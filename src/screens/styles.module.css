@@ -1,0 +1,58 @@
+.loginContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.loginForm {
+  width: 400px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f5f5f5;
+}
+
+.loginForm h2 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.inputGroup {
+  position: relative;
+}
+
+.inputGroupPrepend,
+.inputGroupText {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  background-color: #e9ecef;
+  border-radius: 4px 0 0 4px;
+}
+
+.inputGroupText {
+  color: #495057;
+}
+
+.formControl {
+  border-radius: 0 4px 4px 0;
+  font-size: 14px;
+  padding: 5px;
+  width: 100%;
+}
+
+.isInvalid {
+  border-color: #dc3545 !important;
+}
+
+.invalidFeedback {
+  color: #dc3545;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.loginButton {
+  margin-top: 20px;
+  width: 100%;
+}

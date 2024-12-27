@@ -1,0 +1,79 @@
+.listado {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.centro {
+  width: 60%;
+}
+
+.estrellas {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px;
+}
+
+.text {
+  font-size: 20px;
+  padding: 10px;
+  font-family: 'Poppins',sans-serif;
+}
+
+.image {
+  height: 150px;
+  width: 150px;
+  border-radius: 2px;
+  object-fit: cover;
+}
+
+.item {
+  padding: 10px; 
+  margin-right: 10px;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
+  cursor: pointer;
+}
+
+.searchBar {
+  font-size: 24px;
+  width: 90%;
+  height: 50px;
+  padding-left: 10px;
+  border-radius: 5px;
+  border: 0.5px solid #000;
+}
+
+.buscador {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+ /* background-color: #e5e5e5; */
+  /* border: 0.5px solid #000; */
+  height: 50px;
+  border-radius: 5px;
+  margin: 10px;
+}
+.botonBuscar {
+ /* background-color: #e5e5e5; */
+   border: 0.5px solid #000;
+  height: 50px;
+  width: 50px;
+
+  border-radius: 5px;
+  margin: 10px;
+}
+.fecha {
+  padding-left:10px;
+  width: 110px;
+}
+.dia {
+  font-size: 32px;
+  font-weight: bold;
+}
+.mes {
+  font-size: 22px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
