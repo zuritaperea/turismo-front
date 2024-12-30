@@ -5,6 +5,21 @@ function padTo2Digits(num) {
 }
 
 const funciones = {
+   getColorFromText: function (text, index)  {
+    const colors = ['yellow', 'red', 'pink', 'blue', 'purple', 'green'];
+    
+    // Concatenar el texto con el índice para hacer el hash más único
+    let hash = 0;
+    const combinedText = text + index;  // Usar el índice del tag para diversificar más el valor hash
+    
+    for (let i = 0; i < combinedText.length; i++) {
+      hash = (hash << 5) - hash + combinedText.charCodeAt(i);
+    }
+    
+    // Usar el valor hash para elegir un color, asegurando que se mapee a un índice válido
+    const indexColor = Math.abs(hash % colors.length);
+    return colors[indexColor];
+  },
   formatDate: function (date) {
     return [
       padTo2Digits(date.getDate()),

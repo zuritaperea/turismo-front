@@ -100,7 +100,7 @@ const Registro = () => {
   };
 
   useEffect(() => {
- if (registroExitoso) {
+    if (registroExitoso) {
       console.log(registroExitoso)
       // Si el registro fue exitoso, redirige a la siguiente pantalla
       setTimeout(function () {
@@ -195,181 +195,179 @@ const Registro = () => {
         <Row>
           <Col md={{ span: 6, offset: 3 }}>
             <Row className="destination-box mb-2">
-              <h3>Creá tu cuenta</h3>
-              <hr className="mb-2"></hr>
-              <p>Por favor completá estos datos para continuar.</p>
-              <p><a href="/login/">Si ya estás registrado, ingresá a tu cuenta.</a>
-              </p>
+              <h2 class="text-sm font-semibold mt-2 color-principal">
+                Creá tu cuenta</h2>
+              <Row className="destination-box mb-2">
+                <p class="mt-2 ml-2 texto-tarjeta">
+                  Por favor completá estos datos para continuar.</p>
+              </Row>                <Row className="destination-box mb-2">
+                <p class="mt-2 ml-2 texto-tarjeta">
+
+                  <a href="/login/">Si ya estás registrado, ingresá a tu cuenta.</a>
+                </p></Row>
               {error && <Alert variant="danger">{error}</Alert>}
               <Form onSubmit={handleSubmit}>
 
-                <Accordion defaultActiveKey="0" alwaysOpen>
-                  <Accordion.Item eventKey="0">
-                    <Accordion.Header>Usuario</Accordion.Header>
-                    <Accordion.Body>
-                      <Form.Group controlId="email">
-                        <Form.Label>Correo Electrónico *</Form.Label>
-                        <Form.Control
-                          type="email"
-                          name="email"
-                          value={datosUsuario.email}
-                          onChange={handleInputChange}
-                          required
-                        />
-                      </Form.Group>
-                      <Form.Group controlId="email2">
-                        <Form.Label>Confirmar Correo Electrónico *</Form.Label>
-                        <Form.Control
-                          type="email"
-                          name="email2"
-                          value={datosUsuario.email2}
-                          onChange={handleInputChange}
-                          required
-                        />
-                      </Form.Group>
+                <h1 class="py-2 text-4xl font-semibold text-slate-900 tracking-tight dark:text-slate-200">
+                  Usuario</h1>
+                <Form.Group controlId="email">
+                  <Form.Label>Correo Electrónico *</Form.Label>
+                  <Form.Control
+                    type="email"
+                    name="email"
+                    value={datosUsuario.email}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </Form.Group>
+                <Form.Group controlId="email2">
+                  <Form.Label>Confirmar Correo Electrónico *</Form.Label>
+                  <Form.Control
+                    type="email"
+                    name="email2"
+                    value={datosUsuario.email2}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </Form.Group>
 
-                      <Form.Group controlId="usuario">
-                        <Form.Label>Usuario *</Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="usuario"
-                          value={datosUsuario.usuario}
-                          onChange={handleInputChange}
-                          required
-                        />
-                      </Form.Group>
+                <Form.Group controlId="usuario">
+                  <Form.Label>Usuario *</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="usuario"
+                    value={datosUsuario.usuario}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </Form.Group>
 
-                      <Form.Group controlId="contraseña">
-                        <Form.Label>Creá una contraseña *</Form.Label>
-                        <Form.Control
-                          type={mostrarContrasenia ? 'text' : 'password'}
-                          name="contrasenia"
-                          value={datosUsuario.contrasenia}
-                          onChange={handleInputChange}
-                          required
-                        />
+                <Form.Group controlId="contraseña">
+                  <Form.Label>Creá una contraseña *</Form.Label>
+                  <Form.Control
+                    type={mostrarContrasenia ? 'text' : 'password'}
+                    name="contrasenia"
+                    value={datosUsuario.contrasenia}
+                    onChange={handleInputChange}
+                    required
+                  />
 
-                      </Form.Group>
-                      <Form.Check
-                        type="checkbox"
-                        label={mostrarContrasenia ? 'Ocultar la contraseña' : 'Mostrar la contraseña'}
-                        onChange={toggleMostrarContrasenia}
-                      />
-                    </Accordion.Body>
-                  </Accordion.Item>
+                </Form.Group>
+                <Form.Check
+                  type="checkbox"
+                  label={mostrarContrasenia ? 'Ocultar la contraseña' : 'Mostrar la contraseña'}
+                  onChange={toggleMostrarContrasenia}
+                />
 
-                  <Accordion.Item eventKey="1">
-                    <Accordion.Header>Perfil de turista</Accordion.Header>
-                    <Accordion.Body>
+                <h1 class="py-2 text-4xl font-semibold text-slate-900 tracking-tight dark:text-slate-200">
+                  Perfil de turista</h1>
 
-                      <Form.Group controlId="fechaNacimiento">
-                        <Form.Label>Fecha de Nacimiento</Form.Label>
-                        <Form.Control
-                          type="date"
-                          name="fechaNacimiento"
-                          value={datosUsuario.fechaNacimiento}
-                          onChange={handleInputChange}
-                        />
-                      </Form.Group>
+                <Form.Group controlId="fechaNacimiento">
+                  <Form.Label>Fecha de Nacimiento</Form.Label>
+                  <Form.Control
+                    type="date"
+                    name="fechaNacimiento"
+                    value={datosUsuario.fechaNacimiento}
+                    onChange={handleInputChange}
+                  />
+                </Form.Group>
 
-                      <Form.Group controlId="género">
-                        <Form.Label>Género</Form.Label>
-                        <Form.Control
-                          as="select"
-                          name="genero"
-                          value={datosUsuario.genero}
-                          onChange={handleInputChange}
+                <Form.Group controlId="género">
+                  <Form.Label>Género</Form.Label>
+                  <Form.Control
+                    as="select"
+                    name="genero"
+                    value={datosUsuario.genero}
+                    onChange={handleInputChange}
 
-                        >
-                          <option value="">Seleccionar</option>
-                          <option value="masculino">Masculino</option>
-                          <option value="femenino">Femenino</option>
-                          <option value="otro">Otro</option>
-                        </Form.Control>
-                      </Form.Group>
+                  >
+                    <option value="">Seleccionar</option>
+                    <option value="masculino">Masculino</option>
+                    <option value="femenino">Femenino</option>
+                    <option value="otro">Otro</option>
+                  </Form.Control>
+                </Form.Group>
 
-                      <Form.Group controlId="paísResidencia">
-                        <Form.Label>País de Residencia</Form.Label>
-                        <Form.Select
-                          name="pais"
-                          value={datosUsuario.pais}
-                          onChange={handleInputChange}
+                <Form.Group controlId="paísResidencia">
+                  <Form.Label>País de Residencia</Form.Label>
+                  <Form.Select
+                    name="pais"
+                    value={datosUsuario.pais}
+                    onChange={handleInputChange}
 
-                        >
-                          <option value="">Selecciona un país</option>
-                          {paises.map((pais) => (
-                            <option key={pais.id} value={pais.nombre}>
-                              {pais.nombre}
-                            </option>
-                          ))}
-                        </Form.Select>
-                      </Form.Group>
+                  >
+                    <option value="">Selecciona un país</option>
+                    {paises.map((pais) => (
+                      <option key={pais.id} value={pais.nombre}>
+                        {pais.nombre}
+                      </option>
+                    ))}
+                  </Form.Select>
+                </Form.Group>
 
 
-                      {loadingProvincias ? (
-                        <Spinner animation="border" role="status" />
-                      ) : (
-                        <Form.Group controlId="provincia">
-                          <Form.Label>Provincia de residencia</Form.Label>
-                          <Form.Select
-                            name="provincia"
-                            value={provincia}
-                            onChange={(e) => guardarProvincia(e.target.value)}
-                            disabled={datosUsuario.pais !== 'Argentina'}
-                          >
-                            <option value="">Selecciona una provincia</option>
-                            {provincias?.map((p) => (
-                              <option key={p.id} value={p.id}>
-                                {p.nombre}
-                              </option>
-                            ))}
-                          </Form.Select>
-                        </Form.Group>)}
+                {loadingProvincias ? (
+                  <Spinner animation="border" role="status" />
+                ) : (
+                  <Form.Group controlId="provincia">
+                    <Form.Label>Provincia de residencia</Form.Label>
+                    <Form.Select
+                      name="provincia"
+                      value={provincia}
+                      onChange={(e) => guardarProvincia(e.target.value)}
+                      disabled={datosUsuario.pais !== 'Argentina'}
+                    >
+                      <option value="">Selecciona una provincia</option>
+                      {provincias?.map((p) => (
+                        <option key={p.id} value={p.id}>
+                          {p.nombre}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </Form.Group>)}
 
-                      {loadingDepartamentos ? (
-                        <Spinner animation="border" role="status" />
-                      ) : (
-                        <Form.Group controlId="departamento">
-                          <Form.Label>Departamento/Comuna/Partido de residencia</Form.Label>
-                          <Form.Select
-                            name="departamento"
-                            value={departamento}
-                            onChange={(e) => guardarDepartamento(e.target.value)}
+                {loadingDepartamentos ? (
+                  <Spinner animation="border" role="status" />
+                ) : (
+                  <Form.Group controlId="departamento">
+                    <Form.Label>Departamento/Comuna/Partido de residencia</Form.Label>
+                    <Form.Select
+                      name="departamento"
+                      value={departamento}
+                      onChange={(e) => guardarDepartamento(e.target.value)}
 
-                            disabled={datosUsuario.pais !== 'Argentina'}
-                          >
-                            <option value="">Selecciona un Departamento/Comuna/Partido</option>
-                            {departamentos?.map((p) => (
-                              <option key={p.id} value={p.id}>
-                                {p.nombre}
-                              </option>
-                            ))}
-                          </Form.Select>
-                        </Form.Group>)}
+                      disabled={datosUsuario.pais !== 'Argentina'}
+                    >
+                      <option value="">Selecciona un Departamento/Comuna/Partido</option>
+                      {departamentos?.map((p) => (
+                        <option key={p.id} value={p.id}>
+                          {p.nombre}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </Form.Group>)}
 
-                      {loadingLocalidades ? (
-                        <Spinner animation="border" role="status" />
-                      ) : (
-                        <Form.Group controlId="localidad">
-                          <Form.Label>Localidad de residencia</Form.Label>
-                          <Form.Select
-                            name="localidad"
-                            value={datosUsuario.localidad}
-                            onChange={handleInputChange}
+                {loadingLocalidades ? (
+                  <Spinner animation="border" role="status" />
+                ) : (
+                  <Form.Group controlId="localidad">
+                    <Form.Label>Localidad de residencia</Form.Label>
+                    <Form.Select
+                      name="localidad"
+                      value={datosUsuario.localidad}
+                      onChange={handleInputChange}
 
-                            disabled={datosUsuario.pais !== 'Argentina'}
-                          >
-                            <option value="">Selecciona una localidad</option>
-                            {localidades?.map((p) => (
-                              <option key={p.id} value={p.id}>
-                                {p.nombre}
-                              </option>
-                            ))}
-                          </Form.Select>
-                        </Form.Group>)}
-                    </Accordion.Body>
-                  </Accordion.Item>
-                </Accordion>
+                      disabled={datosUsuario.pais !== 'Argentina'}
+                    >
+                      <option value="">Selecciona una localidad</option>
+                      {localidades?.map((p) => (
+                        <option key={p.id} value={p.id}>
+                          {p.nombre}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </Form.Group>)}
+
 
                 <div className="d-grid gap-2">
                   <Button variant="primary" type="submit" className="mt-3" disabled={registroExitoso}>

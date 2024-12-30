@@ -13,7 +13,9 @@ export default function EncabezadoCategoria({ target, title }) {
     subtitulo = "Conocé donde hospedarte";
 
   } else if (target === 'Atractivo') {
-    epigrafe = "epigrafeAtractivos";
+    epigrafe = "Qué hacer";
+
+    subtitulo = "Actividades de todos los tipos y para todos los públicos";
   } else if (target === 'Beneficio') {
     epigrafe = "epigrafeBeneficios";
   } else if (target === 'Comercio') {

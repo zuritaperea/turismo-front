@@ -1,53 +1,43 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Button, Image } from 'react-bootstrap';
 import { Spinner, Alert } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import Jumbotron from '../components/Jumbotron';
-import Redes from '../components/Redes';
-import CustomAccordion from '../components/CustomAccordion';
-import Opiniones from '../components/Opiniones';
-import Carrusel from '../components/Carrusel';
 import service from '../axios/services/atractivo';
-import puntoInteresService from '../axios/services/puntoInteres';
-import favoritoService from '../axios/services/favorito_visitado';
-import canalService from '../axios/services/contacto_canales';
 
-import { useParams } from 'react-router-dom';
-import ImageCarousel from '../components/ImageCarousel';
-import MapView from '../components/MapView';
+
+import { Link, useParams } from 'react-router-dom';
+import Carousel from '../components/Carousel';
+import Card from '../components/Card';
+import TagsList from '../components/TagsList';
+import Estrellas from '../components/Items/Estrellas';
+
 
 function AtractivoScreen() {
   const { id, fechadesde, fechahasta } = useParams();
   const [atractivo, setAtractivo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [destino, setDestino] = useState(null);
-  const [canal, setCanal] = useState(null);
+  const [atractivos, setAtractivos] = useState([]);
 
-  const [naturalAttractions, setNaturalAttractions] = useState([]);
   const [loadingAtractivos, setLoadingAtractivos] = useState(true);
-  const [culturalAttractions, setCulturalAttractions] = useState([]);
-  const [loadingAtractivosCulturales, setLoadingAtractivosCulturales] = useState(true);
-  const [puntosInteres, setPuntosInteres] = useState([]);
-  const [loadingPuntosInteres, setLoadingPuntosInteres] = useState(true);
 
   useEffect(() => {
     const obtenerAtractivo = async () => {
       try {
         const response = await service.obtener(id);
         const datosAtractivo = {
-          ...response.data,
+          ...response.data.data,
           fechadesde: fechadesde,
           fechahasta: fechahasta,
-          tipo: "atractivo"
+          image: response.data.data.attributes.image_url
+          ? process.env.REACT_APP_API_URL + response.data.data.attributes.image_url
+          : process.env.REACT_APP_IMAGE_DEFAULT,     
+         tipo: "atractivo"
         };
         setAtractivo(datosAtractivo);
-        if (datosAtractivo.destinos && datosAtractivo.destinos.length > 0) {
-          setDestino(datosAtractivo.destinos[0]);
-        }
+
         setLoading(false); // Cambia el estado a false cuando los datos se cargan correctamente
       } catch (error) {
         setError('Hubo un error al cargar el atractivo');
@@ -55,157 +45,40 @@ function AtractivoScreen() {
       }
     };
 
+
+    const obtenerAtractivos = async () => {
+      try {
+        const response = await service.obtenerTodos();
+        const atracciones = response.data.data.map((obj) => {
+          return {
+            id: obj.id,
+            title: obj.attributes.name,
+            image: obj.attributes.image_url
+              ? process.env.REACT_APP_API_URL + obj.attributes.image_url
+              : process.env.REACT_APP_IMAGE_DEFAULT,
+            puntuacion: obj.attributes.evaluation,
+            favorito: obj.attributes.favorite,
+            coordinates: obj.attributes.point,
+            tourist_type: obj.attributes.tourist_type,
+    
+            type:obj.type
+          };
+        });
+        setAtractivos(atracciones);
+        setLoadingAtractivos(false);
+      } catch (error) {
+        setLoadingAtractivos(false);
+      }
+    };
+
+    obtenerAtractivos();
     obtenerAtractivo(); // Llama a la función para obtener el atractivo
   }, [id, fechadesde, fechahasta]);
 
 
-  useEffect(() => {
-
-    const obtenerAtractivosNaturales = async () => {
-      try {
-        const response = await service.obtenerNaturalDestino(destino.id);
-        const atracciones = response.data.map((atractivo) => {
-          let toPath = `/atractivo/${atractivo.id}`;
-          if (fechadesde || fechahasta) {
-            toPath += `/${fechadesde || ''}/${fechahasta || ''}`;
-          }
-          return {
-            to: toPath,
-            imgSrc: atractivo.imagenPrincipal,
-            alt: atractivo.nombre,
-            title: atractivo.nombre,
-          };
-        });
-        const atraccionesFiltradas = atracciones.filter((atractivo) => atractivo.id !== id);
-
-        setNaturalAttractions(atraccionesFiltradas);
-        setLoadingAtractivos(false);
-      } catch (error) {
-        setLoadingAtractivos(false);
-      }
-    };
-
-    const obtenerAtractivosCulturales = async () => {
-      try {
-        const response = await service.obtenerCulturalDestino(destino.id);
-        const atracciones = response.data.map((atractivo) => {
-          let toPath = `/atractivo/${atractivo.id}`;
-          if (fechadesde || fechahasta) {
-            toPath += `/${fechadesde || ''}/${fechahasta || ''}`;
-          }
-          return {
-            to: toPath,
-            imgSrc: atractivo.imagenPrincipal,
-            alt: atractivo.nombre,
-            title: atractivo.nombre,
-          };
-        });
-        const atraccionesFiltradas = atracciones.filter((atractivo) => atractivo.id !== id);
-
-        setCulturalAttractions(atraccionesFiltradas);
-        setLoadingAtractivosCulturales(false);
-      } catch (error) {
-        setLoadingAtractivosCulturales(false);
-      }
-    };
 
 
-    const obtenerPuntoInteres = async () => {
-      try {
-        const response = await puntoInteresService.obtenerDestino(destino.id);
-        const puntosInteres = response.data.map((puntoInteres) => {
-          let toPath = `/puntointeres/${puntoInteres.id}`;
-          if (fechadesde || fechahasta) {
-            toPath += `/${fechadesde || ''}/${fechahasta || ''}`;
-          }
-          return {
-            to: toPath,
-            imgSrc: puntoInteres.imagenPrincipal,
-            alt: puntoInteres.nombre,
-            title: puntoInteres.nombre,
-          };
-        });
-        setPuntosInteres(puntosInteres);
-        setLoadingPuntosInteres(false);
-      } catch (error) {
-        setLoadingPuntosInteres(false);
-      }
-    };
 
-    const obtenerCanales = async () => {
-      try {
-        const response = await canalService.obtenerContactoCanalAtractivo(id);
-        if (response.data.length > 0) {
-          const primerCanal = response.data[0];
-          setCanal(primerCanal); // Establecer el primer canal obtenido en el estado
-        } else {
-          // No se encontraron canales, devolver un valor predeterminado
-          setCanal(null); // O establecer algún otro valor predeterminado según tu caso
-        }
-      } catch (error) {
-        // Manejar errores
-        console.error("Error al obtener los canales:", error);
-        setCanal(null); // O establecer algún otro valor predeterminado según tu caso
-      }
-    };
-
-    if (destino?.id) {
-      obtenerAtractivosNaturales();
-      obtenerAtractivosCulturales();
-      obtenerPuntoInteres();
-      obtenerCanales();
-    }
-  }, [destino?.id]);
-
-  const handleFavoriteClick = async () => {
-    try {
-      let newFavoriteValue = 1; // Valor predeterminado
-      if (atractivo && atractivo.favorito === 1) {
-        newFavoriteValue = 0; // Si era 1, lo cambiamos a 0
-      }
-      await favoritoService.agregarFavorito({ tipo: 'Atractivo', id, favorito: newFavoriteValue })
-        .then((response) => {
-          setAtractivo({ ...atractivo, favorito: newFavoriteValue });
-        }
-        )
-        .catch((error) => {
-          if (error) {
-            console.log('Error estableciendo el valor de favorito');
-          }
-        });
-
-    } catch (error) {
-      console.log('Error estableciendo el valor de favorito');
-    }
-  };
-
-  const handleVisitedClick = async () => {
-    try {
-      let newVisitedValue = 1; // Valor predeterminado
-      if (atractivo && atractivo.visitado === 1) {
-        newVisitedValue = 0; // Si era 1, lo cambiamos a 0
-      }
-      await favoritoService.agregarVisitado({ tipo: 'Atractivo', id, visitado: newVisitedValue })
-        .then((response) => {
-          setAtractivo({ ...atractivo, visitado: newVisitedValue });
-        }
-        )
-        .catch((error) => {
-          if (error) {
-            console.log('Error estableciendo el valor de visitado');
-          }
-        });
-
-    } catch (error) {
-      console.log('Error estableciendo el valor de visitado');
-    }
-  };
-
-
-  const esURL = atractivo?.Entradas && /^(ftp|http|https):\/\/[^ "]+$/.test(atractivo.Entradas);
-
-  // Opiniones aqui
-  const opiniones = atractivo?.opinones;
 
 
   if (loading) {
@@ -226,136 +99,137 @@ function AtractivoScreen() {
 
   return (<>
     <Header />
-    <Jumbotron
-      name={atractivo.Nombre}
-      subtittle={`${atractivo.Departamento}, ${atractivo.Provincia}`}
-      description={`Atractivo ${atractivo.Tipo}`}
-      fechadesde={atractivo.fechadesde}
-      fechahasta={atractivo.fechahasta}
-      id={atractivo.id}
-      tipo={atractivo.tipo}
-      isFavorite={atractivo.favorito}
-      isVisited={atractivo.visitado}
-      handleFavoriteClick={handleFavoriteClick}
-      handleVisitedClick={handleVisitedClick}
-    />
-    <Container className="boxed p-2">
-      <Row>
-        <Col>
-          <Row className="destination-box">
-            <Col xs={12} md={6}>
-              <Image src={atractivo.ImagenPrincipal} fluid />
-            </Col>
-            <Col xs={12} md={6}>
-              <p>{atractivo.Descripcion}</p>
-            </Col>
 
-            <Redes latitud={atractivo.Latitud} longitud={atractivo.Longitud}
-              facebook={canal?.facebook}
-              instagram={canal?.instagram}
-              whatsapp={canal?.whatsapp}
-              email={canal?.email}
-              telefono={canal?.telefono} />
-          </Row>
+    <div className="w-full h-64 bg-gray-300">
+      <img className="w-full object-cover object-center	h-64" src={atractivo.image} alt="Imagen 1" />
+    </div>
 
-          <ImageCarousel images={atractivo.imagenes} />
-          <Row>
-            <Col className="mapa">
-              <MapView
-                name={atractivo.Nombre}
-                latitud={atractivo.Latitud}
-                longitud={atractivo.Longitud}
-                height="300px"
-              />
-            </Col>
-          </Row>
-          {(atractivo.HorarioApertura && atractivo.HorarioCierre) && (
-            <CustomAccordion
-              title="Horarios de visita"
-              content={`De ${atractivo.HorarioApertura} a ${atractivo.HorarioCierre}`}
-            />
-          )}
+    <div className="container mx-auto p-4">
 
-          {(!atractivo.HorarioApertura || !atractivo.HorarioCierre) && (
-            <CustomAccordion
-              title="Horarios de visita"
-              content="No se han especificado horarios de visita"
-            />
-          )}
-          <CustomAccordion
-            title="Época de Visita"
-            content={atractivo.Epoca_Visita}
-          />
+      <div className="pb-4">
+        <div className="botones float-right hidden sm:block">
+          <button className="color-principal bg-white shadow-sm px-10 py-3 font-semibold rounded-lg mr-2">
+            <i className="fa-regular fa-star"></i>
+                        Calificar</button>
+          <button className="color-principal bg-white shadow-sm px-10 py-3 font-semibold rounded-lg">
+            <i className="fa-solid fa-arrow-up-right-from-square"></i>                        Compartir</button>
 
-          <CustomAccordion
-            title="Servicios dentro"
-            content={atractivo.Servicios_Adentro}
-          />
-          <CustomAccordion
-            title="Servicios fuera"
-            content={atractivo.Servicios_Afuera}
-          />
+        </div>
 
-          <CustomAccordion
-            title="Requisitos de acceso"
-            content={atractivo.requistosAcceso}
-          />
+        <div className="pb-3 text-center lg:text-left">
+          <h2 className="text-sm font-semibold mt-2 color-principal">
+          {atractivo?.attributes?.type_attractive}
+          </h2>
+          <h1 className="py-2 text-4xl font-semibold text-slate-900 tracking-tight dark:text-slate-200">
+            {atractivo?.attributes?.name}
+          </h1>
+          <div className="space-x-1 mt-2 p-2 flex justify-center lg:justify-start	">
+          <TagsList tags= {atractivo?.attributes?.tourist_type} /> 
 
-          <CustomAccordion
-            title="Accesibilidad"
-            content={atractivo.accesibilidad}
-          />
+          </div>
+          <Estrellas puntuacion={atractivo?.attributes?.puntuacion} size={'sm'} />
+          <span className="puntacion font-semibold mx-1">{atractivo?.attributes?.puntuacion}</span>
+        </div>
 
-          <CustomAccordion
-            title="Tipo de Atractivo"
-            content={atractivo.tipo_atractivo}
-          />
+        <div className="text-2xl font-bold text-slate-900 tracking-tight dark:text-slate-200 my-4">
+          Descripción
+        </div>
+        <div className="descripcion whitespace-pre-line">        {atractivo?.attributes?.description}
 
-          <CustomAccordion
-            title="Tipo de Turismo"
-            content={atractivo.tipoTurismo}
-          />
+        </div>
+        <div className="text-2xl font-bold text-slate-900 tracking-tight dark:text-slate-200 my-4">
+          Dirección
+        </div>
+        <div className="descripcion">        {atractivo?.attributes?.street_address}
 
-          <CustomAccordion
-            title="Ruta Natural"
-            content={atractivo.ruta_natural}
-          />
-          {(opiniones) && (
+        </div>
 
-            <CustomAccordion
-              title="Opiniones"
-              content={<Opiniones opiniones={opiniones} />}
-            />
-          )}
+        <Carousel images= {atractivo?.attributes?.contenidos} />
 
+        <div className="grid grid-cols-1 md:grid-cols-3">
+          <div id="horarios">
+            <div className="text-xl font-bold text-slate-900 tracking-tight dark:text-slate-200 my-4">
+              Horarios
+            </div>
+            <ul className="descripcion list-disc ml-10">
+              <li>Lunes: 06:00 hs - 19:00 hs</li>
+              <li>Martes: 06:00 hs - 19:00 hs</li>
+              <li>Miercoles: 06:00 hs - 19:00 hs</li>
+              <li>Jueves: 06:00 hs - 19:00 hs</li>
+              <li>Viernes: 06:00 hs - 19:00 hs</li>
+              <li>Sábado: 06:00 hs - 19:00 hs</li>
+              <li>Domingo: 06:00 hs - 19:00 hs</li>
+            </ul>
+          </div>
+          <div id="contacto">
+            <div className="text-xl font-bold text-slate-900 tracking-tight dark:text-slate-200 my-4">
+              Contacto
+            </div>
+            <div className="flex descripcion">
+              <img src="assets/img/phone.png" className="mr-3" />+54 9 223 521 9100
+            </div>
+            <div className="flex descripcion">
+              <img src="assets/img/mail-03.png" className="mr-3" />info@mabubusiness.br
+            </div>
+            <div className="flex descripcion">
+              <img src="assets/img/link-01.png" className="mr-3" />mabubusiness.br
+            </div>
+          </div>
+          <div id="redes">
+            <div className="text-xl font-bold text-slate-900 tracking-tight dark:text-slate-200 my-4">
+              Redes sociales
+            </div>
 
-          {esURL ? (
-            <Button variant="primary" className="centrado blanco" href={atractivo.Entradas}>
-              Entradas/Tickets
-            </Button>
-          ) : (
-            <CustomAccordion
-              title="Entradas"
-              content={atractivo.Entradas}
-            />
-          )}        </Col>
-      </Row>
-      <hr />
-      {loadingAtractivos ? (
-        <Spinner animation="border" role="status" />
-      ) : (
-        <Carrusel title="Atractivos Naturales" data={naturalAttractions.slice(0, 4)} to={`/atractivos-naturales/${destino.id}`} />
-      )}
-      {loadingAtractivosCulturales ? (
-        <Spinner animation="border" role="status" />
-      ) : (
-        <Carrusel title="Atractivos Culturales" data={culturalAttractions.slice(0, 4)} to={`/atractivos-culturales/${destino.id}`} />
-      )}
-      {loadingPuntosInteres ? (
-        <Spinner animation="border" role="status" />
-      ) : (
-        <Carrusel title="Puntos de Interés" data={puntosInteres.slice(0, 4)} to={`/puntosinteres/${destino.id}`} />
-      )} </Container>
+            <div className="flex">
+              <img src="assets/img/x-button.png" className="mr-2" />
+              <img src="assets/img/fb-button.png" className="mr-2" />
+              <img src="assets/img/in-button.png" className="mr-2" />
+            </div>
+          </div>
+        </div>
+        <div className="bg-white border border-gray-200 rounded-xl pl-4 pb-4 mt-4">
+          <div className="text-2xl font-bold text-slate-900 tracking-tight dark:text-slate-200 my-4">
+            Certificaciones y premios
+          </div>
+          <div className="descripcion">
+          {atractivo?.attributes?.certifications}          </div>
+          <div className="descripcion">
+          {atractivo?.attributes?.certifications}          </div>
+        </div>
+        <div className="text-xl font-bold text-slate-900 tracking-tight dark:text-slate-200 my-4">
+          Información de la empresa
+        </div>
+        <ul className="descripcion list-disc ml-10">
+          <li>Nombre legal: Razón social SRL</li>
+          <li>ID: 30253458769</li>
+        </ul>
+        <div className="botones float-right sm:hidden">
+          <button className="color-principal bg-white shadow-sm px-10 py-3 font-semibold rounded-lg mr-2">
+            <i className="fa-regular fa-star"></i>
+                        Calificar</button>
+          <button className="color-principal bg-white shadow-sm px-10 py-3 font-semibold rounded-lg">
+            <i className="fa-solid fa-arrow-up-right-from-square"></i>                        Compartir</button>
+
+        </div>
+
+        <div className="py-4">
+          <div className="py-4">
+            <div className="text-3xl font-semibold text-slate-900 tracking-tight dark:text-slate-200 mb-4">
+              También puede interesarte...
+            </div>
+      <div className="slider-horizontal flex space-x-4 overflow-x-auto 2xl:justify-center pl-10">
+        {atractivos.map((item, index) => (
+                    <Link key={item.id} to={`/atractivo/${item.id}`}>
+
+            <Card key={item.id} imgSrc={item.image} title={item.title} category={item.type} description={item.description} tags={item.tourist_type} puntuacion={item.puntuacion} />
+            </Link>
+          ))}
+      </div>
+ 
+          </div>
+        </div>
+      </div>
+    </div>
 
     <Footer /></>
   );

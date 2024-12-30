@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Card from "../Card";
-import Item from "../../components/Items/Item";
 
 const Listado = ({ objetosFiltrados, target }) => {
   return (
