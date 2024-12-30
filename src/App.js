@@ -51,7 +51,7 @@ function App() {
   return (
     <>
       <CookieConsent onConsent={handleConsent} />
-      <BrowserRouter>
+      <BrowserRouter basename="/ui">
         <Routes>
           <Route path="/" element={<Inicio />} />
           <Route path="/login" element={<Login />} />

@@ -1,7 +1,8 @@
 {
-  "name": "piit",
+  "name": "SIT",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/ui",
   "dependencies": {
     "@babel/core": "^7.16.0",
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
