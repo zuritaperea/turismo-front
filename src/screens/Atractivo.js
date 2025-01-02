@@ -12,6 +12,7 @@ import Carousel from '../components/Carousel';
 import Card from '../components/Card';
 import TagsList from '../components/TagsList';
 import Estrellas from '../components/Items/Estrellas';
+import OpeningHours from '../components/OpeningHours';
 
 
 function AtractivoScreen() {
@@ -151,15 +152,7 @@ function AtractivoScreen() {
             <div className="text-xl font-bold text-slate-900 tracking-tight dark:text-slate-200 my-4">
               Horarios
             </div>
-            <ul className="descripcion list-disc ml-10">
-              <li>Lunes: 06:00 hs - 19:00 hs</li>
-              <li>Martes: 06:00 hs - 19:00 hs</li>
-              <li>Miercoles: 06:00 hs - 19:00 hs</li>
-              <li>Jueves: 06:00 hs - 19:00 hs</li>
-              <li>Viernes: 06:00 hs - 19:00 hs</li>
-              <li>Sábado: 06:00 hs - 19:00 hs</li>
-              <li>Domingo: 06:00 hs - 19:00 hs</li>
-            </ul>
+          <OpeningHours openingHoursText={atractivo?.attributes?.opening_hours}/>
           </div>
           <div id="contacto">
             <div className="text-xl font-bold text-slate-900 tracking-tight dark:text-slate-200 my-4">

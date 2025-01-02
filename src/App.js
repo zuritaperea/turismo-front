@@ -23,14 +23,16 @@ import Registro from "./screens/Registro";
 import DatosAdicionales from "./screens/DatosAdicionales";
 import Terminos from "./screens/Terminos";
 import Recupero from "./screens/Recupero";
-import AtractivosCultural from "./screens/AtractivosCultural";
-import AtractivosNatural from "./screens/AtractivosNatural";
 import Eventos from "./screens/Eventos";
 import PuntosInteres from "./screens/PuntosInteres";
 import ViajeScreen from "./screens/Viaje";
 import FavoritoScreen from "./screens/Favoritos";
 import VisitadoScreen from "./screens/Visitados";
 import CircuitosScreen from "./screens/Circuitos";
+import GastronomiasScreen from "./screens/Gastronomias";
+import GastronomiaScreen from "./screens/Gastronomia";
+import ComerciosScreen from "./screens/Comercio"
+import ComercioScreen from "./screens/Comercios"
 
 function App() {
   // Verificar si ya existe un UUID en el localStorage
@@ -70,10 +72,10 @@ function App() {
           <Route path="/atractivo" element={<AtractivoScreen />} />
           <Route path="/atractivos" element={<AtractivosScreen />} />
           <Route path="/atractivos/:id" element={<AtractivosScreen />} />
-          <Route path="/atractivos-culturales" element={<AtractivosCultural />} />
-          <Route path="/atractivos-culturales/:id" element={<AtractivosCultural />} />
-          <Route path="/atractivos-naturales" element={<AtractivosNatural />} />
-          <Route path="/atractivos-naturales/:id" element={<AtractivosNatural />} />
+          <Route path="/gastronomias" element={<GastronomiasScreen />} />
+          <Route path="/gastronomia/:id" element={<GastronomiaScreen />} />
+          <Route path="/comercios" element={<ComerciosScreen />} />
+          <Route path="/comercios/:id" element={<ComercioScreen />} />
           <Route path="/atractivo/:id/:fechadesde/:fechahasta" element={<AtractivoScreen />} />
           <Route path="/atractivo/:id" element={<AtractivoScreen />} />
           <Route path="/alojamiento/:id" element={<AlojamientoScreen />} />

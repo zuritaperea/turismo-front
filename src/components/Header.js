@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark, faUser, faSignOutAlt, faBars } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import logo from '../assets/img/logomark.png';
 
 export default function Header() {
@@ -37,8 +37,10 @@ export default function Header() {
     <>
       <header className="bg-white p-4 shadow-md flex justify-between items-center">
         <div className="flex items-center">
-       <a href="/"  > <img className="logo" src={logo} alt="Logo" /></a>
-       <a href="/"  > <h1 className="ml-3 font-extrabold text-base">Sistema de Turismo</h1></a>
+          <Link to="/">
+            <img className="logo" src={logo} alt="Logo" /></Link>
+          <Link to="/">
+            <h1 className="ml-3 font-extrabold text-base">Sistema de Turismo</h1></Link>
         </div>
         <div className="flex items-center space-x-4">
           <i className="fas fa-cloud text-gray-500 text-xl"></i>
@@ -58,19 +60,19 @@ export default function Header() {
               <h1 className="ml-3 font-extrabold text-base">Curitiba</h1>
             </div>
             <div className="flex flex-col">
- 
-            <div className=""><hr /></div>
-            <div className="p-5">
-            {personaDenominacion ? (
-              <>
-                Bienvenido: <b><a href="/perfil"><FontAwesomeIcon icon={faUser} /> {personaDenominacion}</a></b>
-                <span style={{ marginLeft: '10px' }}>|</span>{' '}
-                <a href="/logout"><FontAwesomeIcon icon={faSignOutAlt} /> Desconectar</a>
-              </>
-            ) : (
-              <a href="/login">Ingresar</a>
-            )}</div>
-          </div></div>
+
+              <div className=""><hr /></div>
+              <div className="p-5">
+                {personaDenominacion ? (
+                  <>
+                    Bienvenido: <b><a href="/perfil"><FontAwesomeIcon icon={faUser} /> {personaDenominacion}</a></b>
+                    <span style={{ marginLeft: '10px' }}>|</span>{' '}
+                    <a href="/logout"><FontAwesomeIcon icon={faSignOutAlt} /> Desconectar</a>
+                  </>
+                ) : (
+                  <a href="/login">Ingresar</a>
+                )}</div>
+            </div></div>
           <div className="h-full sidebar-cerrar">
             <FontAwesomeIcon
               icon={faXmark}
