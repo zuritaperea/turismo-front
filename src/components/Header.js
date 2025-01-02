@@ -4,11 +4,13 @@ import { faXmark, faUser, faSignOutAlt, faBars } from "@fortawesome/free-solid-s
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import logo from '../assets/img/logomark.png';
 
+
 export default function Header() {
   const [personaDenominacion, setPersonaDenominacion] = useState(null);
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const history = useNavigate();
   const location = useLocation();
+  const title = 'Sistema de Turismo'
 
   const handleGoBack = () => {
     history(-1);
@@ -40,7 +42,7 @@ export default function Header() {
           <Link to="/">
             <img className="logo" src={logo} alt="Logo" /></Link>
           <Link to="/">
-            <h1 className="ml-3 font-extrabold text-base">Sistema de Turismo</h1></Link>
+            <h1 className="ml-3 font-extrabold text-base">{title}</h1></Link>
         </div>
         <div className="flex items-center space-x-4">
           <i className="fas fa-cloud text-gray-500 text-xl"></i>
@@ -57,7 +59,7 @@ export default function Header() {
           <div className="h-full w-full flex-col">
             <div className="mt-8 flex items-center justify-center">
               <img className="logo" src={logo} alt="Logo" />
-              <h1 className="ml-3 font-extrabold text-base">Curitiba</h1>
+              <h1 className="ml-3 font-extrabold text-base">{title}</h1>
             </div>
             <div className="flex flex-col">
 
@@ -67,10 +69,11 @@ export default function Header() {
                   <>
                     Bienvenido: <b><a href="/perfil"><FontAwesomeIcon icon={faUser} /> {personaDenominacion}</a></b>
                     <span style={{ marginLeft: '10px' }}>|</span>{' '}
-                    <a href="/logout"><FontAwesomeIcon icon={faSignOutAlt} /> Desconectar</a>
+                    <Link to="/logout"><FontAwesomeIcon icon={faSignOutAlt} /> Desconectar</Link>
                   </>
                 ) : (
-                  <a href="/login">Ingresar</a>
+                  <Link to="/login">
+                  Ingresar</Link>
                 )}</div>
             </div></div>
           <div className="h-full sidebar-cerrar">

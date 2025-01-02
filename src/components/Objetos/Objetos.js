@@ -10,6 +10,7 @@ import EncabezadoCategoria from "./EncabezadoCategoria";
 import Header from "../Header";
 import Footer from "../Footer";
 
+
 const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
   const [objetos, guardarObjetos] = useState([]);
   const [objetosFiltrados, setObjetosFiltrados] = useState([]);
@@ -35,7 +36,7 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
         coordinates: obj.attributes.point,
         tourist_type: obj.attributes.tourist_type,
 
-        type:obj.type
+        type: obj.type
       }));
 
       guardarObjetos(objetosData);
@@ -52,7 +53,9 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
     obtenerTodos();
   }, []);
 
-
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [navigation])
 
   const search = (searchText) => {
     setLoading(true);
@@ -81,13 +84,13 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
         ) : (
           <>
             <Row>
-              <Col  lg="6">
+              <Col lg="6">
                 <Buscar
                   onChangeText={(textoBuscar) => setTextoBuscar(textoBuscar)}
                   onPress={() => search(textoBuscar)}
-                />      
-                        </Col>
-                        <Col  lg="6">
+                />
+              </Col>
+              <Col lg="6" >
                 <Mapa objetosFiltrados={objetosFiltrados} navigation={navigation} target={target} />
               </Col>
             </Row>

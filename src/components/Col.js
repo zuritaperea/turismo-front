@@ -28,11 +28,12 @@ const Col = ({ children, className = '', sm = '12', md = '12', lg = '12' }) => {
   return (
     <div
       className={`
+       w-full
        md:${getColumnClasses(sm)} 
-        md:${getColumnClasses(md)} 
+       md:${getColumnClasses(md)} 
        lg:${getColumnClasses(lg)} 
-        px-2 
-        ${className}
+       px-2 
+       ${className}
       `}
     >
       {children}

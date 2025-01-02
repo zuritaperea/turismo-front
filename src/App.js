@@ -1,5 +1,5 @@
 import "./App.css";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Inicio from "./screens/Inicio";
 import Logout from "./screens/Logout";
@@ -33,8 +33,63 @@ import GastronomiasScreen from "./screens/Gastronomias";
 import GastronomiaScreen from "./screens/Gastronomia";
 import ComerciosScreen from "./screens/Comercio"
 import ComercioScreen from "./screens/Comercios"
+import ScrollToTopButton from "./components/ScrollToTopButton";
+import service from './axios/services/front';
+import Splash from "./components/Splash";
+
+// Función para obtener la configuración desde la API o desde el cache
+const fetchConfig = async () => {
+  const cachedConfig = localStorage.getItem('appConfig');
+  const cachedTimestamp = localStorage.getItem('configTimestamp');
+
+  const currentTime = new Date().getTime();
+  const cacheExpirationTime = 3600000; // 1 hora (en milisegundos)
+  // Si tenemos configuración en el cache y no ha expirado
+  if (cachedConfig && cachedTimestamp && currentTime - cachedTimestamp < cacheExpirationTime) {
+    try { return JSON.parse(cachedConfig); 
+
+    }
+    catch {}// Usamos la configuración cacheada
+  }
+
+  // Si no hay cache válido, hacemos la llamada a la API
+  try {
+    const response = await service.obtenerUltimo(); // Suponiendo que esta es la llamada correcta
+    const config = response.data.data.attributes;
+
+    // Guardamos la configuración en localStorage
+    localStorage.setItem('appConfig', JSON.stringify(config));
+    localStorage.setItem('configTimestamp', currentTime.toString());
+
+    return config;
+  } catch (error) {
+    console.error("Error al obtener la configuración:", error);
+    return null;
+  }
+};
 
 function App() {
+  const [config, setConfig] = useState(null);
+
+  // Cargar la configuración solo una vez cuando el componente se monta
+  useEffect(() => {
+    const loadConfig = async () => {
+      const config = await fetchConfig();
+      setConfig(config);
+
+      // Si la configuración se obtiene correctamente, actualizamos las variables CSS
+      if (config) {
+        document.documentElement.style.setProperty('--color-principal', config.main_link_color);
+        document.documentElement.style.setProperty('--color-principal-background', config.body_background);
+      }
+    };
+
+
+    loadConfig();
+  }, []);
+
+
+
   // Verificar si ya existe un UUID en el localStorage
   let userIdentifier = localStorage.getItem('userIdentifier');
 
@@ -52,6 +107,8 @@ function App() {
   };
   return (
     <>
+      {!config ? <Splash /> : null}
+
       <CookieConsent onConsent={handleConsent} />
       <BrowserRouter basename="/web">
         <Routes>
@@ -72,7 +129,7 @@ function App() {
           <Route path="/atractivo" element={<AtractivoScreen />} />
           <Route path="/atractivos" element={<AtractivosScreen />} />
           <Route path="/atractivos/:id" element={<AtractivosScreen />} />
-          <Route path="/gastronomias" element={<GastronomiasScreen />} />
+          <Route path="/gastronomia" element={<GastronomiasScreen />} />
           <Route path="/gastronomia/:id" element={<GastronomiaScreen />} />
           <Route path="/comercios" element={<ComerciosScreen />} />
           <Route path="/comercios/:id" element={<ComercioScreen />} />
@@ -84,7 +141,7 @@ function App() {
           <Route path="/puntointeres/:id" element={<PuntoInteresScreen />} />
           <Route path="/puntointeres" element={<PuntoInteresScreen />} />
           <Route path="/puntosinteres/:id" element={<PuntosInteres />} />
-          <Route path="/puntosinteres" element={<PuntosInteres />} />          
+          <Route path="/puntosinteres" element={<PuntosInteres />} />
           <Route path="/circuito/:id/:fechadesde/:fechahasta" element={<CircuitoScreen />} />
           <Route path="/circuito/:id" element={<CircuitoScreen />} />
           <Route path="/circuitos" element={<CircuitosScreen />} />
@@ -103,7 +160,8 @@ function App() {
           <Route path="/visitados" element={<VisitadoScreen />} />
 
         </Routes>
-      </BrowserRouter></>
+      </BrowserRouter>      <ScrollToTopButton />
+    </>
   );
 }
 

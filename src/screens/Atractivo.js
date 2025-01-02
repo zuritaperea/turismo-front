@@ -23,6 +23,10 @@ function AtractivoScreen() {
   const [atractivos, setAtractivos] = useState([]);
 
   const [loadingAtractivos, setLoadingAtractivos] = useState(true);
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [id])
+
 
   useEffect(() => {
     const obtenerAtractivo = async () => {

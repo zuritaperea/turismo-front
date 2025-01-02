@@ -13,6 +13,10 @@ const DAYS_OF_WEEK = {
 
 // Función para convertir el string de horarios a un formato legible
 const formatOpeningHours = (openingHoursText) => {
+  if (!openingHoursText) {
+    return []; // Si el texto de horarios es nulo o vacío, devolver un array vacío
+  }
+
   const days = openingHoursText.split(', ').map(item => {
     const [dayShort, times] = item.split(' ');
     const day = DAYS_OF_WEEK[dayShort] || dayShort;
@@ -37,16 +41,26 @@ const formatOpeningHours = (openingHoursText) => {
 };
 
 const OpeningHours = ({ openingHoursText }) => {
+  // Si no hay horarios, mostrar un mensaje adecuado
+  if (!openingHoursText) {
+    return <p>No hay horarios disponibles.</p>;
+  }
+
   const formattedOpeningHours = formatOpeningHours(openingHoursText);
 
   return (
     <div>
-      <ul className="descripcion list-disc ml-10">
-        {formattedOpeningHours.map((item, index) => (
-          <li key={index}>
-            <strong>{item.day}:</strong> {item.times}
-          </li>
-        ))}
+      <h3>Horarios de Apertura:</h3>
+      <ul>
+        {formattedOpeningHours.length === 0 ? (
+          <li>No hay horarios disponibles.</li>
+        ) : (
+          formattedOpeningHours.map((item, index) => (
+            <li key={index}>
+              <strong>{item.day}:</strong> {item.times}
+            </li>
+          ))
+        )}
       </ul>
     </div>
   );

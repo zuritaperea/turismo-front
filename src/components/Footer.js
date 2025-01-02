@@ -6,14 +6,14 @@ import in_button from '../assets/img/in-button.png';
 export default function Footer() {
   return (
     <>
-      <footer className="invisible md:visible">
-        <div id="menu-footer" className="bg-white py-5 px-10">
+      <footer>
+        <div id="menu-footer" className="bg-white py-5 sm:px-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 ">
             <div className="md:col-span-1 mx-10">
-              <img className="logo mx-10 " src={logo} />
-                <p className="descripcion mx-10 mt-4">Este es un parrafo descriptivo marketinero de cada uno de los destinos.</p>
+              <img className="logo sm:mx-10 " src={logo} />
+                <p className="descripcion sm:mx-10 mt-4">Este es un parrafo descriptivo marketinero de cada uno de los destinos.</p>
             </div>
-            <div className="md:col-span-2">
+            <div className="md:col-span-2 hidden sm:block ">
 
               <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
                 <div>
@@ -71,7 +71,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="footer-bottom py-5 px-10 flex justify-between">
-          <span className="py-5 px-10 mx-10">© 2024 Instituto Ciudades del Futuro. All rights reserved.</span>
+          <span className="py-5 sm:px-10 sm:mx-10">© 2024 Instituto Ciudades del Futuro. All rights reserved.</span>
           <div className="flex py-5 px-10 mx-10">
             <img src={x_button} className="mr-2 object-contain" />
             <img src={fb_button} className="mr-2 object-contain" />

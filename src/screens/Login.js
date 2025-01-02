@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Form from '../components/Form';
 import Button from '../components/Button';
@@ -39,20 +39,21 @@ const Login = () => {
       setAlerts(functions.errorMaker(response.data));
     }
   }
+
   const usuarioCompleto = () => {
     return localStorage.getItem('datosCompletados') === 'true';
   };
 
   return (
     <>
-      <Container className='md:w-6/12 w-full	'>
+      <Container className='md:w-6/12 w-full'>
         <Row className="m-b-2 text-center sm:mt-10 mt-6">
           <Col md={{ span: 6, offset: 3 }} >
             <div>
               <img className="logo m-auto" src={logo} alt="Logo" />
             </div>
-            <h1 className="text-2xl  font-bold">Ingresá a tu cuenta</h1>
-            <h4 className="text-sm	">¡Hola de nuevo! Completá tus datos para ingresar</h4>
+            <h1 className="text-2xl font-bold">Ingresá a tu cuenta</h1>
+            <h4 className="text-sm">¡Hola de nuevo! Completá tus datos para ingresar</h4>
           </Col>
         </Row>
 
@@ -68,14 +69,10 @@ const Login = () => {
             <Form noValidate onSubmit={handleSubmit(onSubmit)} className="mt-6">
               <Row>
                 <Col md={10} className="form-group item-form">
-                  <Form.Label htmlFor="usuario">Email</Form.Label>
+                  <Form.Label htmlFor="username">Email</Form.Label>
                   <Form.Control
                     type="text"
-                    name="username"
                     id="username"
-                    required
-                    aria-required="true"
-                    autoComplete="username"
                     placeholder="Colocá aquí tu email"
                     {...register("username", { required: 'Ingrese su email' })}
                   />
@@ -89,24 +86,22 @@ const Login = () => {
                   <Form.Label htmlFor="password">Contraseña</Form.Label>
                   <Form.Control
                     type="password"
-                    name="password"
                     id="password"
-                    autoComplete="current-password"
-                    {...register("password", { required: 'Ingrese su clave' })}
+                    placeholder="Colocá aquí tu contraseña"
+                    {...register("password", { required: 'Ingrese su contraseña' })}
                   />
                   {errors.password && (
                     <Form.Text className="error">Ingresá tu contraseña</Form.Text>
                   )}
                 </Col>
               </Row>
-              <Row >
+              <Row>
                 <Col xs={12}>
                   <p>
-                    <a className="color-principal text-sm	" href="/recuperar-clave">Olvidé contraseña</a>
+                    <a className="color-principal text-sm" href="/recuperar-clave">Olvidé contraseña</a>
                   </p>
                 </Col>
                 <Col sm={3}>
-
                   <Button variant="primary" className="w-full bg-principal mt-3">
                     Ingresar
                   </Button>
@@ -114,10 +109,11 @@ const Login = () => {
               </Row>
             </Form>
 
+
             <Row>
               <Col xs={12}>
-                <p className='text-sm text-center mt-5'>
-                  ¿Aún no tienes una cuenta?  <a href="/registro" className='color-principal text-sm	'>¡Créala ahora!</a>
+                <p className="text-sm text-center mt-5">
+                  ¿Aún no tienes una cuenta?  <Link to="/registro" className="color-principal text-sm">¡Créala ahora!</Link>
                 </p>
               </Col>
             </Row>

@@ -1,4 +1,3 @@
-// Form.js
 import React, { useState } from 'react';
 
 // Definir el componente Form para envolver el formulario
@@ -32,7 +31,6 @@ Form.Label = ({ children, htmlFor, className = '' }) => (
   </label>
 );
 
-
 // Definir Form.Control como los campos de entrada (input, textarea, etc.)
 Form.Control = React.forwardRef(({
   type,
@@ -50,8 +48,10 @@ Form.Control = React.forwardRef(({
   ...props
 }, ref) => {
 
-  // Determina el tipo de elemento a renderizar según `as`
-  const Element = as;
+  const safeValue = value ?? '';  // Si el valor es null o undefined, asigna un string vacío
+
+  const Element = as;  // Determina el tipo de campo (input, textarea, etc.)
+
   // Determinar las clases de tamaño según el prop `size` y las clases de Tailwind
   let sizeClass = '';
   if (size === 'sm') {
@@ -61,12 +61,19 @@ Form.Control = React.forwardRef(({
   } else {
     sizeClass = 'text-base py-2';  // Tamaño por defecto (normal)
   }
+
+  const handleChange = (e) => {
+    if (onChange) {
+      onChange(e);  // Llamar al onChange si se pasa
+    }
+  };
+
   return (
     <Element
-      ref={ref}  // Pasar la referencia al elemento
+      ref={ref}  // Asegúrate de pasar la referencia al campo de formulario
       type={as === 'input' ? type : undefined} // Solo el tipo si el elemento es input
-      value={value ?? ''}  // Asegúrate de que el valor nunca sea undefined o null
-      onChange={onChange}
+      value={safeValue}  // Asegúrate de que el valor nunca sea undefined o null
+      onChange={handleChange}  // Asegurarse de que onChange siempre se llame
       placeholder={placeholder}
       required={required}  // Propagar el prop required
       disabled={disabled}  // Propagar el prop disabled
@@ -79,7 +86,6 @@ Form.Control = React.forwardRef(({
     />
   );
 });
-
 
 
 // Agregar soporte para <Form.Select>
@@ -99,6 +105,7 @@ Form.Select = React.forwardRef(({ value, onChange, options = [], className = '',
   </select>
 ));
 
+// Agregar soporte para <Form.Check>
 Form.Check = React.forwardRef(
   (
     {
@@ -120,24 +127,19 @@ Form.Check = React.forwardRef(
     const [checked, setChecked] = useState(false);
     const [touched, setTouched] = useState(false);  // Para saber si el usuario interactuó con el campo
 
-    // Clases base para el checkbox/radio
     let inputClassName = 'h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded';
 
-    // Añadir clases para validación
     if (isValid) inputClassName += ' border-green-500';
     if (isInvalid) inputClassName += ' border-red-500';
 
-    // Configurar el layout
     const layoutClass = inline ? 'inline-flex items-center' : 'flex items-center';
     const reverseClass = reverse ? 'flex-row-reverse' : '';
 
-    // Función que maneja el cambio de estado
     const handleChange = (e) => {
       setChecked(e.target.checked);
       setTouched(true); // Marcar como tocado cuando el usuario interactúa
     };
 
-    // Determinar si se debe mostrar el feedback
     const showFeedback = touched && required && !checked && feedbackType === 'invalid';
 
     return (
@@ -155,8 +157,6 @@ Form.Check = React.forwardRef(
           className={`${inputClassName} ${disabled ? 'cursor-not-allowed opacity-50' : ''}`}
         />
         {label && <label htmlFor={id} className="ml-2">{label}</label>}
-
-        {/* Mostrar feedback solo si el campo no está marcado y es inválido */}
         {showFeedback && (
           <div className={`mt-2 text-sm text-red-500`}>
             {feedback || 'Campo requerido'}

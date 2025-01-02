@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import Modal from './Modal';
+import Button from './Button';
 function CookieConsent({ onConsent }) {
   const [consentAccepted, setConsentAccepted] = useState(localStorage.getItem('consentAccepted'));
   const [showModal, setShowModal] = useState(true);
