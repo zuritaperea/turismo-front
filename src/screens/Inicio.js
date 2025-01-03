@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {  faHistory } from '@fortawesome/free-solid-svg-icons'
+import { faHistory } from '@fortawesome/free-solid-svg-icons'
 import Row from "../components/Row";
 import Spinner from "../components/Spinner";
 import Col from "../components/Col";
@@ -26,6 +26,11 @@ import Carousel from "../components/Carousel";
 import AttractionsSection from "../components/AttractionsSection";
 import EventsSection from "../components/EventsSection";
 import Splash from "../components/Splash";
+import marketPlaceLogo from "../assets/img/marketplace.png"
+import pasaporteLogo from "../assets/img/pasaporte.png"
+import planificadorLogo from "../assets/img/planificador.png"
+
+
 export default function Inicio() {
   const [loading, setLoading] = useState(false);
 
@@ -68,8 +73,8 @@ export default function Inicio() {
             favorito: obj.attributes.favorite,
             coordinates: obj.attributes.point,
             tourist_type: obj.attributes.tourist_type,
-    
-            type:obj.type
+
+            type: obj.type
           };
         });
         setEventos(destinos);
@@ -94,8 +99,8 @@ export default function Inicio() {
             favorito: obj.attributes.favorite,
             coordinates: obj.attributes.point,
             tourist_type: obj.attributes.tourist_type,
-    
-            type:obj.type
+
+            type: obj.type
           };
         });
         setNaturalAttractions(atracciones);
@@ -138,37 +143,42 @@ export default function Inicio() {
 
       <SearchComponent onSearch={handleSearch} />
       <SeccionesSlider secciones={secciones} />
+      <div className="flex justify-center flex-wrap">
+        <img src={marketPlaceLogo} className="m-2" />
+        <img src={pasaporteLogo} className="m-2" />
+        <img src={planificadorLogo} className="m-2" />
+      </div>
       <hr />
       {loadingAtractivos ? (
-            <Spinner animation="border" role="status" />
-          ) : (
-            <AttractionsSection  data={naturalAttractions.sort(() => Math.random() - Math.random()).slice(0, 6)} />
-          )}
+        <Spinner animation="border" role="status" />
+      ) : (
+        <AttractionsSection data={naturalAttractions.sort(() => Math.random() - Math.random()).slice(0, 6)} />
+      )}
 
 
       <hr />
       {loadingEventos ? (
-            <Spinner animation="border" role="status" />
+        <Spinner animation="border" role="status" />
+      ) : (
+        <EventsSection data={eventos.sort(() => Math.random() - Math.random()).slice(0, 6)} />
+      )}
+
+
+
+
+      <Row className="justify-content-md-center p-2">
+        <Col md="12">
+          {!personaDenominacion ? (
+            <Alert variant="light">
+              ¿Sabías que al <Alert.Link href="/login">iniciar sesión </Alert.Link>
+              puedes guardar tus destinos favoritos y recibir recomendaciones personalizadas?</Alert>
           ) : (
-            <EventsSection  data={eventos.sort(() => Math.random() - Math.random()).slice(0, 6)} />
-          )}
-
-
-
-
-        <Row className="justify-content-md-center p-2">
-          <Col md="12">
-            {!personaDenominacion ? (
-              <Alert variant="light">
-                ¿Sabías que al <Alert.Link href="/login">iniciar sesión </Alert.Link>
-                puedes guardar tus destinos favoritos y recibir recomendaciones personalizadas?</Alert>
-            ) : (
-              <Alert variant="light">
-                Para mejorar los resultados de tus búsquedas, <Alert.Link href="/perfil">completá  </Alert.Link>
-                algunos datos que definan <Alert.Link href="/perfil">tu perfil de turista</Alert.Link>
-              </Alert>)}
-            </Col>
-        </Row>
+            <Alert variant="light">
+              Para mejorar los resultados de tus búsquedas, <Alert.Link href="/perfil">completá  </Alert.Link>
+              algunos datos que definan <Alert.Link href="/perfil">tu perfil de turista</Alert.Link>
+            </Alert>)}
+        </Col>
+      </Row>
 
       <Footer />
     </>

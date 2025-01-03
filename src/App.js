@@ -49,8 +49,8 @@ function App() {
       console.log('config: ', config)
       // Si la configuración se obtiene correctamente, actualizamos las variables CSS
       if (config) {
-        document.documentElement.style.setProperty('--color-principal', config.main_link_color);
-        document.documentElement.style.setProperty('--color-principal-background', config.body_background);
+        document.documentElement.style.setProperty('--color-principal',`${config.main_link_color} !important`);
+        document.documentElement.style.setProperty('--color-principal-background', `${config.body_background} !important`);
         document.title = config.title
       }
     };
