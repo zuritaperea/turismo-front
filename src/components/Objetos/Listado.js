@@ -4,7 +4,7 @@ import Card from "../Card";
 
 const Listado = ({ objetosFiltrados, target }) => {
   return (
-    <div className="flex flex-wrap">
+    <div className="flex flex-wrap  justify-center">
       {objetosFiltrados.map((item) => (
         <div style={{ margin: "0.8px" }}>
           <Link key={item.id} to={`/${target.toLowerCase()}/${item.id}`}>
