@@ -1,14 +1,15 @@
 import React, { forwardRef, useState, useRef } from 'react'; // Use forwardRef
 
 // Definir el componente Form para envolver el formulario
-const Form = forwardRef(({ children, className = '', onSubmit, noValidate = false, method = "post" }, ref) => (
+const Form = forwardRef(({ children, className = '', onSubmit, method = "post",  ...props
+}, ref) => (
   <form
     className={`space-y-4 ${className}`}
     onSubmit={onSubmit}
-    noValidate={noValidate} // Deshabilitar la validación del navegador
     method={method}
     ref={ref} // Pass the ref to the form itself
-  >
+    {...props} 
+    >
     {children}
   </form>
 ));
@@ -36,23 +37,15 @@ Form.Label = ({ children, htmlFor, className = '' }) => (
 // Definir Form.Control como los campos de entrada (input, textarea, etc.)
 Form.Control = React.forwardRef(({
   type,
-  value,
-  onChange,
   className = '',
-  placeholder,
-  required,
   size,
   as = 'input',
-  disabled,
-  readOnly,
-  plaintext,
-  rows,
   ...props
 }, ref) => {
-  const inputRef = useRef(null); // Crea una referencia mutable
-  React.useImperativeHandle(ref, () => inputRef.current); // Conexión CRUCIAL
 
-  const safeValue = value ?? '';  // Si el valor es null o undefined, asigna un string vacío
+  console.log()
+
+  //const safeValue = value ?? '';  // Si el valor es null o undefined, asigna un string vacío
 
   const Element = as;  // Determina el tipo de campo (input, textarea, etc.)
 
@@ -66,27 +59,16 @@ Form.Control = React.forwardRef(({
     sizeClass = 'text-base py-2';  // Tamaño por defecto (normal)
   }
 
-  const handleChange = (e) => {
-    if (onChange) {
-      onChange(e);  // Llamar al onChange si se pasa
-    }
-  };
+
 
   return (
     <Element
-    ref={inputRef} // Asigna la referencia al elemento de entrada
+    ref={ref} // Asigna la referencia al elemento de entrada
     type={as === 'input' ? type : undefined} // Solo el tipo si el elemento es input
-      value={safeValue}  // Asegúrate de que el valor nunca sea undefined o null
-      onChange={handleChange}  // Asegurarse de que onChange siempre se llame
-      placeholder={placeholder}
-      required={required}  // Propagar el prop required
-      disabled={disabled}  // Propagar el prop disabled
-      readOnly={readOnly}  // Propagar el prop readOnly
-      plaintext={plaintext}  // Propagar el prop plaintext (solo si as es 'input')
-      rows={rows}  // Propiedad rows para el textarea
-      size={size}  // Propiedad de tamaño
+    //  value={safeValue}  // Asegúrate de que el valor nunca sea undefined o null
       className={`mt-1 block w-full px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 ${sizeClass} ${className}`}  // Clases de Tailwind con tamaño
-      {...props}  // Pasar cualquier otra propiedad adicional
+     // Pasar cualquier otra propiedad adicional
+     {...props} 
     />
   );
 });

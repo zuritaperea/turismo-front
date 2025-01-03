@@ -1,4 +1,4 @@
-import React, { useState , useRef} from 'react';
+import React, { useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Form from '../components/Form';
@@ -23,35 +23,25 @@ const Login = () => {
 
   const onSubmit = data => {
     login(data.username, data.password);
+
+    console.log(data);
   }
+
 
   const login = async (username, password) => {
     setAlerts([]);
-    try {
-      const response = await authService.login(username, password);
-      if (response === 'success') { // Verifica la condición de éxito
-        // ... (navegación)
+    const response = await authService.login(username, password);
+    if (response === 'success') {
+      if (usuarioCompleto()) {
+        navigate('/');
       } else {
-        console.error("Respuesta inesperada:", response); // Log completo para depuración
-        setAlerts([{ message: "Respuesta inesperada del servidor." }]);
+        navigate('/datos-adicionales');
       }
-    } catch (error) { // Manejo de errores de red o del API
-      console.error("Error en el login:", error);
-      if (error.response && error.response.data) {
-        if (error.response.data.message) {
-          setAlerts([{ message: error.response.data.message }]);
-        } else if (Array.isArray(error.response.data.errors)) { // Manejo de array de errores
-          setAlerts(error.response.data.errors.map(err => ({ message: err.message })));
-        } else {
-          setAlerts([{ message: JSON.stringify(error.response.data) }]); // Mostrar el error en string si no tiene formato conocido
-        }
-      } else if (error.message) {
-        setAlerts([{ message: error.message }]);
-      } else {
-        setAlerts([{ message: "Error desconocido al iniciar sesión." }]);
-      }
+    } else {
+      console.log("error :", response.data);
+      setAlerts(functions.errorMaker(response.data));
     }
-  };
+  }
 
   const usuarioCompleto = () => {
     return localStorage.getItem('datosCompletados') === 'true';
@@ -63,7 +53,7 @@ const Login = () => {
         <Row className="m-b-2 text-center sm:mt-10 mt-6">
           <Col md={{ span: 6, offset: 3 }} >
             <div>
-              <img className="logo m-auto" src={logo} alt="Logo" />
+             <img className="logo m-auto" src={logo} alt="Logo" /> 
             </div>
             <h1 className="text-2xl font-bold">Ingresá a tu cuenta</h1>
             <h4 className="text-sm">¡Hola de nuevo! Completá tus datos para ingresar</h4>
@@ -79,7 +69,7 @@ const Login = () => {
               </Alert>
             )}
 
-<Form ref={formRef} onSubmit={handleSubmit(onSubmit)} className="mt-6">
+            <Form ref={formRef} onSubmit={handleSubmit(onSubmit)} className="mt-6">
               <Row>
                 <Col md={10} className="form-group item-form">
                   <Form.Label htmlFor="username">Email</Form.Label>

@@ -1,10 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 // Componente de enlace dentro de la alerta
 const AlertLink = ({ children, href }) => (
-  <a href={href} className="text-blue-600 hover:text-blue-800">
+  <Link to={href} className="text-blue-600 hover:text-blue-800">
     {children}
-  </a>
+  </Link>
 );
 
 const Alert = ({ variant = 'info', children, onClose }) => {

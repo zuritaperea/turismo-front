@@ -147,7 +147,7 @@ export default function Inicio() {
 
 
       <hr />
-      {loadingAtractivos ? (
+      {loadingEventos ? (
             <Spinner animation="border" role="status" />
           ) : (
             <EventsSection  data={eventos.sort(() => Math.random() - Math.random()).slice(0, 6)} />
