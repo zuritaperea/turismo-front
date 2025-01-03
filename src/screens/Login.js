@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useRef} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Form from '../components/Form';
@@ -17,7 +17,7 @@ import logo from '../assets/img/logomark.png';
 
 const Login = () => {
   const [alerts, setAlerts] = useState([]);
-
+  const formRef = useRef();
   const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate();
 
@@ -27,18 +27,31 @@ const Login = () => {
 
   const login = async (username, password) => {
     setAlerts([]);
-    const response = await authService.login(username, password);
-    if (response === 'success') {
-      if (usuarioCompleto()) {
-        navigate('/');
+    try {
+      const response = await authService.login(username, password);
+      if (response === 'success') { // Verifica la condición de éxito
+        // ... (navegación)
       } else {
-        navigate('/datos-adicionales');
+        console.error("Respuesta inesperada:", response); // Log completo para depuración
+        setAlerts([{ message: "Respuesta inesperada del servidor." }]);
       }
-    } else {
-      console.log("error :", response.data);
-      setAlerts(functions.errorMaker(response.data));
+    } catch (error) { // Manejo de errores de red o del API
+      console.error("Error en el login:", error);
+      if (error.response && error.response.data) {
+        if (error.response.data.message) {
+          setAlerts([{ message: error.response.data.message }]);
+        } else if (Array.isArray(error.response.data.errors)) { // Manejo de array de errores
+          setAlerts(error.response.data.errors.map(err => ({ message: err.message })));
+        } else {
+          setAlerts([{ message: JSON.stringify(error.response.data) }]); // Mostrar el error en string si no tiene formato conocido
+        }
+      } else if (error.message) {
+        setAlerts([{ message: error.message }]);
+      } else {
+        setAlerts([{ message: "Error desconocido al iniciar sesión." }]);
+      }
     }
-  }
+  };
 
   const usuarioCompleto = () => {
     return localStorage.getItem('datosCompletados') === 'true';
@@ -66,7 +79,7 @@ const Login = () => {
               </Alert>
             )}
 
-            <Form noValidate onSubmit={handleSubmit(onSubmit)} className="mt-6">
+<Form ref={formRef} onSubmit={handleSubmit(onSubmit)} className="mt-6">
               <Row>
                 <Col md={10} className="form-group item-form">
                   <Form.Label htmlFor="username">Email</Form.Label>
@@ -74,8 +87,8 @@ const Login = () => {
                     type="text"
                     id="username"
                     placeholder="Colocá aquí tu email"
-                    {...register("username", { required: 'Ingrese su email' })}
-                  />
+                    {...register("username", { required: 'Ingrese su email' })} // Aquí NO se usa inputRef directamente
+                    />
                   {errors.username && (
                     <Form.Text className="error">Ingresá tu email</Form.Text>
                   )}
@@ -88,8 +101,8 @@ const Login = () => {
                     type="password"
                     id="password"
                     placeholder="Colocá aquí tu contraseña"
-                    {...register("password", { required: 'Ingrese su contraseña' })}
-                  />
+                    {...register("password", { required: 'Ingrese su contraseña' })} // Aquí NO se usa inputRef directamente
+                    />
                   {errors.password && (
                     <Form.Text className="error">Ingresá tu contraseña</Form.Text>
                   )}
@@ -98,7 +111,7 @@ const Login = () => {
               <Row>
                 <Col xs={12}>
                   <p>
-                    <a className="color-principal text-sm" href="/recuperar-clave">Olvidé contraseña</a>
+                    <Link className="color-principal text-sm" to="/recuperar-clave">Olvidé contraseña</Link>
                   </p>
                 </Col>
                 <Col sm={3}>

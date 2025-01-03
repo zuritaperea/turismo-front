@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+import React, { forwardRef, useState, useRef } from 'react'; // Use forwardRef
 
 // Definir el componente Form para envolver el formulario
-const Form = ({ children, className = '', onSubmit, noValidate = false, method = "post" }) => (
+const Form = forwardRef(({ children, className = '', onSubmit, noValidate = false, method = "post" }, ref) => (
   <form
     className={`space-y-4 ${className}`}
     onSubmit={onSubmit}
     noValidate={noValidate} // Deshabilitar la validación del navegador
     method={method}
+    ref={ref} // Pass the ref to the form itself
   >
     {children}
   </form>
-);
+));
+
 
 Form.Group = ({ children, className = '', as: Component = 'div', controlId, ...props }) => {
   return (
@@ -47,6 +49,8 @@ Form.Control = React.forwardRef(({
   rows,
   ...props
 }, ref) => {
+  const inputRef = useRef(null); // Crea una referencia mutable
+  React.useImperativeHandle(ref, () => inputRef.current); // Conexión CRUCIAL
 
   const safeValue = value ?? '';  // Si el valor es null o undefined, asigna un string vacío
 
@@ -70,8 +74,8 @@ Form.Control = React.forwardRef(({
 
   return (
     <Element
-      ref={ref}  // Asegúrate de pasar la referencia al campo de formulario
-      type={as === 'input' ? type : undefined} // Solo el tipo si el elemento es input
+    ref={inputRef} // Asigna la referencia al elemento de entrada
+    type={as === 'input' ? type : undefined} // Solo el tipo si el elemento es input
       value={safeValue}  // Asegúrate de que el valor nunca sea undefined o null
       onChange={handleChange}  // Asegurarse de que onChange siempre se llame
       placeholder={placeholder}
@@ -86,7 +90,6 @@ Form.Control = React.forwardRef(({
     />
   );
 });
-
 
 // Agregar soporte para <Form.Select>
 Form.Select = React.forwardRef(({ value, onChange, options = [], className = '', ...props }, ref) => (

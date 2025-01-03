@@ -42,12 +42,7 @@ z-index: 15;
 .logo {
   height: 48px;
 }
-.hidden{
-  transition: all  2s ease-in-out;
-  -moz-transition: all 2s ease-in-out;
-  -webkit-transition: all 2s ease-in-out;
-   display : none;
-}
+
 .categoria>div {
   width: 6rem;
   height: 5rem;

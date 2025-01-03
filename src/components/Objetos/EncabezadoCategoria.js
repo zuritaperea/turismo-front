@@ -6,32 +6,50 @@ export default function EncabezadoCategoria({ target, title }) {
   let epigrafe = "";
   let subtitulo = "";
 
-  if (target === 'Agencia') {
-    epigrafe = "epigrafeAgencia";
-  } else if (target === 'Alojamiento') {
+  
+switch (target) { // Usar switch es más legible para múltiples comparaciones
+  case 'Agencia':
+    epigrafe = "Agencias de Viajes"; // Más descriptivo
+    subtitulo = "Encontrá la agencia ideal para tu viaje";
+    break;
+  case 'Alojamiento':
     epigrafe = "Dónde dormir";
-    subtitulo = "Conocé donde hospedarte";
-  } else if (target === 'Atractivo') {
+    subtitulo = "Conocé dónde hospedarte";
+    break;
+  case 'Atractivo':
     epigrafe = "Qué hacer";
     subtitulo = "Actividades de todos los tipos y para todos los públicos";
-  } else if (target === 'Circuito') {
-    epigrafe = "Qué hacer";
-    subtitulo = "Actividades de todos los tipos y para todos los públicos";
-  }
-  else if (target === 'Beneficio') {
-    epigrafe = "epigrafeBeneficios";
-  } else if (target === 'Comercio') {
-    epigrafe = "epigrafeComercios";
-  } else if (target === 'Evento') {
-    epigrafe = "Qué hacer";
-    subtitulo = 'Conocé los próximos eventos';
-  } else if (target === 'Experiencia') {
-    epigrafe = "epigrafeExperiencias";
-  } else if (target === 'Gastronomia') {
-    epigrafe = "epigrafeGastronomia";
-  } else if (target === 'Ruta') {
-    epigrafe = "epigrafeRuta";
-  }
+    break;
+  case 'Circuito':
+    epigrafe = "Circuitos Turísticos"; // Más descriptivo
+    subtitulo = "Descubre circuitos para explorar la región";
+    break;
+  case 'Comercio':
+    epigrafe = "Comercios Locales"; // Más descriptivo
+    subtitulo = "Explora la oferta comercial de la zona";
+    break;
+  case 'Evento':
+    epigrafe = "Eventos"; // Más conciso
+    subtitulo = "Conocé los próximos eventos";
+    break;
+  case 'Experiencia':
+    epigrafe = "Experiencias Únicas"; // Más atractivo
+    subtitulo = "Viví momentos inolvidables en tu viaje";
+    break;
+  case 'Gastronomia':
+    epigrafe = "Gastronomía Local"; // Más descriptivo
+    subtitulo = "Sabores que te encantarán";
+    break;
+  case 'Ruta':
+    epigrafe = "Rutas Turísticas"; // Más descriptivo
+    subtitulo = "Recorré caminos increíbles";
+    break;
+  default: // Manejo de casos no contemplados
+    console.warn(`Valor de 'target' no reconocido: ${target}`);
+    epigrafe = "Información"; // Valor por defecto
+    subtitulo = "Detalles sobre el destino";
+    break;
+}
 
   return (
     <div className="">

@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { Container, Form, Button, Alert, Row, Col, } from 'react-bootstrap';
+import Form from '../components/Form';
+import Button from '../components/Button';
+import Alert from '../components/Alert';
+import Row from '../components/Row';
+import Col from '../components/Col';
+import Container from '../components/Container';
+
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import registroService from "../axios/services/profile";
@@ -71,8 +77,9 @@ const Recupero = () => {
         <Row>
           <Col md={{ span: 6, offset: 3 }}>
             <Row className="destination-box mb-2">
-              <h3>Recuperá tu contraseña</h3>
-              <hr className="mb-2"></hr>
+              <h3 className='text-2xl'>Recuperá tu contraseña</h3>
+              <div></div>
+              <hr className="block"></hr>
               {error && <Alert variant="danger">{error}</Alert>}
               <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="email">
