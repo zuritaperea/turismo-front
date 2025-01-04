@@ -156,16 +156,16 @@ function ItemScreen({ tipoObjeto }) {
               Certificaciones y premios
             </div>
             <div className="descripcion">
-              {atractivo?.attributes?.certifications}          </div>
+              {item?.attributes?.certifications}          </div>
             <div className="descripcion">
-              {atractivo?.attributes?.certifications}          </div>
+              {item?.attributes?.certifications}          </div>
           </div>
           <div className="text-xl font-bold text-slate-900 tracking-tight dark:text-slate-200 my-4">
             Información de la empresa
           </div>
           <ul className="descripcion list-disc ml-10">
-            <li>Nombre legal: Razón social SRL</li>
-            <li>ID: 30253458769</li>
+            <li>{item?.attributes?.legal_name}   </li>
+            <li>ID: {item?.attributes?.identifier_organization}   </li>
           </ul>
           <div className="botones float-right sm:hidden">
             <button className="color-principal bg-white shadow-sm px-10 py-3 font-semibold rounded-lg mr-2">
