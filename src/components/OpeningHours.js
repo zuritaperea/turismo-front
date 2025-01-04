@@ -22,7 +22,7 @@ const formatOpeningHours = (openingHoursText) => {
     const day = DAYS_OF_WEEK[dayShort] || dayShort;
     
     let timesFormatted = times;
-    if (times.includes(',')) {
+    if (times?.includes(',')) {
       // Si hay múltiples rangos de tiempo en el día
       timesFormatted = times.split(',').map(time => {
         const [start, end] = time.split('-');
