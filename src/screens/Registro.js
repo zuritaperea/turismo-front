@@ -4,7 +4,6 @@ import Container from "../components/Container"
 import Button from "../components/Button";
 import Row from "../components/Row";
 import Col from "../components/Col";
-import Accordion from '../components/Accordion';
 import Alert from "../components/Alert";
 import Spinner from "../components/Spinner"
 import { useNavigate } from 'react-router-dom';
@@ -190,10 +189,9 @@ const Registro = () => {
   return (
     <>
       <Header />
-      <Container className="boxed p-2">
-
-        <Row>
-          <Col md={{ span: 6, offset: 3 }}>
+      <Container className='md:w-6/12 w-full'>
+        <Row className="m-2">
+          <Col>
             <Row className="destination-box mb-2">
               <h2 class="text-sm font-semibold mt-2 color-principal">
                 Creá tu cuenta</h2>

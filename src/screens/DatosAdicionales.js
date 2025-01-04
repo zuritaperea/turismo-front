@@ -63,7 +63,7 @@ function DatosAdicionales() {
     }
   };
 
-  
+
   useEffect(() => {
 
     const obtenerProfile = () => {
@@ -104,18 +104,20 @@ function DatosAdicionales() {
 
   return (
     <>
-      <Header />     <Container className="boxed p-2">
-
-        <Row>
-          <Col md={{ span: 6, offset: 3 }}>
+      <Header />          <Container className='md:w-6/12 w-full'>
+        <Row className="m-2">
+          <Col>
             <Row className="destination-box mb-2">
-              <h2>Completar datos adicionales</h2>
+              <h2 class="text-sm font-semibold mt-2 color-principal">
+                  Completar datos adicionales</h2>
+              </Row>
+              <Row className="destination-box mb-2">
+
+              
               <Form onSubmit={handleSubmit}>
                 {/* Campos para los datos adicionales */}
-                <Accordion defaultActiveKey="0" alwaysOpen>
-                  <Accordion.Item eventKey="0">
-                    <Accordion.Header>Datos Personales</Accordion.Header>
-                    <Accordion.Body>
+                <h1 class="py-2 text-4xl font-semibold text-slate-900 tracking-tight dark:text-slate-200">
+                  Datos Personales</h1>
                 <Row>
                   <Form.Group as={Col} md="4" controlId="tipoDocumento">
                     <Form.Label>Tipo de Documento</Form.Label>
@@ -173,12 +175,9 @@ function DatosAdicionales() {
                   />
                 </Form.Group>
 
-                </Accordion.Body>
-                  </Accordion.Item>
 
-                  <Accordion.Item eventKey="1">
-                    <Accordion.Header>Domicilio</Accordion.Header>
-                    <Accordion.Body>
+                <h1 class="py-2 text-4xl font-semibold text-slate-900 tracking-tight dark:text-slate-200">
+                  Domicilio</h1>
                 <Row>
                   <Form.Group as={Col} md="9" controlId="calle">
                     <Form.Label>Calle</Form.Label>
@@ -244,25 +243,23 @@ function DatosAdicionales() {
                     ))}
                   </Form.Select>
                 </Form.Group>
-                </Accordion.Body>
-                  </Accordion.Item>
-                </Accordion>
-                <Row><Col>
-                  <div className="d-grid gap-2">
-                    <Button variant="primary" type="submit" className="mt-3" disabled={registroExitoso}>
-                      Actualizar
-                    </Button></div></Col>
-                  <Col>
-                    <div className="d-grid gap-2">
-                      <Button variant="secondary" href="/" className="mt-3">
-                        Volver
-                      </Button></div>
-                  </Col></Row>
-              </Form>
-              {mensaje && <Alert variant="success">{mensaje}</Alert>}
-              {error && <Alert variant="danger">{error}</Alert>}
+              
+          <Row><Col>
+            <div className="d-grid gap-2">
+              <Button variant="primary" type="submit" className="mt-3" disabled={registroExitoso}>
+                Actualizar
+              </Button></div></Col>
+            <Col>
+              <div className="d-grid gap-2">
+                <Button variant="secondary" href="/" className="mt-3">
+                  Volver
+                </Button></div>
+            </Col></Row>
+        </Form>
+        {mensaje && <Alert variant="success">{mensaje}</Alert>}
+        {error && <Alert variant="danger">{error}</Alert>}
 
-            </Row></Col></Row></Container>    <Footer />
+      </Row></Col ></Row ></Container > <Footer />
     </>
   );
 }

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark, faUser, faSignOutAlt, faBars } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import logo from '../assets/img/logomark.png';
-import fetchConfig from "../extras/config";
+import { ConfigContext } from '../extras/ConfigContext'; // Importa el contexto
 
 export default function Header() {
   const [personaDenominacion, setPersonaDenominacion] = useState(null);
@@ -12,6 +12,7 @@ export default function Header() {
   const location = useLocation();
   const [headerLogo, setHeaderLogo] = useState(logo); // Estado para el logo
   const [headerTitle, setHeaderTitle] = useState('Sistema de Turismo'); // Estado para el título
+  const config = useContext(ConfigContext); // Usa el contexto para acceder a la configuración
 
 
   const toggleSidebar = () => {
@@ -37,16 +38,11 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-    const getConfig = async () => {
-      const fetchedConfig = await fetchConfig();
-      if (fetchedConfig) {
-        setHeaderLogo(fetchedConfig.logo || logo); // Actualizar el estado del logo
-        setHeaderTitle(fetchedConfig.title || 'Sistema de Turismo'); // Actualizar el estado del título
-      }
-    };
-
-    getConfig();
-  }, []);
+    if (config) { // Verifica que config no sea null
+      setHeaderLogo(config.logo || logo);
+      setHeaderTitle(config.title || 'Sistema de Turismo');
+    }
+  }, [config]); // El useEffect se ejecuta cada vez que config cambia
 
 
 
@@ -78,7 +74,12 @@ export default function Header() {
         </div>
       </header>
 
-      <div className={`fixed z-30	left-0 top-0 h-full w-64 bg-white shadow-xl transition-transform transform ${sidebarVisible ? 'translate-x-0' : '-translate-x-full'} duration-300`}>
+      <div
+        className={`fixed z-30 left-0 top-0 h-full w-64 bg-white shadow-xl transition-transform transform duration-300 ${sidebarVisible
+          ? 'translate-x-0 opacity-100 pointer-events-auto'
+          : '-translate-x-full opacity-0 pointer-events-none'
+          }`}
+      >
         <div className="flex flex-row h-full">
           <div className="h-full w-full flex-col">
             <div className="mt-8 flex items-center justify-center">

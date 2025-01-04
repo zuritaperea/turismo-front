@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Form from '../components/Form';
@@ -7,19 +7,19 @@ import Container from '../components/Container';
 import Row from '../components/Row';
 import Col from '../components/Col';
 import Alert from "../components/Alert";
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import ErrorAlerts from '../components/ErrorAlerts/ErrorAlerts';
 import authService from '../axios/services/auth';
 import functions from '../extras/functions';
-import styles from './styles.module.css';
 import logo from '../assets/img/logomark.png';
+import { ConfigContext } from '../extras/ConfigContext'; // Importa el contexto
 
 const Login = () => {
   const [alerts, setAlerts] = useState([]);
   const formRef = useRef();
+  const [logoLogin, setLogoLogin] = useState(logo);
   const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate();
+  const config = useContext(ConfigContext); // Usa el contexto para acceder a la configuración
 
   const onSubmit = data => {
     login(data.username, data.password);
@@ -46,14 +46,19 @@ const Login = () => {
   const usuarioCompleto = () => {
     return localStorage.getItem('datosCompletados') === 'true';
   };
+  useEffect(() => {
+    if (config) { // Verifica que config no sea null
+      setLogoLogin(config.logo || logo);
+    }
+  }, [config]); // El useEffect se ejecuta cada vez que config cambia
 
   return (
     <>
       <Container className='md:w-6/12 w-full'>
         <Row className="m-b-2 text-center sm:mt-10 mt-6">
-          <Col md={{ span: 6, offset: 3 }} >
+          <Col>
             <div>
-             <img className="logo m-auto" src={logo} alt="Logo" /> 
+              <img className="logo m-auto" src={logoLogin} alt="Logo" />
             </div>
             <h1 className="text-2xl font-bold">Ingresá a tu cuenta</h1>
             <h4 className="text-sm">¡Hola de nuevo! Completá tus datos para ingresar</h4>
@@ -78,7 +83,7 @@ const Login = () => {
                     id="username"
                     placeholder="Colocá aquí tu email"
                     {...register("username", { required: 'Ingrese su email' })} // Aquí NO se usa inputRef directamente
-                    />
+                  />
                   {errors.username && (
                     <Form.Text className="error">Ingresá tu email</Form.Text>
                   )}
@@ -92,7 +97,7 @@ const Login = () => {
                     id="password"
                     placeholder="Colocá aquí tu contraseña"
                     {...register("password", { required: 'Ingrese su contraseña' })} // Aquí NO se usa inputRef directamente
-                    />
+                  />
                   {errors.password && (
                     <Form.Text className="error">Ingresá tu contraseña</Form.Text>
                   )}

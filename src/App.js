@@ -31,35 +31,15 @@ import VisitadoScreen from "./screens/Visitados";
 import CircuitosScreen from "./screens/Circuitos";
 import GastronomiasScreen from "./screens/Gastronomias";
 import GastronomiaScreen from "./screens/Gastronomia";
-import ComerciosScreen from "./screens/Comercio"
-import ComercioScreen from "./screens/Comercios"
+import ComerciosScreen from "./screens/Comercios"
+import ComercioScreen from "./screens/Comercio"
 import ScrollToTopButton from "./components/ScrollToTopButton";
 import Splash from "./components/Splash";
-import fetchConfig from "./extras/config";
+import { ConfigProvider } from './extras/ConfigContext';
 
 
 function App() {
-  const [config, setConfig] = useState(null);
-
-  // Cargar la configuración solo una vez cuando el componente se monta
-  useEffect(() => {
-    const loadConfig = async () => {
-      const config = await fetchConfig();
-      setConfig(config);
-      console.log('config: ', config)
-      // Si la configuración se obtiene correctamente, actualizamos las variables CSS
-      if (config) {
-        document.documentElement.style.setProperty('--color-principal', config.main_link_color);
-        document.documentElement.style.setProperty('--color-principal-background', config.body_background);
-        document.title = config.title
-      } 
-    };
-
-
-    loadConfig();
-  }, []);
-
-
+ 
 
   // Verificar si ya existe un UUID en el localStorage
   let userIdentifier = localStorage.getItem('userIdentifier');
@@ -77,9 +57,7 @@ function App() {
     }
   };
   return (
-    <>
-      {!config ? <Splash /> : null}
-
+    <ConfigProvider> <>
       <CookieConsent onConsent={handleConsent} />
       <BrowserRouter basename="/web">
         <Routes>
@@ -103,7 +81,7 @@ function App() {
           <Route path="/gastronomia" element={<GastronomiasScreen />} />
           <Route path="/gastronomia/:id" element={<GastronomiaScreen />} />
           <Route path="/comercios" element={<ComerciosScreen />} />
-          <Route path="/comercios/:id" element={<ComercioScreen />} />
+          <Route path="/comercio/:id" element={<ComercioScreen />} />
           <Route path="/atractivo/:id/:fechadesde/:fechahasta" element={<AtractivoScreen />} />
           <Route path="/atractivo/:id" element={<AtractivoScreen />} />
           <Route path="/alojamiento/:id" element={<AlojamientoScreen />} />
@@ -132,7 +110,7 @@ function App() {
 
         </Routes>
       </BrowserRouter>      <ScrollToTopButton />
-    </>
+    </></ConfigProvider>
   );
 }
 

@@ -1,16 +1,29 @@
-import { Container, Image, Navbar, Breadcrumb } from "react-bootstrap";
+import React, { useContext, useEffect, useState } from "react";
 import logo from '../assets/img/logomark.png'; 
 import x_button from '../assets/img/x-button.png';
 import fb_button from '../assets/img/fb-button.png'; 
 import in_button from '../assets/img/in-button.png'; 
+import { ConfigContext } from '../extras/ConfigContext'; // Importa el contexto
+
 export default function Footer() {
+  const [footerLogo, setFooterLogo] = useState(logo); // Estado para el logo
+  const config = useContext(ConfigContext); // Usa el contexto para acceder a la configuración
+
+  useEffect(() => {
+    if (config) { // Verifica que config no sea null
+      setFooterLogo(config.logo || logo);
+      //setfooterTitle(config.title || 'Sistema de Turismo');
+    }
+  }, [config]); // El useEffect se ejecuta cada vez que config cambia
+
+
   return (
     <>
       <footer>
         <div id="menu-footer" className="bg-white py-5 sm:px-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 ">
             <div className="md:col-span-1 mx-10">
-              <img className="logo sm:mx-10 " src={logo} />
+              <img className="logo sm:mx-10 " src={footerLogo} />
                 <p className="descripcion sm:mx-10 mt-4">Este es un parrafo descriptivo marketinero de cada uno de los destinos.</p>
             </div>
             <div className="hidden sm:block sm:col-span-2">

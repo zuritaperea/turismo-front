@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHistory } from '@fortawesome/free-solid-svg-icons'
 import Row from "../components/Row";
 import Spinner from "../components/Spinner";
 import Col from "../components/Col";
@@ -9,11 +7,8 @@ import Alert from "../components/Alert";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
-import Carrusel from "../components/Carrusel";
 import atractivoService from '../axios/services/atractivo';
 import eventoService from '../axios/services/evento';
-
 import SearchComponent from "../components/SearchComponent";
 import SeccionesSlider from "../components/SectionSlider";
 import ticketImg from '../assets/img/ticket-01.png';
@@ -144,9 +139,9 @@ export default function Inicio() {
       <SearchComponent onSearch={handleSearch} />
       <SeccionesSlider secciones={secciones} />
       <div className="flex justify-center flex-wrap">
-        <img src={marketPlaceLogo} className="m-2" />
-        <img src={pasaporteLogo} className="m-2" />
-        <img src={planificadorLogo} className="m-2" />
+        <img src={marketPlaceLogo} className="m-2 h-48 2xl:h-auto" loading="lazy" alt="Marketplace"/>
+        <img src={pasaporteLogo} className="m-2 h-48 2xl:h-auto" loading="lazy" alt="Pasaporte" />
+        <img src={planificadorLogo} className="m-2 h-48 2xl:h-auto" loading="lazy" alt="Planificador"/>
       </div>
       <hr />
       {loadingAtractivos ? (

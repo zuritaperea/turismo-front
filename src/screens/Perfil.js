@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Form, Button, Alert, Row, Col, Spinner, Modal, Accordion } from 'react-bootstrap';
+import Form from '../components/Form';
+import Container from "../components/Container"
+import Button from "../components/Button";
+import Row from "../components/Row";
+import Col from "../components/Col";
+import Alert from "../components/Alert";
+import Spinner from "../components/Spinner"
+import Modal from '../components/Modal';
+
 import { useNavigate } from 'react-router-dom';
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import registroService from "../axios/services/profile";
 import paises from "../extras/paises"
-import Jumbotron from '../components/Jumbotron';
 
 const Perfil = () => {
   const [mensaje, setMensaje] = useState(null);
@@ -289,22 +296,18 @@ const Perfil = () => {
   return (
     <>
       <Header />
-      <Jumbotron name="Mi Perfil" handleFavoriteClick={irAFavoritos}
-        handleVisitedClick={irAVisitados} />
-      <Container className="boxed p-2">
-
-        <Row>
-          <Col md={{ span: 6, offset: 3 }}>
+      <Container className='md:w-6/12 w-full'>
+        <Row className="m-2">
+          <Col>
             <Row className="destination-box mb-2">
-              <hr className="mb-2"></hr>
+
+             <hr className="mb-2"></hr>
               {error && <Alert variant="danger">{error}</Alert>}
               {perfilCargado && (
 
                 <Form onSubmit={handleSubmit}>
-                  <Accordion defaultActiveKey="0" alwaysOpen>
-                    <Accordion.Item eventKey="0">
-                      <Accordion.Header>Usuario</Accordion.Header>
-                      <Accordion.Body>
+                 <h1 class="py-2 text-4xl font-semibold text-slate-900 tracking-tight dark:text-slate-200">
+                  Usuario</h1>
                         <Form.Group controlId="email">
                           <Form.Label>Correo Electrónico *</Form.Label>
                           <Form.Control
@@ -358,12 +361,8 @@ const Perfil = () => {
                           label={mostrarContrasenia2 ? 'Ocultar la contraseña' : 'Mostrar la contraseña'}
                           onChange={toggleMostrarContrasenia2}
                         />
-                      </Accordion.Body>
-                    </Accordion.Item>
-
-                    <Accordion.Item eventKey="1">
-                      <Accordion.Header>Perfil de turista</Accordion.Header>
-                      <Accordion.Body>
+                      <h1 class="py-2 text-4xl font-semibold text-slate-900 tracking-tight dark:text-slate-200">
+                  Perfil de Turísta</h1>
                         <Form.Group controlId="fechaNacimiento">
                           <Form.Label>Fecha de Nacimiento</Form.Label>
                           <Form.Control
@@ -467,11 +466,9 @@ const Perfil = () => {
                               ))}
                             </Form.Select>
                           </Form.Group>)}
-                      </Accordion.Body>
-                    </Accordion.Item>
-                    <Accordion.Item eventKey="2">
-                      <Accordion.Header>Datos Personales</Accordion.Header>
-                      <Accordion.Body>
+       
+                          <h1 class="py-2 text-4xl font-semibold text-slate-900 tracking-tight dark:text-slate-200">
+                  Datos Personales</h1>
                         <Row>
                           <Form.Group as={Col} md="4" controlId="tipoDocumento">
                             <Form.Label>Tipo de Documento</Form.Label>
@@ -528,11 +525,8 @@ const Perfil = () => {
                             onChange={handleInputChange}
                           />
                         </Form.Group>
-                      </Accordion.Body>
-                    </Accordion.Item>
-                    <Accordion.Item eventKey="3">
-                      <Accordion.Header>Domicilio</Accordion.Header>
-                      <Accordion.Body>
+                        <h1 class="py-2 text-4xl font-semibold text-slate-900 tracking-tight dark:text-slate-200">
+                  Domicilio</h1>
 
                         <Form.Group controlId="codigoPostal">
                           <Form.Label>Código Postal</Form.Label>
@@ -599,9 +593,7 @@ const Perfil = () => {
                             ))}
                           </Form.Select>
                         </Form.Group>
-                      </Accordion.Body>
-                    </Accordion.Item>
-                  </Accordion>
+          
                   <Row><Col>
                     <div className="d-grid gap-2">
                       <Button variant="primary" type="submit" className="mt-3" disabled={registroExitoso}>
