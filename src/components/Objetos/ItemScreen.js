@@ -151,6 +151,30 @@ function ItemScreen({ tipoObjeto }) {
               </div>
             </div>
           </div>
+          <div className="bg-white border border-gray-200 rounded-xl pl-4 pb-4 mt-4">
+            <div className="text-2xl font-bold text-slate-900 tracking-tight dark:text-slate-200 my-4">
+              Certificaciones y premios
+            </div>
+            <div className="descripcion">
+              {atractivo?.attributes?.certifications}          </div>
+            <div className="descripcion">
+              {atractivo?.attributes?.certifications}          </div>
+          </div>
+          <div className="text-xl font-bold text-slate-900 tracking-tight dark:text-slate-200 my-4">
+            Información de la empresa
+          </div>
+          <ul className="descripcion list-disc ml-10">
+            <li>Nombre legal: Razón social SRL</li>
+            <li>ID: 30253458769</li>
+          </ul>
+          <div className="botones float-right sm:hidden">
+            <button className="color-principal bg-white shadow-sm px-10 py-3 font-semibold rounded-lg mr-2">
+              <i className="fa-regular fa-star"></i>
+              Calificar</button>
+            <button className="color-principal bg-white shadow-sm px-10 py-3 font-semibold rounded-lg">
+              <i className="fa-solid fa-arrow-up-right-from-square"></i>                        Compartir</button>
+
+          </div>
 
           <div className="py-4">
             <div className="text-3xl font-semibold text-slate-900 tracking-tight dark:text-slate-200 mb-4">
