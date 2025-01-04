@@ -13,31 +13,44 @@ const DAYS_OF_WEEK = {
 
 // Función para convertir el string de horarios a un formato legible
 const formatOpeningHours = (openingHoursText) => {
+  console.log('openingHoursText: ', openingHoursText);
+  
   if (!openingHoursText) {
     return []; // Si el texto de horarios es nulo o vacío, devolver un array vacío
   }
 
-  const days = openingHoursText.split(', ').map(item => {
-    const [dayShort, times] = item.split(' ');
-    const day = DAYS_OF_WEEK[dayShort] || dayShort;
-    
-    let timesFormatted = times;
-    if (times?.includes(',')) {
-      // Si hay múltiples rangos de tiempo en el día
-      timesFormatted = times.split(',').map(time => {
+  try {
+    // Dividir la cadena de texto por comas y procesar cada grupo de días
+    const days = openingHoursText.split(', ').map(item => {
+      const parts = item.split(' ');
+
+      // Si no hay horas en esta parte (es decir, son solo los días de la semana)
+      if (parts.length === 1) {
+        // Estos días están abiertos todo el día
+        const day = DAYS_OF_WEEK[parts[0]] || parts[0];
+        return { day, times: 'Todo el día' };
+      }
+
+      // Si hay días y horas (rango de tiempo)
+      const [dayShorts, times] = parts;
+      const daysList = dayShorts.split(','); // Dividimos los días si están separados por comas
+      const formattedTimes = times.split(',').map(time => {
         const [start, end] = time.split('-');
         return `${start} - ${end}`;
       }).join(', ');
-    } else {
-      // Si es solo un único rango de tiempo
-      const [start, end] = times.split('-');
-      timesFormatted = `${start} - ${end}`;
-    }
-    
-    return { day, times: timesFormatted };
-  });
 
-  return days;
+      // Formateamos los días con el nombre en español
+      const formattedDays = daysList.map(day => DAYS_OF_WEEK[day.trim()] || day.trim());
+
+      // Devolvemos los días con sus horarios
+      return formattedDays.map(day => ({ day, times: formattedTimes }));
+    }).flat(); // Aplanamos el array, ya que puede haber días repetidos con diferentes horarios
+
+    return days;
+  } catch (error) {
+    console.error('Error al procesar los horarios: ', error);
+    return [];
+  }
 };
 
 const OpeningHours = ({ openingHoursText }) => {
@@ -50,8 +63,7 @@ const OpeningHours = ({ openingHoursText }) => {
 
   return (
     <div>
-      <h3>Horarios de Apertura:</h3>
-      <ul>
+      <ul className='descripcion list-disc ml-10'>
         {formattedOpeningHours.length === 0 ? (
           <li>No hay horarios disponibles.</li>
         ) : (
