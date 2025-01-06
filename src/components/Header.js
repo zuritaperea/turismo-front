@@ -59,9 +59,9 @@ export default function Header() {
           ) : (
             <div className="cursor-pointer flex items-center" onClick={handleGoBack}>
               <div className="rounded-full h-10 w-10 flex items-center justify-center">
-                <i class="fas fa-chevron-left text-base"></i>
+                <i className="fas fa-chevron-left text-base"></i>
               </div>
-              <h1 class="ml-3 font-extrabold text-base"> Atras</h1>
+              <h1 className="ml-3 font-extrabold text-base"> Atras</h1>
             </div>
           )}</div>
         <div className="flex items-center space-x-4">
@@ -83,8 +83,8 @@ export default function Header() {
         <div className="flex flex-row h-full">
           <div className="h-full w-full flex-col">
             <div className="mt-8 flex items-center justify-center">
-              <img className="logo" src={headerLogo} alt="Logo" />
-              <h1 className="ml-3 font-extrabold text-base">{headerTitle}</h1>
+            <Link to="/"><img className="logo" src={headerLogo} alt="Logo" /></Link>
+            <Link to="/"> <h1 className="ml-3 font-extrabold text-base">{headerTitle}</h1></Link>
             </div>
             <div className="flex flex-col">
 

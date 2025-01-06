@@ -56,7 +56,7 @@ const formatOpeningHours = (openingHoursText) => {
 const OpeningHours = ({ openingHoursText }) => {
   // Si no hay horarios, mostrar un mensaje adecuado
   if (!openingHoursText) {
-    return <p>No hay horarios disponibles.</p>;
+    return null;
   }
 
   const formattedOpeningHours = formatOpeningHours(openingHoursText);

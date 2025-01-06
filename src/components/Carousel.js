@@ -9,6 +9,10 @@ function Carousel({ images }) {
   useEffect(() => {
     // Puedes agregar cualquier configuración adicional aquí si lo necesitas
   }, []);
+  // Verificar si las imágenes están presentes
+  if (!images || images.length === 0) {
+    return null; // No renderiza nada si no hay imágenes
+  }
 
   return (
     <div className="relative swiper-container">
@@ -19,8 +23,6 @@ function Carousel({ images }) {
         slidesPerView={1}
         navigation={true}
         pagination={{ clickable: true }}
-        onSwiper={(swiper) => console.log(swiper)}
-        onSlideChange={() => console.log('slide change')}
         style={{ height: '250px' }} // Define la altura aquí si no está en CSS
 
       >

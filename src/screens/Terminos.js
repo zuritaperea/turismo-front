@@ -17,7 +17,7 @@ const Terminos = () => {
             <Row className="destination-box mb-2">
               <h3>Términos y condiciones
               </h3>
-              <hr class="mb-2"></hr>
+              <hr className="mb-2"></hr>
               <p>El acceso a y/o uso de este sitio requiere que todos los visitantes y usuarios adhieran a los t&eacute;rminos y condiciones, acept&aacute;ndolos desde el momento de ingreso al mismo, plenamente y sin reserva alguna. Por otro lado, en el caso que estos t&eacute;rminos y condiciones en el futuro puedan modificarse, complementarse, sustituirse en alg&uacute;n sentido en relaci&oacute;n con los servicios y contenidos del Sitio. En este sentido se clarifica que por el solo hecho de ingresar y hacer uso del Sitio, el &#39;usuario&#39; se adhiere en forma inmediata a todos y cada uno de los siguientes t&eacute;rminos y condiciones. En consecuencia, el usuario deber&aacute; leer detenidamente los t&eacute;rminos y condiciones antes de acceder y/o utilizar cualquier servicio del portal bajo su entera responsabilidad.</p>
 
               <h3>Alcance</h3>

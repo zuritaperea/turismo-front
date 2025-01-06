@@ -306,7 +306,7 @@ const Perfil = () => {
               {perfilCargado && (
 
                 <Form onSubmit={handleSubmit}>
-                 <h1 class="py-2 text-4xl font-semibold text-slate-900 tracking-tight dark:text-slate-200">
+                 <h1 className="py-2 text-4xl font-semibold text-slate-900 tracking-tight dark:text-slate-200">
                   Usuario</h1>
                         <Form.Group controlId="email">
                           <Form.Label>Correo Electrónico *</Form.Label>
@@ -361,7 +361,7 @@ const Perfil = () => {
                           label={mostrarContrasenia2 ? 'Ocultar la contraseña' : 'Mostrar la contraseña'}
                           onChange={toggleMostrarContrasenia2}
                         />
-                      <h1 class="py-2 text-4xl font-semibold text-slate-900 tracking-tight dark:text-slate-200">
+                      <h1 className="py-2 text-4xl font-semibold text-slate-900 tracking-tight dark:text-slate-200">
                   Perfil de Turísta</h1>
                         <Form.Group controlId="fechaNacimiento">
                           <Form.Label>Fecha de Nacimiento</Form.Label>
@@ -467,7 +467,7 @@ const Perfil = () => {
                             </Form.Select>
                           </Form.Group>)}
        
-                          <h1 class="py-2 text-4xl font-semibold text-slate-900 tracking-tight dark:text-slate-200">
+                          <h1 className="py-2 text-4xl font-semibold text-slate-900 tracking-tight dark:text-slate-200">
                   Datos Personales</h1>
                         <Row>
                           <Form.Group as={Col} md="4" controlId="tipoDocumento">
@@ -525,7 +525,7 @@ const Perfil = () => {
                             onChange={handleInputChange}
                           />
                         </Form.Group>
-                        <h1 class="py-2 text-4xl font-semibold text-slate-900 tracking-tight dark:text-slate-200">
+                        <h1 className="py-2 text-4xl font-semibold text-slate-900 tracking-tight dark:text-slate-200">
                   Domicilio</h1>
 
                         <Form.Group controlId="codigoPostal">

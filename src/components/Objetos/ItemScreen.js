@@ -13,13 +13,14 @@ import Estrellas from '../../components/Items/Estrellas';
 import OpeningHours from '../../components/OpeningHours';
 import Alert from '../Alert';
 import Splash from '../../components/Splash';
-
+import Tags from './Tags';
 import phone from '../../assets/img/phone.png';
 import mail from '../../assets/img/mail-03.png';
 import link from '../../assets/img/link-01.png';
 import x_button from '../../assets/img/x-button.png';
 import fb_button from '../../assets/img/fb-button.png';
 import in_button from '../../assets/img/in-button.png';
+import Fecha from '../Fecha';
 
 function ItemScreen({ tipoObjeto }) {
   const { id, fechadesde, fechahasta } = useParams();
@@ -114,16 +115,49 @@ function ItemScreen({ tipoObjeto }) {
           <div className="text-2xl font-bold text-slate-900 tracking-tight dark:text-slate-200 my-4">
             Dirección
           </div>
+
           <div className="descripcion">{item?.attributes?.street_address}</div>
+
+          {item?.attributes?.amenity_feature ? (
+            <>
+              <div className="text-2xl font-bold text-slate-900 tracking-tight dark:text-slate-200 my-4">
+                Servicios
+              </div>
+
+              <Tags elementos={item?.attributes?.amenity_feature}></Tags>
+            </>
+          ) : null}
+
 
           <Carousel images={item?.attributes?.contenidos} />
 
           <div className="grid grid-cols-1 md:grid-cols-3">
             <div id="horarios">
               <div className="text-xl font-bold text-slate-900 tracking-tight dark:text-slate-200 my-4">
-                Horarios
+                {tipoObjeto === 'evento' ? 'Fechas' : 'Horarios'}
               </div>
               <OpeningHours openingHoursText={item?.attributes?.opening_hours} />
+              {item?.attributes?.checkin_time ? (
+                <>
+                  <div className="descripcion">Check in: {item?.attributes?.checkin_time?.substring(0, 5)} hs</div>
+                </>
+              ) : null}
+              {item?.attributes?.checkout_time ? (
+                <>
+                  <div className="descripcion">Check out: {item?.attributes?.checkout_time?.substring(0, 5)} hs</div>
+                </>
+              ) : null}
+              <Fecha
+                fecha={item?.attributes?.start_date}
+                label="Fecha de inicio"
+              />
+              <Fecha
+                fecha={item?.attributes?.end_date}
+                label="Fecha de fin"
+              />
+
+
+
             </div>
             <div id="contacto">
               <div className="text-xl font-bold text-slate-900 tracking-tight dark:text-slate-200 my-4">
@@ -151,12 +185,21 @@ function ItemScreen({ tipoObjeto }) {
               </div>
             </div>
           </div>
+          {item?.attributes?.price_range ? (
+            <>
+              <div className="text-2xl font-bold text-slate-900 tracking-tight dark:text-slate-200 my-4">
+                Rango de Precios
+              </div>
+
+              <div className='descripcion'>{item?.attributes?.price_range}</div>
+            </>
+          ) : null}
+
+
           <div className="bg-white border border-gray-200 rounded-xl pl-4 pb-4 mt-4">
             <div className="text-2xl font-bold text-slate-900 tracking-tight dark:text-slate-200 my-4">
               Certificaciones y premios
             </div>
-            <div className="descripcion">
-              {item?.attributes?.certifications}          </div>
             <div className="descripcion">
               {item?.attributes?.certifications}          </div>
           </div>
@@ -171,8 +214,25 @@ function ItemScreen({ tipoObjeto }) {
             <button className="color-principal bg-white shadow-sm px-10 py-3 font-semibold rounded-lg mr-2">
               <i className="fa-regular fa-star"></i>
               Calificar</button>
-            <button className="color-principal bg-white shadow-sm px-10 py-3 font-semibold rounded-lg">
-              <i className="fa-solid fa-arrow-up-right-from-square"></i>                        Compartir</button>
+            <button className="color-principal bg-white shadow-sm px-10 py-3 font-semibold rounded-lg"
+              onClick={() => {
+                if (navigator.share) {
+                  navigator
+                    .share({
+                      title: document.title, // El título de la página
+                      text: item?.attributes?.name
+                      , // El texto que acompañará el enlace
+                      url: window.location.href, // La URL actual de la página
+                    })
+                    .catch((error) => console.log('Error sharing', error)); // Maneja errores si no es compatible
+                } else {
+                  // Si no es compatible con 'navigator.share', mostrar un fallback
+                  alert('Tu navegador no es compatible con el compartir nativo.');
+                }
+              }}
+            >
+              <i className="fa-solid fa-arrow-up-right-from-square"></i>
+              Compartir</button>
 
           </div>
 

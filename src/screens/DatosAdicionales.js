@@ -108,7 +108,7 @@ function DatosAdicionales() {
         <Row className="m-2">
           <Col>
             <Row className="destination-box mb-2">
-              <h2 class="text-sm font-semibold mt-2 color-principal">
+              <h2 className="text-sm font-semibold mt-2 color-principal">
                   Completar datos adicionales</h2>
               </Row>
               <Row className="destination-box mb-2">
@@ -116,7 +116,7 @@ function DatosAdicionales() {
               
               <Form onSubmit={handleSubmit}>
                 {/* Campos para los datos adicionales */}
-                <h1 class="py-2 text-4xl font-semibold text-slate-900 tracking-tight dark:text-slate-200">
+                <h1 className="py-2 text-4xl font-semibold text-slate-900 tracking-tight dark:text-slate-200">
                   Datos Personales</h1>
                 <Row>
                   <Form.Group as={Col} md="4" controlId="tipoDocumento">
@@ -176,7 +176,7 @@ function DatosAdicionales() {
                 </Form.Group>
 
 
-                <h1 class="py-2 text-4xl font-semibold text-slate-900 tracking-tight dark:text-slate-200">
+                <h1 className="py-2 text-4xl font-semibold text-slate-900 tracking-tight dark:text-slate-200">
                   Domicilio</h1>
                 <Row>
                   <Form.Group as={Col} md="9" controlId="calle">

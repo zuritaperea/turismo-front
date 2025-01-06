@@ -193,20 +193,20 @@ const Registro = () => {
         <Row className="m-2">
           <Col>
             <Row className="destination-box mb-2">
-              <h2 class="text-sm font-semibold mt-2 color-principal">
+              <h2 className="text-sm font-semibold mt-2 color-principal">
                 Creá tu cuenta</h2>
               <Row className="destination-box mb-2">
-                <p class="mt-2 ml-2 texto-tarjeta">
+                <p className="mt-2 ml-2 texto-tarjeta">
                   Por favor completá estos datos para continuar.</p>
               </Row>                <Row className="destination-box mb-2">
-                <p class="mt-2 ml-2 texto-tarjeta">
+                <p className="mt-2 ml-2 texto-tarjeta">
 
                   <a href="/login/">Si ya estás registrado, ingresá a tu cuenta.</a>
                 </p></Row>
               {error && <Alert variant="danger">{error}</Alert>}
               <Form onSubmit={handleSubmit}>
 
-                <h1 class="py-2 text-4xl font-semibold text-slate-900 tracking-tight dark:text-slate-200">
+                <h1 className="py-2 text-4xl font-semibold text-slate-900 tracking-tight dark:text-slate-200">
                   Usuario</h1>
                 <Form.Group controlId="email">
                   <Form.Label>Correo Electrónico *</Form.Label>
@@ -257,7 +257,7 @@ const Registro = () => {
                   onChange={toggleMostrarContrasenia}
                 />
 
-                <h1 class="py-2 text-4xl font-semibold text-slate-900 tracking-tight dark:text-slate-200">
+                <h1 className="py-2 text-4xl font-semibold text-slate-900 tracking-tight dark:text-slate-200">
                   Perfil de turista</h1>
 
                 <Form.Group controlId="fechaNacimiento">

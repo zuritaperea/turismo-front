@@ -53,11 +53,11 @@ switch (target) { // Usar switch es más legible para múltiples comparaciones
 
   return (
     <div className="">
-      <h2 class="text-sm font-semibold mt-2 color-principal">
+      <h2 className="text-sm font-semibold mt-2 color-principal">
         {epigrafe}</h2>
-      <h1 class="py-2 text-4xl font-semibold text-slate-900 tracking-tight dark:text-slate-200">
+      <h1 className="py-2 text-4xl font-semibold text-slate-900 tracking-tight dark:text-slate-200">
         {title}</h1>
-      <p class="mt-2 texto-tarjeta">
+      <p className="mt-2 texto-tarjeta">
         {subtitulo}</p>
     </div>
   );
