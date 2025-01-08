@@ -3,9 +3,9 @@ import React from "react";
 const Tags = ({ elementos }) => {
   return (
     <div className="descripcion">
-      {elementos?.map((home, i) => (
+      {elementos?.map((item, i) => (
         <span key={i} className="pr-5">
-          {home.name}
+          {item.name}
         </span>
       ))}
     </div>
