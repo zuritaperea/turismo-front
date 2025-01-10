@@ -21,8 +21,8 @@ Para poder ejecutar este proyecto, asegúrate de tener instalados los siguientes
 
 Copia el archivo .env.example a .env ejecutando el siguiente comando:
 
- ```bash
-cp .env.example .env
+    ```bash
+    cp .env.example .env
 
 Luego, edita el archivo .env con los siguientes valores:
 
@@ -58,9 +58,9 @@ Generar los archivos estáticos para producción:
 
 Una vez que el archivo .env esté correctamente configurado, puedes ejecutar el siguiente comando para construir los archivos estáticos (HTML, JS, CSS) que serán servidos por el servidor web:
 
- ```bash
+    ```bash
 
-npm run build
+    npm run build
 
 
 Esto generará la carpeta build con los archivos optimizados listos para ser desplegados.
