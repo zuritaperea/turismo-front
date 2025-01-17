@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Row from "../components/Row";
 import Spinner from "../components/Spinner";
 import Col from "../components/Col";
@@ -24,6 +24,7 @@ import Splash from "../components/Splash";
 import marketPlaceLogo from "../assets/img/marketplace.png"
 import pasaporteLogo from "../assets/img/pasaporte.png"
 import planificadorLogo from "../assets/img/planificador.png"
+import { ConfigContext } from '../extras/ConfigContext'; // Importa el contexto
 
 
 export default function Inicio() {
@@ -31,19 +32,30 @@ export default function Inicio() {
 
   const [personaDenominacion, setPersonaDenominacion] = useState(null);
 
+  const [eventos, setEventos] = useState([]);
 
   const [error, setError] = useState("");
-  const [eventos, setEventos] = useState([]);
+  const [images, setImages] = useState([]);
   const [naturalAttractions, setNaturalAttractions] = useState([]);
 
   const [loadingAtractivos, setLoadingAtractivos] = useState(true);
 
   const [loadingEventos, setLoadingEventos] = useState(true);
+  const config = useContext(ConfigContext); // Usa el contexto para acceder a la configuración
 
 
+  const imagesTest = [
+    { file: 'https://picsum.photos/id/227/300/200' },
+    { file: 'https://picsum.photos/id/217/300/200' },
+    { file: 'https://picsum.photos/id/237/300/200' },
+  ];
   const navigate = useNavigate();
 
-
+  useEffect(() => {
+    if (config) { // Verifica que config no sea null
+      setImages(config.carousel_items || imagesTest);
+    }
+  }, [config]); // El useEffect se ejecuta cada vez que config cambia
 
 
 
@@ -123,11 +135,6 @@ export default function Inicio() {
     { imagen: gastronomyImg, titulo: 'Gastronomía', link: '/gastronomia' },
   ];
 
-  const images = [
-    { file: 'https://picsum.photos/id/227/300/200' },
-    { file: 'https://picsum.photos/id/217/300/200' },
-    { file: 'https://picsum.photos/id/237/300/200' },
-  ];
 
   return (
     <>
