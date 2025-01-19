@@ -7,6 +7,8 @@ import { ConfigContext } from '../extras/ConfigContext'; // Importa el contexto
 
 export default function Header() {
   const [personaDenominacion, setPersonaDenominacion] = useState(null);
+  const [email, setEmail] = useState(null);
+
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const history = useNavigate();
   const location = useLocation();
@@ -34,6 +36,7 @@ export default function Header() {
     const item = JSON.parse(localStorage.getItem('user'));
     if (item) {
       setPersonaDenominacion(item?.username);
+      setEmail(item?.username);
     }
   }, []);
 
@@ -92,9 +95,29 @@ export default function Header() {
               <div className="p-5">
                 {personaDenominacion ? (
                   <>
-                    Bienvenido: <b><a href="/perfil"><FontAwesomeIcon icon={faUser} /> {personaDenominacion}</a></b>
-                    <span style={{ marginLeft: '10px' }}>|</span>{' '}
-                    <Link to="/logout"><FontAwesomeIcon icon={faSignOutAlt} /> Desconectar</Link>
+                  <div className="flex w-full items-center"> {/* Contenedor principal con ancho completo y alineación vertical centrada */}
+  <Link to="/perfil">
+    <FontAwesomeIcon
+      icon={faUser}
+      className="rounded-full h-5 p-1 border border-gray-500"
+    />
+  </Link>
+
+  <div className="flex flex-col ml-2">
+    <Link to="/perfil" className="block m-0 p-0 line-none"> {/* Elimina espaciado del Link */}
+      <span className="text-sm font-bold line-none">{personaDenominacion}</span>{/* Ajusta line-height */}
+    </Link>
+    <Link to="/perfil" className="block m-0 p-0"> {/* Elimina espaciado del Link */}
+      <span className="text-xs line-none">{email}</span>{/* Ajusta line-height */}
+    </Link>
+  </div>
+
+  <div className="ml-auto"> {/* Margen automático a la izquierda para empujar el icono de logout a la derecha */}
+    <Link to="/logout" >
+      <FontAwesomeIcon icon={faSignOutAlt} className="color-gris h-4 " /> {/*color-gris cambiado a text-gray-500*/}
+    </Link>
+  </div>
+</div>
                   </>
                 ) : (
                   <Link to="/login">

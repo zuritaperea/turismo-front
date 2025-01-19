@@ -23,8 +23,6 @@ const Login = () => {
 
   const onSubmit = data => {
     login(data.username, data.password);
-
-    console.log(data);
   }
 
 

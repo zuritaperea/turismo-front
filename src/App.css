@@ -40,7 +40,13 @@ z-index: 15;
 .logo {
   height: 48px;
 }
-
+/* color gris del figma para los textos */
+.color-gris {
+ color: #475467;
+}
+.line-none {
+  line-height: 0.5;
+}
 .categoria>div {
   width: 6rem;
   height: 5rem;
