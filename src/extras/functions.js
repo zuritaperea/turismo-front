@@ -5,17 +5,17 @@ function padTo2Digits(num) {
 }
 
 const funciones = {
-   getColorFromText: function (text, index)  {
+  getColorFromText: function (text, index) {
     const colors = ['yellow', 'red', 'pink', 'blue', 'purple', 'green'];
-    
+
     // Concatenar el texto con el índice para hacer el hash más único
     let hash = 0;
     const combinedText = text + index;  // Usar el índice del tag para diversificar más el valor hash
-    
+
     for (let i = 0; i < combinedText.length; i++) {
       hash = (hash << 5) - hash + combinedText.charCodeAt(i);
     }
-    
+
     // Usar el valor hash para elegir un color, asegurando que se mapee a un índice válido
     const indexColor = Math.abs(hash % colors.length);
     return colors[indexColor];
@@ -39,11 +39,12 @@ const funciones = {
     return newDate;
   },
   errorMaker: function (error) {
-    let messages = [];
-    if (error?.message)
-      messages.push(error)
-    else
-      if (error?.detail) {
+    try {
+      let messages = [];
+
+      if (error?.message) {
+        messages.push(error);
+      } else if (error?.detail) {
         if (
           error.source &&
           error.source.pointer &&
@@ -73,7 +74,7 @@ const funciones = {
         } else {
           messages.push({ message: error.error.detail, type: "error" });
         }
-      } else if (error?.errors && error?.errors.length > 0) {
+      } else if (error?.errors && Array.isArray(error.errors) && error.errors.length > 0) {
         error.errors.forEach((element) => {
           if (element.source && element.source.pointer) {
             let field = element.source.pointer.split("/")[3];
@@ -88,14 +89,23 @@ const funciones = {
         });
       } else {
         messages.push({
-          message: error.error,
-          description: error.error_description,
+          message: error?.error || "Error desconocido",
+          description: error?.error_description || "Ha ocurrido un error inesperado.",
           type: "error",
         });
       }
 
-    return messages;
-  },
+      return messages;
+    } catch (err) {
+      console.error("Error procesando la respuesta:", err);
+      return [{
+        message: "Error en el procesamiento",
+        description: "No se pudo procesar la respuesta del servidor.",
+        type: "error",
+      }];
+    }
+  }
+  ,
   generarIncludes: function (data, included) {
     let included_return = {};
     for (var [key, relation] of Object.entries(data.relationships)) {
