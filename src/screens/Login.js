@@ -33,7 +33,7 @@ const Login = () => {
       if (usuarioCompleto()) {
         navigate('/');
       } else {
-        navigate('/datos-adicionales');
+        navigate('/');//navigate('/datos-adicionales');
       }
     } else {
       console.log("error :", response.data);
