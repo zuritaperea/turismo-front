@@ -70,10 +70,10 @@ const Registro = () => {
               setMensaje(
                 <span>
                   Su registro se ha realizado exitosamente,
-                  <Alert.Link href="/login"> a continuación podrá completar datos adicionales</Alert.Link>
+                  <Alert.Link href="/perfil"> a continuación podrá completar datos adicionales</Alert.Link>
                 </span>
               );
-
+              setError([]);
               setRegistroExitoso(true);
             }
             )
@@ -112,7 +112,7 @@ const Registro = () => {
       // Si el registro fue exitoso, redirige a la siguiente pantalla
       setTimeout(function () {
         navigate("/login");
-      }, 5000);
+      }, 10000);//5000
     }
   }, [registroExitoso, navigate]);
 
