@@ -7,7 +7,7 @@ const Listado = ({ objetosFiltrados, target }) => {
     <div className="flex flex-wrap  justify-center">
       {objetosFiltrados.map((item) => (
         <div key={item.id} style={{ margin: "0.8px" }}>
-          <Link to={`/${target.toLowerCase()}/${item.id}`}>
+          <Link to={`/${target ? target.toLowerCase() : item.tipo.toLowerCase()}/${item.id}`}>
             <Card imgSrc={item.image} title={item.title} category={item.type} description={item.description} tags={item.tourist_type} puntuacion={item.puntuacion} />
           </Link></div>
       ))}

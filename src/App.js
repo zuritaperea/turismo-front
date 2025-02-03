@@ -8,6 +8,7 @@ import Perfil from "./screens/Perfil";
 import DestinoScreen from "./screens/Destino";
 import ServiciosScreen from "./screens/Servicios";
 import InfoScreen from "./screens/Info";
+import BusquedaScreen from "./screens/Busqueda";
 import BusquedaAvanzada from "./screens/BusquedaAvanzada";
 import AtractivoScreen from "./screens/Atractivo";
 import AlojamientoScreen from "./screens/Alojamiento";
@@ -74,7 +75,7 @@ function App() {
           <Route path="/servicios" element={<ServiciosScreen />} />
           <Route path="/info/:id" element={<InfoScreen />} />
           <Route path="/avanzada/:id/:tipo/:nombre/:fechadesde/:fechahasta" element={<BusquedaAvanzada />} />
-          <Route path="/avanzada/:id/:tipo/:nombre" element={<BusquedaAvanzada />} />
+          <Route path="/busqueda/:nombre" element={<BusquedaScreen />} />
           <Route path="/atractivo" element={<AtractivoScreen />} />
           <Route path="/atractivos" element={<AtractivosScreen />} />
           <Route path="/atractivos/:id" element={<AtractivosScreen />} />

@@ -123,8 +123,7 @@ export default function Inicio() {
 
 
   const handleSearch = (query) => {
-    console.log('Buscando:', query);
-    // Aquí puedes agregar la lógica para manejar la búsqueda
+    navigate(`/busqueda/${query}`);
   };
   const secciones = [
     { imagen: ticketImg, titulo: 'Eventos', link: '/eventos' },
