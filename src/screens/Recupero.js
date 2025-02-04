@@ -1,21 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useContext, useEffect } from 'react';
 import Form from '../components/Form';
 import Button from '../components/Button';
 import Alert from '../components/Alert';
 import Row from '../components/Row';
 import Col from '../components/Col';
 import Container from '../components/Container';
+import logo from '../assets/img/logomark.png';
+import { ConfigContext } from '../extras/ConfigContext'; // Importa el contexto
+import { useForm } from 'react-hook-form';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { Link, useNavigate } from 'react-router-dom';
 
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import registroService from "../axios/services/profile";
+import Separador from '../components/Separador';
 
 const Recupero = () => {
   const [mensaje, setMensaje] = useState(null);
+  const [logoLogin, setLogoLogin] = useState(logo);
+  const config = useContext(ConfigContext); // Usa el contexto para acceder a la configuración
 
   const [datosUsuario, setDatosUsuario] = useState({
     email: '',
-    email2: ''  
+    email2: ''
   });
 
   const [error, setError] = useState(null);
@@ -34,7 +41,7 @@ const Recupero = () => {
     // Realiza validación de los datos
     if (datosUsuario.email === datosUsuario.email2) {
       if (
-        datosUsuario.email 
+        datosUsuario.email
       ) {
         try {
           registroService
@@ -66,60 +73,76 @@ const Recupero = () => {
     }
   };
 
+  useEffect(() => {
+    if (config) { // Verifica que config no sea null
+      setLogoLogin(config.logo || logo);
+    }
+  }, [config]); // El useEffect se ejecuta cada vez que config cambia
 
 
 
   return (
     <>
-      <Header />
-      <Container className="boxed p-2">
+      <Container className='md:w-6/12 w-full'>
+        <Row className="m-b-2 text-center sm:mt-10 mt-6">
+          <Col>
+            <div>
+              <img className="logo m-auto" src={logoLogin} alt="Logo" />
+            </div>
+            <h1 className="text-2xl font-bold">¿Olvidaste tu contraseña?</h1>
+            <h4 className="text-sm">No te preocupes enviaremos un correo electrónico para que la recuperes</h4>
+          </Col>
+        </Row>
 
-        <Row>
+        <Row className="destination-box mb-2 mt-6">
           <Col md={{ span: 6, offset: 3 }}>
-            <Row className="destination-box mb-2">
-              <h3 className='text-2xl'>Recuperá tu contraseña</h3>
-              <div></div>
-              <hr className="block"></hr>
-              {error && <Alert variant="danger">{error}</Alert>}
-              <Form onSubmit={handleSubmit}>
-                <Form.Group controlId="email">
-                  <Form.Label>Correo Electrónico</Form.Label>
-                  <Form.Control
-                    type="email"
-                    name="email"
-                    value={datosUsuario.email}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </Form.Group>
-                <Form.Group controlId="email2">
-                  <Form.Label>Confirmar Correo Electrónico</Form.Label>
-                  <Form.Control
-                    type="email"
-                    name="email2"
-                    value={datosUsuario.email2}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </Form.Group>
+            {error && <Alert variant="danger">{error}</Alert>}
+            <Form onSubmit={handleSubmit}>
+              <Form.Group controlId="email">
+                <Form.Label>Correo Electrónico</Form.Label>
+                <Form.Control
+                  type="email"
+                  name="email"
+                  value={datosUsuario.email}
+                  onChange={handleInputChange}
+                  required
+                  placeholder="Colocá aquí tu email"
+
+                />
+              </Form.Group>
+              <Form.Group controlId="email2">
+                <Form.Label>Confirmar Correo Electrónico</Form.Label>
+                <Form.Control
+                  type="email"
+                  name="email2"
+                  value={datosUsuario.email2}
+                  onChange={handleInputChange}
+                  required
+                  placeholder="Colocá aquí tu email"
+
+                />
+              </Form.Group>
 
 
-                <Row><Col>
-                  <div className="d-grid gap-2">
-                    <Button variant="primary" type="submit" className="mt-3" disabled={registroExitoso}>
-                      Enviar
-                    </Button></div></Col>
-                  <Col>
-                    <div className="d-grid gap-2">
-                      <Button variant="secondary" href="/login" className="mt-3">
-                        Volver
-                      </Button></div>
-                  </Col></Row>
+              <Row>
+                <Col sm={3}>
+                  <Button variant="primary" type="submit" className="w-full bg-principal mt-3" disabled={registroExitoso}>
+                    Comenzar
+                  </Button>
+                </Col>
+                <Separador />
+              </Row>
+              <Row className="destination-box mb-2 text-center">
+              <Col xs={12}>
 
-              </Form>
-              {mensaje && <Alert variant="success">{mensaje}</Alert>}
-            </Row></Col></Row></Container>
-      <Footer />
+                <p className="text-sm text-center mt-0">
+                  <Link to="/" className="color-principal text-sm"><FontAwesomeIcon icon={faArrowLeft} /> Regresar al inicio</Link>
+                </p> </Col>
+              </Row>
+
+            </Form>
+            {mensaje && <Alert variant="success">{mensaje}</Alert>}
+          </Col></Row></Container>
     </>
   );
 };

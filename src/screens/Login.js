@@ -12,8 +12,12 @@ import authService from '../axios/services/auth';
 import functions from '../extras/functions';
 import logo from '../assets/img/logomark.png';
 import { ConfigContext } from '../extras/ConfigContext'; // Importa el contexto
+import Separador from '../components/Separador';
+import { AuthContext } from '../components/AuthContext';
 
 const Login = () => {
+  const { login } = useContext(AuthContext);
+
   const [alerts, setAlerts] = useState([]);
   const formRef = useRef();
   const [logoLogin, setLogoLogin] = useState(logo);
@@ -22,18 +26,18 @@ const Login = () => {
   const config = useContext(ConfigContext); // Usa el contexto para acceder a la configuración
 
   const onSubmit = data => {
-    login(data.username, data.password);
+    handleLogin(data.username, data.password);
   }
 
 
-  const login = async (username, password) => {
+  const handleLogin  = async (username, password) => {
     setAlerts([]);
-    const response = await authService.login(username, password);
+    const response = await authService.login(username, password, login); // Pasa login como callback
     if (response === 'success') {
       if (usuarioCompleto()) {
         navigate('/');
       } else {
-        navigate('/');//navigate('/datos-adicionales');
+        navigate('/');//navigate('/datos-adicionales'); por ahora esta asi
       }
     } else {
       console.log("error :", response.data);
@@ -80,6 +84,7 @@ const Login = () => {
                     type="text"
                     id="username"
                     placeholder="Colocá aquí tu email"
+                    required
                     {...register("username", { required: 'Ingrese su email' })} // Aquí NO se usa inputRef directamente
                   />
                   {errors.username && (
@@ -94,6 +99,7 @@ const Login = () => {
                     type="password"
                     id="password"
                     placeholder="Colocá aquí tu contraseña"
+                    required
                     {...register("password", { required: 'Ingrese su contraseña' })} // Aquí NO se usa inputRef directamente
                   />
                   {errors.password && (
@@ -115,9 +121,10 @@ const Login = () => {
               </Row>
             </Form>
 
-
             <Row>
               <Col xs={12}>
+              <Separador />
+
                 <p className="text-sm text-center mt-5">
                   ¿Aún no tienes una cuenta?  <Link to="/registro" className="color-principal text-sm">¡Créala ahora!</Link>
                 </p>

@@ -16,6 +16,7 @@ import { v4 as uuidv4 } from 'uuid';
 import functions from "../extras/functions";
 
 import { ConfigContext } from '../extras/ConfigContext'; // Importa el contexto
+import Separador from '../components/Separador';
 
 const Registro = () => {
   const [logoLogin, setLogoLogin] = useState(logo);
@@ -140,7 +141,6 @@ const Registro = () => {
 
         <Row className="destination-box mb-2">
           <Col md={{ span: 6, offset: 3 }}>
-
             {error?.length > 0 && (
               <Alert variant="danger">
                 <ul>
@@ -222,7 +222,7 @@ const Registro = () => {
               </Form.Group>
 
 
-              <Col sm={3}>
+              <Col sm={12}>
                 <Button variant="primary" className="w-full bg-principal mt-3">
                   Comenzar
                 </Button>
@@ -230,8 +230,11 @@ const Registro = () => {
             </Form>
             {mensaje && <Alert variant="success">{mensaje}</Alert>}
           </Col>
+          <Separador />
+
         </Row>
         <Row className="destination-box mb-2 text-center">
+
           <Col>
             <p className="mt-2 ml-2 texto-tarjeta ">
               ¿Ya tienes una cuenta?
