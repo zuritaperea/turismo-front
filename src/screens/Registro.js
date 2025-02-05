@@ -14,12 +14,14 @@ import paises from "../extras/paises"
 import logo from '../assets/img/logomark.png';
 import { v4 as uuidv4 } from 'uuid';
 import functions from "../extras/functions";
+import Turnstile from "react-turnstile";
 
 import { ConfigContext } from '../extras/ConfigContext'; // Importa el contexto
 import Separador from '../components/Separador';
 
 const Registro = () => {
   const [logoLogin, setLogoLogin] = useState(logo);
+  const [token, setToken] = useState("");
 
   const [mensaje, setMensaje] = useState(null);
   const navigate = useNavigate();
@@ -50,6 +52,11 @@ const Registro = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!token) {
+      alert("Por favor, completa el captcha.");
+      return;
+    }
     // Agregar un UUID único al campo documento_identidad
     // Generar un UUID y tomar solo los primeros 9 caracteres después del prefijo "t-"
     const uuidParcial = uuidv4().replace(/-/g, '').slice(0, 9); // Eliminar guiones y tomar los primeros 9 caracteres
@@ -223,6 +230,13 @@ const Registro = () => {
 
 
               <Col sm={12}>
+                {/* Turnstile */}
+                <div className="flex justify-center">
+                  <Turnstile
+                    sitekey={process.env.REACT_APP_TURNSTILE_SITE_KEY} // Para Create React App
+                    // sitekey={import.meta.env.VITE_TURNSTILE_SITE_KEY} // Para Vite
+                    onVerify={(token) => setToken(token)}
+                  /></div>
                 <Button variant="primary" className="w-full bg-principal mt-3">
                   Comenzar
                 </Button>

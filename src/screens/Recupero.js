@@ -11,6 +11,7 @@ import { useForm } from 'react-hook-form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
+import Turnstile from "react-turnstile";
 
 import registroService from "../axios/services/profile";
 import Separador from '../components/Separador';
@@ -19,6 +20,7 @@ const Recupero = () => {
   const [mensaje, setMensaje] = useState(null);
   const [logoLogin, setLogoLogin] = useState(logo);
   const config = useContext(ConfigContext); // Usa el contexto para acceder a la configuración
+  const [token, setToken] = useState("");
 
   const [datosUsuario, setDatosUsuario] = useState({
     email: '',
@@ -38,6 +40,10 @@ const Recupero = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!token) {
+      alert("Por favor, completa el captcha.");
+      return;
+    }
     // Realiza validación de los datos
     if (datosUsuario.email === datosUsuario.email2) {
       if (
@@ -126,6 +132,13 @@ const Recupero = () => {
 
               <Row>
                 <Col sm={3}>
+                    {/* Turnstile */}
+                    <div className="flex justify-center">
+                    <Turnstile
+                      sitekey={process.env.REACT_APP_TURNSTILE_SITE_KEY} // Para Create React App
+                      // sitekey={import.meta.env.VITE_TURNSTILE_SITE_KEY} // Para Vite
+                      onVerify={(token) => setToken(token)}
+                    /></div>
                   <Button variant="primary" type="submit" className="w-full bg-principal mt-3" disabled={registroExitoso}>
                     Comenzar
                   </Button>

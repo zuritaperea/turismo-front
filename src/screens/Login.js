@@ -14,9 +14,11 @@ import logo from '../assets/img/logomark.png';
 import { ConfigContext } from '../extras/ConfigContext'; // Importa el contexto
 import Separador from '../components/Separador';
 import { AuthContext } from '../components/AuthContext';
+import Turnstile from "react-turnstile";
 
 const Login = () => {
   const { login } = useContext(AuthContext);
+  const [token, setToken] = useState("");
 
   const [alerts, setAlerts] = useState([]);
   const formRef = useRef();
@@ -26,11 +28,15 @@ const Login = () => {
   const config = useContext(ConfigContext); // Usa el contexto para acceder a la configuración
 
   const onSubmit = data => {
+    if (!token) {
+      alert("Por favor, completa el captcha.");
+      return;
+    }
     handleLogin(data.username, data.password);
   }
 
 
-  const handleLogin  = async (username, password) => {
+  const handleLogin = async (username, password) => {
     setAlerts([]);
     const response = await authService.login(username, password, login); // Pasa login como callback
     if (response === 'success') {
@@ -114,6 +120,13 @@ const Login = () => {
                   </p>
                 </Col>
                 <Col sm={3}>
+                  {/* Turnstile */}
+                  <div className="flex justify-center">
+                    <Turnstile
+                      sitekey={process.env.REACT_APP_TURNSTILE_SITE_KEY} // Para Create React App
+                      // sitekey={import.meta.env.VITE_TURNSTILE_SITE_KEY} // Para Vite
+                      onVerify={(token) => setToken(token)}
+                    /></div>
                   <Button variant="primary" className="w-full bg-principal mt-3">
                     Ingresar
                   </Button>
@@ -123,7 +136,7 @@ const Login = () => {
 
             <Row>
               <Col xs={12}>
-              <Separador />
+                <Separador />
 
                 <p className="text-sm text-center mt-5">
                   ¿Aún no tienes una cuenta?  <Link to="/registro" className="color-principal text-sm">¡Créala ahora!</Link>
