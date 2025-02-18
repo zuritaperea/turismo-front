@@ -4,7 +4,7 @@ import x_button from '../assets/img/x-button.png';
 import fb_button from '../assets/img/fb-button.png'; 
 import in_button from '../assets/img/in-button.png'; 
 import { ConfigContext } from '../extras/ConfigContext'; // Importa el contexto
-
+import SocialLinks from "./SocialLinks";
 export default function Footer() {
   const [footerLogo, setFooterLogo] = useState(logo); // Estado para el logo
   const config = useContext(ConfigContext); // Usa el contexto para acceder a la configuración
@@ -89,9 +89,7 @@ export default function Footer() {
         <div className="footer-bottom py-5 px-10 flex justify-between">
           <span className="py-5 sm:px-10 sm:mx-10">© 2024 Instituto Ciudades del Futuro. All rights reserved.</span>
           <div className="flex py-5 px-10 mx-10">
-            <img src={x_button} className="mr-2 object-contain" />
-            <img src={fb_button} className="mr-2 object-contain" />
-            <img src={in_button} className="mr-2 object-contain" />
+          <SocialLinks redes={config.redes_sociales} />
           </div>
         </div>
       </footer>
