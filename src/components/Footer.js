@@ -8,10 +8,13 @@ import { ConfigContext } from '../extras/ConfigContext'; // Importa el contexto
 export default function Footer() {
   const [footerLogo, setFooterLogo] = useState(logo); // Estado para el logo
   const config = useContext(ConfigContext); // Usa el contexto para acceder a la configuración
+  const [footerDescription, setFooterDescription] = useState(""); 
 
   useEffect(() => {
     if (config) { // Verifica que config no sea null
-      setFooterLogo(config.logo || logo);
+      setFooterLogo(config.footer_logo || logo);
+      setFooterDescription(config.footer_description || "Este es un parrafo descriptivo marketinero de cada uno de los destinos.")
+
       //setfooterTitle(config.title || 'Sistema de Turismo');
     }
   }, [config]); // El useEffect se ejecuta cada vez que config cambia
@@ -24,7 +27,7 @@ export default function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 ">
             <div className="md:col-span-1 mx-10">
               <img className="logo sm:mx-10 " src={footerLogo} />
-                <p className="descripcion sm:mx-10 mt-4">Este es un parrafo descriptivo marketinero de cada uno de los destinos.</p>
+                <p className="descripcion sm:mx-10 mt-4">{footerDescription}</p>
             </div>
             <div className="hidden sm:block sm:col-span-2">
 

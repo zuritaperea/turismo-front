@@ -6,8 +6,8 @@ import medalla from "../assets/img/medalla.png";
 import { Link } from "react-router-dom";
 
 const AttractionsSection = ({data}) => {
-  const title = "Atractivos más cercanos";
-  const subtitle = "Conocé los puntos más cercanos a tu ubicación.";
+  const title = "Atractivos";
+  const subtitle = "Conocé los puntos cercanos.";
   const target = "atractivo"
 
 

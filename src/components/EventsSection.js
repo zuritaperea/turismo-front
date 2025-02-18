@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 const EventsSection = ({data}) => {
     const title = "Próximos eventos";
-    const subtitle = "Conocé los próximos eventos en Curitiba.";
+    const subtitle = "Conocé los próximos eventos.";
     const target = "evento"
 
 
