@@ -44,8 +44,11 @@ const Mapa = ({ objetosFiltrados }) => {
     <div className="relative h-full w-full">
       {/* Selector de mapas */}
       <select
-        className="absolute top-2 left-2 z-10 bg-white p-2 rounded shadow-md"
+        className="absolute top-2 right-2 bg-white p-2 rounded shadow-md text-xs"
         value={tileLayer}
+        style={{
+          zIndex: 401,
+        }}
         onChange={(e) => setTileLayer(e.target.value)}
       >
         {Object.keys(TILES).map((key) => (
@@ -63,16 +66,16 @@ const Mapa = ({ objetosFiltrados }) => {
           coordinates ? (
             <Marker key={id} icon={defaultIcon} position={[coordinates.latitude, coordinates.longitude]}>
               <Popup> <div className="text-center">
-          <h3 className="font-semibold">{title}</h3>
-          <a
-            href={`http://maps.google.com/maps?q=${coordinates.latitude},${coordinates.longitude}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-500 underline"
-          >
-            Ver en Google Maps
-          </a>
-        </div></Popup>
+                <h3 className="font-semibold">{title}</h3>
+                <a
+                  href={`http://maps.google.com/maps?q=${coordinates.latitude},${coordinates.longitude}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 underline"
+                >
+                  Ver en Google Maps
+                </a>
+              </div></Popup>
             </Marker>
           ) : null
         )}
