@@ -23,7 +23,7 @@ export default function Footer() {
   return (
     <>
       <footer>
-        <div id="menu-footer" className="bg-white py-5 sm:px-10">
+        <div id="menu-footer" className="bg-white py-5 px-56 sm:px-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 ">
             <div className="md:col-span-1 mx-10">
               <img className="logo sm:mx-10 " src={footerLogo} />

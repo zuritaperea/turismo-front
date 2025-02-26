@@ -7,8 +7,6 @@ import Jumbotron from '../components/Jumbotron';
 
 function ServiciosScreen() {
 
-
-
   return (<>
     <Header />
     <Jumbotron

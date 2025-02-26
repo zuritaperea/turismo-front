@@ -24,7 +24,8 @@ import Splash from "../components/Splash";
 import marketPlaceLogo from "../assets/img/marketplace.png"
 import pasaporteLogo from "../assets/img/pasaporte.png"
 import planificadorLogo from "../assets/img/planificador.png"
-import { ConfigContext } from '../extras/ConfigContext'; // Importa el contexto
+import { ConfigContext } from '../extras/ConfigContext';
+import { Ticket, MapPinned, Hotel, Bus, ShoppingBag, Utensils } from 'lucide-react';
 
 
 export default function Inicio() {
@@ -52,10 +53,10 @@ export default function Inicio() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (config) { // Verifica que config no sea null
+    if (config) {
       setImages(config.carousel_items || imagesTest);
     }
-  }, [config]); // El useEffect se ejecuta cada vez que config cambia
+  }, [config]);
 
 
 
@@ -126,15 +127,13 @@ export default function Inicio() {
     navigate(`/busqueda/${query}`);
   };
   const secciones = [
-    { imagen: ticketImg, titulo: 'Eventos', link: '/eventos' },
-    { imagen: markerImg, titulo: 'Atractivos', link: '/atractivos' },
-    { imagen: buildingImg, titulo: 'Alojamientos', link: '/alojamientos' },
-    { imagen: busImg, titulo: 'Circuitos', link: '/circuitos' },
-    { imagen: shoppingBagImg, titulo: 'Comercios', link: '/comercios' },
-    { imagen: gastronomyImg, titulo: 'Gastronomía', link: '/gastronomia' },
+    { icono: <Ticket size={30} />, titulo: 'Eventos', link: '/eventos' },
+    { icono: <MapPinned size={30} />, titulo: 'Atractivos', link: '/atractivos' },
+    { icono: <Hotel size={30} />, titulo: 'Alojamientos', link: '/alojamientos' },
+    { icono: <Bus size={30} />, titulo: 'Circuitos', link: '/circuitos' },
+    { icono: <ShoppingBag size={30} />, titulo: 'Comercios', link: '/comercios' },
+    { icono: <Utensils size={30} />, titulo: 'Gastronomía', link: '/gastronomia' },
   ];
-
-
   return (
     <>
       {loading ? <Splash /> : null}
@@ -145,9 +144,9 @@ export default function Inicio() {
       <SearchComponent onSearch={handleSearch} />
       <SeccionesSlider secciones={secciones} />
       <div className="flex justify-center flex-wrap">
-        <img src={marketPlaceLogo} className="m-2 h-48 2xl:h-auto" loading="lazy" alt="Marketplace"/>
+        <img src={marketPlaceLogo} className="m-2 h-48 2xl:h-auto" loading="lazy" alt="Marketplace" />
         <img src={pasaporteLogo} className="m-2 h-48 2xl:h-auto" loading="lazy" alt="Pasaporte" />
-        <img src={planificadorLogo} className="m-2 h-48 2xl:h-auto" loading="lazy" alt="Planificador"/>
+        <img src={planificadorLogo} className="m-2 h-48 2xl:h-auto" loading="lazy" alt="Planificador" />
       </div>
       <hr />
       {loadingAtractivos ? (
@@ -156,7 +155,6 @@ export default function Inicio() {
         <AttractionsSection data={naturalAttractions.sort(() => Math.random() - Math.random()).slice(0, 6)} />
       )}
 
-
       <hr />
       {loadingEventos ? (
         <Spinner animation="border" role="status" />
@@ -164,20 +162,19 @@ export default function Inicio() {
         <EventsSection data={eventos.sort(() => Math.random() - Math.random()).slice(0, 6)} />
       )}
 
-
-
-
-      <Row className="justify-content-md-center p-2">
+      <Row className="justify-content-md-center p-2 px-56">
         <Col md="12">
           {!personaDenominacion ? (
             <Alert variant="light">
               ¿Sabías que al <Alert.Link href="/login">iniciar sesión </Alert.Link>
-              puedes guardar tus destinos favoritos y recibir recomendaciones personalizadas?</Alert>
+              puedes guardar tus destinos favoritos y recibir recomendaciones personalizadas?
+            </Alert>
           ) : (
             <Alert variant="light">
               Para mejorar los resultados de tus búsquedas, <Alert.Link href="/perfil">completá  </Alert.Link>
               algunos datos que definan <Alert.Link href="/perfil">tu perfil de turista</Alert.Link>
-            </Alert>)}
+            </Alert>
+          )}
         </Col>
       </Row>
 

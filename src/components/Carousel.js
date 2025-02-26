@@ -15,7 +15,7 @@ function Carousel({ images }) {
   }
 
   return (
-    <div className="relative swiper-container">
+    <div className="relative swiper-container" style={{ height: '670px' }}>
       <Swiper
         // install Swiper modules
         modules={[Navigation, Pagination]}
@@ -23,7 +23,7 @@ function Carousel({ images }) {
         slidesPerView={1}
         navigation={true}
         pagination={{ clickable: true }}
-        style={{ height: '250px' }} // Define la altura aquí si no está en CSS
+         // Define la altura aquí si no está en CSS
 
       >
         {images.map((img, index) => (

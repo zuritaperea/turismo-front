@@ -281,8 +281,6 @@ function BusquedaAvanzada() {
       setSelectedFiltersRango(updatedFilters);
   };
 
-
-
   return (
     <>
       <Header />
