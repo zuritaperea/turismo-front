@@ -1,13 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-optical-sizing: auto;
   font-weight: 200;
   font-style: normal;
@@ -85,6 +86,33 @@ z-index: 15;
   background-color: rgb(250 250 250);
 }
 
+.category-title {
+  color: #F08400 !important;
+}
+
+.section-title {
+  color: #101828;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.marketplace-img,
+.pasaporte-img,
+.planificador-img {
+  width: 100%;
+  max-width: 440px;
+  height: auto; /* Permite que la imagen mantenga proporción */
+}
+
+@media (min-width: 640px) {
+  .marketplace-img,
+  .pasaporte-img,
+  .planificador-img {
+    width: 440px;
+    height: 222px;
+  }
+}
+
 .swiper-pagination {
   background-color: #eceef1;
   width: fit-content !important;
@@ -102,10 +130,13 @@ z-index: 15;
 }
 
 .swiper-container {
-  height: 250px;
-  overflow: hidden;
+  height: 436px;
   margin-top: 5px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 2rem;
 }
+
 
 .swiper-slide {
   display: flex;

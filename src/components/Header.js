@@ -3,6 +3,7 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import logo from '../assets/img/logomark.png';
 import { ConfigContext } from '../extras/ConfigContext';
 import { AuthContext } from "./AuthContext";
+import { Sun, Menu, X } from 'lucide-react';
 
 export default function Header() {
   const [personaDenominacion, setPersonaDenominacion] = useState(null);
@@ -43,38 +44,50 @@ export default function Header() {
   }, [user]);
 
   return (
-    <header className="w-full shadow-md px-56 py-10 bg-white relative">
-      <div className="flex items-center relative">
-        <div className="flex items-center absolute left-0">
-          {isHomePage ? (
-            <>
-              <Link to="/">
-                <img className="logo" src={headerLogo} alt="Logo" />
-              </Link>
-              <Link to="/">
-                <h1 className="ml-3 font-bold text-lg font-poppins">{headerTitle}</h1>
-              </Link>
-            </>
-          ) : (
-            <div className="cursor-pointer flex items-center" onClick={handleGoBack}>
-              <div className="rounded-full h-10 w-10 flex items-center justify-center">
-                <i className="fas fa-chevron-left text-base"></i>
-              </div>
-              <h1 className="ml-3 font-bold text-lg font-poppins">Atrás</h1>
-            </div>
-          )}
+    <header className="w-full shadow-md bg-white py-4 px-6 md:px-10">
+      <div className="flex items-center justify-between h-16">
+        <div className="flex items-center">
+          <Link to="/" className="flex items-center">
+            <img className="h-10" src={headerLogo} alt="Logo" />
+            {isHomePage && (
+              <h1 className="ml-3 font-semibold text-lg font-inter hidden sm:block">
+                {headerTitle}
+              </h1>
+            )}
+          </Link>
         </div>
 
-        <nav className="absolute inset-x-0 mx-auto flex justify-center w-max">
-          <div className="flex gap-6">
-            <Link to="/descubre" className="hover:text-blue-600 font-bold text-lg font-poppins">Descubre</Link>
-            <Link to="/experiencias" className="hover:text-blue-600 font-bold text-lg font-poppins">Experiencias</Link>
-            <Link to="/eventos" className="hover:text-blue-600 font-bold text-lg font-poppins">Eventos</Link>
-            <Link to="/planifica" className="hover:text-blue-600 font-bold text-lg font-poppins">Planifica</Link>
-          </div>
+        <div className="md:hidden flex items-center gap-4">
+          <button onClick={() => setMenuOpen(!menuOpen)}>
+            {menuOpen ? <X size={28} className="text-gray-700" /> : <Menu size={28} className="text-gray-700" />}
+          </button>
+          <Sun className="text-yellow-500" size={24} />
+
+        </div>
+
+
+        <nav className="hidden md:flex gap-6 items-center">
+          <Link to="/descubre" className="hover:text-blue-600 text-[#475467] font-medium text-base">Inicio</Link>
+          <Link to="/experiencias" className="hover:text-blue-600 text-[#475467] font-light text-base">Alojamiento</Link>
+          <Link to="/eventos" className="hover:text-blue-600 text-[#475467] font-light text-base">Actividades</Link>
+          <Link to="/planifica" className="hover:text-blue-600 text-[#475467] font-light text-base">Eventos</Link>
+          <Link to="/planifica" className="hover:text-blue-600 text-[#475467] font-light text-base">Circuito</Link>
+          <Sun className="text-yellow-500" size={24} />
         </nav>
       </div>
-    </header>
 
+      {menuOpen && (
+        <div className="md:hidden absolute top-16 left-0 w-full bg-white shadow-md p-4 transition-all duration-300 z-50">
+          <nav className="flex flex-col gap-4 items-center">
+            <Link to="/descubre" className="hover:text-blue-600 text-[#475467] font-medium text-base" onClick={() => setMenuOpen(false)}>Inicio</Link>
+            <Link to="/experiencias" className="hover:text-blue-600 text-[#475467] font-light text-base" onClick={() => setMenuOpen(false)}>Alojamiento</Link>
+            <Link to="/eventos" className="hover:text-blue-600 text-[#475467] font-light text-base" onClick={() => setMenuOpen(false)}>Actividades</Link>
+            <Link to="/planifica" className="hover:text-blue-600 text-[#475467] font-light text-base" onClick={() => setMenuOpen(false)}>Eventos</Link>
+            <Link to="/planifica" className="hover:text-blue-600 text-[#475467] font-light text-base" onClick={() => setMenuOpen(false)}>Circuito</Link>
+          </nav>
+        </div>
+      )}
+
+    </header>
   );
 }

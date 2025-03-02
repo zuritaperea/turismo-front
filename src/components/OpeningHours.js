@@ -54,7 +54,6 @@ const formatOpeningHours = (openingHoursText) => {
 };
 
 const OpeningHours = ({ openingHoursText }) => {
-  // Si no hay horarios, mostrar un mensaje adecuado
   if (!openingHoursText) {
     return null;
   }
@@ -63,13 +62,15 @@ const OpeningHours = ({ openingHoursText }) => {
 
   return (
     <div>
-      <ul className='descripcion list-disc ml-10'>
+      <ul className="list-disc ml-10">
         {formattedOpeningHours.length === 0 ? (
-          <li>No hay horarios disponibles.</li>
+          <li style={{ color: "#475467", fontWeight: "400", fontSize: "16px" }}>
+            No hay horarios disponibles.
+          </li>
         ) : (
           formattedOpeningHours.map((item, index) => (
-            <li key={index}>
-              <strong>{item.day}:</strong> {item.times}
+            <li key={index} style={{ color: "#475467", fontWeight: "400", fontSize: "16px" }}>
+              <span>{item.day}:</span> {item.times}
             </li>
           ))
         )}
@@ -77,5 +78,6 @@ const OpeningHours = ({ openingHoursText }) => {
     </div>
   );
 };
+
 
 export default OpeningHours;

@@ -12,8 +12,12 @@ function SearchComponent({ onSearch }) {
   };
 
   return (
-    <div id="search" className="bg-principal rounded-lg p-6 mt-6 text-white">
-      <h2 className="text-md font-medium mb-2">
+    <div 
+    id="search" 
+    className="rounded-lg p-6 md:mt-6 text-white w-full max-w-lg mx-auto sm:mx-10"
+    style={{ backgroundColor: '#F08400' }}
+  >
+      <h2 className="text-md font-medium mb-2 text-center">
         ¿Estás buscando algo en particular?
       </h2>
       <div className="relative">

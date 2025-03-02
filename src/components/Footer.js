@@ -22,15 +22,14 @@ export default function Footer() {
 
   return (
     <>
-      <footer>
-        <div id="menu-footer" className="bg-white py-5 px-56 sm:px-10">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 ">
+      <footer className="hidden md:block">
+        <div id="menu-footer" className="bg-white mt-10 py-5 px-56 sm:px-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="md:col-span-1 mx-10">
-              <img className="logo sm:mx-10 " src={footerLogo} />
-                <p className="descripcion sm:mx-10 mt-4">{footerDescription}</p>
+              <img className="logo sm:mx-10" src={footerLogo} alt="Logo Footer" />
+              <p className="descripcion sm:mx-10 mt-4">{footerDescription}</p>
             </div>
             <div className="hidden sm:block sm:col-span-2">
-
               <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
                 <div>
                   <h3 className="titulo mb-4">Product</h3>
@@ -89,11 +88,10 @@ export default function Footer() {
         <div className="footer-bottom py-5 px-10 flex justify-between">
           <span className="py-5 sm:px-10 sm:mx-10">© 2024 Instituto Ciudades del Futuro. All rights reserved.</span>
           <div className="flex py-5 px-10 mx-10">
-          <SocialLinks redes={config.redes_sociales} />
+            <SocialLinks redes={config.redes_sociales} />
           </div>
         </div>
       </footer>
-
     </>
   );
 }

@@ -79,23 +79,31 @@ function ItemScreen({ tipoObjeto }) {
   return (
     <>
       <Header />
-      <div className="w-full h-64 bg-gray-300">
-        <img className="w-full object-cover object-center h-64" src={item.image} alt="Imagen 1" />
+      <div className="w-full max-w-[1376px] mx-auto p-4">
+        <img
+          className="w-full h-64 object-cover object-center rounded-xl md:rounded-xl lg:rounded-xl shadow-md"
+          src={item.image}
+          alt="Imagen 1"
+        />
       </div>
+
 
       <div className="container mx-auto p-4">
         <div className="pb-4">
-          <BotonesAccion /> 
-
+          <BotonesAccion />
           <div className="pb-3 text-center lg:text-left">
             <h2 className="text-sm font-semibold mt-2 color-principal">{item?.attributes?.type}</h2>
             <h1 className="py-2 text-4xl font-semibold text-slate-900 tracking-tight dark:text-slate-200">
               {item?.attributes?.name}
             </h1>
-            <div className="space-x-1 mt-2 p-2 flex justify-center lg:justify-start">
+            <div className="space-x-1 mt-2 mb-5 flex justify-center lg:justify-start">
               <TagsList tags={item?.attributes?.tourist_type} />
             </div>
-            <Estrellas puntuacion={item?.attributes?.puntuacion} size={'sm'} />
+            <div className="flex items-center justify-center md:justify-start mt-2">
+              <Estrellas puntuacion={item?.attributes?.puntuacion} size={'sm'} />
+              <span className="puntacion font-semibold mx-1">{item?.attributes?.puntuacion}</span>
+            </div>
+
             <span className="puntacion font-semibold mx-1">{item?.attributes?.puntuacion}</span>
           </div>
 
@@ -104,15 +112,19 @@ function ItemScreen({ tipoObjeto }) {
 
           {item?.attributes?.amenity_feature && <Servicios servicios={item?.attributes?.amenity_feature} />}
 
-          <Carousel images={item?.attributes?.contenidos} />
+          <div className="w-full max-w-[1376px] mx-auto ">
+            <Carousel images={item?.attributes?.contenidos} detail={true} />
+          </div>
+
+
           <div className="grid grid-cols-1 md:grid-cols-3">
             <FechasHorarios item={item} tipoObjeto={tipoObjeto} />
             <Contacto />
             <RedesSociales />
           </div>
-          <RangoPrecios item={item} />
+          {/* <RangoPrecios item={item} /> */}
           <Certificaciones item={item} />
-          <InformacionEmpresa item={item} />
+          {/* <InformacionEmpresa item={item} /> */}
 
           <BotonesCalificarYCompartir item={item} />
 

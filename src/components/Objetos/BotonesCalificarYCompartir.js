@@ -1,11 +1,14 @@
 const BotonesCalificarCompartir = ({ onCalificar, onCompartir }) => (
-    <div className="botones float-right sm:hidden">
-      <button className="color-principal bg-white shadow-sm px-10 py-3 font-semibold rounded-lg mr-2" onClick={onCalificar}>
-        <i className="fa-regular fa-star"></i> Calificar
-      </button>
-      <button className="color-principal bg-white shadow-sm px-10 py-3 font-semibold rounded-lg" onClick={onCompartir}>
-        <i className="fa-solid fa-arrow-up-right-from-square"></i> Compartir
-      </button>
-    </div>
-  );
-  export default BotonesCalificarCompartir;
+  <div className="botones flex justify-center items-center gap-4 sm:hidden mt-10">
+    <button className="color-principal bg-white shadow-sm px-6 py-3 font-semibold rounded-lg flex items-center">
+      <i className="fa-regular fa-star mr-2" style={{ color: "#F08400" }}></i>
+      <span style={{ color: "#F08400" }}>Calificar</span>
+    </button>
+    <button className="color-principal bg-white shadow-sm px-6 py-3 font-semibold rounded-lg flex items-center">
+      <i className="fa-solid fa-arrow-up-right-from-square mr-2" style={{ color: "#F08400" }}></i>
+      <span style={{ color: "#F08400" }}>Compartir</span>
+    </button>
+  </div>
+);
+
+export default BotonesCalificarCompartir;

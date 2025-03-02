@@ -5,30 +5,34 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
-function Carousel({ images }) {
-  useEffect(() => {
-    // Puedes agregar cualquier configuración adicional aquí si lo necesitas
-  }, []);
-  // Verificar si las imágenes están presentes
+
+function Carousel({ images, detail = false }) {
+  useEffect(() => {}, []);
+
   if (!images || images.length === 0) {
-    return null; // No renderiza nada si no hay imágenes
+    return null; 
   }
 
   return (
-    <div className="relative swiper-container" style={{ height: '670px' }}>
+    <div 
+      className={`relative w-full mx-auto mt-5 ${detail ? 'max-w-[1600px] px-4 md:px-0' : 'max-w-[1376px] px-10 md:px-0'}`}
+      style={{ height: 'auto', minHeight: '280px', maxHeight: '436px', marginBottom: '1rem' }} 
+    >
       <Swiper
-        // install Swiper modules
         modules={[Navigation, Pagination]}
-        spaceBetween={50}
+        spaceBetween={20}
         slidesPerView={1}
         navigation={true}
         pagination={{ clickable: true }}
-         // Define la altura aquí si no está en CSS
-
       >
         {images.map((img, index) => (
-          <SwiperSlide key={index} className="w-full h-64 bg-gray-300 rounded-lg">
-            <img className="rounded-lg" src={img.file} alt={img.title} />
+          <SwiperSlide key={index} className="rounded-lg overflow-hidden">
+            <img
+              style={{ height: 'auto', minHeight: '280px', maxHeight: '430px', marginBottom: '1rem', borderRadius: '1rem' }}
+              className="w-full max-h-[436px] object-cover mx-auto rounded-lg"
+              src={img.file}
+              alt={img.title}
+            />
           </SwiperSlide>
         ))}
       </Swiper>

@@ -1,13 +1,25 @@
 import { Link } from "react-router-dom";
 import Card from "../Card";
 
-const Recomendaciones = ({ items, tipoObjeto }) => (
+const Recomendaciones = ({ items, tipoObjeto }) => {
+  if (!items || items.length === 0) {
+    return null; // No renderiza nada si no hay recomendaciones
+  }
+
+  return (
     <div className="py-4">
-      <div className="text-3xl font-semibold text-slate-900 tracking-tight dark:text-slate-200 mb-4">
+      <div
+        className="mb-4"
+        style={{
+          color: "#101828",
+          fontSize: "30px",
+          fontWeight: "600",
+        }}
+      >
         También puede interesarte...
       </div>
       <div className="slider-horizontal flex space-x-4 overflow-x-auto pl-2">
-        {items?.map((item) => (
+        {items.map((item) => (
           <Link key={item.id} to={`/${tipoObjeto}/${item.id}`}>
             <Card
               key={item.id}
@@ -23,5 +35,6 @@ const Recomendaciones = ({ items, tipoObjeto }) => (
       </div>
     </div>
   );
-  
-  export default Recomendaciones;
+};
+
+export default Recomendaciones;

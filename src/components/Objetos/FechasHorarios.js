@@ -4,7 +4,7 @@ import Fecha from '../Fecha';
 
 const FechasHorarios = ({ item, tipoObjeto }) => (
   <div id="horarios">
-    <div className="text-xl font-bold text-slate-900 tracking-tight dark:text-slate-200 my-4">
+    <div className="text-xl text-slate-900 tracking-tight font-semibold dark:text-slate-200 my-4" style={{ color: '#101828' }}>
       {tipoObjeto === 'evento' ? 'Fechas' : 'Horarios'}
     </div>
     <OpeningHours openingHoursText={item?.attributes?.opening_hours} />

@@ -1,12 +1,14 @@
 import React from 'react';
 
 const BotonesAccion = () => (
-  <div className="botones float-right hidden sm:block">
-    <button className="color-principal bg-white shadow-sm px-10 py-3 font-semibold rounded-lg mr-2">
-      <i className="fa-regular fa-star"></i> Calificar
+  <div className="hidden sm:flex justify-center md:justify-end items-center gap-2 mt-4 md:mt-0">
+    <button className="bg-white shadow-sm px-6 py-2 font-semibold rounded-lg flex items-center">
+      <i className="fa-regular fa-star mr-2" style={{ color: "#F08400" }}></i>
+      <span style={{ color: "#F08400" }}>Calificar</span>
     </button>
-    <button className="color-principal bg-white shadow-sm px-10 py-3 font-semibold rounded-lg">
-      <i className="fa-solid fa-arrow-up-right-from-square"></i> Compartir
+    <button className="bg-white shadow-sm px-6 py-2 font-semibold rounded-lg flex items-center">
+      <i className="fa-solid fa-arrow-up-right-from-square mr-2" style={{ color: "#F08400" }}></i>
+      <span style={{ color: "#F08400" }}>Compartir</span>
     </button>
   </div>
 );

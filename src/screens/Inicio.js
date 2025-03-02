@@ -141,42 +141,32 @@ export default function Inicio() {
       <Header />
       <Carousel images={images} />
 
-      <SearchComponent onSearch={handleSearch} />
-      <SeccionesSlider secciones={secciones} />
-      <div className="flex justify-center flex-wrap">
-        <img src={marketPlaceLogo} className="m-2 h-48 2xl:h-auto" loading="lazy" alt="Marketplace" />
-        <img src={pasaporteLogo} className="m-2 h-48 2xl:h-auto" loading="lazy" alt="Pasaporte" />
-        <img src={planificadorLogo} className="m-2 h-48 2xl:h-auto" loading="lazy" alt="Planificador" />
+      <div className="flex justify-center flex-col items-center px-8">
+        <SearchComponent onSearch={handleSearch} />
+        <SeccionesSlider secciones={secciones} />
       </div>
-      <hr />
+
+      <div className="flex overflow-x-auto md:overflow-hidden whitespace-nowrap justify-start md:justify-center gap-4 px-4 md:px-0 pb-4">
+        <img src={marketPlaceLogo} className="h-48 flex-none" loading="lazy" alt="Marketplace" />
+        <img src={pasaporteLogo} className="h-48 flex-none" loading="lazy" alt="Pasaporte" />
+        <img src={planificadorLogo} className="h-48 flex-none" loading="lazy" alt="Planificador" />
+      </div>
+
+      <div className="border-t border-[#E4E7EC] h-[1px] md:hidden my-4"></div>
+
       {loadingAtractivos ? (
         <Spinner animation="border" role="status" />
       ) : (
         <AttractionsSection data={naturalAttractions.sort(() => Math.random() - Math.random()).slice(0, 6)} />
       )}
+      <div className="border-t border-[#E4E7EC] h-[1px] md:hidden my-4"></div>
 
-      <hr />
+
       {loadingEventos ? (
         <Spinner animation="border" role="status" />
       ) : (
         <EventsSection data={eventos.sort(() => Math.random() - Math.random()).slice(0, 6)} />
       )}
-
-      <Row className="justify-content-md-center p-2 px-56">
-        <Col md="12">
-          {!personaDenominacion ? (
-            <Alert variant="light">
-              ¿Sabías que al <Alert.Link href="/login">iniciar sesión </Alert.Link>
-              puedes guardar tus destinos favoritos y recibir recomendaciones personalizadas?
-            </Alert>
-          ) : (
-            <Alert variant="light">
-              Para mejorar los resultados de tus búsquedas, <Alert.Link href="/perfil">completá  </Alert.Link>
-              algunos datos que definan <Alert.Link href="/perfil">tu perfil de turista</Alert.Link>
-            </Alert>
-          )}
-        </Col>
-      </Row>
 
       <Footer />
     </>
