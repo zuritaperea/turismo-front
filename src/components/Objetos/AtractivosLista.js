@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import LandingHeader from "../Landing/LandingHeader/LandingHeader";
 import LandingFooter from "../Landing/LandingFooter/LandingFooter";
