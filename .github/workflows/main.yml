@@ -3,7 +3,7 @@ name: Despliegue Automático
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   deploy:
