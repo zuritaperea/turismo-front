@@ -1,0 +1,18 @@
+name: Despliegue Automático
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted  # Usamos el runner auto-hospedado
+
+    steps:
+      - name: Comprobación de código
+        uses: actions/checkout@v3
+
+      - name: Despliegue en el servidor
+        run: |
+          bash /home/ldc/projects/marchiquita/front/deploy.sh
