@@ -106,9 +106,6 @@ const Registro = () => {
     }
   };
 
-  const toggleMostrarContrasenia = () => {
-    setMostrarContrasenia(!mostrarContrasenia);
-  };
 
   useEffect(() => {
     if (registroExitoso) {

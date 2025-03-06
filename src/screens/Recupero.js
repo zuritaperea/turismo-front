@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext, useEffect } from 'react';
+import React, { useState,  useContext, useEffect } from 'react';
 import Form from '../components/Form';
 import Button from '../components/Button';
 import Alert from '../components/Alert';
@@ -7,10 +7,9 @@ import Col from '../components/Col';
 import Container from '../components/Container';
 import logo from '../assets/img/logomark.png';
 import { ConfigContext } from '../extras/ConfigContext'; // Importa el contexto
-import { useForm } from 'react-hook-form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Turnstile from "react-turnstile";
 
 import registroService from "../axios/services/profile";
