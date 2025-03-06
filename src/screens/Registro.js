@@ -5,12 +5,8 @@ import Button from "../components/Button";
 import Row from "../components/Row";
 import Col from "../components/Col";
 import Alert from "../components/Alert";
-import Spinner from "../components/Spinner"
 import { Link, useNavigate } from 'react-router-dom';
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import registroService from "../axios/services/profile";
-import paises from "../extras/paises"
 import logo from '../assets/img/logomark.png';
 import { v4 as uuidv4 } from 'uuid';
 import functions from "../extras/functions";
