@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
-import logo from '../assets/img/logomark.png'; 
+import logo from '../assets/img/logomark.png';
 import x_button from '../assets/img/x-button.png';
-import fb_button from '../assets/img/fb-button.png'; 
-import in_button from '../assets/img/in-button.png'; 
+import fb_button from '../assets/img/fb-button.png';
+import in_button from '../assets/img/in-button.png';
 import { ConfigContext } from '../extras/ConfigContext'; // Importa el contexto
 import SocialLinks from "./SocialLinks";
 export default function Footer() {
   const [footerLogo, setFooterLogo] = useState(logo); // Estado para el logo
   const config = useContext(ConfigContext); // Usa el contexto para acceder a la configuración
-  const [footerDescription, setFooterDescription] = useState(""); 
+  const [footerDescription, setFooterDescription] = useState("");
 
   useEffect(() => {
     if (config) { // Verifica que config no sea null
@@ -66,9 +66,6 @@ export default function Footer() {
                   <ul>
                     <li className="mb-2"><a href="#" className="hover:underline font-semibold">Facebook</a></li>
                     <li className="mb-2"><a href="#" className="hover:underline font-semibold">Twitter</a></li>
-                    <li className="mb-2"><a href="#" className="hover:underline font-semibold">LinkedIn</a></li>
-                    <li className="mb-2"><a href="#" className="hover:underline font-semibold">Instagram</a></li>
-                    <li className="mb-2"><a href="#" className="hover:underline font-semibold">YouTube</a></li>
                   </ul>
                 </div>
                 <div>
@@ -77,8 +74,6 @@ export default function Footer() {
                     <li className="mb-2"><a href="#" className="hover:underline font-semibold">Privacy Policy</a></li>
                     <li className="mb-2"><a href="#" className="hover:underline font-semibold">Terms of Service</a></li>
                     <li className="mb-2"><a href="#" className="hover:underline font-semibold">Cookie Policy</a></li>
-                    <li className="mb-2"><a href="#" className="hover:underline font-semibold">GDPR Compliance</a></li>
-                    <li className="mb-2"><a href="#" className="hover:underline font-semibold">Accessibility</a></li>
                   </ul>
                 </div>
               </div>

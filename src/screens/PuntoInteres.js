@@ -8,19 +8,16 @@ import Footer from "../components/Footer";
 import Jumbotron from '../components/Jumbotron';
 import CustomAccordion from '../components/CustomAccordion';
 import Opiniones from '../components/Opiniones';
-import Multimedia from '../components/Multimedia';
 import { useParams } from 'react-router-dom';
 import service from '../axios/services/puntoInteres';
 import favoritoService from '../axios/services/favorito_visitado';
 import ImageCarousel from '../components/ImageCarousel';
-import MapView from '../components/MapView';
 
 function PuntoInteresScreen() {
   const { id, fechadesde, fechahasta } = useParams();
   const [puntoInteres, setPuntoInteres] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [canal, setCanal] = useState(null);
 
   // Opiniones aqui
   const opiniones = puntoInteres?.opiones;

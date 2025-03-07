@@ -58,13 +58,6 @@ const Perfil = () => {
   const [registroExitoso, setRegistroExitoso] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  const irAFavoritos = () => {
-    navigate('/favoritos');
-  };
-  const irAVisitados = () => {
-    navigate('/visitados');
-  };
-
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setDatosUsuario({

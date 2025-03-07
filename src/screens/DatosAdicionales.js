@@ -3,7 +3,6 @@ import Container from "../components/Container"
 import Button from "../components/Button";
 import Row from "../components/Row";
 import Col from "../components/Col";
-import Accordion from '../components/Accordion';
 import Alert from "../components/Alert";
 import Form from '../components/Form';
 import Header from "../components/Header";

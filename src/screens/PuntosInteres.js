@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Button, Image } from 'react-bootstrap';
-import { Spinner, Alert } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
+import { Container, Row, Col } from 'react-bootstrap';
+import { Spinner } from 'react-bootstrap';
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Jumbotron from '../components/Jumbotron';
@@ -11,7 +9,6 @@ import ContentSection from '../components/ContentSection';
 import { useParams } from 'react-router-dom';
 
 function PuntosInteres() {
-  const [error, setError] = useState(null);
   const [puntointeress, setPuntosInteres] = useState([]);
   const [loadingPuntosInteres, setLoadingPuntosInteres] = useState(true);
   const { id } = useParams();
@@ -46,14 +43,6 @@ function PuntosInteres() {
     obtenerPuntosInteres();
   }, [id]);
 
-
-  if (error) {
-    return (
-      <Alert variant="danger">
-        <FontAwesomeIcon icon={faExclamationCircle} /> {error}
-      </Alert>
-    );
-  }
 
 
   return (<>
