@@ -49,11 +49,6 @@ export default function Inicio() {
 
 
   useEffect(() => {
-    const item = JSON.parse(localStorage.getItem('user'));
-    if (item) {
-      setPersonaDenominacion(item?.username);
-    }
-
     const obtenerEventos = async () => {
       try {
         const response = await eventoService.obtenerTodos();
