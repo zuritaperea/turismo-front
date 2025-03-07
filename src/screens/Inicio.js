@@ -21,11 +21,8 @@ import { Ticket, MapPinned, Hotel, Bus, ShoppingBag, Utensils } from 'lucide-rea
 export default function Inicio() {
   const [loading, setLoading] = useState(false);
 
-  const [personaDenominacion, setPersonaDenominacion] = useState(null);
-
   const [eventos, setEventos] = useState([]);
 
-  const [error, setError] = useState("");
   const [images, setImages] = useState([]);
   const [naturalAttractions, setNaturalAttractions] = useState([]);
 

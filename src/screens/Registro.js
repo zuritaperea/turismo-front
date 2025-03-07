@@ -32,8 +32,6 @@ const Registro = () => {
     apellido: '',
     documento_identidad: '',
   });
-  const [mostrarContrasenia, setMostrarContrasenia] = useState(false);
-
   const [error, setError] = useState([]);
   const [registroExitoso, setRegistroExitoso] = useState(false);
   const config = useContext(ConfigContext); // Usa el contexto para acceder a la configuración
@@ -199,7 +197,7 @@ const Registro = () => {
               <Form.Group controlId="password">
                 <Form.Label>Contraseña *</Form.Label>
                 <Form.Control
-                  type={mostrarContrasenia ? 'text' : 'password'}
+                  type='password'
                   name="password"
                   value={datosUsuario.password}
                   onChange={handleInputChange}
