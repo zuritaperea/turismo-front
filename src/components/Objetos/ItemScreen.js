@@ -87,12 +87,13 @@ function ItemScreen({ tipoObjeto }) {
         />
       </div>
 
-
       <div className="container mx-auto p-4">
         <div className="pb-4">
           <BotonesAccion />
           <div className="pb-3 text-center lg:text-left">
-            <h2 className="text-sm font-semibold mt-2 color-principal">{item?.attributes?.type}</h2>
+            <h2 className="text-sm font-semibold mt-2 color-principal">
+              {item?.attributes?.type}
+            </h2>
             <h1 className="py-2 text-4xl font-semibold text-slate-900 tracking-tight dark:text-slate-200">
               {item?.attributes?.name}
             </h1>
@@ -101,10 +102,13 @@ function ItemScreen({ tipoObjeto }) {
             </div>
             <div className="flex items-center justify-center md:justify-start mt-2">
               <Estrellas puntuacion={item?.attributes?.puntuacion} size={'sm'} />
-              <span className="puntacion font-semibold mx-1">{item?.attributes?.puntuacion}</span>
+              <span className="puntacion font-semibold mx-1">
+                {item?.attributes?.puntuacion}
+              </span>
             </div>
-
-            <span className="puntacion font-semibold mx-1">{item?.attributes?.puntuacion}</span>
+            <span className="puntacion font-semibold mx-1">
+              {item?.attributes?.puntuacion}
+            </span>
           </div>
 
           <SeccionConTitulo titulo="Descripción" contenido={item?.attributes?.description} />
@@ -116,14 +120,18 @@ function ItemScreen({ tipoObjeto }) {
             <Carousel images={item?.attributes?.contenidos} detail={true} />
           </div>
 
-
           <div className="grid grid-cols-1 md:grid-cols-3">
             <FechasHorarios item={item} tipoObjeto={tipoObjeto} />
             <Contacto />
             <RedesSociales />
           </div>
           {/* <RangoPrecios item={item} /> */}
-          <Certificaciones item={item} />
+
+          {item?.attributes?.certificaciones &&
+            item?.attributes?.certificaciones.length > 0 && (
+              <Certificaciones item={item} />
+            )}
+
           {/* <InformacionEmpresa item={item} /> */}
 
           <BotonesCalificarYCompartir item={item} />

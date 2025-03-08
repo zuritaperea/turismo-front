@@ -1,92 +1,68 @@
 import React, { useContext, useEffect, useState } from "react";
 import logo from '../assets/img/logomark.png';
-import x_button from '../assets/img/x-button.png';
-import fb_button from '../assets/img/fb-button.png';
-import in_button from '../assets/img/in-button.png';
 import { ConfigContext } from '../extras/ConfigContext'; // Importa el contexto
 import SocialLinks from "./SocialLinks";
+
 export default function Footer() {
-  const [footerLogo, setFooterLogo] = useState(logo); // Estado para el logo
-  const config = useContext(ConfigContext); // Usa el contexto para acceder a la configuración
+  const [footerLogo, setFooterLogo] = useState(logo);
+  const config = useContext(ConfigContext);
   const [footerDescription, setFooterDescription] = useState("");
 
   useEffect(() => {
-    if (config) { // Verifica que config no sea null
+    if (config) {
       setFooterLogo(config.footer_logo || logo);
-      setFooterDescription(config.footer_description || "Este es un parrafo descriptivo marketinero de cada uno de los destinos.")
-
-      //setfooterTitle(config.title || 'Sistema de Turismo');
+      setFooterDescription(
+        config.footer_description ||
+          "Este es un párrafo descriptivo marketinero de cada uno de los destinos."
+      );
     }
-  }, [config]); // El useEffect se ejecuta cada vez que config cambia
-
+  }, [config]);
 
   return (
-    <>
-      <footer className="hidden md:block">
-        <div id="menu-footer" className="bg-white mt-10 py-5 px-56 sm:px-10">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="md:col-span-1 mx-10">
-              <img className="logo sm:mx-10" src={footerLogo} alt="Logo Footer" />
-              <p className="descripcion sm:mx-10 mt-4">{footerDescription}</p>
+    <footer className="hidden md:block">
+      {/* Sección superior del footer */}
+      <div id="menu-footer" className="bg-white mt-10 py-5 px-10 mx-auto">
+      <p className="descripcion text-center sm:mx-10 my-7 text-sm text-gray-600">
+  {footerDescription}
+</p>
+        
+        <div className="flex flex-col md:flex-row items-center justify-center gap-8">
+          
+          <div className="flex justify-center">
+            <img className="logo" src={footerLogo} alt="Logo Footer" />
+          </div>
+          <div className="flex flex-wrap justify-center gap-8">
+            <div>
+              <h3 className="titulo mb-4 text-center">About us</h3>
             </div>
-            <div className="hidden sm:block sm:col-span-2">
-              <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
-                <div>
-                  <h3 className="titulo mb-4">Product</h3>
-                  <ul>
-                    <li className="mb-2"><a href="#" className="hover:underline font-semibold">Overview</a></li>
-                    <li className="mb-2"><a href="#" className="hover:underline font-semibold">Features</a></li>
-                    <li className="mb-2"><a href="#" className="hover:underline font-semibold">Pricing</a></li>
-                    <li className="mb-2"><a href="#" className="hover:underline font-semibold">Integrations</a></li>
-                    <li className="mb-2"><a href="#" className="hover:underline font-semibold">API</a></li>
-                  </ul>
-                </div>
-                <div>
-                  <h3 className="titulo mb-4">Company</h3>
-                  <ul>
-                    <li className="mb-2"><a href="#" className="hover:underline font-semibold">About Us</a></li>
-                    <li className="mb-2"><a href="#" className="hover:underline font-semibold">Careers</a></li>
-                    <li className="mb-2"><a href="#" className="hover:underline font-semibold">Press</a></li>
-                    <li className="mb-2"><a href="#" className="hover:underline font-semibold">Blog</a></li>
-                    <li className="mb-2"><a href="#" className="hover:underline font-semibold">Contact</a></li>
-                  </ul>
-                </div>
-                <div>
-                  <h3 className="titulo mb-4">Resources</h3>
-                  <ul>
-                    <li className="mb-2"><a href="#" className="hover:underline font-semibold">Documentation</a></li>
-                    <li className="mb-2"><a href="#" className="hover:underline font-semibold">Tutorials</a></li>
-                    <li className="mb-2"><a href="#" className="hover:underline font-semibold">Community</a></li>
-                    <li className="mb-2"><a href="#" className="hover:underline font-semibold">Support</a></li>
-                    <li className="mb-2"><a href="#" className="hover:underline font-semibold">FAQs</a></li>
-                  </ul>
-                </div>
-                <div>
-                  <h3 className="titulo mb-4">Social</h3>
-                  <ul>
-                    <li className="mb-2"><a href="#" className="hover:underline font-semibold">Facebook</a></li>
-                    <li className="mb-2"><a href="#" className="hover:underline font-semibold">Twitter</a></li>
-                  </ul>
-                </div>
-                <div>
-                  <h3 className="titulo mb-4">Legal</h3>
-                  <ul>
-                    <li className="mb-2"><a href="#" className="hover:underline font-semibold">Privacy Policy</a></li>
-                    <li className="mb-2"><a href="#" className="hover:underline font-semibold">Terms of Service</a></li>
-                    <li className="mb-2"><a href="#" className="hover:underline font-semibold">Cookie Policy</a></li>
-                  </ul>
-                </div>
-              </div>
+            <div>
+              <h3 className="titulo mb-4 text-center">Features</h3>
+            </div>
+            <div>
+              <h3 className="titulo mb-4 text-center">FAQs</h3>
+            </div>
+            <div>
+              <h3 className="titulo mb-4 text-center">Blog</h3>
+            </div>
+            <div>
+              <h3 className="titulo mb-4 text-center">Políticas de privacidad</h3>
             </div>
           </div>
         </div>
-        <div className="footer-bottom py-5 px-10 flex justify-between">
-          <span className="py-5 sm:px-10 sm:mx-10">© 2024 Instituto Ciudades del Futuro. All rights reserved.</span>
-          <div className="flex py-5 px-10 mx-10">
-            <SocialLinks redes={config.redes_sociales} />
-          </div>
+
+       
+
+      </div>
+
+      {/* Sección inferior del footer */}
+      <div className="footer-bottom py-5 px-10 flex flex-col md:flex-row items-center justify-center gap-4 mx-auto">
+        <span className="py-5 sm:px-10 sm:mx-10">
+          © 2024 Instituto Ciudades del Futuro. All rights reserved.
+        </span>
+        <div className="flex py-5 px-10 mx-10">
+          <SocialLinks redes={config.redes_sociales} />
         </div>
-      </footer>
-    </>
+      </div>
+    </footer>
   );
 }

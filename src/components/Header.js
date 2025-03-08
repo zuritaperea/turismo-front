@@ -67,11 +67,11 @@ export default function Header() {
 
 
         <nav className="hidden md:flex gap-6 items-center">
-          <Link to="/descubre" className="hover:text-blue-600 text-[#475467] font-medium text-base">Inicio</Link>
-          <Link to="/experiencias" className="hover:text-blue-600 text-[#475467] font-light text-base">Alojamiento</Link>
-          <Link to="/eventos" className="hover:text-blue-600 text-[#475467] font-light text-base">Actividades</Link>
-          <Link to="/planifica" className="hover:text-blue-600 text-[#475467] font-light text-base">Eventos</Link>
-          <Link to="/planifica" className="hover:text-blue-600 text-[#475467] font-light text-base">Circuito</Link>
+          <Link to="/" className="hover:text-blue-600 text-[#475467] font-medium text-base">Inicio</Link>
+          <Link to="/alojamientos" className="hover:text-blue-600 text-[#475467] font-light text-base">Alojamiento</Link>
+          <Link to="/actividades" className="hover:text-blue-600 text-[#475467] font-light text-base">Actividades</Link>
+          <Link to="/eventos" className="hover:text-blue-600 text-[#475467] font-light text-base">Eventos</Link>
+          <Link to="/circuito" className="hover:text-blue-600 text-[#475467] font-light text-base">Circuito</Link>
           <Sun className="text-yellow-500" size={24} />
         </nav>
       </div>
@@ -79,11 +79,11 @@ export default function Header() {
       {menuOpen && (
         <div className="md:hidden absolute top-16 left-0 w-full bg-white shadow-md p-4 transition-all duration-300 z-50">
           <nav className="flex flex-col gap-4 items-center">
-            <Link to="/descubre" className="hover:text-blue-600 text-[#475467] font-medium text-base" onClick={() => setMenuOpen(false)}>Inicio</Link>
-            <Link to="/experiencias" className="hover:text-blue-600 text-[#475467] font-light text-base" onClick={() => setMenuOpen(false)}>Alojamiento</Link>
-            <Link to="/eventos" className="hover:text-blue-600 text-[#475467] font-light text-base" onClick={() => setMenuOpen(false)}>Actividades</Link>
-            <Link to="/planifica" className="hover:text-blue-600 text-[#475467] font-light text-base" onClick={() => setMenuOpen(false)}>Eventos</Link>
-            <Link to="/planifica" className="hover:text-blue-600 text-[#475467] font-light text-base" onClick={() => setMenuOpen(false)}>Circuito</Link>
+            <Link to="/" className="hover:text-blue-600 text-[#475467] font-medium text-base" onClick={() => setMenuOpen(false)}>Inicio</Link>
+            <Link to="/alojamiento" className="hover:text-blue-600 text-[#475467] font-light text-base" onClick={() => setMenuOpen(false)}>Alojamiento</Link>
+            <Link to="/actividades" className="hover:text-blue-600 text-[#475467] font-light text-base" onClick={() => setMenuOpen(false)}>Actividades</Link>
+            <Link to="/eventos" className="hover:text-blue-600 text-[#475467] font-light text-base" onClick={() => setMenuOpen(false)}>Eventos</Link>
+            <Link to="/circuito" className="hover:text-blue-600 text-[#475467] font-light text-base" onClick={() => setMenuOpen(false)}>Circuito</Link>
           </nav>
         </div>
       )}

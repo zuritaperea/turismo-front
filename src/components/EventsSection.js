@@ -12,7 +12,7 @@ const EventsSection = ({ data }) => {
     return (
       <div className="py-10 px-4 sm:px-6 md:px-0">
         <SectionTitle title={title} subtitle={subtitle} imgSrc={medalla} />
-        <div className="slider-horizontal flex space-x-4 overflow-x-auto 2xl:justify-center">
+        <div className="slider-horizontal flex justify-center space-x-4 overflow-x-auto">
           {data.map((item, index) => (
             <Link key={item.id} to={`/${target.toLowerCase()}/${item.id}`}>
               <Card 

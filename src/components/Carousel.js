@@ -15,7 +15,7 @@ function Carousel({ images, detail = false }) {
 
   return (
     <div 
-      className={`relative w-full mx-auto mt-5 ${detail ? 'max-w-[1600px] px-4 md:px-0' : 'max-w-[1376px] px-10 md:px-0'}`}
+      className={`relative w-11/12 mx-auto mt-5 ${detail ? 'max-w-[1600px] px-4 md:px-0' : 'max-w-[1376px] px-10 md:px-0'}`}
       style={{ height: 'auto', minHeight: '280px', maxHeight: '436px', marginBottom: '1rem' }} 
     >
       <Swiper
