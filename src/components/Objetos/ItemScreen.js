@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import service from '../../axios/services/service';
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
@@ -23,6 +23,7 @@ import FiltrosBusqueda from './FiltrosBusqueda';
 
 function ItemScreen({ tipoObjeto }) {
   const { id, fechadesde, fechahasta } = useParams();
+  const location = useLocation();
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -109,7 +110,8 @@ function ItemScreen({ tipoObjeto }) {
               {item?.attributes?.puntuacion}
             </span>
 
-            <FiltrosBusqueda/>
+            {/* Se renderiza FiltrosBusqueda solo si la URL contiene "/alojamiento/" */}
+            {location.pathname.includes('/alojamiento/') && <FiltrosBusqueda />}
           </div>
 
           <SeccionConTitulo titulo="Descripción" contenido={item?.attributes?.description} />
@@ -129,14 +131,11 @@ function ItemScreen({ tipoObjeto }) {
             <Contacto />
             <RedesSociales idAtractivo={item.id} />
           </div>
-          {/* <RangoPrecios item={item} /> */}
 
           {item?.attributes?.certificaciones &&
             item?.attributes?.certificaciones.length > 0 && (
               <Certificaciones item={item} />
             )}
-
-          {/* <InformacionEmpresa item={item} /> */}
 
           <BotonesCalificarYCompartir item={item} />
 
