@@ -7,6 +7,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .leaflet-container {
+    @apply rounded-lg;
+  }
+}
+
 body {
   font-family: 'Inter', sans-serif;
   font-optical-sizing: auto;
