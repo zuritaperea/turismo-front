@@ -12,15 +12,14 @@ import BotonesAccion from './BotonesAccion';
 import FechasHorarios from './FechasHorarios';
 import Contacto from './Contacto';
 import RedesSociales from './RedesSociales';
-import RangoPrecios from './RangoPrecios';
 import Certificaciones from './Certificaciones';
-import InformacionEmpresa from './InformacionEmpresa';
 import Alert from '../Alert';
 import Splash from '../../components/Splash';
 import SeccionConTitulo from './SeccionConTitulo'; 
 import Servicios from './Servicios'; 
 import BotonesCalificarYCompartir from './BotonesCalificarYCompartir'; 
 import Recomendaciones from './Recomendaciones';
+import FiltrosBusqueda from './FiltrosBusqueda';
 
 function ItemScreen({ tipoObjeto }) {
   const { id, fechadesde, fechahasta } = useParams();
@@ -109,6 +108,8 @@ function ItemScreen({ tipoObjeto }) {
             <span className="puntacion font-semibold mx-1">
               {item?.attributes?.puntuacion}
             </span>
+
+            <FiltrosBusqueda/>
           </div>
 
           <SeccionConTitulo titulo="Descripción" contenido={item?.attributes?.description} />

@@ -9,6 +9,7 @@ import { Calendar, Search, SlidersHorizontal, User, X } from "lucide-react"
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet"
 import L from "leaflet"
 import Mapa from "./Mapa";
+import FiltrosBusqueda from "./FiltrosBusqueda"
 
 const mapStyles = `
   .leaflet-control-zoom {
@@ -126,19 +127,7 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
 
       <div className="flex flex-col md:flex-row flex-grow justify-center align-middle">
         <div className="w-full md:w-1/2 flex flex-col">
-          <div className="bg-[#f08400] p-4">
-            <div className="space-y-3 p-5 rounded-lg" style={{ backgroundColor: "#F08400" }}>
-              <div className="bg-white rounded-lg p-4 flex items-center">
-                <Calendar className="text-[#667085] mr-2" size={20} />
-                <span className="text-[#344054] text-base">Ene 12, 2024 - Ene 18, 2024</span>
-              </div>
-
-              <div className="bg-white rounded-lg p-4 flex items-center">
-                <User className="text-[#667085] mr-2" size={20} />
-                <span className="text-[#344054] text-base">2 Adultos · 0 Menores · 1 Habitación</span>
-              </div>
-            </div>
-          </div>
+          <FiltrosBusqueda/>
 
           {loading ? (
             <div className="flex items-center justify-center p-8 text-[#667085] flex-1">Cargando...</div>

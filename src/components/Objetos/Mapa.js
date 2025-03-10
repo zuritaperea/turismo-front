@@ -56,7 +56,6 @@ const Mapa = ({ objetosFiltrados }) => {
       <MapContainer center={position} zoom={14} scrollWheelZoom={true} className="h-full w-full">
         <TileLayer attribution='&copy; OpenStreetMap & Google' url={TILES[tileLayer]} />
 
-        {/* Ajuste automático del mapa */}
         <FitBounds objetosFiltrados={objetosFiltrados} />
 
         {objetosFiltrados.map(({ id, title, coordinates }) =>
