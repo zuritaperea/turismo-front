@@ -127,7 +127,7 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
 
       <div className="flex flex-col md:flex-row flex-grow justify-center align-middle">
         <div className="w-full md:w-1/2 flex flex-col">
-          <FiltrosBusqueda/>
+          <FiltrosBusqueda />
 
           {loading ? (
             <div className="flex items-center justify-center p-8 text-[#667085] flex-1">Cargando...</div>
@@ -179,7 +179,7 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
                 ))}
               </div>
 
-              
+
 
             </div>
           )}
@@ -197,8 +197,8 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
       </div>
 
       <div className="overflow-auto flex-grow mt-7 flex justify-center">
-                <Listado objetosFiltrados={objetosFiltrados} navigation={navigation} target={target} />
-              </div>
+        <Listado objetosFiltrados={objetosFiltrados} navigation={navigation} target={target} />
+      </div>
 
       <Footer />
     </div>

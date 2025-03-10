@@ -110,7 +110,6 @@ function ItemScreen({ tipoObjeto }) {
               {item?.attributes?.puntuacion}
             </span>
 
-            {/* Se renderiza FiltrosBusqueda solo si la URL contiene "/alojamiento/" */}
             {location.pathname.includes('/alojamiento/') && <FiltrosBusqueda />}
           </div>
 
