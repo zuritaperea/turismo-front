@@ -17,7 +17,6 @@ import planificadorLogo from "../assets/img/planificador.png"
 import { ConfigContext } from '../extras/ConfigContext';
 import { Ticket, MapPinned, Hotel, Bus, ShoppingBag, Utensils } from 'lucide-react';
 
-
 export default function Inicio() {
   const [loading, setLoading] = useState(false);
 
@@ -29,7 +28,7 @@ export default function Inicio() {
   const [loadingAtractivos, setLoadingAtractivos] = useState(true);
 
   const [loadingEventos, setLoadingEventos] = useState(true);
-  const config = useContext(ConfigContext); // Usa el contexto para acceder a la configuración
+  const config = useContext(ConfigContext);
 
 
   const imagesTest = [
@@ -44,9 +43,6 @@ export default function Inicio() {
       setImages(config.carousel_items || imagesTest);
     }
   }, [config]);
-
-
-
 
   useEffect(() => {
     const obtenerEventos = async () => {
@@ -73,7 +69,6 @@ export default function Inicio() {
         setLoadingEventos(false);
       }
     };
-
 
     const obtenerAtractivos = async () => {
       try {

@@ -62,9 +62,7 @@ export default function Header() {
             {menuOpen ? <X size={28} className="text-gray-700" /> : <Menu size={28} className="text-gray-700" />}
           </button>
           <Sun className="text-yellow-500" size={24} />
-
         </div>
-
 
         <nav className="hidden md:flex gap-6 items-center">
           <Link to="/" className="hover:text-blue-600 text-[#475467] font-medium text-base">Inicio</Link>

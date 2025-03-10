@@ -17,9 +17,9 @@ import Certificaciones from './Certificaciones';
 import InformacionEmpresa from './InformacionEmpresa';
 import Alert from '../Alert';
 import Splash from '../../components/Splash';
-import SeccionConTitulo from './SeccionConTitulo'; // Importamos el nuevo componente
-import Servicios from './Servicios'; // Importamos el nuevo componente de servicios
-import BotonesCalificarYCompartir from './BotonesCalificarYCompartir'; // Importamos el nuevo componente de botones
+import SeccionConTitulo from './SeccionConTitulo'; 
+import Servicios from './Servicios'; 
+import BotonesCalificarYCompartir from './BotonesCalificarYCompartir'; 
 import Recomendaciones from './Recomendaciones';
 
 function ItemScreen({ tipoObjeto }) {
@@ -116,14 +116,17 @@ function ItemScreen({ tipoObjeto }) {
 
           {item?.attributes?.amenity_feature && <Servicios servicios={item?.attributes?.amenity_feature} />}
 
-          <div className="w-full max-w-[1376px] mx-auto ">
-            <Carousel images={item?.attributes?.contenidos} detail={true} />
-          </div>
+          {item?.attributes?.contenidos &&
+            item?.attributes?.contenidos.length > 1 && (
+              <div className="w-full max-w-[1376px] mx-auto">
+                <Carousel images={item.attributes.contenidos} detail={true} />
+              </div>
+            )}
 
           <div className="grid grid-cols-1 md:grid-cols-3">
             <FechasHorarios item={item} tipoObjeto={tipoObjeto} />
             <Contacto />
-            <RedesSociales />
+            <RedesSociales idAtractivo={item.id} />
           </div>
           {/* <RangoPrecios item={item} /> */}
 
