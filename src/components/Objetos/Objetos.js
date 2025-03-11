@@ -108,10 +108,8 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
     }
   }
 
-  // Coordenadas de Curitiba como centro predeterminado
   const defaultPosition = [-25.429722, -49.271944]
 
-  // Verificar si hay objetos con coordenadas
   const hasCoordinates = objetosFiltrados.some(
     (objeto) =>
       objeto.coordinates &&

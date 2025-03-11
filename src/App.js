@@ -37,6 +37,7 @@ import ScrollToTopButton from "./components/ScrollToTopButton";
 import Splash from "./components/Splash";
 import { ConfigProvider } from './extras/ConfigContext';
 import { AuthProvider } from "./components/AuthContext";
+import Marketplace from "./screens/Marketplace";
 
 
 function App() {
@@ -107,7 +108,7 @@ function App() {
             <Route path="/viajes" element={<ViajeScreen />} />
             <Route path="/favoritos" element={<FavoritoScreen />} />
             <Route path="/visitados" element={<VisitadoScreen />} />
-
+            <Route path="/marketplace" element={<Marketplace />} />
           </Routes>
         </BrowserRouter>      <ScrollToTopButton />
       </></AuthProvider></ConfigProvider>

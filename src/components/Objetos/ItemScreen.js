@@ -15,11 +15,13 @@ import RedesSociales from './RedesSociales';
 import Certificaciones from './Certificaciones';
 import Alert from '../Alert';
 import Splash from '../../components/Splash';
-import SeccionConTitulo from './SeccionConTitulo'; 
-import Servicios from './Servicios'; 
-import BotonesCalificarYCompartir from './BotonesCalificarYCompartir'; 
+import SeccionConTitulo from './SeccionConTitulo';
+import Servicios from './Servicios';
+import BotonesCalificarYCompartir from './BotonesCalificarYCompartir';
 import Recomendaciones from './Recomendaciones';
 import FiltrosBusqueda from './FiltrosBusqueda';
+import { Ticket, ArrowUpRight } from 'lucide-react';
+import { DatePickerComponent } from '../DatePicker.tsx';
 
 function ItemScreen({ tipoObjeto }) {
   const { id, fechadesde, fechahasta } = useParams();
@@ -29,6 +31,7 @@ function ItemScreen({ tipoObjeto }) {
   const [error, setError] = useState(null);
   const [items, setItems] = useState([]);
   const [loadingItems, setLoadingItems] = useState(true);
+  const [selectedDate, setSelectedDate] = useState(null);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -112,6 +115,46 @@ function ItemScreen({ tipoObjeto }) {
 
             {location.pathname.includes('/alojamiento/') && <FiltrosBusqueda />}
           </div>
+
+          <div className="p-4">
+            <div className="max-w-md mx-auto rounded-3xl shadow-sm border border-[#e4e7ec] bg-white">
+              <div className="p-6">
+                <div className="flex items-start gap-3">
+                  <div className="rounded-md text-[#f08400]">
+                    <Ticket size={24} style={{ color: "#f08400" }} />
+                  </div>
+                  <div>
+                    <h2 className="text-xl font-semibold text-[#101828] mb-1">Visita familiar</h2>
+                  </div>
+                </div>
+
+                <p className="text-[#475467] mt-4 mb-6 text-lg">
+                  Campo VIP
+                </p>
+
+                <div className="flex items-center">
+                  <span className="text-3xl font-bold text-[#101828]">$ 0</span>
+                  <span className="text-[#475467] ml-2 text-lg">+ impuestos</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Pasar la función para actualizar la fecha seleccionada */}
+          <DatePickerComponent setSelectedDate={setSelectedDate} />
+
+          <button
+  className="w-1/3 bg-[#f08400] text-[#ffffff] rounded-2xl py-4 px-6 flex items-center justify-center gap-2 font-medium text-xl transition-colors mx-auto"
+  style={{
+    backgroundColor: selectedDate ? "#F08400" : "#CCCCCC", 
+    color: "#FFFFFF",
+    cursor: selectedDate ? "pointer" : "not-allowed",
+  }}
+  disabled={!selectedDate} 
+>
+  <ArrowUpRight className="w-5 h-5" />
+  <span>¡Reservar!</span>
+</button>
 
           <SeccionConTitulo titulo="Descripción" contenido={item?.attributes?.description} />
           <SeccionConTitulo titulo="Dirección" contenido={item?.attributes?.street_address} />
