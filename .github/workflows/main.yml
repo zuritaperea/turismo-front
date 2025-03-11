@@ -18,3 +18,10 @@ jobs:
       - name: Despliegue en el servidor FIDI
         run: |
           bash /home/ldc/projects/fidi/front/deploy.sh
+        continue-on-error: true  
+
+      - name: Despliegue en el servidor Maringa
+        run: |
+          bash /home/ldc/projects/maringa/front/deploy.sh
+        continue-on-error: true  
+
