@@ -22,6 +22,7 @@ import Recomendaciones from './Recomendaciones';
 import FiltrosBusqueda from './FiltrosBusqueda';
 import { Ticket, ArrowUpRight } from 'lucide-react';
 import { DatePickerComponent } from '../DatePicker.tsx';
+import { Link } from 'react-router-dom';
 
 function ItemScreen({ tipoObjeto }) {
   const { id, fechadesde, fechahasta } = useParams();
@@ -140,21 +141,21 @@ function ItemScreen({ tipoObjeto }) {
             </div>
           </div>
 
-          {/* Pasar la función para actualizar la fecha seleccionada */}
           <DatePickerComponent setSelectedDate={setSelectedDate} />
 
-          <button
-  className="w-1/3 bg-[#f08400] text-[#ffffff] rounded-2xl py-4 px-6 flex items-center justify-center gap-2 font-medium text-xl transition-colors mx-auto"
-  style={{
-    backgroundColor: selectedDate ? "#F08400" : "#CCCCCC", 
-    color: "#FFFFFF",
-    cursor: selectedDate ? "pointer" : "not-allowed",
-  }}
-  disabled={!selectedDate} 
->
-  <ArrowUpRight className="w-5 h-5" />
-  <span>¡Reservar!</span>
-</button>
+          <Link
+            to="/confirmacion-reserva"
+            className="w-1/3 bg-[#f08400] text-[#ffffff] rounded-2xl py-4 px-6 flex items-center justify-center gap-2 font-medium text-xl transition-colors mx-auto"
+            style={{
+              backgroundColor: selectedDate ? "#F08400" : "#CCCCCC",
+              color: "#FFFFFF",
+              cursor: selectedDate ? "pointer" : "not-allowed",
+              pointerEvents: selectedDate ? "auto" : "none",
+            }}
+          >
+            <ArrowUpRight className="w-5 h-5" />
+            <span>¡Reservar!</span>
+          </Link>
 
           <SeccionConTitulo titulo="Descripción" contenido={item?.attributes?.description} />
           <SeccionConTitulo titulo="Dirección" contenido={item?.attributes?.street_address} />

@@ -38,6 +38,7 @@ import Splash from "./components/Splash";
 import { ConfigProvider } from './extras/ConfigContext';
 import { AuthProvider } from "./components/AuthContext";
 import Marketplace from "./screens/Marketplace";
+import ConfirmacionReserva from "./screens/ConfirmacionReserva";
 
 
 function App() {
@@ -109,6 +110,7 @@ function App() {
             <Route path="/favoritos" element={<FavoritoScreen />} />
             <Route path="/visitados" element={<VisitadoScreen />} />
             <Route path="/marketplace" element={<Marketplace />} />
+            <Route path="/confirmacion-reserva" element={<ConfirmacionReserva />} />
           </Routes>
         </BrowserRouter>      <ScrollToTopButton />
       </></AuthProvider></ConfigProvider>
