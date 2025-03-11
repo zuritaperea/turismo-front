@@ -39,6 +39,7 @@ import { ConfigProvider } from './extras/ConfigContext';
 import { AuthProvider } from "./components/AuthContext";
 import Marketplace from "./screens/Marketplace";
 import ConfirmacionReserva from "./screens/ConfirmacionReserva";
+import ComprobanteReserva from "./screens/ComprobanteReserva";
 
 
 function App() {
@@ -111,6 +112,7 @@ function App() {
             <Route path="/visitados" element={<VisitadoScreen />} />
             <Route path="/marketplace" element={<Marketplace />} />
             <Route path="/confirmacion-reserva" element={<ConfirmacionReserva />} />
+            <Route path="/comprobante-reserva" element={<ComprobanteReserva />} />
           </Routes>
         </BrowserRouter>      <ScrollToTopButton />
       </></AuthProvider></ConfigProvider>

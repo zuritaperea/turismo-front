@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export default function ConfirmacionReserva() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-6 bg-[#ffffff]">
@@ -23,16 +25,20 @@ export default function ConfirmacionReserva() {
         </div>
 
         <div className="space-y-4">
+          <Link to="/marketplace">
           <button 
             className="w-full py-6 text-[#344054] border border-[#D0D5DD] bg-white 
             hover:bg-[#F3F4F6] transition-all font-medium rounded-xl">
             Volver al Inicio
           </button>
+          </Link>
+          <Link to="/comprobante-reserva">
           <button 
             className="w-full py-6 text-[#344054] border border-[#D0D5DD] bg-white 
             hover:bg-[#F3F4F6] transition-all font-medium rounded-xl">
             Comprobante de la reserva
           </button>
+          </Link>
         </div>
       </div>
     </div>
