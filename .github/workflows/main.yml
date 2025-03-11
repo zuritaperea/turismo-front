@@ -10,7 +10,11 @@ jobs:
     runs-on: self-hosted  # Usamos el runner auto-hospedado
 
     steps:
-
-      - name: Despliegue en el servidor
+      - name: Despliegue en el servidor Mar Chiquita
         run: |
           bash /home/ldc/projects/marchiquita/front/deploy.sh
+        continue-on-error: true  
+
+      - name: Despliegue en el servidor FIDI
+        run: |
+          bash /home/ldc/projects/fidi/front/deploy.sh
