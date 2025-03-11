@@ -13,8 +13,8 @@ jobs:
       - name: Despliegue en el servidor Mar Chiquita
         run: |
           bash /home/ldc/projects/marchiquita/front/deploy.sh
+        continue-on-error: true  
 
       - name: Despliegue en el servidor FIDI
         run: |
           bash /home/ldc/projects/fidi/front/deploy.sh
-        continue-on-error: true  # Este paso se ejecutará incluso si el paso anterior falla
