@@ -136,12 +136,20 @@ export default function Inicio() {
           loading="lazy"
           alt="Pasaporte"
         />
-        <img
-          src={planificadorLogo}
-          className="h-48 flex-none rounded-md"
-          loading="lazy"
-          alt="Planificador"
-        />
+        <a
+          href="https://fidibonito.ciceroneweb.com/register-user"
+          target="_blank"
+          rel="noopener noreferrer"
+
+        >
+          <img
+            src={planificadorLogo}
+            className="h-48 flex-none rounded-md"
+            loading="lazy"
+            alt="Planificador"
+          />
+        </a>
+
       </div>
 
 
