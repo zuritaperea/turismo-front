@@ -23,7 +23,7 @@ import FiltrosBusqueda from './FiltrosBusqueda';
 import { Ticket, ArrowUpRight } from 'lucide-react';
 import { DatePickerComponent } from '../DatePicker.tsx';
 import { Link } from 'react-router-dom';
-
+import ActividadesLista from '../ActividadesFidiLista.js';
 function ItemScreen({ tipoObjeto }) {
   const { id, fechadesde, fechahasta } = useParams();
   const location = useLocation();
@@ -116,6 +116,7 @@ function ItemScreen({ tipoObjeto }) {
 
             {location.pathname.includes('/alojamiento/') && <FiltrosBusqueda />}
           </div>
+          {tipoObjeto === "atractivo" && item?.attributes?.external_id && <ActividadesLista idAtractivo={item?.attributes?.external_id} />}
 
           <div className="p-4">
             <div className="max-w-md mx-auto rounded-3xl shadow-sm border border-[#e4e7ec] bg-white">
