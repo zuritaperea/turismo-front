@@ -124,10 +124,26 @@ export default function Inicio() {
       </div>
 
       <div className="flex overflow-x-auto md:overflow-hidden whitespace-nowrap justify-start md:justify-center gap-4 px-4 md:px-0 pb-4">
-        <img src={marketPlaceLogo} className="h-48 flex-none" loading="lazy" alt="Marketplace" />
-        <img src={pasaporteLogo} className="h-48 flex-none" loading="lazy" alt="Pasaporte" />
-        <img src={planificadorLogo} className="h-48 flex-none" loading="lazy" alt="Planificador" />
+        <img
+          src={marketPlaceLogo}
+          className="h-48 flex-none rounded-md"
+          loading="lazy"
+          alt="Marketplace"
+        />
+        <img
+          src={pasaporteLogo}
+          className="h-48 flex-none rounded-md"
+          loading="lazy"
+          alt="Pasaporte"
+        />
+        <img
+          src={planificadorLogo}
+          className="h-48 flex-none rounded-md"
+          loading="lazy"
+          alt="Planificador"
+        />
       </div>
+
 
       <div className="border-t border-[#E4E7EC] h-[1px] md:hidden my-4"></div>
 

@@ -68,6 +68,15 @@ export default function Header() {
           <Link to="/alojamientos" className="hover:text-blue-600 text-[#475467] font-light text-base">Alojamiento</Link>
           <Link to="/actividades" className="hover:text-blue-600 text-[#475467] font-light text-base">Actividades</Link>
           <Link to="/eventos" className="hover:text-blue-600 text-[#475467] font-light text-base">Eventos</Link>
+          <a
+            href="https://fidibonito.ciceroneweb.com/register-user"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-blue-600 text-[#475467] font-light text-base"
+          >
+            Planificador Inteligente
+          </a>
+
         </nav>
       </div>
 
@@ -78,6 +87,15 @@ export default function Header() {
             <Link to="/alojamiento" className="hover:text-blue-600 text-[#475467] font-light text-base" onClick={() => setMenuOpen(false)}>Alojamiento</Link>
             <Link to="/actividades" className="hover:text-blue-600 text-[#475467] font-light text-base" onClick={() => setMenuOpen(false)}>Actividades</Link>
             <Link to="/eventos" className="hover:text-blue-600 text-[#475467] font-light text-base" onClick={() => setMenuOpen(false)}>Eventos</Link>
+            <a
+              href="https://fidibonito.ciceroneweb.com/register-user"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-blue-600 text-[#475467] font-light text-base"
+            >
+              Planificador Inteligente
+            </a>
+
           </nav>
         </div>
       )}
