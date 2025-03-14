@@ -29,16 +29,13 @@ export default {
 
   /**
    * Realizar una reserva para una actividad en un horario específico.
-   * @param {string} token - Token JWT para autenticación.
    * @param {object} data - Datos de la reserva.
    * @returns {Promise} - Confirmación de la reserva.
    */
-  hacerReserva: function (token, data) {
+  hacerReserva: function (data) {
     return api.post(`${API_BASE_URL}/reservas/reserva_salva/`, data, {
       headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json"
-      }
+        "Content-Type": "application/json",       }
     });
   }
 };

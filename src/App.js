@@ -40,7 +40,7 @@ import { AuthProvider } from "./components/AuthContext";
 import Marketplace from "./screens/Marketplace";
 import ConfirmacionReserva from "./screens/ConfirmacionReserva";
 import ComprobanteReserva from "./screens/ComprobanteReserva";
-
+import ConfirmacionReservaFidi from "./screens/ConfirmacionReservaFidi";
 
 function App() {
 
@@ -113,6 +113,8 @@ function App() {
             <Route path="/marketplace" element={<Marketplace />} />
             <Route path="/confirmacion-reserva" element={<ConfirmacionReserva />} />
             <Route path="/comprobante-reserva" element={<ComprobanteReserva />} />
+            <Route path="/confirmacion-reserva-fidi" element={<ConfirmacionReservaFidi />} />
+
           </Routes>
         </BrowserRouter>      <ScrollToTopButton />
       </></AuthProvider></ConfigProvider>
