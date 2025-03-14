@@ -11,8 +11,8 @@ import Carousel from "../components/Carousel";
 import AttractionsSection from "../components/AttractionsSection";
 import EventsSection from "../components/EventsSection";
 import Splash from "../components/Splash";
-import marketPlaceLogo from "../assets/img/marketplace.png"
-import pasaporteLogo from "../assets/img/pasaporte.png"
+import marketPlaceLogo from "../assets/img/banners-aplicativo-01.jpg"
+import pasaporteLogo from "../assets/img/banners-aplicativo-02.jpg"
 import planificadorLogo from "../assets/img/planificador.png"
 import { ConfigContext } from '../extras/ConfigContext';
 import { Ticket, MapPinned, Hotel, Bus, ShoppingBag, Utensils } from 'lucide-react';

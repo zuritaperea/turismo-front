@@ -41,7 +41,7 @@ const Mapa = ({ objetosFiltrados }) => {
   const [tileLayer, setTileLayer] = useState("GoogleMaps")
 
   return (
-    <div className=" h-80 w-11/12 rounded-lg overflow-hidden md:mt-10 lg:mt-10">
+    <div className=" h-80 w-11/12 rounded-lg overflow-hidden md:mt-5 lg:mt-5">
       <select
         className="absolute top-2 right-2 bg-white p-2 rounded shadow-md text-xs"
         value={tileLayer}
@@ -55,9 +55,7 @@ const Mapa = ({ objetosFiltrados }) => {
 
       <MapContainer center={position} zoom={14} scrollWheelZoom={true} className="h-full w-full">
         <TileLayer attribution='&copy; OpenStreetMap & Google' url={TILES[tileLayer]} />
-
         <FitBounds objetosFiltrados={objetosFiltrados} />
-
         {objetosFiltrados.map(({ id, title, coordinates }) =>
           coordinates ? (
             <Marker key={id} icon={defaultIcon} position={[coordinates.latitude, coordinates.longitude]}>

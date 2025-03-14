@@ -61,7 +61,6 @@ export default function Header() {
           <button onClick={() => setMenuOpen(!menuOpen)}>
             {menuOpen ? <X size={28} className="text-gray-700" /> : <Menu size={28} className="text-gray-700" />}
           </button>
-          <Sun className="text-yellow-500" size={24} />
         </div>
 
         <nav className="hidden md:flex gap-6 items-center">
@@ -69,8 +68,6 @@ export default function Header() {
           <Link to="/alojamientos" className="hover:text-blue-600 text-[#475467] font-light text-base">Alojamiento</Link>
           <Link to="/actividades" className="hover:text-blue-600 text-[#475467] font-light text-base">Actividades</Link>
           <Link to="/eventos" className="hover:text-blue-600 text-[#475467] font-light text-base">Eventos</Link>
-          <Link to="/circuito" className="hover:text-blue-600 text-[#475467] font-light text-base">Circuito</Link>
-          <Sun className="text-yellow-500" size={24} />
         </nav>
       </div>
 
@@ -81,7 +78,6 @@ export default function Header() {
             <Link to="/alojamiento" className="hover:text-blue-600 text-[#475467] font-light text-base" onClick={() => setMenuOpen(false)}>Alojamiento</Link>
             <Link to="/actividades" className="hover:text-blue-600 text-[#475467] font-light text-base" onClick={() => setMenuOpen(false)}>Actividades</Link>
             <Link to="/eventos" className="hover:text-blue-600 text-[#475467] font-light text-base" onClick={() => setMenuOpen(false)}>Eventos</Link>
-            <Link to="/circuito" className="hover:text-blue-600 text-[#475467] font-light text-base" onClick={() => setMenuOpen(false)}>Circuito</Link>
           </nav>
         </div>
       )}

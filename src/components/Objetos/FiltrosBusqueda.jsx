@@ -21,10 +21,6 @@ const FiltrosBusqueda = () => {
         </div>
       </div>
       <div>
-        <h1 className="py-2 text-2xl my-4 font-semibold text-slate-900 tracking-tight dark:text-slate-200">
-          Habitaciones
-        </h1>
-
         {location.pathname.includes('/alojamiento/') &&
           <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
             <div className="p-4">
@@ -76,13 +72,6 @@ const FiltrosBusqueda = () => {
             </div>
           </div>
         }
-
-        <Link to="/marketplace" className="w-1/2 mx-auto block">
-          <button className="w-full bg-[#f08400] text-[#ffffff] rounded-2xl py-4 px-6 flex items-center justify-center gap-2 font-medium text-xl hover:bg-[#e07800] transition-colors" style={{ backgroundColor: "#F08400", color: '#FFFFFF' }}>
-            <ArrowUpRight className="w-5 h-5" />
-            <span>¡Reservar!</span>
-          </button>
-        </Link>
       </div>
     </>
   )

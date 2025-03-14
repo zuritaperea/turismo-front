@@ -126,66 +126,11 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
       <div className="flex flex-col md:flex-row flex-grow justify-center align-middle">
         <div className="w-full md:w-1/2 flex flex-col">
           <FiltrosBusqueda />
-
-          {loading ? (
-            <div className="flex items-center justify-center p-8 text-[#667085] flex-1">Cargando...</div>
-          ) : (
-            <div className="flex flex-col flex-grow overflow-hidden">
-              <div className="px-4 pt-4 pb-3">
-                <div className="relative w-full">
-                  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#667085]" size={20} />
-                  <input
-                    type="text"
-                    placeholder="Buscar..."
-                    value={textoBuscar}
-                    onChange={(e) => setTextoBuscar(e.target.value)}
-                    onKeyPress={handleKeyPress}
-                    className="w-full py-3 pl-11 pr-4 border border-[#d0d5dd] rounded-lg text-base text-[#344054] focus:outline-none"
-                  />
-                </div>
-              </div>
-
-              <div className="px-4 pb-3">
-                <button className="w-full py-3 border border-[#d0d5dd] rounded-lg flex items-center justify-center gap-2 bg-white text-[#344054] text-base">
-                  <SlidersHorizontal size={18} />
-                  <span>2 filtros aplicados</span>
-                </button>
-                <div className="grid grid-cols-2 gap-2 rounded-lg mt-4 border-[#d0d5dd]">
-                  <button className="py-3.5 text-center rounded-lg text-[#344054] border-2 border-[#d0d5dd] bg-white text-base cursor-pointer">
-                    Ord. por calificación
-                  </button>
-                  <button className="py-3.5 text-center text-[#344054] border-2 rounded-lg bg-white text-base cursor-pointer">
-                    Ord. por cercanía
-                  </button>
-                </div>
-              </div>
-
-              <div className="px-4 pb-3 flex flex-wrap gap-2">
-                {activeFilters.map((filter) => (
-                  <div
-                    key={filter.id}
-                    className="flex items-center bg-white border border-[#d0d5dd] rounded-full px-3 py-1"
-                  >
-                    <span className="text-sm text-[#344054]">{filter.name}</span>
-                    <button
-                      onClick={() => removeFilter(filter.id)}
-                      className="ml-1.5 text-[#667085] bg-transparent border-none p-0 cursor-pointer flex items-center justify-center"
-                    >
-                      <X size={16} />
-                    </button>
-                  </div>
-                ))}
-              </div>
-
-
-
-            </div>
-          )}
         </div>
 
-        <div className="hidden md:block md:w-1/2 lg:ml-10 h-[calc(100vh-64px)]">
+        <div className="hidden md:block md:w-1/2 lg:ml-10 ">
           {!hasCoordinates ? (
-            <div className="flex items-center justify-center h-full bg-[#f9fafb] text-[#667085] text-sm text-center p-5">
+            <div className="flex items-center justify-center h-full bg-[#f9fafb] text-[#667085] text-sm text-center ">
               No hay ubicaciones para mostrar en el mapa
             </div>
           ) : (
