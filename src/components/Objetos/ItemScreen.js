@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { useParams, useLocation } from 'react-router-dom';
@@ -24,6 +24,9 @@ import { Ticket, ArrowUpRight } from 'lucide-react';
 import { DatePickerComponent } from '../DatePicker.tsx';
 import { Link } from 'react-router-dom';
 import ActividadesLista from '../ActividadesFidiLista.js';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../components/AuthContext';
+
 function ItemScreen({ tipoObjeto }) {
   const { id, fechadesde, fechahasta } = useParams();
   const location = useLocation();
@@ -33,6 +36,18 @@ function ItemScreen({ tipoObjeto }) {
   const [items, setItems] = useState([]);
   const [loadingItems, setLoadingItems] = useState(true);
   const [selectedDate, setSelectedDate] = useState(null);
+
+  const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
+  const handleReserva = () => {
+    if (!selectedDate) return;
+    if (!user) {
+      navigate('/login');
+    } else {
+      navigate('/confirmacion-reserva');
+    }
+  };
+
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -161,19 +176,19 @@ function ItemScreen({ tipoObjeto }) {
             </select>
           </div>
 
-          <Link
-            to="/confirmacion-reserva"
+          <button
+            onClick={handleReserva}
+            disabled={!selectedDate}
             className="w-1/3 bg-[#f08400] text-[#ffffff] rounded-2xl py-4 px-6 flex items-center justify-center gap-2 font-medium text-xl transition-colors mx-auto"
             style={{
               backgroundColor: selectedDate ? "#F08400" : "#CCCCCC",
               color: "#FFFFFF",
-              cursor: selectedDate ? "pointer" : "not-allowed",
-              pointerEvents: selectedDate ? "auto" : "none",
+              cursor: selectedDate ? "pointer" : "not-allowed"
             }}
           >
             <ArrowUpRight className="w-5 h-5" />
             <span>¡Reservar!</span>
-          </Link>
+          </button>
 
           <SeccionConTitulo titulo="Descripción" contenido={item?.attributes?.description} />
           <SeccionConTitulo titulo="Dirección" contenido={item?.attributes?.street_address} />

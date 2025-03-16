@@ -17,9 +17,9 @@ export default function Marketplace() {
   const [naturalAttractions, setNaturalAttractions] = useState([]);
   const [loadingAtractivos, setLoadingAtractivos] = useState(true);
   const [loadingEventos, setLoadingEventos] = useState(false);
-  const [selectedSection, setSelectedSection] = useState(""); 
+  // Inicializamos selectedSection con "Eventos"
+  const [selectedSection, setSelectedSection] = useState("Eventos"); 
   const config = useContext(ConfigContext);
-
 
   const imagesTest = [
     { file: "https://picsum.photos/id/227/300/200" },
