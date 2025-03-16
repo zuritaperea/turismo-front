@@ -45,7 +45,7 @@ export default function Header() {
   };
 
   return (
-    <header className="w-full shadow-md bg-white py-4 px-6 md:px-10">
+    <header className="w-full shadow-md py-4 px-6 md:px-10">
       <div className="flex items-center justify-between h-16">
         <div className="flex items-center">
           <Link to="/" className="flex items-center">
@@ -59,15 +59,15 @@ export default function Header() {
         </div>
 
         <nav className="hidden md:flex gap-6 items-center">
-          <Link to="/" className="hover:text-blue-600 text-[#475467] font-medium text-base">Inicio</Link>
-          <Link to="/alojamientos" className="hover:text-blue-600 text-[#475467] font-light text-base">Alojamiento</Link>
-          <Link to="/actividades" className="hover:text-blue-600 text-[#475467] font-light text-base">Actividades</Link>
-          <Link to="/eventos" className="hover:text-blue-600 text-[#475467] font-light text-base">Eventos</Link>
+          <Link to="/" className="font-medium text-base">Inicio</Link>
+          <Link to="/alojamientos" className="font-light text-base">Alojamiento</Link>
+          <Link to="/actividades" className="font-light text-base">Actividades</Link>
+          <Link to="/eventos" className="font-light text-base">Eventos</Link>
           <a
             href="https://fidibonito.ciceroneweb.com/register-user"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-blue-600 text-[#475467] font-light text-base"
+            className="font-light text-base"
           >
             Planificador Inteligente
           </a>
@@ -92,15 +92,15 @@ export default function Header() {
       {menuOpen && (
         <div className="md:hidden absolute top-16 left-0 w-full bg-white shadow-md p-4 transition-all duration-300 z-50">
           <nav className="flex flex-col gap-4 items-center">
-            <Link to="/" className="hover:text-blue-600 text-[#475467] font-medium text-base" onClick={() => setMenuOpen(false)}>Inicio</Link>
-            <Link to="/alojamientos" className="hover:text-blue-600 text-[#475467] font-light text-base" onClick={() => setMenuOpen(false)}>Alojamiento</Link>
-            <Link to="/actividades" className="hover:text-blue-600 text-[#475467] font-light text-base" onClick={() => setMenuOpen(false)}>Actividades</Link>
-            <Link to="/eventos" className="hover:text-blue-600 text-[#475467] font-light text-base" onClick={() => setMenuOpen(false)}>Eventos</Link>
+            <Link to="/" className="font-medium text-base" onClick={() => setMenuOpen(false)}>Inicio</Link>
+            <Link to="/alojamientos" className="font-light text-base" onClick={() => setMenuOpen(false)}>Alojamiento</Link>
+            <Link to="/actividades" className="font-light text-base" onClick={() => setMenuOpen(false)}>Actividades</Link>
+            <Link to="/eventos" className="font-light text-base" onClick={() => setMenuOpen(false)}>Eventos</Link>
             <a
               href="https://fidibonito.ciceroneweb.com/register-user"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-blue-600 text-[#475467] font-light text-base"
+              className="font-light text-base"
               onClick={() => setMenuOpen(false)}
             >
               Planificador Inteligente

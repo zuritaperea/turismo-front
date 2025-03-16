@@ -15,8 +15,10 @@ const ConfigProvider = ({ children }) => {
         const fetchedConfig = await fetchConfig();
         setConfig(fetchedConfig);
         if (fetchedConfig) {
-          document.documentElement.style.setProperty('--color-principal', fetchedConfig.main_link_color);
-          document.documentElement.style.setProperty('--color-principal-background', fetchedConfig.body_background);
+          document.documentElement.style.setProperty('--navbar-background', fetchedConfig.navbar_background);
+          document.documentElement.style.setProperty('--navbar-text-color', fetchedConfig.navbar_color);
+          document.documentElement.style.setProperty('--main-link-color', fetchedConfig.main_link_color);
+          document.documentElement.style.setProperty('--body-background', fetchedConfig.body_background);
           document.title = fetchedConfig.title;
         } else {
           console.error("La configuración obtenida está vacía o es nula.");

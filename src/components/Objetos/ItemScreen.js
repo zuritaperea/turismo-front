@@ -142,7 +142,24 @@ function ItemScreen({ tipoObjeto }) {
             </div>
           </div>
 
-          <DatePickerComponent setSelectedDate={setSelectedDate} />
+          <div className="mb-4 w-56 justify-center mx-auto">
+            <label htmlFor="dateDropdown" className="block  text-sm font-medium text-gray-700">
+              Seleccione una fecha
+            </label>
+            <select
+              id="dateDropdown"
+              name="dateDropdown"
+              value={selectedDate}
+              onChange={(e) => setSelectedDate(e.target.value)}
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+            >
+              <option value="">Seleccione una fecha</option>
+              <option value="19/03">19/03</option>
+              <option value="20/03">20/03</option>
+              <option value="21/03">21/03</option>
+              <option value="22/03">22/03</option>
+            </select>
+          </div>
 
           <Link
             to="/confirmacion-reserva"

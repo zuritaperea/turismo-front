@@ -13,11 +13,14 @@
   }
 }
 
+
 body {
   font-family: 'Inter', sans-serif;
   font-optical-sizing: auto;
   font-weight: 200;
   font-style: normal;
+  background-color: var(--body-background, #F5F5F5);
+
 }
 .splash {
   cursor: pointer;
@@ -293,5 +296,22 @@ footer .titulo {
 
   .imagen-categoria {
     height: 25px;
+  }
+
+  a {
+    color: var(--color-principal);
+  }
+
+  header {
+    background-color: var(--navbar-background, #ffffff);
+    color: var(--navbar-text-color, #475467);
+  }
+  
+  nav a {
+    color: var(--main-link-color, #475467);
+  }
+  
+  nav a:hover {
+    color: var(--main-link-hover, blue); 
   }
 }

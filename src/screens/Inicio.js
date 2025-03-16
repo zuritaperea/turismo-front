@@ -115,7 +115,7 @@ export default function Inicio() {
     <>
       {loading ? <Splash /> : null}
 
-      <Header />
+      <Header config={config}/>
       <Carousel images={images} />
 
       <div className="flex justify-center flex-col items-center px-8">
