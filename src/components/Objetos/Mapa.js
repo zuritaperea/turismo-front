@@ -38,10 +38,10 @@ const FitBounds = ({ objetosFiltrados }) => {
 
 const Mapa = ({ objetosFiltrados }) => {
   const position = [-25.441105, -49.276855];
-  const [tileLayer, setTileLayer] = useState("GoogleMaps")
+  const [tileLayer, setTileLayer] = useState("GoogleMaps");
 
   return (
-    <div className=" h-80 w-11/12 rounded-lg overflow-hidden md:mt-5 lg:mt-5">
+    <div className="h-80 w-11/12 mx-auto rounded-lg overflow-hidden md:mt-5 lg:mt-5 my-5">
       <select
         className="absolute top-2 right-2 bg-white p-2 rounded shadow-md text-xs"
         value={tileLayer}
@@ -77,7 +77,6 @@ const Mapa = ({ objetosFiltrados }) => {
         )}
       </MapContainer>
     </div>
-
   );
 };
 

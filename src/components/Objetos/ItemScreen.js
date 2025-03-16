@@ -26,6 +26,7 @@ import { Link } from 'react-router-dom';
 import ActividadesLista from '../ActividadesFidiLista.js';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../components/AuthContext';
+import Mapa from './Mapa.js';
 
 function ItemScreen({ tipoObjeto }) {
   const { id, fechadesde, fechahasta } = useParams();
@@ -133,65 +134,84 @@ function ItemScreen({ tipoObjeto }) {
           </div>
           {tipoObjeto === "atractivo" && item?.attributes?.external_id && <ActividadesLista idAtractivo={item?.attributes?.external_id} />}
 
-          <div className="p-4">
-            <div className="max-w-md mx-auto rounded-3xl shadow-sm border border-[#e4e7ec] bg-white">
-              <div className="p-6">
-                <div className="flex items-start gap-3">
-                  <div className="rounded-md text-[#f08400]">
-                    <Ticket size={24} style={{ color: "#f08400" }} />
+          <div className='bg-white w-full border border-[#e4e7ec] rounded-3xl shadow-sm'>
+            <div className="p-4 my-5">
+              <div className="max-w-md mx-auto rounded-3xl shadow-sm border border-[#e4e7ec] bg-white">
+                <div className="p-6">
+                  <div className="flex items-start gap-3">
+                    <div className="rounded-md text-[#f08400]">
+                      <Ticket size={24} style={{ color: "#f08400" }} />
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-semibold text-[#101828] mb-1">Visita familiar</h2>
+                    </div>
                   </div>
-                  <div>
-                    <h2 className="text-xl font-semibold text-[#101828] mb-1">Visita familiar</h2>
+
+                  <p className="text-[#475467] mt-4 mb-6 text-lg">
+                    Campo VIP
+                  </p>
+
+                  <div className="flex items-center">
+                    <span className="text-3xl font-bold text-[#101828]">$ 0</span>
+                    <span className="text-[#475467] ml-2 text-lg">+ impuestos</span>
                   </div>
-                </div>
-
-                <p className="text-[#475467] mt-4 mb-6 text-lg">
-                  Campo VIP
-                </p>
-
-                <div className="flex items-center">
-                  <span className="text-3xl font-bold text-[#101828]">$ 0</span>
-                  <span className="text-[#475467] ml-2 text-lg">+ impuestos</span>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div className="mb-4 w-56 justify-center mx-auto">
-            <label htmlFor="dateDropdown" className="block  text-sm font-medium text-gray-700">
-              Seleccione una fecha
-            </label>
-            <select
-              id="dateDropdown"
-              name="dateDropdown"
-              value={selectedDate}
-              onChange={(e) => setSelectedDate(e.target.value)}
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+            <div className="mb-4 w-56 justify-center mx-auto">
+              <label htmlFor="dateDropdown" className="block  text-sm font-medium text-gray-700">
+                Seleccione una fecha
+              </label>
+              <select
+                id="dateDropdown"
+                name="dateDropdown"
+                value={selectedDate}
+                onChange={(e) => setSelectedDate(e.target.value)}
+                className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+              >
+                <option value="">Seleccione una fecha</option>
+                <option value="19/03">19/03</option>
+                <option value="20/03">20/03</option>
+                <option value="21/03">21/03</option>
+                <option value="22/03">22/03</option>
+              </select>
+            </div>
+
+            <button
+              onClick={handleReserva}
+              disabled={!selectedDate}
+              className="w-1/3 bg-[#f08400] text-[#ffffff] rounded-2xl py-4 px-6 flex items-center justify-center gap-2 font-medium text-xl transition-colors mx-auto mb-5"
+              style={{
+                backgroundColor: selectedDate ? "#F08400" : "#CCCCCC",
+                color: "#FFFFFF",
+                cursor: selectedDate ? "pointer" : "not-allowed"
+              }}
             >
-              <option value="">Seleccione una fecha</option>
-              <option value="19/03">19/03</option>
-              <option value="20/03">20/03</option>
-              <option value="21/03">21/03</option>
-              <option value="22/03">22/03</option>
-            </select>
+              <ArrowUpRight className="w-5 h-5" />
+              <span>¡Reservar!</span>
+            </button>
           </div>
 
-          <button
-            onClick={handleReserva}
-            disabled={!selectedDate}
-            className="w-1/3 bg-[#f08400] text-[#ffffff] rounded-2xl py-4 px-6 flex items-center justify-center gap-2 font-medium text-xl transition-colors mx-auto"
-            style={{
-              backgroundColor: selectedDate ? "#F08400" : "#CCCCCC",
-              color: "#FFFFFF",
-              cursor: selectedDate ? "pointer" : "not-allowed"
-            }}
-          >
-            <ArrowUpRight className="w-5 h-5" />
-            <span>¡Reservar!</span>
-          </button>
+
+
+
+
 
           <SeccionConTitulo titulo="Descripción" contenido={item?.attributes?.description} />
           <SeccionConTitulo titulo="Dirección" contenido={item?.attributes?.street_address} />
+          {item?.attributes?.point && (
+            <Mapa
+              objetosFiltrados={[
+                {
+                  id: item.id,
+                  title: item.attributes.name,
+                  coordinates: item.attributes.point,
+                },
+              ]}
+            />
+          )}
+
 
           {item?.attributes?.amenity_feature && <Servicios servicios={item?.attributes?.amenity_feature} />}
 
@@ -204,7 +224,17 @@ function ItemScreen({ tipoObjeto }) {
 
           <div className="grid grid-cols-1 md:grid-cols-3">
             <FechasHorarios item={item} tipoObjeto={tipoObjeto} />
-            <Contacto />
+            {(item.attributes.telefonos?.length > 0 ||
+              item.attributes.correos_electronicos?.length > 0 ||
+              item.attributes.url) && (
+                <Contacto
+                  contactoData={{
+                    telefonos: item.attributes.telefonos,
+                    correos_electronicos: item.attributes.correos_electronicos,
+                    url: item.attributes.url,
+                  }}
+                />
+              )}
             <RedesSociales idAtractivo={item.id} />
           </div>
 
@@ -213,7 +243,7 @@ function ItemScreen({ tipoObjeto }) {
               <Certificaciones item={item} />
             )}
 
-          <BotonesCalificarYCompartir item={item} />
+          {/* <BotonesCalificarYCompartir item={item} /> */}
 
           <Recomendaciones />
         </div>
