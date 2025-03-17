@@ -25,15 +25,16 @@ const ErrorAlerts = ({ alerts }) => {
         alerts.length > 0 &&
         alerts.map((alert, index) => (
           <div style={styles.alert} key={index}>
-            {REGISTER_ERRORS[alert.message]
-              ? REGISTER_ERRORS[alert.message]
-              : alert.message}
-            {alert.description
-              ? REGISTER_ERRORS[alert.description]
-                ? ": " + REGISTER_ERRORS[alert.description]
-                : ": " + alert.description
+            {alert.message?.trim()
+              ? REGISTER_ERRORS[alert.message] || alert.message
               : ""}
+
+            {alert.description?.trim() &&
+              (alert.message?.trim()
+                ? `: ${REGISTER_ERRORS[alert.description] || alert.description}`
+                : REGISTER_ERRORS[alert.description] || alert.description)}
           </div>
+
         ))}
     </>
   );

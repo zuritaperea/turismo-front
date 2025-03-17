@@ -51,7 +51,6 @@ const Recupero = () => {
           const response = await registroService.recuperarCuenta(datosUsuario.email);
   
           if (response.status === 200) {
-            console.log("ok :", response);
             setMensaje(
               "Su contraseña ha sido reseteada, recibirá un correo electrónico con instrucciones"
             );
@@ -63,18 +62,17 @@ const Recupero = () => {
   
           if (error.response) {
             // Manejo de error basado en la respuesta del servidor
-            console.log("error response:", error.response);
             setAlerts(functions.errorMaker(error.response.data));
           } else {
             // Error inesperado
-            setAlerts(["Ocurrió un error inesperado. Intente nuevamente."]);
+            setAlerts([{"description": "Ocurrió un error inesperado. Intente nuevamente."}]);
           }
         }
       } else {
-        setAlerts(["El correo electrónico es obligatorio"]);
+        setAlerts([{"description": "El correo electrónico es obligatorio"}]);
       }
     } else {
-      setAlerts(["Los correos electrónicos no son iguales"]);
+      setAlerts([{"description": "Los correos electrónicos no son iguales"},]);
     }
   };
   
