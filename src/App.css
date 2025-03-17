@@ -299,7 +299,7 @@ footer .titulo {
   }
 
   a {
-    color: var(--color-principal);
+    color: var(--main-link-color);
   }
 
   header {

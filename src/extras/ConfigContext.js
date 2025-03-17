@@ -18,6 +18,7 @@ const ConfigProvider = ({ children }) => {
           document.documentElement.style.setProperty('--navbar-background', fetchedConfig.navbar_background);
           document.documentElement.style.setProperty('--navbar-text-color', fetchedConfig.navbar_color);
           document.documentElement.style.setProperty('--main-link-color', fetchedConfig.main_link_color);
+          document.documentElement.style.setProperty('--color-principal', fetchedConfig.main_link_color);
           document.documentElement.style.setProperty('--body-background', fetchedConfig.body_background);
           document.title = fetchedConfig.title;
         } else {
