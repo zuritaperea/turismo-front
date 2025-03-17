@@ -28,23 +28,22 @@ const ActividadesLista = ({ idAtractivo }) => {
     const [reservaConfirmada, setReservaConfirmada] = useState(null);
     const handleReservar = async () => {
         if (!user) {
-            // Si no hay usuario, muestra un mensaje o redirige a login
             alert("¡Por favor, inicia sesión para realizar una reserva!");
             return; // Detiene la ejecución de la reserva si no hay usuario
         }
-    
+
         const reservaData = {
             cdgbtms_atrativo: idAtractivo,
             cdgbtms_atividade: selectedActividad?.cdgbtms,
             data: new Date(selectedDate).toLocaleDateString('es-AR'),  // Asegúrate de que 'data' esté en el formato adecuado
             hora: selectedHorario,
             nome: personaDenominacion,
-          };
-          
-          try {
+        };
+
+        try {
             const response = await fidiApi.hacerReserva(reservaData);
             const reservaConfirmada = response.data.info[0];
-    
+
             // Incluye nombre de la actividad y nombre de la persona
             const reservaDetalles = {
                 reserva_num: reservaConfirmada.reserva_num,
@@ -53,15 +52,15 @@ const ActividadesLista = ({ idAtractivo }) => {
                 personaDenominacion: personaDenominacion, // Nombre de la persona
                 nome_atividade: selectedActividad?.nome, // Nombre de la actividad, si está disponible
             };
-    
+
             // Redirigir a la página de confirmación de reserva
             navigate('/confirmacion-reserva-fidi', { state: { reservaConfirmada: reservaDetalles } });
         } catch (error) {
             console.error('Error al hacer la reserva', error);
         }
     };
-    
-    
+
+
     useEffect(() => {
         if (user?.profile?.length > 0) {
             const persona = user.profile.find(p => p.type === "Persona");
@@ -142,73 +141,85 @@ const ActividadesLista = ({ idAtractivo }) => {
                 </div>
             ))}
 
-            {/* MODAL */}
             <Modal show={modalOpen} onHide={() => setModalOpen(false)}>
-                <Modal.Header onHide={() => setModalOpen(false)}>Seleccionar Fecha y Horario</Modal.Header>
-                <Modal.Body>
-
-                    {/* Selección de Fecha */}
-                    <div className="mb-4">
-                        <h3 className="text-md font-semibold mb-2">Selecciona una fecha:</h3>
-                        <div className="flex gap-2">
-                            {fechasDisponibles.map((fecha) => (
-                                <button
-                                    key={fecha}
-                                    onClick={() => setSelectedDate(fecha)}
-                                    className={`px-4 py-2 rounded-md border ${selectedDate === fecha ? "bg-principal text-white" : "border-gray-300"
-                                        }`}
-                                >
-                                    {new Date(fecha).toLocaleDateString("es-AR", { day: "2-digit", month: "2-digit", year: "numeric" })}
-                                </button>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* Lista de Horarios */}
-                    {selectedDate && (
-                        <div>
-                            <h3 className="text-md font-semibold mb-2">Horarios Disponibles</h3>
-                            <ul className="list-group">
-                                {horarios.length > 0 ? (
-                                    horarios.map(([hora, cupos]) => (
-                                        <li
-                                            key={hora}
-                                            className={`list-group-item cursor-pointer ${selectedHorario === hora ? "bg-principal text-white" : "hover:bg-light"}`}
-                                            onClick={() => setSelectedHorario(hora)}
+                <div
+                    className="mx-4 sm:mx-auto"
+                    style={{ maxWidth: "500px", maxHeight: "90vh", overflowY: "auto", paddingRight: "10px" }}
+                >
+                    <div className="flex flex-col h-full">
+                        <Modal.Header onHide={() => setModalOpen(false)}>
+                            Seleccionar Fecha y Horario
+                        </Modal.Header>
+                        <Modal.Body className="flex-grow overflow-y-auto scrollbar-hide">
+                            <div className="mb-4">
+                                <h3 className="text-md font-semibold mb-2">Selecciona una fecha:</h3>
+                                <div className="flex flex-col gap-2">
+                                    {fechasDisponibles.map((fecha) => (
+                                        <button
+                                            key={fecha}
+                                            onClick={() => setSelectedDate(fecha)}
+                                            className={`px-4 py-2 rounded-md border ${selectedDate === fecha ? "bg-principal text-white" : "border-gray-300"
+                                                }`}
                                         >
-                                            {hora} - {cupos} lugares
-                                        </li>
-                                    ))
-                                ) : (
-                                    <p>No hay horarios disponibles.</p>
-                                )}
-                            </ul>
-                        </div>
-                    )}
-                </Modal.Body>
+                                            {new Date(fecha).toLocaleDateString("es-AR", {
+                                                day: "2-digit",
+                                                month: "2-digit",
+                                                year: "numeric",
+                                            })}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                            {selectedDate && (
+                                <div>
+                                    <h3 className="text-md font-semibold mb-2">Horarios Disponibles</h3>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        {horarios.length > 0 ? (
+                                            horarios.map(([hora, cupos]) => (
+                                                <div
+                                                    key={hora}
+                                                    onClick={() => setSelectedHorario(hora)}
+                                                    className={`cursor-pointer rounded-lg border p-4 text-center transition-colors duration-200 ${selectedHorario === hora
+                                                            ? "bg-principal text-white border-transparent"
+                                                            : "bg-white text-slate-900 border-gray-300 hover:bg-gray-100"
+                                                        }`}
+                                                >
+                                                    <div className="text-lg font-bold">{hora}</div>
+                                                    <div className="text-sm">{cupos} lugares</div>
+                                                </div>
+                                            ))
+                                        ) : (
+                                            <p className="col-span-2 text-center">No hay horarios disponibles.</p>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
 
-                <Modal.Footer>
-                    {/* Botón de Reservar */}
-                    <div
-                        className=" bg-[#f08400] text-[#ffffff] rounded-2xl py-1 px-4 flex items-center font-medium text-xl transition-colors"
-                        style={{
-                            backgroundColor: selectedHorario ? "#F08400" : "#CCCCCC",
-                            color: "#FFFFFF",
-                            cursor: selectedHorario ? "pointer" : "not-allowed",
-                            pointerEvents: selectedHorario ? "auto" : "none",
-                        }}
-                        onClick={handleReservar}
-                    >
-                        <ArrowUpRight className="w-5 h-5" />
-                        <span>¡Reservar!</span>
+
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <div className="flex justify-center w-full">
+                                <div
+                                    className="bg-[#f08400] text-[#ffffff] rounded-2xl py-1 px-4 flex items-center font-medium text-xl transition-colors"
+                                    style={{
+                                        backgroundColor: selectedHorario ? "#F08400" : "#CCCCCC",
+                                        color: "#FFFFFF",
+                                        cursor: selectedHorario ? "pointer" : "not-allowed",
+                                        pointerEvents: selectedHorario ? "auto" : "none",
+                                    }}
+                                    onClick={handleReservar}
+                                >
+                                    <ArrowUpRight className="w-5 h-5" />
+                                    <span>¡Reservar!</span>
+                                </div>
+                            </div>
+                        </Modal.Footer>
                     </div>
-
-                    {/* Botón de Cerrar */}
-                    <Button variant="secondary" className="w-100 mt-2 button" onClick={() => setModalOpen(false)}>
-                        Cancelar
-                    </Button>
-                </Modal.Footer>
+                </div>
             </Modal>
+
+
+
         </div>
     );
 };

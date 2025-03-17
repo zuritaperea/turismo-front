@@ -23,5 +23,7 @@ export default {
         return response.data.data.attributes.redes_sociales;
       });
   },
-  
+  obtenerTodosProductoTuristico: function () {
+    return api.get(`${apiVersion}/producto_turistico/?ordering=name`);
+  },
 };
