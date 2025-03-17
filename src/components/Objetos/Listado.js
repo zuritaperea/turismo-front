@@ -4,8 +4,8 @@ import Card from "../Card";
 
 const Listado = ({ objetosFiltrados, target }) => {
   return (
-    <div className="w-full p-4">
-      <div className="max-w-7xl mx-auto">
+    <div className="w-full p-4 flex justify-center">
+      <div className="max-w-7xl w-full">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center">
           {objetosFiltrados.map((item) => (
             <Link 

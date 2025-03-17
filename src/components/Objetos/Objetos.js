@@ -119,15 +119,11 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
   )
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen justify-center">
       <style>{mapStyles}</style>
       <Header />
 
-      <div className="flex flex-col md:flex-row flex-grow justify-center align-middle">
-        <div className="w-full md:w-1/2 flex flex-col">
-          <FiltrosBusqueda />
-        </div>
-
+      <div className="flex flex-col md:flex-row flex-grow justify-center items-center align-middle">
         <div className="hidden md:block md:w-1/2 lg:ml-10 ">
           {!hasCoordinates ? (
             <div className="flex items-center justify-center h-full bg-[#f9fafb] text-[#667085] text-sm text-center ">
@@ -139,10 +135,9 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
         </div>
       </div>
 
-      <div className="overflow-auto flex-grow mt-7 flex justify-center">
+      <div className="mt-7 flex justify-center align-middle items-center">
         <Listado objetosFiltrados={objetosFiltrados} navigation={navigation} target={target} />
       </div>
-
       <Footer />
     </div>
   )
