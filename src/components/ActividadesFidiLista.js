@@ -23,19 +23,18 @@ const ActividadesLista = ({ idAtractivo }) => {
     const [selectedHorario, setSelectedHorario] = useState(null);
     const [personaDenominacion, setPersonaDenominacion] = useState(null);
 
-    // Fechas fijas a mostrar
     const fechasDisponibles = ["2025-03-19", "2025-03-20", "2025-03-21", "2025-03-22"];
     const [reservaConfirmada, setReservaConfirmada] = useState(null);
     const handleReservar = async () => {
         if (!user) {
             alert("¡Por favor, inicia sesión para realizar una reserva!");
-            return; // Detiene la ejecución de la reserva si no hay usuario
+            return; 
         }
 
         const reservaData = {
             cdgbtms_atrativo: idAtractivo,
             cdgbtms_atividade: selectedActividad?.cdgbtms,
-            data: new Date(selectedDate).toLocaleDateString('es-AR'),  // Asegúrate de que 'data' esté en el formato adecuado
+            data: new Date(selectedDate).toLocaleDateString('es-AR'), 
             hora: selectedHorario,
             nome: personaDenominacion,
         };
@@ -44,16 +43,14 @@ const ActividadesLista = ({ idAtractivo }) => {
             const response = await fidiApi.hacerReserva(reservaData);
             const reservaConfirmada = response.data.info[0];
 
-            // Incluye nombre de la actividad y nombre de la persona
             const reservaDetalles = {
                 reserva_num: reservaConfirmada.reserva_num,
                 data: reservaConfirmada.data,
                 hora: reservaConfirmada.hora,
-                personaDenominacion: personaDenominacion, // Nombre de la persona
-                nome_atividade: selectedActividad?.nome, // Nombre de la actividad, si está disponible
+                personaDenominacion: personaDenominacion, 
+                nome_atividade: selectedActividad?.nome, 
             };
 
-            // Redirigir a la página de confirmación de reserva
             navigate('/confirmacion-reserva-fidi', { state: { reservaConfirmada: reservaDetalles } });
         } catch (error) {
             console.error('Error al hacer la reserva', error);
@@ -96,8 +93,7 @@ const ActividadesLista = ({ idAtractivo }) => {
         const obtenerHorarios = async () => {
             if (selectedActividad && selectedDate) {
                 try {
-                    // Convertir selectedDate a formato dd-mm-yyyy
-                    const formattedDate = new Date(selectedDate).toLocaleDateString('es-AR'); // Aquí usas el formato adecuado para Argentina
+                    const formattedDate = new Date(selectedDate).toLocaleDateString('es-AR'); 
                     const response = await fidiApi.obtenerHorarios(selectedActividad.cdgbtms, formattedDate);
                     setHorarios(Object.entries(response.data.data.dados[0].vagas));
                 } catch (error) {
@@ -108,6 +104,10 @@ const ActividadesLista = ({ idAtractivo }) => {
         obtenerHorarios();
     }, [selectedDate, selectedActividad]);
 
+    useEffect(() => {
+        console.log()
+    }, [])
+    
 
     if (loading) return <p>Cargando actividades...</p>;
     if (error) return <p>{error}</p>;

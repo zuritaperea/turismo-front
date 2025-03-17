@@ -1,13 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
-import { useParams, useLocation } from 'react-router-dom';
-import service from '../../axios/services/service';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import serviceGeneral from '../../axios/services/service';
+import serviceAtractivo from '../../axios/services/atractivo.js';
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Carousel from '../../components/Carousel';
 import TagsList from '../../components/TagsList';
-import Estrellas from '../../components/Items/Estrellas';
 import BotonesAccion from './BotonesAccion';
 import FechasHorarios from './FechasHorarios';
 import Contacto from './Contacto';
@@ -17,29 +17,27 @@ import Alert from '../Alert';
 import Splash from '../../components/Splash';
 import SeccionConTitulo from './SeccionConTitulo';
 import Servicios from './Servicios';
-import BotonesCalificarYCompartir from './BotonesCalificarYCompartir';
 import Recomendaciones from './Recomendaciones';
 import FiltrosBusqueda from './FiltrosBusqueda';
-import { Ticket, ArrowUpRight } from 'lucide-react';
-import { DatePickerComponent } from '../DatePicker.tsx';
-import { Link } from 'react-router-dom';
 import ActividadesLista from '../ActividadesFidiLista.js';
-import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../components/AuthContext';
 import Mapa from './Mapa.js';
+import ActividadesListaPresentacion from '../EventosProductosLista.jsx';
 
 function ItemScreen({ tipoObjeto }) {
   const { id, fechadesde, fechahasta } = useParams();
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
+
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [items, setItems] = useState([]);
   const [loadingItems, setLoadingItems] = useState(true);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [atractivoData, setAtractivoData] = useState([]); 
 
-  const navigate = useNavigate();
-  const { user } = useContext(AuthContext);
   const handleReserva = () => {
     if (!selectedDate) return;
     if (!user) {
@@ -49,7 +47,6 @@ function ItemScreen({ tipoObjeto }) {
     }
   };
 
-
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [id]);
@@ -57,7 +54,7 @@ function ItemScreen({ tipoObjeto }) {
   useEffect(() => {
     const obtenerItem = async () => {
       try {
-        const datosItem = await service.obtenerDatos(tipoObjeto, id, fechadesde, fechahasta);
+        const datosItem = await serviceGeneral.obtenerDatos(tipoObjeto, id, fechadesde, fechahasta);
         setItem(datosItem);
         setLoading(false);
       } catch (error) {
@@ -68,7 +65,7 @@ function ItemScreen({ tipoObjeto }) {
 
     const obtenerItems = async () => {
       try {
-        const datosItems = await service.obtenerTodos(tipoObjeto);
+        const datosItems = await serviceGeneral.obtenerTodos(tipoObjeto);
         setItems(datosItems);
         setLoadingItems(false);
       } catch (error) {
@@ -79,6 +76,20 @@ function ItemScreen({ tipoObjeto }) {
     obtenerItems();
     obtenerItem();
   }, [id, fechadesde, fechahasta, tipoObjeto]);
+
+  useEffect(() => {
+    const datosItemAtractivos = async () => {
+      try {
+        const data = await serviceAtractivo.obtenerTodosProductoTuristico();
+        console.log(data, 'atractivo data');
+        setAtractivoData(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    datosItemAtractivos();
+  }, []);
 
   if (loading) {
     return <Splash />;
@@ -101,7 +112,7 @@ function ItemScreen({ tipoObjeto }) {
       <Header />
       <div className="w-full max-w-[1376px] mx-auto p-4">
         <img
-          className="w-full h-64 object-cover object-center rounded-xl md:rounded-xl lg:rounded-xl shadow-md"
+          className="w-full h-64 object-cover object-center rounded-xl shadow-md"
           src={item.image}
           alt="Imagen 1"
         />
@@ -120,19 +131,18 @@ function ItemScreen({ tipoObjeto }) {
             <div className="space-x-1 mt-2 mb-5 flex justify-center lg:justify-start">
               <TagsList tags={item?.attributes?.tourist_type} />
             </div>
-            {/* <div className="flex items-center justify-center md:justify-start mt-2">
-              <Estrellas puntuacion={item?.attributes?.puntuacion} size={'sm'} />
-              <span className="puntacion font-semibold mx-1">
-                {item?.attributes?.puntuacion}
-              </span>
-            </div> */}
             <span className="puntacion font-semibold mx-1">
               {item?.attributes?.puntuacion}
             </span>
 
             {location.pathname.includes('/alojamiento/') && <FiltrosBusqueda />}
           </div>
-          {tipoObjeto === "atractivo" && item?.attributes?.external_id && <ActividadesLista idAtractivo={item?.attributes?.external_id} />}
+
+          {tipoObjeto === "atractivo" && item?.attributes?.external_id && (
+            <ActividadesLista idAtractivo={item?.attributes?.external_id} />
+          )}
+
+            <ActividadesListaPresentacion listData={atractivoData} />
 
           <SeccionConTitulo titulo="Descripción" contenido={item?.attributes?.description} />
           <SeccionConTitulo titulo="Dirección" contenido={item?.attributes?.street_address} />
@@ -147,7 +157,6 @@ function ItemScreen({ tipoObjeto }) {
               ]}
             />
           )}
-
 
           {item?.attributes?.amenity_feature && <Servicios servicios={item?.attributes?.amenity_feature} />}
 
@@ -178,8 +187,6 @@ function ItemScreen({ tipoObjeto }) {
             item?.attributes?.certificaciones.length > 0 && (
               <Certificaciones item={item} />
             )}
-
-          {/* <BotonesCalificarYCompartir item={item} /> */}
 
           <Recomendaciones />
         </div>
