@@ -11,18 +11,33 @@ const Contacto = ({ contactoData }) => {
       <div className="text-xl font-bold text-slate-900 tracking-tight dark:text-slate-200 my-4">
         Contacto
       </div>
-      <div className="flex descripcion">
-        <img src={phoneIcon} className="mr-3" alt="Teléfono" />
-        {contactoData.telefonos}
-      </div>
-      <div className="flex descripcion">
-        <img src={mailIcon} className="mr-3" alt="Correo" />
-        {contactoData.correos_electronicos}
-      </div>
-      <div className="flex descripcion">
-        <img src={linkIcon} className="mr-3" alt="Sitio web" />
-        {contactoData.url}
-      </div>
+      {/* Mostrar los teléfonos */}
+      {contactoData.telefonos && contactoData.telefonos.length > 0 && (
+        contactoData.telefonos.map((telefono, index) => (
+          <div key={index} className="flex descripcion">
+            <img src={phoneIcon} className="mr-3" alt="Teléfono" />
+            {telefono.type}: {telefono.contact_point}
+          </div>
+        ))
+      )}
+      
+      {/* Mostrar los correos electrónicos */}
+      {contactoData.correos_electronicos && contactoData.correos_electronicos.length > 0 && (
+        contactoData.correos_electronicos.map((correo, index) => (
+          <div key={index} className="flex descripcion">
+            <img src={mailIcon} className="mr-3" alt="Correo" />
+            {correo.type}: {correo.contact_point}
+          </div>
+        ))
+      )}
+
+      {/* Mostrar el sitio web */}
+      {contactoData.url && (
+        <div className="flex descripcion">
+          <img src={linkIcon} className="mr-3" alt="Sitio web" />
+          {contactoData.url}
+        </div>
+      )}
     </div>
   );
 };
