@@ -1,4 +1,4 @@
-import React, { useState,  useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Form from '../components/Form';
 import Button from '../components/Button';
 import Alert from '../components/Alert';
@@ -11,9 +11,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import Turnstile from "react-turnstile";
+import functions from '../extras/functions';
 
 import registroService from "../axios/services/profile";
 import Separador from '../components/Separador';
+import ErrorAlerts from '../components/ErrorAlerts/ErrorAlerts';
 
 const Recupero = () => {
   const [mensaje, setMensaje] = useState(null);
@@ -26,7 +28,7 @@ const Recupero = () => {
     email2: ''
   });
 
-  const [error, setError] = useState(null);
+  const [alerts, setAlerts] = useState([]);
   const [registroExitoso, setRegistroExitoso] = useState(false);
 
   const handleInputChange = (event) => {
@@ -36,47 +38,46 @@ const Recupero = () => {
       [name]: value
     });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!token) {
       alert("Por favor, completa el captcha.");
       return;
     }
-    // Realiza validación de los datos
+  
     if (datosUsuario.email === datosUsuario.email2) {
-      if (
-        datosUsuario.email
-      ) {
+      if (datosUsuario.email) {
         try {
-          registroService
-            .recuperarCuenta(datosUsuario)
-            .then((response) => {
-              setMensaje(
-                "Su contraseña ha sido reseteada, recibirá un correo electrónico con instrucciones"
-              );
-              setRegistroExitoso(true);
-            }
-            )
-            .catch((error) => {
-              if (error) {
-                setMensaje(null);
-                setError(String(error));
-              }
-            });
+          const response = await registroService.recuperarCuenta(datosUsuario.email);
+  
+          if (response.status === 200) {
+            console.log("ok :", response);
+            setMensaje(
+              "Su contraseña ha sido reseteada, recibirá un correo electrónico con instrucciones"
+            );
+            setAlerts([]);
+            setRegistroExitoso(true);
+          }
         } catch (error) {
-          // En caso de error al guardar los datos, muestra el mensaje de error
-          setError('No se pudo realizar el reseteo');
+          console.error("Error en la solicitud:", error);
+  
+          if (error.response) {
+            // Manejo de error basado en la respuesta del servidor
+            console.log("error response:", error.response);
+            setAlerts(functions.errorMaker(error.response.data));
+          } else {
+            // Error inesperado
+            setAlerts(["Ocurrió un error inesperado. Intente nuevamente."]);
+          }
         }
       } else {
-        // Si falta algún dato, muestra un error
-        setError('El correo electrónico es obligatorio');
+        setAlerts(["El correo electrónico es obligatorio"]);
       }
     } else {
-      // Si falta algún dato, muestra un error
-      setError('Los correos electrónicos no son iguales');
+      setAlerts(["Los correos electrónicos no son iguales"]);
     }
   };
+  
 
   useEffect(() => {
     if (config) { // Verifica que config no sea null
@@ -101,7 +102,10 @@ const Recupero = () => {
 
         <Row className="destination-box mb-2 mt-6">
           <Col md={{ span: 6, offset: 3 }}>
-            {error && <Alert variant="danger">{error}</Alert>}
+
+            <ErrorAlerts alerts={alerts} />
+            {mensaje && <Alert variant="success">{mensaje}</Alert>}
+
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="email">
                 <Form.Label>Correo Electrónico</Form.Label>
@@ -131,8 +135,8 @@ const Recupero = () => {
 
               <Row>
                 <Col sm={3}>
-                    {/* Turnstile */}
-                    <div className="flex justify-center">
+                  {/* Turnstile */}
+                  <div className="flex justify-center">
                     <Turnstile
                       sitekey={process.env.REACT_APP_TURNSTILE_SITE_KEY} // Para Create React App
                       // sitekey={import.meta.env.VITE_TURNSTILE_SITE_KEY} // Para Vite
@@ -145,15 +149,14 @@ const Recupero = () => {
                 <Separador />
               </Row>
               <Row className="destination-box mb-2 text-center">
-              <Col xs={12}>
+                <Col xs={12}>
 
-                <p className="text-sm text-center mt-0">
-                  <Link to="/" className="color-principal text-sm"><FontAwesomeIcon icon={faArrowLeft} /> Regresar al inicio</Link>
-                </p> </Col>
+                  <p className="text-sm text-center mt-0">
+                    <Link to="/" className="color-principal text-sm"><FontAwesomeIcon icon={faArrowLeft} /> Regresar al inicio</Link>
+                  </p> </Col>
               </Row>
 
             </Form>
-            {mensaje && <Alert variant="success">{mensaje}</Alert>}
           </Col></Row></Container>
     </>
   );

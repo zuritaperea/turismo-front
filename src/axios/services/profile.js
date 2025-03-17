@@ -108,11 +108,11 @@ export default {
       },
     });
   },
-  recuperarCuenta: function (data) {
+  recuperarCuenta: async function (correo_electronico) {
     const body = {
-        correo_electronico:data,      
+        correo_electronico:correo_electronico,      
     };
-    return api.post(`${apiVersion}/usuario/recuperar-cuenta/`, JSON.stringify(body), {
+    return await api.post(`${apiVersion}/usuario/recuperar-cuenta/`, JSON.stringify(body), {
       headers: {
         "Content-Type": "application/json",
       },
