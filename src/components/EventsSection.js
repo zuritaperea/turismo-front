@@ -14,7 +14,7 @@ const EventsSection = ({ data, marketplace }) => {
       {!marketplace && (
         <SectionTitle title={title} subtitle={subtitle} imgSrc={medalla} />
       )}
-      <div className="slider-horizontal flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4">
+      <div className="slider-horizontal flex justify-center space-x-4 overflow-x-auto">
         {data.map((item) => (
           <Link key={item.id} to={`/${target.toLowerCase()}/${item.id}`}>
             <Card 
@@ -30,6 +30,6 @@ const EventsSection = ({ data, marketplace }) => {
       </div>
     </div>
   );
-}
+};
 
 export default EventsSection;

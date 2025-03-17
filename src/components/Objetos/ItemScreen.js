@@ -120,12 +120,12 @@ function ItemScreen({ tipoObjeto }) {
             <div className="space-x-1 mt-2 mb-5 flex justify-center lg:justify-start">
               <TagsList tags={item?.attributes?.tourist_type} />
             </div>
-            <div className="flex items-center justify-center md:justify-start mt-2">
+            {/* <div className="flex items-center justify-center md:justify-start mt-2">
               <Estrellas puntuacion={item?.attributes?.puntuacion} size={'sm'} />
               <span className="puntacion font-semibold mx-1">
                 {item?.attributes?.puntuacion}
               </span>
-            </div>
+            </div> */}
             <span className="puntacion font-semibold mx-1">
               {item?.attributes?.puntuacion}
             </span>
@@ -133,70 +133,6 @@ function ItemScreen({ tipoObjeto }) {
             {location.pathname.includes('/alojamiento/') && <FiltrosBusqueda />}
           </div>
           {tipoObjeto === "atractivo" && item?.attributes?.external_id && <ActividadesLista idAtractivo={item?.attributes?.external_id} />}
-
-          <div className='bg-white w-full border border-[#e4e7ec] rounded-3xl shadow-sm'>
-            <div className="p-4 my-5">
-              <div className="max-w-md mx-auto rounded-3xl shadow-sm border border-[#e4e7ec] bg-white">
-                <div className="p-6">
-                  <div className="flex items-start gap-3">
-                    <div className="rounded-md text-[#f08400]">
-                      <Ticket size={24} style={{ color: "#f08400" }} />
-                    </div>
-                    <div>
-                      <h2 className="text-xl font-semibold text-[#101828] mb-1">Visita familiar</h2>
-                    </div>
-                  </div>
-
-                  <p className="text-[#475467] mt-4 mb-6 text-lg">
-                    Campo VIP
-                  </p>
-
-                  <div className="flex items-center">
-                    <span className="text-3xl font-bold text-[#101828]">$ 0</span>
-                    <span className="text-[#475467] ml-2 text-lg">+ impuestos</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="mb-4 w-56 justify-center mx-auto">
-              <label htmlFor="dateDropdown" className="block  text-sm font-medium text-gray-700">
-                Seleccione una fecha
-              </label>
-              <select
-                id="dateDropdown"
-                name="dateDropdown"
-                value={selectedDate}
-                onChange={(e) => setSelectedDate(e.target.value)}
-                className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-              >
-                <option value="">Seleccione una fecha</option>
-                <option value="19/03">19/03</option>
-                <option value="20/03">20/03</option>
-                <option value="21/03">21/03</option>
-                <option value="22/03">22/03</option>
-              </select>
-            </div>
-
-            <button
-              onClick={handleReserva}
-              disabled={!selectedDate}
-              className="w-1/3 bg-[#f08400] text-[#ffffff] rounded-2xl py-4 px-6 flex items-center justify-center gap-2 font-medium text-xl transition-colors mx-auto mb-5"
-              style={{
-                backgroundColor: selectedDate ? "#F08400" : "#CCCCCC",
-                color: "#FFFFFF",
-                cursor: selectedDate ? "pointer" : "not-allowed"
-              }}
-            >
-              <ArrowUpRight className="w-5 h-5" />
-              <span>¡Reservar!</span>
-            </button>
-          </div>
-
-
-
-
-
 
           <SeccionConTitulo titulo="Descripción" contenido={item?.attributes?.description} />
           <SeccionConTitulo titulo="Dirección" contenido={item?.attributes?.street_address} />

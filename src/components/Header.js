@@ -61,7 +61,7 @@ export default function Header() {
         <nav className="hidden md:flex gap-6 items-center">
           <Link to="/" className="font-medium text-base">Inicio</Link>
           <Link to="/alojamientos" className="font-light text-base">Alojamiento</Link>
-          <Link to="/actividades" className="font-light text-base">Actividades</Link>
+          <Link to="/atractivos" className="font-light text-base">Actividades</Link>
           <Link to="/eventos" className="font-light text-base">Eventos</Link>
           <a
             href="https://fidibonito.ciceroneweb.com/register-user"
@@ -94,7 +94,7 @@ export default function Header() {
           <nav className="flex flex-col gap-4 items-center">
             <Link to="/" className="font-medium text-base" onClick={() => setMenuOpen(false)}>Inicio</Link>
             <Link to="/alojamientos" className="font-light text-base" onClick={() => setMenuOpen(false)}>Alojamiento</Link>
-            <Link to="/actividades" className="font-light text-base" onClick={() => setMenuOpen(false)}>Actividades</Link>
+            <Link to="/atractivos" className="font-light text-base" onClick={() => setMenuOpen(false)}>Actividades</Link>
             <Link to="/eventos" className="font-light text-base" onClick={() => setMenuOpen(false)}>Eventos</Link>
             <a
               href="https://fidibonito.ciceroneweb.com/register-user"
