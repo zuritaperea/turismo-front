@@ -135,8 +135,9 @@ function ItemScreen({ tipoObjeto }) {
           )}
 
           {/* Listado de productos */}
-          {item.attributes.productos_turisticos && <ActividadesListaPresentacion listData={item.attributes.productos_turisticos}  />}
-
+          {item.attributes.productos_turisticos?.length > 0 && (
+            <ActividadesListaPresentacion listData={item.attributes.productos_turisticos} />
+          )}
           <SeccionConTitulo titulo="Descripción" contenido={item.attributes.description} />
           <SeccionConTitulo titulo="Dirección" contenido={item.attributes.street_address} />
           {item.attributes.point && (
