@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import Spinner from "../components/Spinner";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import atractivoService from '../axios/services/atractivo';
 import eventoService from '../axios/services/evento';
 import SearchComponent from "../components/SearchComponent";
@@ -107,15 +107,15 @@ export default function Inicio() {
     { icono: <Ticket size={30} />, titulo: 'Eventos', link: '/eventos' },
     { icono: <MapPinned size={30} />, titulo: 'Atractivos', link: '/atractivos' },
     { icono: <Hotel size={30} />, titulo: 'Alojamientos', link: '/alojamientos' },
-    { icono: <Bus size={30} />, titulo: 'Circuitos', link: '/circuitos' },
-    { icono: <ShoppingBag size={30} />, titulo: 'Comercios', link: '/comercios' },
+    //{ icono: <Bus size={30} />, titulo: 'Circuitos', link: '/circuitos' },
+    //{ icono: <ShoppingBag size={30} />, titulo: 'Comercios', link: '/comercios' },
     { icono: <Utensils size={30} />, titulo: 'Gastronomía', link: '/gastronomia' },
   ];
   return (
     <>
       {loading ? <Splash /> : null}
 
-      <Header config={config}/>
+      <Header config={config} />
       <Carousel images={images} />
 
       <div className="flex justify-center flex-col items-center px-8">
@@ -124,18 +124,12 @@ export default function Inicio() {
       </div>
 
       <div className="flex overflow-x-auto md:overflow-hidden whitespace-nowrap justify-start md:justify-center gap-4 px-4 md:px-0 pb-4">
-        <img
+        <Link to="/atractivos"> <img
           src={marketPlaceLogo}
           className="h-48 flex-none rounded-md"
           loading="lazy"
           alt="Marketplace"
-        />
-        <img
-          src={pasaporteLogo}
-          className="h-48 flex-none rounded-md"
-          loading="lazy"
-          alt="Pasaporte"
-        />
+        /></Link>
         <a
           href="https://fidibonito.ciceroneweb.com/register-user"
           target="_blank"
@@ -143,31 +137,36 @@ export default function Inicio() {
 
         >
           <img
-            src={planificadorLogo}
+            src={pasaporteLogo}
             className="h-48 flex-none rounded-md"
             loading="lazy"
-            alt="Planificador"
+            alt="Pasaporte"
           />
         </a>
 
-      </div>
+
+      </div >
 
 
       <div className="border-t border-[#E4E7EC] h-[1px] md:hidden my-4"></div>
 
-      {loadingAtractivos ? (
-        <Spinner animation="border" role="status" />
-      ) : (
-        <AttractionsSection data={naturalAttractions.sort(() => Math.random() - Math.random()).slice(0, 6)} />
-      )}
+      {
+        loadingAtractivos ? (
+          <Spinner animation="border" role="status" />
+        ) : (
+          <AttractionsSection data={naturalAttractions.sort(() => Math.random() - Math.random()).slice(0, 6)} />
+        )
+      }
       <div className="border-t border-[#E4E7EC] h-[1px] md:hidden my-4"></div>
 
 
-      {loadingEventos ? (
-        <Spinner animation="border" role="status" />
-      ) : (
-        <EventsSection data={eventos.sort(() => Math.random() - Math.random()).slice(0, 6)} />
-      )}
+      {
+        loadingEventos ? (
+          <Spinner animation="border" role="status" />
+        ) : (
+          <EventsSection data={eventos.sort(() => Math.random() - Math.random()).slice(0, 6)} />
+        )
+      }
 
       <Footer />
     </>

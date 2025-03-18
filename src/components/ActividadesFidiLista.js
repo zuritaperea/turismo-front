@@ -1,14 +1,36 @@
 import React, { useEffect, useState, useContext } from "react";
 import fidiApi from "../axios/services/fidi"; // Servicio API
 import { Ticket, ArrowUpRight } from "lucide-react";
-import { DatePickerComponent } from "./DatePicker.tsx";
-import { Link } from "react-router-dom";
 import Modal from './Modal.js';
-import Button from './Button.js';
 import { AuthContext } from "./AuthContext";
 import { useNavigate } from 'react-router-dom';
 
-
+const cdgbtms_agencia = [
+    "90550101001270003", "90550101000690009", "90550101000860001", "90550101001070004",
+    "90550101019005905", "90550101001140002", "90550101000820000", "90550101000730000",
+    "90550101000930000", "90550101001250002", "90550101009790006", "90550101012420001",
+    "90550101019004828", "90550101019003775", "90550101032520001", "90550101019006499",
+    "90550101000630006", "90550101000570003", "90550101009750004", "90550101019005891",
+    "90550101000030009", "90550101000590004", "90550101001120001", "90550101011820006",
+    "90550101000680003", "90550101001190000", "90550101012620000", "90550101032500000",
+    "90550101000650007", "90550101000940005", "90550101000710000", "90550101000040004",
+    "90550101000050000", "90550101000450008", "90550101000100007", "90550101002280045",
+    "90550101001130007", "90550101001260008", "90550101000600000", "90550101019008327",
+    "90550101000360009", "90550101000830005", "90550101000180000", "90550101019004763",
+    "90550101009780000", "90550101011830001", "90550101000210007", "90550101011640008",
+    "90550101000250009", "90550101000460003", "90550101019005239", "90550101000610005",
+    "90550101009910001", "90550101000880002", "90550101000290000", "90550101001280009",
+    "90550101001030002", "90550101000330002"
+  ];
+  
+  function getRandomAgencia() {
+    const randomIndex = Math.floor(Math.random() * cdgbtms_agencia.length);
+    return cdgbtms_agencia[randomIndex];
+  }
+  
+  // Ejemplo de uso:
+  console.log(getRandomAgencia());
+  
 const ActividadesLista = ({ idAtractivo }) => {
     const [actividades, setActividades] = useState([]);
     const [error, setError] = useState(null);
@@ -51,7 +73,7 @@ const ActividadesLista = ({ idAtractivo }) => {
                     nome_atividade: selectedActividad?.nome,
                     cdgbtms_atividade: selectedActividad?.cdgbtms,
                     cdgbtms_atrativo: idAtractivo,
-                    cdgbtms_agencia: "90550101000430007" //hardcodeada
+                    cdgbtms_agencia: "90550101000430007" //getRandomAgencia() //"90550101000430007" //hardcodeada
 
                 };
 
@@ -162,7 +184,7 @@ const ActividadesLista = ({ idAtractivo }) => {
                                             className={`px-4 py-2 rounded-md border ${selectedDate === fecha ? "bg-principal text-white" : "border-gray-300"
                                                 }`}
                                         >
-                                            {new Date(fecha).toLocaleDateString("es-AR", {
+                                            {new Date(`${fecha}T12:00:00`).toLocaleDateString("es-AR", {
                                                 day: "2-digit",
                                                 month: "2-digit",
                                                 year: "numeric",

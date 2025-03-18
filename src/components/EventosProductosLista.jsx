@@ -151,7 +151,7 @@ const ActividadesListaPresentacion = ({ listData }) => {
                           selectedDate === fecha ? "bg-principal text-white" : "border-gray-300"
                         }`}
                       >
-                        {new Date(fecha).toLocaleDateString("es-AR", {
+                        {new Date(`${fecha}T12:00:00`).toLocaleDateString("es-AR", {
                           day: "2-digit",
                           month: "2-digit",
                           year: "numeric",
