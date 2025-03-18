@@ -36,7 +36,7 @@ function ItemScreen({ tipoObjeto }) {
   const [items, setItems] = useState([]);
   const [loadingItems, setLoadingItems] = useState(true);
   const [selectedDate, setSelectedDate] = useState(null);
-  const [atractivoData, setAtractivoData] = useState([]); 
+  const [atractivoData, setAtractivoData] = useState([]);
 
   const handleReserva = () => {
     if (!selectedDate) return;
@@ -66,6 +66,7 @@ function ItemScreen({ tipoObjeto }) {
     const obtenerItems = async () => {
       try {
         const datosItems = await serviceGeneral.obtenerTodos(tipoObjeto);
+        console.log(datosItems, 'datosItems');
         setItems(datosItems);
         setLoadingItems(false);
       } catch (error) {
@@ -77,19 +78,36 @@ function ItemScreen({ tipoObjeto }) {
     obtenerItem();
   }, [id, fechadesde, fechahasta, tipoObjeto]);
 
+  // useEffect(() => {
+  //   const datosItemAtractivos = async () => {
+  //     try {
+  //       const data = await serviceAtractivo.obtenerTodosProductoTuristico();
+  //       console.log(data, 'atractivo data');
+  //       setAtractivoData(data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+
+  //   datosItemAtractivos();
+  // }, []);
+
   useEffect(() => {
-    const datosItemAtractivos = async () => {
+    const obtenerProductoTuristico = async () => {
       try {
-        const data = await serviceAtractivo.obtenerTodosProductoTuristico();
-        console.log(data, 'atractivo data');
-        setAtractivoData(data);
+        const data = await serviceAtractivo.obtenerProductoTuristicoPorId(id);
+        console.log(data, 'producto turístico data');
+        setAtractivoData([data]);
       } catch (error) {
         console.log(error);
       }
     };
 
-    datosItemAtractivos();
-  }, []);
+    if (tipoObjeto === "producto_turistico") {
+      obtenerProductoTuristico();
+    }
+  }, [id, tipoObjeto]);
+
 
   if (loading) {
     return <Splash />;
@@ -142,7 +160,8 @@ function ItemScreen({ tipoObjeto }) {
             <ActividadesLista idAtractivo={item?.attributes?.external_id} />
           )}
 
-            <ActividadesListaPresentacion listData={atractivoData} />
+          <ActividadesListaPresentacion listData={atractivoData} />
+
 
           <SeccionConTitulo titulo="Descripción" contenido={item?.attributes?.description} />
           <SeccionConTitulo titulo="Dirección" contenido={item?.attributes?.street_address} />

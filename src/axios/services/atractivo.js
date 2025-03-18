@@ -26,4 +26,9 @@ export default {
   obtenerTodosProductoTuristico: function () {
     return api.get(`${apiVersion}/producto_turistico/?ordering=name`);
   },
+
+  obtenerProductoTuristicoPorId: function (id) {
+    return api.get(`${apiVersion}/producto_turistico/${id}/`);
+  },
+  
 };

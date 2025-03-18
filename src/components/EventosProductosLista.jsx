@@ -11,14 +11,12 @@ const ActividadesListaPresentacion = ({ listData = {} }) => {
   const [selectedHorario, setSelectedHorario] = useState(null);
   const [horarios, setHorarios] = useState([]);
 
-  // Fechas disponibles (puedes ajustarlas según tus datos)
   const fechasDisponibles = ["2025-03-19", "2025-03-20", "2025-03-21", "2025-03-22"];
 
   useEffect(() => {
     console.log(listData, "listData");
   }, [listData]);
 
-  // Función para formatear la hora (muestra solo hora y minutos)
   const formatHour = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleTimeString("es-AR", {
@@ -27,17 +25,13 @@ const ActividadesListaPresentacion = ({ listData = {} }) => {
     });
   };
 
-  // Función para manejar la reserva (puedes integrarla con tu API)
   const handleReservar = () => {
     console.log("Reservar actividad:", selectedActividad, selectedDate, selectedHorario);
     setModalOpen(false);
   };
 
-  // Simula la carga de horarios al seleccionar una fecha y una actividad.
-  // Aquí normalmente llamarías a la API para obtener los horarios disponibles.
   useEffect(() => {
     if (selectedActividad && selectedDate) {
-      // Ejemplo de horarios simulados: [hora, cupos]
       setHorarios([
         ["07:00", 10],
         ["08:00", 5],
