@@ -124,7 +124,6 @@ function ItemScreen({ tipoObjeto }) {
               <TagsList tags={item.attributes.tourist_type} />
             </div>
 
-            {location.pathname.includes('/alojamiento/') && <FiltrosBusqueda />}
           </div>
 
           {tipoObjeto === "atractivo" && item.attributes.external_id && (
