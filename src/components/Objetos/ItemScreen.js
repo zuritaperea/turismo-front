@@ -3,7 +3,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
-import serviceGeneral from '../../axios/services/service';
+import service from '../../axios/services/service';
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Carousel from '../../components/Carousel';
@@ -23,7 +23,7 @@ import ActividadesLista from '../ActividadesFidiLista.js';
 import { AuthContext } from '../../components/AuthContext';
 import Mapa from './Mapa.js';
 import ActividadesListaPresentacion from '../EventosProductosLista.jsx';
-import service from '../../axios/services/atractivo.js';
+import serviceProducto from '../../axios/services/producto_turistico.js';
 
 function ItemScreen({ tipoObjeto }) {
   const { id, fechadesde, fechahasta } = useParams();
@@ -52,69 +52,33 @@ function ItemScreen({ tipoObjeto }) {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [id]);
 
-  // Función de transformación para adaptar la respuesta al formato que espera ActividadesListaPresentacion
-  // Como el atractivo no posee start_date ni end_date, asignamos valores por defecto.
-  const transformAtractivoResponse = (response) => {
-    const data = response.data.data;
-    const defaultStart = "2025-03-19T09:00:00-03:00";
-    const defaultEnd = "2025-03-19T18:00:00-03:00";
-    return {
-      data: {
-        data: [
-          {
-            id: data.id,
-            attributes: {
-              name: data.attributes.name,
-              start_date: data.attributes.opening_hours?.start || defaultStart,
-              end_date: data.attributes.opening_hours?.end || defaultEnd,
-              location: data.attributes.street_address,
-              image_url: data.attributes.image_url
-                ? process.env.REACT_APP_API_URL + data.attributes.image_url
-                : process.env.REACT_APP_IMAGE_DEFAULT,
-              // Se incluye este objeto interno para que el componente pueda formatear las horas
-              objeto: {
-                attributes: {
-                  start_date: data.attributes.opening_hours?.start || defaultStart,
-                  end_date: data.attributes.opening_hours?.end || defaultEnd,
-                },
-              },
-            },
-          },
-        ],
-      },
-    };
-  };
 
   useEffect(() => {
-    const obtenerProductoTuristico = async () => {
+
+    const obtenerItem = async () => {
       try {
-        const response = await service.obtenerProductoTuristicoPorId(id);
-        if (!response || !response.data || !response.data.data) {
-          throw new Error("Datos inválidos recibidos de la API");
-        }
-        const transformData = transformAtractivoResponse(response);
-        setAtractivoData(transformData);
-        setItem(response.data.data);
+        const datosItem = await service.obtenerDatos(tipoObjeto, id, fechadesde, fechahasta);
+        setItem(datosItem);
         setLoading(false);
       } catch (error) {
-        console.error("Error obteniendo el producto turístico:", error);
-        setError("Hubo un error al cargar el producto turístico");
+        setError('Hubo un error al cargar el item');
         setLoading(false);
       }
     };
-
     const obtenerItems = async () => {
       try {
-        const datosItems = await serviceGeneral.obtenerTodos(tipoObjeto);
+        const datosItems = await service.obtenerTodos(tipoObjeto);
         setItems(datosItems);
         setLoadingItems(false);
+
       } catch (error) {
         setLoadingItems(false);
+
       }
     };
+    obtenerItem();
 
     obtenerItems();
-    obtenerProductoTuristico();
   }, [id, fechadesde, fechahasta, tipoObjeto]);
 
   if (loading) {
@@ -170,8 +134,8 @@ function ItemScreen({ tipoObjeto }) {
             <ActividadesLista idAtractivo={item.attributes.external_id} />
           )}
 
-          {/* Se muestra ActividadesListaPresentacion solo si se obtuvo y transformó la data */}
-          {atractivoData && <ActividadesListaPresentacion listData={atractivoData} id={id} />}
+          {/* Listado de productos */}
+          {item.attributes.productos_turisticos && <ActividadesListaPresentacion listData={item.attributes.productos_turisticos}  />}
 
           <SeccionConTitulo titulo="Descripción" contenido={item.attributes.description} />
           <SeccionConTitulo titulo="Dirección" contenido={item.attributes.street_address} />
@@ -200,14 +164,14 @@ function ItemScreen({ tipoObjeto }) {
             {(item.attributes.telefonos?.length > 0 ||
               item.attributes.correos_electronicos?.length > 0 ||
               item.attributes.url) && (
-              <Contacto
-                contactoData={{
-                  telefonos: item.attributes.telefonos,
-                  correos_electronicos: item.attributes.correos_electronicos,
-                  url: item.attributes.url,
-                }}
-              />
-            )}
+                <Contacto
+                  contactoData={{
+                    telefonos: item.attributes.telefonos,
+                    correos_electronicos: item.attributes.correos_electronicos,
+                    url: item.attributes.url,
+                  }}
+                />
+              )}
             <RedesSociales idAtractivo={item.id} />
           </div>
 
