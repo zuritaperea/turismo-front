@@ -37,5 +37,17 @@ export default {
       headers: {
         "Content-Type": "application/json",       }
     });
-  }
+  },
+  generarVoucher: function (data) {
+    return api.post(`${API_BASE_URL}/reservas/voucher_salva_v2/`, data, {
+      headers: {
+        "Content-Type": "application/json",       }
+    });
+  },
+  imprimirVoucher: function (data) {
+    return api.post(`${API_BASE_URL}/reservas/voucher_imprime/`, data, {
+      headers: {
+        "Content-Type": "application/json",       }
+    });
+  },
 };
