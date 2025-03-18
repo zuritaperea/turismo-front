@@ -28,13 +28,13 @@ const ActividadesLista = ({ idAtractivo }) => {
     const handleReservar = async () => {
         if (!user) {
             alert("¡Por favor, inicia sesión para realizar una reserva!");
-            return; 
+            return;
         }
 
         const reservaData = {
             cdgbtms_atrativo: idAtractivo,
             cdgbtms_atividade: selectedActividad?.cdgbtms,
-            data: new Date(selectedDate).toLocaleDateString('es-AR'), 
+            data: new Date(selectedDate).toLocaleDateString('es-AR'),
             hora: selectedHorario,
             nome: personaDenominacion,
         };
@@ -42,16 +42,22 @@ const ActividadesLista = ({ idAtractivo }) => {
         try {
             const response = await fidiApi.hacerReserva(reservaData);
             const reservaConfirmada = response.data.info[0];
+            if (reservaConfirmada.reserva_num) {
+                const reservaDetalles = {
+                    reserva_num: reservaConfirmada.reserva_num,
+                    data: reservaConfirmada.data,
+                    hora: reservaConfirmada.hora,
+                    personaDenominacion: personaDenominacion,
+                    nome_atividade: selectedActividad?.nome,
+                    cdgbtms_atividade: selectedActividad?.cdgbtms,
+                    cdgbtms_atrativo: idAtractivo,
+                    cdgbtms_agencia: "90550101000430007" //hardcodeada
 
-            const reservaDetalles = {
-                reserva_num: reservaConfirmada.reserva_num,
-                data: reservaConfirmada.data,
-                hora: reservaConfirmada.hora,
-                personaDenominacion: personaDenominacion, 
-                nome_atividade: selectedActividad?.nome, 
-            };
+                };
 
-            navigate('/confirmacion-reserva-fidi', { state: { reservaConfirmada: reservaDetalles } });
+                navigate('/confirmacion-reserva-fidi', { state: { reservaConfirmada: reservaDetalles } });
+            }
+            else { alert(reservaConfirmada.msg) }
         } catch (error) {
             console.error('Error al hacer la reserva', error);
         }
@@ -93,7 +99,7 @@ const ActividadesLista = ({ idAtractivo }) => {
         const obtenerHorarios = async () => {
             if (selectedActividad && selectedDate) {
                 try {
-                    const formattedDate = new Date(selectedDate).toLocaleDateString('es-AR'); 
+                    const formattedDate = new Date(selectedDate).toLocaleDateString('es-AR');
                     const response = await fidiApi.obtenerHorarios(selectedActividad.cdgbtms, formattedDate);
                     setHorarios(Object.entries(response.data.data.dados[0].vagas));
                 } catch (error) {
@@ -107,7 +113,7 @@ const ActividadesLista = ({ idAtractivo }) => {
     useEffect(() => {
         console.log()
     }, [])
-    
+
 
     if (loading) return <p>Cargando actividades...</p>;
     if (error) return <p>{error}</p>;
@@ -180,8 +186,8 @@ const ActividadesLista = ({ idAtractivo }) => {
                                                     key={hora}
                                                     onClick={() => setSelectedHorario(hora)}
                                                     className={`cursor-pointer rounded-lg border p-4 text-center transition-colors duration-200 ${selectedHorario === hora
-                                                            ? "bg-principal text-white border-transparent"
-                                                            : "bg-white text-slate-900 border-gray-300 hover:bg-gray-100"
+                                                        ? "bg-principal text-white border-transparent"
+                                                        : "bg-white text-slate-900 border-gray-300 hover:bg-gray-100"
                                                         }`}
                                                 >
                                                     <div className="text-lg font-bold">{hora}</div>
