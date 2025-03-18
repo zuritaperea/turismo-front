@@ -187,7 +187,7 @@ const ActividadesListaPresentacion = ({ listData }) => {
       {confirmDialogOpen && reservaId && (
         <Modal show={confirmDialogOpen} onHide={() => setConfirmDialogOpen(false)}>
           <div className="p-6 text-center">
-            <h2 className="text-2xl font-semibold mb-4 text-[#101828]">¡Reserva Confirmada!</h2>
+            <h2 className="text-2xl font-semibold mb-4 text-[#101828]">¡Reserva Realizada!</h2>
             <p className="text-lg text-[#475467]">
               Tu número de reserva es: <span className="font-bold">{reservaId}</span>
             </p>
