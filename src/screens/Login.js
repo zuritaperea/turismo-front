@@ -46,7 +46,6 @@ const Login = () => {
         navigate('/');//navigate('/datos-adicionales'); por ahora esta asi
       }
     } else {
-      console.log("error :", response.data);
       setAlerts(functions.errorMaker(response.data));
     }
   }

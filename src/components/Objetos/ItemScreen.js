@@ -1,9 +1,9 @@
+// src/screens/ItemScreen.js
 import React, { useEffect, useState, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import serviceGeneral from '../../axios/services/service';
-import serviceAtractivo from '../../axios/services/atractivo.js';
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Carousel from '../../components/Carousel';
@@ -23,6 +23,7 @@ import ActividadesLista from '../ActividadesFidiLista.js';
 import { AuthContext } from '../../components/AuthContext';
 import Mapa from './Mapa.js';
 import ActividadesListaPresentacion from '../EventosProductosLista.jsx';
+import service from '../../axios/services/atractivo.js';
 
 function ItemScreen({ tipoObjeto }) {
   const { id, fechadesde, fechahasta } = useParams();
@@ -36,7 +37,7 @@ function ItemScreen({ tipoObjeto }) {
   const [items, setItems] = useState([]);
   const [loadingItems, setLoadingItems] = useState(true);
   const [selectedDate, setSelectedDate] = useState(null);
-  const [atractivoData, setAtractivoData] = useState([]);
+  const [atractivoData, setAtractivoData] = useState(null);
 
   const handleReserva = () => {
     if (!selectedDate) return;
@@ -51,14 +52,53 @@ function ItemScreen({ tipoObjeto }) {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [id]);
 
+  // Función de transformación para adaptar la respuesta al formato que espera ActividadesListaPresentacion
+  // Como el atractivo no posee start_date ni end_date, asignamos valores por defecto.
+  const transformAtractivoResponse = (response) => {
+    const data = response.data.data;
+    const defaultStart = "2025-03-19T09:00:00-03:00";
+    const defaultEnd = "2025-03-19T18:00:00-03:00";
+    return {
+      data: {
+        data: [
+          {
+            id: data.id,
+            attributes: {
+              name: data.attributes.name,
+              start_date: data.attributes.opening_hours?.start || defaultStart,
+              end_date: data.attributes.opening_hours?.end || defaultEnd,
+              location: data.attributes.street_address,
+              image_url: data.attributes.image_url
+                ? process.env.REACT_APP_API_URL + data.attributes.image_url
+                : process.env.REACT_APP_IMAGE_DEFAULT,
+              // Se incluye este objeto interno para que el componente pueda formatear las horas
+              objeto: {
+                attributes: {
+                  start_date: data.attributes.opening_hours?.start || defaultStart,
+                  end_date: data.attributes.opening_hours?.end || defaultEnd,
+                },
+              },
+            },
+          },
+        ],
+      },
+    };
+  };
+
   useEffect(() => {
-    const obtenerItem = async () => {
+    const obtenerProductoTuristico = async () => {
       try {
-        const datosItem = await serviceGeneral.obtenerDatos(tipoObjeto, id, fechadesde, fechahasta);
-        setItem(datosItem);
+        const response = await service.obtenerProductoTuristicoPorId(id);
+        if (!response || !response.data || !response.data.data) {
+          throw new Error("Datos inválidos recibidos de la API");
+        }
+        const transformData = transformAtractivoResponse(response);
+        setAtractivoData(transformData);
+        setItem(response.data.data);
         setLoading(false);
       } catch (error) {
-        setError('Hubo un error al cargar el item');
+        console.error("Error obteniendo el producto turístico:", error);
+        setError("Hubo un error al cargar el producto turístico");
         setLoading(false);
       }
     };
@@ -66,7 +106,6 @@ function ItemScreen({ tipoObjeto }) {
     const obtenerItems = async () => {
       try {
         const datosItems = await serviceGeneral.obtenerTodos(tipoObjeto);
-        console.log(datosItems, 'datosItems');
         setItems(datosItems);
         setLoadingItems(false);
       } catch (error) {
@@ -75,39 +114,8 @@ function ItemScreen({ tipoObjeto }) {
     };
 
     obtenerItems();
-    obtenerItem();
+    obtenerProductoTuristico();
   }, [id, fechadesde, fechahasta, tipoObjeto]);
-
-  // useEffect(() => {
-  //   const datosItemAtractivos = async () => {
-  //     try {
-  //       const data = await serviceAtractivo.obtenerTodosProductoTuristico();
-  //       console.log(data, 'atractivo data');
-  //       setAtractivoData(data);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-
-  //   datosItemAtractivos();
-  // }, []);
-
-  useEffect(() => {
-    const obtenerProductoTuristico = async () => {
-      try {
-        const data = await serviceAtractivo.obtenerProductoTuristicoPorId(id);
-        console.log(data, 'producto turístico data');
-        setAtractivoData([data]);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    if (tipoObjeto === "producto_turistico") {
-      obtenerProductoTuristico();
-    }
-  }, [id, tipoObjeto]);
-
 
   if (loading) {
     return <Splash />;
@@ -131,7 +139,9 @@ function ItemScreen({ tipoObjeto }) {
       <div className="w-full max-w-[1376px] mx-auto p-4">
         <img
           className="w-full h-64 object-cover object-center rounded-xl shadow-md"
-          src={item.image}
+          src={item.attributes.image_url
+            ? process.env.REACT_APP_API_URL + item.attributes.image_url
+            : process.env.REACT_APP_IMAGE_DEFAULT}
           alt="Imagen 1"
         />
       </div>
@@ -141,31 +151,31 @@ function ItemScreen({ tipoObjeto }) {
           <BotonesAccion />
           <div className="pb-3 text-center lg:text-left">
             <h2 className="text-sm font-semibold mt-2 color-principal">
-              {item?.attributes?.type}
+              {item.attributes.type}
             </h2>
             <h1 className="py-2 text-4xl font-semibold text-slate-900 tracking-tight dark:text-slate-200">
-              {item?.attributes?.name}
+              {item.attributes.name}
             </h1>
             <div className="space-x-1 mt-2 mb-5 flex justify-center lg:justify-start">
-              <TagsList tags={item?.attributes?.tourist_type} />
+              <TagsList tags={item.attributes.tourist_type} />
             </div>
             <span className="puntacion font-semibold mx-1">
-              {item?.attributes?.puntuacion}
+              {item.attributes.evaluation}
             </span>
 
             {location.pathname.includes('/alojamiento/') && <FiltrosBusqueda />}
           </div>
 
-          {tipoObjeto === "atractivo" && item?.attributes?.external_id && (
-            <ActividadesLista idAtractivo={item?.attributes?.external_id} />
+          {tipoObjeto === "atractivo" && item.attributes.external_id && (
+            <ActividadesLista idAtractivo={item.attributes.external_id} />
           )}
 
-          <ActividadesListaPresentacion listData={atractivoData} />
+          {/* Se muestra ActividadesListaPresentacion solo si se obtuvo y transformó la data */}
+          {atractivoData && <ActividadesListaPresentacion listData={atractivoData} />}
 
-
-          <SeccionConTitulo titulo="Descripción" contenido={item?.attributes?.description} />
-          <SeccionConTitulo titulo="Dirección" contenido={item?.attributes?.street_address} />
-          {item?.attributes?.point && (
+          <SeccionConTitulo titulo="Descripción" contenido={item.attributes.description} />
+          <SeccionConTitulo titulo="Dirección" contenido={item.attributes.street_address} />
+          {item.attributes.point && (
             <Mapa
               objetosFiltrados={[
                 {
@@ -177,35 +187,33 @@ function ItemScreen({ tipoObjeto }) {
             />
           )}
 
-          {item?.attributes?.amenity_feature && <Servicios servicios={item?.attributes?.amenity_feature} />}
+          {item.attributes.amenity_feature && <Servicios servicios={item.attributes.amenity_feature} />}
 
-          {item?.attributes?.contenidos &&
-            item?.attributes?.contenidos.length > 1 && (
-              <div className="w-full max-w-[1376px] mx-auto">
-                <Carousel images={item.attributes.contenidos} detail={true} />
-              </div>
-            )}
+          {item.attributes.contenidos && item.attributes.contenidos.length > 1 && (
+            <div className="w-full max-w-[1376px] mx-auto">
+              <Carousel images={item.attributes.contenidos} detail={true} />
+            </div>
+          )}
 
           <div className="grid grid-cols-1 md:grid-cols-3">
             <FechasHorarios item={item} tipoObjeto={tipoObjeto} />
             {(item.attributes.telefonos?.length > 0 ||
               item.attributes.correos_electronicos?.length > 0 ||
               item.attributes.url) && (
-                <Contacto
-                  contactoData={{
-                    telefonos: item.attributes.telefonos,
-                    correos_electronicos: item.attributes.correos_electronicos,
-                    url: item.attributes.url,
-                  }}
-                />
-              )}
+              <Contacto
+                contactoData={{
+                  telefonos: item.attributes.telefonos,
+                  correos_electronicos: item.attributes.correos_electronicos,
+                  url: item.attributes.url,
+                }}
+              />
+            )}
             <RedesSociales idAtractivo={item.id} />
           </div>
 
-          {item?.attributes?.certificaciones &&
-            item?.attributes?.certificaciones.length > 0 && (
-              <Certificaciones item={item} />
-            )}
+          {item.attributes.certificaciones && item.attributes.certificaciones.length > 0 && (
+            <Certificaciones item={item} />
+          )}
 
           <Recomendaciones />
         </div>

@@ -16,10 +16,8 @@ export default {
     return api.get(`${apiVersion}/${contentType}/${id}/`);
   },
   obtenerRedesSociales: function (id) {
-    console.log("Obteniendo redes sociales del atractivo con ID:", id);
     return api.get(`${apiVersion}/${contentType}/${id}/`)
       .then(response => {
-        console.log("Respuesta API:", response);
         return response.data.data.attributes.redes_sociales;
       });
   },
@@ -28,7 +26,6 @@ export default {
   },
 
   obtenerProductoTuristicoPorId: function (id) {
-    return api.get(`${apiVersion}/producto_turistico/${id}/`);
+    return api.get(`${apiVersion}/${contentType}/${id}/`);
   },
-  
 };

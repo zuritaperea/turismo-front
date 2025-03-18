@@ -54,7 +54,6 @@ export default function ConfirmacionReserva() {
             }
         } catch (err) {
             setError("Ocurrió un error al procesar el voucher. Intente nuevamente.");
-            console.log(err);
         } finally {
             setLoading(false);  // Restablecer el estado de carga a 'false'
         }

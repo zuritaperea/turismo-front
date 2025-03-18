@@ -110,11 +110,6 @@ const ActividadesLista = ({ idAtractivo }) => {
         obtenerHorarios();
     }, [selectedDate, selectedActividad]);
 
-    useEffect(() => {
-        console.log()
-    }, [])
-
-
     if (loading) return <p>Cargando actividades...</p>;
     if (error) return <p>{error}</p>;
 

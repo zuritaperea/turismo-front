@@ -51,7 +51,6 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
     try {
       const response = await objetoService.obtenerTodos()
       const data = response.data.data
-      console.log(data, 'data')
 
       const objetosData = data.map((obj) => ({
         id: obj.id,

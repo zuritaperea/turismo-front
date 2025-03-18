@@ -43,8 +43,6 @@ Form.Control = React.forwardRef(({
   ...props
 }, ref) => {
 
-  console.log()
-
   //const safeValue = value ?? '';  // Si el valor es null o undefined, asigna un string vacío
 
   const Element = as;  // Determina el tipo de campo (input, textarea, etc.)

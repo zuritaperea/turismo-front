@@ -5,7 +5,6 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 
 function Opiniones({ opiniones }) {
-  console.log(opiniones);
   if (!opiniones) return null;
   if (Array.isArray(opiniones) && opiniones.length === 0) {
     return null;

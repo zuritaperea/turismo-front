@@ -8,11 +8,9 @@ const RedesSociales = ({ idAtractivo }) => {
   const [redes, setRedes] = useState([]);
 
   useEffect(() => {
-    console.log("Componente RedesSociales, idAtractivo:", idAtractivo);
     if (!idAtractivo) return;
     service.obtenerRedesSociales(idAtractivo)
       .then((redesSociales) => {
-        console.log("Redes sociales recibidas:", redesSociales);
         setRedes(redesSociales);
       })
       .catch((error) => console.error("Error al obtener las redes sociales: ", error));

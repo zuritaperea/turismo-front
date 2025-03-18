@@ -2,8 +2,6 @@ import React from 'react';
 import TagsList from './TagsList'; 
 
 function Card({ imgSrc, category, title, description, tags, puntuacion, location, startDate }) {
-  console.log("Props en Card:", { title, location, startDate }); // Debugging
-
   const visibleTags = tags?.slice(0, 2) || [];
   const hasMoreTags = tags?.length > 2;
   const extraTags = hasMoreTags ? ['Más'] : []; 

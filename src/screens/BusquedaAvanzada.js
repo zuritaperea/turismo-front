@@ -109,7 +109,6 @@ function BusquedaAvanzada() {
         })
         .catch((error) => {
           setLoadingProvincias(false);
-          console.log(error);
         });
     };
     if (datosUsuario.pais === 'Argentina') obtenerProvincias(); else {
@@ -136,7 +135,6 @@ function BusquedaAvanzada() {
         })
         .catch((error) => {
           setLoadingDepartamentos(false);
-          console.log(error);
         });
     };
     if (datosUsuario.pais === 'Argentina' && provincia) obtenerDepartamentos(); else guardarDepartamentos([])
@@ -160,7 +158,6 @@ function BusquedaAvanzada() {
         })
         .catch((error) => {
           setLoadingLocalidades(false);
-          console.log(error);
         });
     };
     if (datosUsuario.pais === 'Argentina' && departamento) obtenerLocalidades(); else guardarLocalidades([])
@@ -204,7 +201,6 @@ function BusquedaAvanzada() {
         })
         .catch((error) => {
           setLoadingTiposTurismo(false);
-          console.log(error);
         });
     };
     obtenerTiposTurismo();

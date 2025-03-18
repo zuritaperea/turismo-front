@@ -13,6 +13,7 @@ const obtenerDatos = async (tipo, id, fechadesde, fechahasta) => {
         : process.env.REACT_APP_IMAGE_DEFAULT,
       tipo,
     };
+    console.log(datos);
     return datos;
   } catch (error) {
     throw new Error('Hubo un error al cargar los datos');
