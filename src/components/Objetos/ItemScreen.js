@@ -123,9 +123,6 @@ function ItemScreen({ tipoObjeto }) {
             <div className="space-x-1 mt-2 mb-5 flex justify-center lg:justify-start">
               <TagsList tags={item.attributes.tourist_type} />
             </div>
-            <span className="puntacion font-semibold mx-1">
-              {item.attributes.evaluation}
-            </span>
 
             {location.pathname.includes('/alojamiento/') && <FiltrosBusqueda />}
           </div>
