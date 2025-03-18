@@ -3,7 +3,6 @@ import { Ticket, ArrowUpRight } from "lucide-react";
 import Modal from "./Modal";
 import service from "../axios/services/producto_turistico.js";
 import { AuthContext } from "./AuthContext";
-import Alert from "./Alert.js";
 
 const ActividadesListaPresentacion = ({ listData }) => {
   const [modalOpen, setModalOpen] = useState(false);
