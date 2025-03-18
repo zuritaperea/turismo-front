@@ -13,13 +13,15 @@ const Listado = ({ objetosFiltrados, target }) => {
               to={`/${target ? target.toLowerCase() : item.tipo.toLowerCase()}/${item.id}`}
             >
               <div className="w-64 h-80">
-                <Card 
+              <Card 
                   imgSrc={item.image} 
                   title={item.title} 
                   category={item.type} 
                   description={item.description} 
                   tags={item.tourist_type} 
-                  puntuacion={item.puntuacion} 
+                  puntuacion={item.puntuacion}
+                  location={item.location}  
+                  startDate={item.startDate} 
                 />
               </div>
             </Link>

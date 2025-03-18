@@ -51,6 +51,7 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
     try {
       const response = await objetoService.obtenerTodos()
       const data = response.data.data
+      console.log(data, 'data')
 
       const objetosData = data.map((obj) => ({
         id: obj.id,
@@ -63,6 +64,8 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
         coordinates: obj.attributes.point,
         tourist_type: obj.attributes.tourist_type,
         type: obj.type,
+        location: obj.attributes.location, 
+        startDate: obj.attributes.start_date 
       }))
 
       guardarObjetos(objetosData)
