@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Ticket, ArrowUpRight } from "lucide-react";
 import Modal from "./Modal";
+import service from '../axios/services/atractivo.js';
 
-const ActividadesListaPresentacion = ({ listData = {} }) => {
+const ActividadesListaPresentacion = ({ listData = {}, id }) => {
   const { loading = false, error = null } = listData;
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedActividad, setSelectedActividad] = useState(null);
@@ -21,7 +22,24 @@ const ActividadesListaPresentacion = ({ listData = {} }) => {
     });
   };
 
-  const handleReservar = () => {
+  const handleReservar = async () => {
+    if (!selectedDate || !selectedHorario) return;
+  
+    const startDateTime = new Date(`${selectedDate}T${selectedHorario}:00`);
+    const endDateTime = new Date(startDateTime.getTime() + 60 * 60 * 1000);
+  
+    try {
+      const response = await service.crearReserva(
+        startDateTime.toISOString(),
+        endDateTime.toISOString(),
+        id || undefined,  
+        1
+      );
+      console.log("Reserva creada con éxito:", response);
+    } catch (error) {
+      console.error("Error al crear reserva:", error);
+    }
+  
     setModalOpen(false);
   };
 
@@ -37,7 +55,6 @@ const ActividadesListaPresentacion = ({ listData = {} }) => {
     }
   }, [selectedActividad, selectedDate]);
 
-  // Se utiliza optional chaining para obtener el array de actividades o un array vacío si no existe
   const actividades = listData?.data?.data || [];
 
   return (

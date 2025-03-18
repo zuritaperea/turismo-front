@@ -28,4 +28,31 @@ export default {
   obtenerProductoTuristicoPorId: function (id) {
     return api.get(`${apiVersion}/${contentType}/${id}/`);
   },
+
+  crearReserva: function(start_date, end_date, id, cantidad) {
+    const payload = {
+      data: {
+        type: "Reserva",
+        attributes: {
+          start_date,
+          end_date,
+          cantidad: Number(cantidad)  // Convertir a número
+        }
+      }
+    };
+  
+    if (id) {
+      payload.data.id = id;  // Solo agregar id si existe
+    }
+  
+    return api.post(
+      `${apiVersion}/reserva/`,
+      payload,
+      {
+        headers: {
+          "Content-Type": "application/vnd.api+json"
+        }
+      }
+    );
+  },
 };

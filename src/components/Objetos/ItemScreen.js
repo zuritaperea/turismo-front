@@ -171,7 +171,7 @@ function ItemScreen({ tipoObjeto }) {
           )}
 
           {/* Se muestra ActividadesListaPresentacion solo si se obtuvo y transformó la data */}
-          {atractivoData && <ActividadesListaPresentacion listData={atractivoData} />}
+          {atractivoData && <ActividadesListaPresentacion listData={atractivoData} id={id} />}
 
           <SeccionConTitulo titulo="Descripción" contenido={item.attributes.description} />
           <SeccionConTitulo titulo="Dirección" contenido={item.attributes.street_address} />
