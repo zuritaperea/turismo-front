@@ -8,16 +8,10 @@ function Card({ imgSrc, category, title, description, tags, puntuacion, location
   const hasMoreTags = tags?.length > 2;
   const extraTags = hasMoreTags ? ['Más'] : []; 
 
-  // Verificar si la fecha es válida antes de formatear
   const dateObject = startDate ? new Date(startDate) : null;
   const formattedDate = dateObject
-    ? dateObject.toLocaleDateString('es-ES', {
-        weekday: 'long',
-        day: '2-digit',
-        month: 'long',
-        year: 'numeric',
-      })
-    : "Fecha no disponible";
+  ? `${dateObject.getDate().toString().padStart(2, '0')}/${(dateObject.getMonth() + 1).toString().padStart(2, '0')}/${dateObject.getFullYear()}`
+  : "Fecha no disponible";
 
   const formattedTime = dateObject
     ? dateObject.toLocaleTimeString('es-ES', {
