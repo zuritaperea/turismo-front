@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import service from "../axios/services/producto_turistico";
 import Splash from "../components/Splash";
+import { AuthContext } from "../components/AuthContext";
 
 const MisReservas = () => {
   const [reservas, setReservas] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchedReservas = async () => {
@@ -20,7 +22,7 @@ const MisReservas = () => {
       }
     };
     fetchedReservas();
-  }, []);
+  }, [user]);
 
   const formatearFecha = (fechaISO) => {
     if (!fechaISO) return "-";
