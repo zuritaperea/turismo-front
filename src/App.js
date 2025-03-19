@@ -78,6 +78,7 @@ function App() {
             <Route path="/destinos/:id" element={<DestinosScreen />} />
             <Route path="/avanzada/:id/:tipo/:nombre/:fechadesde/:fechahasta" element={<BusquedaAvanzada />} />
             <Route path="/busqueda/:nombre" element={<BusquedaScreen />} />
+            <Route path="/busqueda" element={<BusquedaScreen />} />
             <Route path="/atractivo" element={<AtractivoScreen />} />
             <Route path="/atractivos" element={<AtractivosScreen />} />
             <Route path="/atractivos/:id" element={<AtractivosScreen />} />
