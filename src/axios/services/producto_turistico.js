@@ -11,7 +11,9 @@ export default {
   obtenerProductoTuristicoPorId: function (id) {
     return api.get(`${apiVersion}/${contentType}/${id}/`);
   },
-
+  obtenerMisReservas: function (id) {
+    return api.get(`${apiVersion}/reserva/me/`);
+  },
   crearReserva: function (data) {
     return api.post(
       `${apiVersion}/reserva/`,

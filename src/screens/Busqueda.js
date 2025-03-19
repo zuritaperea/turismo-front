@@ -64,6 +64,8 @@ const BusquedaScreen = ({ target }) => {
     if (nombre) {
       obtenerTodos(nombre);  // Obtiene los objetos cuando cambia el parámetro `nombre`
     }
+    setLoading(false);
+
   }, [nombre]);  // Añadimos `nombre` como dependencia para que se ejecute cuando cambie
 
   // Este useEffect es solo para asegurar que al cambiar de página, la vista se desplace hacia arriba
