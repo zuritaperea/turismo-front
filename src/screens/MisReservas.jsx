@@ -1,22 +1,46 @@
 import React, { useState, useEffect } from 'react';
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import service from '../axios/services/producto_turistico';
+import Splash from '../components/Splash';
 
 const MisReservas = () => {
   const [reservas, setReservas] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Simulación de datos de reservas del usuario
-    const fetchedReservas = [
-      { id: 1, alojamiento: "Hotel Las Brisas", entrada: "2025-04-15", salida: "2025-04-20", horario: "14:00 - 11:00" },
-      { id: 2, alojamiento: "Cabañas del Bosque", entrada: "2025-05-10", salida: "2025-05-15", horario: "15:00 - 12:00" },
-      { id: 3, alojamiento: "Resort Playa Azul", entrada: "2025-06-05", salida: "2025-06-10", horario: "13:00 - 10:00" },
-    ];
-    setReservas(fetchedReservas);
+    const fetchedReservas = async () => {
+      try {
+        const response = await service.obtenerMisReservas();
+        setReservas(response?.data?.data ? [response.data.data] : []);
+        setLoading(false);
+      } catch (error) {
+        console.log('Hubo un error al cargar las reservas');
+        setLoading(false);
+      }
+    };
+    fetchedReservas();
   }, []);
 
   const cancelarReserva = (id) => {
     setReservas(prevReservas => prevReservas.filter(reserva => reserva.id !== id));
+  };
+
+  if (loading) {
+    return <Splash />;
+  }
+
+  const formatearFecha = (fechaISO) => {
+    if (!fechaISO) return "-";
+    const fecha = new Date(fechaISO);
+    return fecha.toLocaleDateString("es-AR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    }) + " " + fecha.toLocaleTimeString("es-AR", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
   };
 
   return (
@@ -34,16 +58,14 @@ const MisReservas = () => {
                   <th className="p-3 text-left">Visita</th>
                   <th className="p-3 text-left">Entrada</th>
                   <th className="p-3 text-left">Salida</th>
-                  <th className="p-3 text-left">Horario</th>
                 </tr>
               </thead>
               <tbody>
                 {reservas.map(reserva => (
                   <tr key={reserva.id} className="border-t border-gray-300">
-                    <td className="p-3">{reserva.alojamiento}</td>
-                    <td className="p-3">{reserva.entrada}</td>
-                    <td className="p-3">{reserva.salida}</td>
-                    <td className="p-3">{reserva.horario}</td>
+                    <td className="p-3">{reserva.attributes.producto_turistico?.name || "-"}</td>
+                    <td className="p-3">{formatearFecha(reserva.attributes.start_date)}</td>
+                    <td className="p-3">{formatearFecha(reserva.attributes.end_date)}</td>
                   </tr>
                 ))}
               </tbody>
