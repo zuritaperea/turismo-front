@@ -31,7 +31,7 @@ const MisReservas = () => {
             <table className="w-full border border-gray-300 rounded-lg overflow-hidden shadow-md">
               <thead className="bg-gray-200">
                 <tr>
-                  <th className="p-3 text-left">Alojamiento</th>
+                  <th className="p-3 text-left">Visita</th>
                   <th className="p-3 text-left">Entrada</th>
                   <th className="p-3 text-left">Salida</th>
                   <th className="p-3 text-left">Horario</th>
