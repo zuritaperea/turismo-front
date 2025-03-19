@@ -71,6 +71,7 @@ export default function Header() {
           >
             Planificador Inteligente
           </a>
+          {user && <Link to="/mis-reservas" className="font-light text-base">Mis Reservas</Link>}
           {user ? (
             <button onClick={handleLogout} title="Cerrar sesión">
               <LogOut size={24} className="text-gray-700" />
@@ -105,6 +106,7 @@ export default function Header() {
             >
               Planificador Inteligente
             </a>
+            {user && <Link to="/mis-reservas" className="font-light text-base" onClick={() => setMenuOpen(false)}>Mis Reservas</Link>}
             {user ? (
               <button onClick={() => { setMenuOpen(false); handleLogout(); }} title="Cerrar sesión" className="flex items-center gap-2">
                 <LogOut size={24} className="text-gray-700" />

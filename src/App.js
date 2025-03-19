@@ -41,6 +41,7 @@ import Marketplace from "./screens/Marketplace";
 import ConfirmacionReserva from "./screens/ConfirmacionReserva";
 import ComprobanteReserva from "./screens/ComprobanteReserva";
 import ConfirmacionReservaFidi from "./screens/ConfirmacionReservaFidi";
+import MisReservas from "./screens/MisReservas";
 
 function App() {
 
@@ -114,7 +115,7 @@ function App() {
             <Route path="/confirmacion-reserva" element={<ConfirmacionReserva />} />
             <Route path="/comprobante-reserva" element={<ComprobanteReserva />} />
             <Route path="/confirmacion-reserva-fidi" element={<ConfirmacionReservaFidi />} />
-
+            <Route path="/mis-reservas" element={<MisReservas />} />
           </Routes>
         </BrowserRouter>      <ScrollToTopButton />
       </></AuthProvider></ConfigProvider>
