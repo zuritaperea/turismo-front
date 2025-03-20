@@ -85,7 +85,7 @@ const ActividadesListaPresentacion = ({ listData }) => {
       </div>
 
       {listData.length > 0 ? (
-        listData.map((actividad, index) => (
+        listData.filter((actividad) => actividad.active).map((actividad, index) => (
           <div
             className="p-4 cursor-pointer"
             key={actividad?.id || index}
@@ -108,9 +108,9 @@ const ActividadesListaPresentacion = ({ listData }) => {
                 </div>
 
                 <p className="text-[#475467] mt-4 mb-6 text-lg">
-                  {actividad.start_date ? formatHour(actividad.start_date) : ""}
-                  {actividad.start_date && actividad.end_date ? " - " : ""}
-                  {actividad.end_date ? formatHour(actividad.end_date) : ""}
+                  {actividad.validity_from ? formatHour(actividad.validity_from) : ""}
+                  {actividad.validity_from && actividad.validity_to ? " - " : ""}
+                  {actividad.validity_to ? formatHour(actividad.validity_to) : ""}
                 </p>
                 <p className="text-[#475467] mt-4 mb-6 text-lg">
                   {actividad.value}
