@@ -45,7 +45,6 @@ const MisReservas = () => {
       day: "2-digit",
       month: "2-digit",
       year: "numeric",
-      timeZoneName: "short", // Para visualizar la zona horaria, si lo necesitas
     };
 
     const opcionesHora = {
