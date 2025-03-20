@@ -1,48 +1,70 @@
-import React, { useState, useEffect,useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import service from "../axios/services/producto_turistico";
 import Splash from "../components/Splash";
 import { AuthContext } from "../components/AuthContext";
+import { useNavigate } from 'react-router-dom';
 
 const MisReservas = () => {
   const [reservas, setReservas] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);  // Se obtiene el contexto del usuario autenticado
+  const navigate = useNavigate();  // Para la redirección
 
   useEffect(() => {
     const fetchedReservas = async () => {
+      if (!user) {
+        // Si no hay usuario, redirigir al login
+        setLoading(false);
+        navigate('/login');
+        return; // Detener la ejecución del efecto si no hay usuario
+      }
+
       try {
-        const response = await service.obtenerMisReservas();
-        setReservas(response?.data?.data || []); // Ahora toma un array en lugar de un objeto
+        const response = await service.obtenerMisReservas();  // Traer las reservas del servicio
+        setReservas(response?.data?.data || []);  // Actualizar el estado con las reservas
         setLoading(false);
       } catch (error) {
         console.log("Hubo un error al cargar las reservas");
         setLoading(false);
       }
     };
+
     fetchedReservas();
-  }, [user]);
+  }, [user, navigate]);  // Dependencias: 'user' y 'navigate'
 
   const formatearFecha = (fechaISO) => {
     if (!fechaISO) return "-";
+
+    // Crear un objeto Date a partir de la fecha ISO
     const fecha = new Date(fechaISO);
-    return (
-      fecha.toLocaleDateString("es-AR", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-      }) +
-      " " +
-      fecha.toLocaleTimeString("es-AR", {
-        hour: "2-digit",
-        minute: "2-digit",
-      })
-    );
+
+    // Configurar opciones para obtener la fecha y hora de acuerdo con la zona horaria local
+    const opcionesFecha = {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      timeZoneName: "short", // Para visualizar la zona horaria, si lo necesitas
+    };
+
+    const opcionesHora = {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false, // Para formato 24 horas
+    };
+
+    // Formatear la fecha y hora en el formato dd/mm/yyyy hh:mm
+    const fechaFormateada = fecha.toLocaleDateString("es-AR", opcionesFecha);
+    const horaFormateada = fecha.toLocaleTimeString("es-AR", opcionesHora);
+
+    // Devolver la fecha formateada como dd/mm/yyyy hh:mm
+    // return `${fechaFormateada} ${horaFormateada}`;
+    return `${fechaFormateada}`;
   };
 
   if (loading) {
-    return <Splash />;
+    return <Splash />; // Mostrar el splash mientras cargan los datos
   }
 
   return (
@@ -60,7 +82,7 @@ const MisReservas = () => {
                   <th className="p-3 text-left">Visita</th>
                   <th className="p-3 text-left">Acceso</th>
                   <th className="p-3 text-left">Entrada</th>
-                  <th className="p-3 text-left">Salida</th>
+                {/*    <th className="p-3 text-left">Salida</th> */}
                 </tr>
               </thead>
               <tbody>
@@ -73,7 +95,7 @@ const MisReservas = () => {
                       {reserva.attributes.producto_turistico?.name || "-"}
                     </td>
                     <td className="p-3">{formatearFecha(reserva.attributes.start_date)}</td>
-                    <td className="p-3">{formatearFecha(reserva.attributes.end_date)}</td>
+                  {/*  <td className="p-3">{formatearFecha(reserva.attributes.end_date)}</td> */}
                   </tr>
                 ))}
               </tbody>
