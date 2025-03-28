@@ -23,7 +23,7 @@ function SearchComponent({ onSearch }) {
         <input
           type="text"
           placeholder="Buscar..."
-          className="w-full p-3 rounded-md text-gray-900 buscador"
+          className="w-full p-3 rounded-md text-gray-900 indent-8"
           value={query}
           onChange={handleInputChange}
           onKeyPress={(event) => {
@@ -32,7 +32,7 @@ function SearchComponent({ onSearch }) {
             }
           }}
         />
-        <i className="fas fa-search absolute text-lg left-3 top-2 text-gray-500"
+        <i className="fas fa-search absolute text-lg right-3 top-2 text-gray-100 bg-principal rounded-lg px-4"
           style={{ cursor: 'pointer' }} 
           onClick={handleSearch}></i>
       </div>

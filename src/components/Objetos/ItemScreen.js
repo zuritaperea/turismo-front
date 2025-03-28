@@ -19,7 +19,6 @@ import SeccionConTitulo from './SeccionConTitulo';
 import Servicios from './Servicios';
 import Recomendaciones from './Recomendaciones';
 import FiltrosBusqueda from './FiltrosBusqueda';
-import ActividadesLista from '../ActividadesFidiLista.js';
 import { AuthContext } from '../../components/AuthContext';
 import Mapa from './Mapa.js';
 import ActividadesListaPresentacion from '../EventosProductosLista.jsx';
@@ -126,9 +125,6 @@ function ItemScreen({ tipoObjeto }) {
 
           </div>
 
-          {tipoObjeto === "atractivo" && item.attributes.external_id && (
-            <ActividadesLista idAtractivo={item.attributes.external_id} />
-          )}
 
           {/* Listado de productos */}
           {item.attributes.productos_turisticos?.length > 0 && (

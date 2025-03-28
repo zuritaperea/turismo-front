@@ -13,7 +13,7 @@ const ActividadesListaPresentacion = ({ listData }) => {
   const { user } = useContext(AuthContext);
 
   const fechasDisponibles = ["2025-03-19", "2025-03-20", "2025-03-21", "2025-03-22"];
-
+//TODO Agregar fechas calendario
   const formatHour = (dateString) => {
     if (!dateString) return "Sin horario";
     const date = new Date(dateString);

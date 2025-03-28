@@ -18,12 +18,12 @@ const Buscar = ({ onPress, onChangeText }) => {
 
       <input
         type="text"
-        className="w-full p-3 rounded-md text-gray-900 buscador border border-gray-200"
+        className="w-full p-3 rounded-md text-gray-900 indent-8 border border-gray-200"
         placeholder="Buscar"
         onChange={handleChange}
         onKeyDown={handleKeyDown}
       />
-      <i className="fas fa-search absolute text-lg left-3 top-2 text-gray-500"
+      <i className="fas fa-search absolute text-lg right-3 top-2 text-gray-100 bg-principal rounded-lg px-4"
         style={{ cursor: 'pointer' }}
         onClick={onPress}></i>
     </div>

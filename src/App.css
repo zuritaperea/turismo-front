@@ -15,9 +15,10 @@
 
 @layer utilities {
   .scrollbar-hide {
-    -ms-overflow-style: none; 
+    -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
@@ -31,43 +32,55 @@ body {
   background-color: var(--body-background, #F5F5F5);
 
 }
+
 .splash {
   cursor: pointer;
-position: fixed;
-top: 50%;
-left: 50%;
-height: 100%;
-width: 100%;
-transform: translate(-50%, -50%);
-background-color: var(--color-principal, '#3f37c9');
-transition: all ease-in-out 600ms;
-z-index: 15;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  height: 100%;
+  width: 100%;
+  transform: translate(-50%, -50%);
+  background-color: var(--color-principal, '#3f37c9');
+  transition: all ease-in-out 600ms;
+  z-index: 15;
 }
+
 .splash-container {
   display: flex;
   justify-content: center;
-  align-items: center ;
+  align-items: center;
   height: 100%;
 }
+
 .logo-splash {
   animation: pulse 1s infinite ease-in-out alternate;
 }
+
 @keyframes pulse {
-  from { transform: scale(0.8); }
-  to { transform: scale(1.2); }
+  from {
+    transform: scale(0.8);
+  }
+
+  to {
+    transform: scale(1.2);
+  }
 }
 
 
 .logo {
   height: 48px;
 }
+
 /* color gris del figma para los textos */
 .color-gris {
- color: #475467;
+  color: #475467;
 }
+
 .line-none {
   line-height: 0.5;
 }
+
 .categoria>div {
   width: 6rem;
   height: 5rem;
@@ -119,10 +132,12 @@ z-index: 15;
 .planificador-img {
   width: 100%;
   max-width: 440px;
-  height: auto; /* Permite que la imagen mantenga proporción */
+  height: auto;
+  /* Permite que la imagen mantenga proporción */
 }
 
 @media (min-width: 640px) {
+
   .marketplace-img,
   .pasaporte-img,
   .planificador-img {
@@ -137,13 +152,13 @@ z-index: 15;
   padding: 5px;
   border-radius: 10px;
   display: flex;
-    justify-content: center;
-    position: absolute;
-    bottom: 10px;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    z-index: 10;
+  justify-content: center;
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  z-index: 10;
 
 }
 
@@ -180,9 +195,11 @@ z-index: 15;
   color: black;
   background-color: #fff;
   border-radius: 100%;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  /* Sombra */
 
 }
+
 .swiper-button-prev,
 .swiper-button-next {
   width: 30px !important;
@@ -202,9 +219,10 @@ z-index: 15;
   color: var(--color-principal, '#3f37c9');
 }
 
-.buscador {
-  text-indent: 25px;
+.border-principal {
+  border-color: var(--color-principal, '#3f37c9');
 }
+
 
 .texto-tarjeta {
   color: #475467;
@@ -223,12 +241,14 @@ z-index: 15;
   font-size: 18px;
   padding: 2px 0px;
 }
+
 footer .titulo {
   color: #475467;
   font-weight: 400;
   font-size: 14px;
 
 }
+
 .swiper-slide img {
   width: 100%;
   height: 100%;
@@ -267,7 +287,7 @@ footer .titulo {
   background-color: #e4e4e4;
 }
 
-.sidebar-cerrar{
+.sidebar-cerrar {
   background-color: #52565e;
 }
 
@@ -315,12 +335,12 @@ footer .titulo {
     background-color: var(--navbar-background, #ffffff);
     color: var(--navbar-text-color, #475467);
   }
-  
+
   nav a {
     color: var(--main-link-color, #475467);
   }
-  
+
   nav a:hover {
-    color: var(--main-link-hover, blue); 
+    color: var(--main-link-hover, blue);
   }
 }

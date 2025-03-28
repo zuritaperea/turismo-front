@@ -1,5 +1,5 @@
 import React, { useState, useRef, useContext, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation} from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Form from '../components/Form';
 import Button from '../components/Button';
@@ -25,6 +25,7 @@ const Login = () => {
   const [logoLogin, setLogoLogin] = useState(logo);
   const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate();
+  const location = useLocation();
   const config = useContext(ConfigContext); // Usa el contexto para acceder a la configuración
 
   const onSubmit = data => {
@@ -40,11 +41,8 @@ const Login = () => {
     setAlerts([]);
     const response = await authService.login(username, password, login); // Pasa login como callback
     if (response === 'success') {
-      if (usuarioCompleto()) {
-        navigate('/');
-      } else {
-        navigate('/');//navigate('/datos-adicionales'); por ahora esta asi
-      }
+      const redirectTo = location.state?.from?.pathname || "/"; // Redirige a la página anterior o a "/"
+      navigate(redirectTo);
     } else {
       setAlerts(functions.errorMaker(response.data));
     }

@@ -1,6 +1,5 @@
 import api from "../api";
 import api_profile from "./profile";
-
 const authService = {
   login: async function (username, password, loginCallback) {
     const formData = new FormData();

@@ -5,7 +5,7 @@ import "leaflet/dist/leaflet.css"
 import Listado from "./Listado"
 import Header from "../Header"
 import Footer from "../Footer"
-import { Calendar, Search, SlidersHorizontal, User, X } from "lucide-react"
+import { Calendar, CaseLower, Search, SlidersHorizontal, User, X } from "lucide-react"
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet"
 import L from "leaflet"
 import Mapa from "./Mapa";
@@ -129,7 +129,7 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
         <div className="hidden md:block md:w-1/2 lg:ml-10 ">
           {!hasCoordinates ? (
             <div className="flex items-center justify-center h-full bg-[#f9fafb] text-[#667085] text-sm text-center ">
-              No hay ubicaciones para mostrar en el mapa
+              No hay {title?.toLowerCase()} para mostrar en el mapa
             </div>
           ) : (
             <Mapa objetosFiltrados={objetosFiltrados} navigation={navigation} target={target} />
