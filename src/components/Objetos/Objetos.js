@@ -30,6 +30,17 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
     { id: 2, name: "+18" },
   ])
 
+  const defaultImage = process.env.REACT_APP_IMAGE_DEFAULT;
+  const [backgroundImage, setBackgroundImage] = useState(defaultImage);
+
+  useEffect(() => {
+    if (objetosFiltrados.length > 0) {
+      const randomIndex = Math.floor(Math.random() * objetosFiltrados.length);
+      setBackgroundImage(objetosFiltrados[randomIndex].image);
+    }
+  }, [objetosFiltrados]);
+
+
   const customIcon = new L.Icon({
     iconUrl:
       "data:image/svg+xml;charset=UTF-8," +
@@ -125,7 +136,24 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
       <style>{mapStyles}</style>
       <Header />
 
+      <div 
+      className="relative w-full h-24 md:h-32 lg:h-40 flex items-center justify-center 
+      text-center text-white bg-cover   bg-center"
+      style={{ backgroundImage: `url(${backgroundImage})` }}
+    >
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black/50"></div>
+
+      {/* Título */}
+      <h1 className="relative z-10 text-4xl md:text-5xl lg:text-6xl font-bold">
+        {title}
+      </h1>
+    </div>
+
       <div className="flex flex-col md:flex-row flex-grow justify-center items-center align-middle">
+        
+
+
         <div className="hidden md:block md:w-1/2 lg:ml-10 ">
           {!hasCoordinates ? (
             <div className="flex items-center justify-center h-full bg-[#f9fafb] text-[#667085] text-sm text-center ">
