@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import eventoService from '../axios/services/evento';
-import EventsSection from './EventsSection';
+import ItemSection from "./ItemSection";
+import medallaEventos from "../assets/img/calendario.png";
 
 const EventoMarketplace = () => {
   const [eventos, setEventos] = useState([]);
@@ -36,7 +37,11 @@ const EventoMarketplace = () => {
       <h2 className="text-2xl font-bold text-center mb-4">Eventos Destacados</h2>
       <p className="text-center">Estos son los Eventos más elegidos en Santa Clara del Mar.</p>
 
-      <EventsSection 
+      <ItemSection             target="evento"
+            imgSrc={medallaEventos}
+            title="Próximos eventos"
+            subtitle="Conocé los próximos eventos."
+
         marketplace={true} 
         data={eventos.sort(() => Math.random() - Math.random()).slice(0, 6)} 
       />

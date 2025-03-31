@@ -8,14 +8,15 @@ import eventoService from '../axios/services/evento';
 import SearchComponent from "../components/SearchComponent";
 import SeccionesSlider from "../components/SectionSlider";
 import Carousel from "../components/Carousel";
-import AttractionsSection from "../components/AttractionsSection";
-import EventsSection from "../components/EventsSection";
 import Splash from "../components/Splash";
 import marketPlaceLogo from "../assets/img/banners-aplicativo-01.jpg"
 import pasaporteLogo from "../assets/img/banners-aplicativo-02.jpg"
 import planificadorLogo from "../assets/img/planificador.png"
 import { ConfigContext } from '../extras/ConfigContext';
 import { Ticket, MapPinned, Hotel, Bus, ShoppingBag, Utensils } from 'lucide-react';
+import ItemSection from "../components/ItemSection";
+import medallaAtractivos from "../assets/img/medalla.png";
+import medallaEventos from "../assets/img/calendario.png";
 
 export default function Inicio() {
   const [loading, setLoading] = useState(false);
@@ -107,8 +108,8 @@ export default function Inicio() {
     { icono: <Ticket size={30} />, titulo: 'Eventos', link: '/eventos' },
     { icono: <MapPinned size={30} />, titulo: 'Atractivos', link: '/atractivos' },
     { icono: <Hotel size={30} />, titulo: 'Alojamientos', link: '/alojamientos' },
-    //{ icono: <Bus size={30} />, titulo: 'Circuitos', link: '/circuitos' },
-    //{ icono: <ShoppingBag size={30} />, titulo: 'Comercios', link: '/comercios' },
+    { icono: <Bus size={30} />, titulo: 'Circuitos', link: '/circuitos' },
+    { icono: <ShoppingBag size={30} />, titulo: 'Comercios', link: '/comercios' },
     { icono: <Utensils size={30} />, titulo: 'Gastronomía', link: '/gastronomia' },
   ];
   return (
@@ -124,25 +125,7 @@ export default function Inicio() {
       </div>
 
       <div className="flex overflow-x-auto md:overflow-hidden whitespace-nowrap justify-start md:justify-center gap-4 px-4 md:px-0 pb-4">
-        <Link to="/atractivos"> <img
-          src={marketPlaceLogo}
-          className="h-48 flex-none rounded-md"
-          loading="lazy"
-          alt="Marketplace"
-        /></Link>
-        <a
-          href="https://fidibonito.ciceroneweb.com/register-user"
-          target="_blank"
-          rel="noopener noreferrer"
-
-        >
-          <img
-            src={pasaporteLogo}
-            className="h-48 flex-none rounded-md"
-            loading="lazy"
-            alt="Pasaporte"
-          />
-        </a>
+        {/** aqui van los logos */}
 
 
       </div >
@@ -154,8 +137,13 @@ export default function Inicio() {
         loadingAtractivos ? (
           <Spinner animation="border" role="status" />
         ) : (
-          <AttractionsSection data={naturalAttractions.sort(() => Math.random() - Math.random()).slice(0, 6)} />
-        )
+          <ItemSection
+            data={naturalAttractions.sort(() => Math.random() - Math.random())}
+            title="Atractivos más cercanos"
+            subtitle="Conocé los puntos más cercanos a tu ubicación."
+            target="atractivo"
+            imgSrc={medallaAtractivos}
+          />)
       }
       <div className="border-t border-[#E4E7EC] h-[1px] md:hidden my-4"></div>
 
@@ -164,8 +152,14 @@ export default function Inicio() {
         loadingEventos ? (
           <Spinner animation="border" role="status" />
         ) : (
-          <EventsSection data={eventos.sort(() => Math.random() - Math.random()).slice(0, 6)} />
-        )
+          <ItemSection
+            data={eventos.sort(() => Math.random() - Math.random())}
+            title="Próximos eventos"
+            subtitle="Conocé los próximos eventos."
+            target="evento"
+            imgSrc={medallaEventos}
+            marketplace={false}
+          />)
       }
 
       <Footer />
