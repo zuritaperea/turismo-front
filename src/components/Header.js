@@ -62,14 +62,7 @@ export default function Header() {
           <Link to="/alojamientos" className="font-light text-base">Alojamiento</Link>
           <Link to="/atractivos" className="font-light text-base">Actividades</Link>
           <Link to="/eventos" className="font-light text-base">Eventos</Link>
-          <a
-            href="https://fidibonito.ciceroneweb.com/register-user"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-light text-base"
-          >
-            Planificador Inteligente
-          </a>
+
           {user && <Link to="/mis-reservas" className="font-light text-base">Mis Reservas</Link>}
 
           {user ? (

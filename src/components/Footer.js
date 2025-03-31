@@ -49,16 +49,6 @@ export default function Footer() {
               <h3 className="titulo mb-4 text-center">          <Link to="/eventos" className="font-light text-base">Eventos</Link>
               </h3>
             </div>
-            <div>
-              <h3 className="titulo mb-4 text-center">          <a
-                href="https://fidibonito.ciceroneweb.com/register-user"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-light text-base"
-              >
-                Planificador Inteligente
-              </a></h3>
-            </div>
           </div>
         </div>
 

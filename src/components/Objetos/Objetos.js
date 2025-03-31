@@ -142,7 +142,7 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black/50"></div>
+      <div className="absolute inset-0 bg-black bg-opacity-25"></div>
 
       {/* Título */}
       <h1 className="relative z-10 text-4xl md:text-5xl lg:text-6xl font-bold">
