@@ -41,7 +41,7 @@ const Mapa = ({ objetosFiltrados }) => {
   const [tileLayer, setTileLayer] = useState("GoogleMaps");
 
   return (
-    <div className="h-80 w-11/12 mx-auto rounded-lg overflow-hidden md:mt-5 lg:mt-5 my-5">
+    <div className="h-80 w-11/12 mx-auto rounded-lg overflow-hidden md:mt-5 lg:mt-5 my-5 z-10">
       <select
         className="absolute top-2 right-2 bg-white p-2 rounded shadow-md text-xs hidden"
         value={tileLayer}

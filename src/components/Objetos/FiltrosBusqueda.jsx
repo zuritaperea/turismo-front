@@ -1,7 +1,7 @@
 import React from 'react'
 import { Calendar, User, House, ArrowUpRight } from "lucide-react"
 import { useLocation, Link } from 'react-router-dom';
-
+//TODO borrar despues este componente
 const FiltrosBusqueda = () => {
   const location = useLocation();
 

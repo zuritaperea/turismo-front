@@ -8,7 +8,6 @@ import Perfil from "./screens/Perfil";
 import DestinoScreen from "./screens/Destino";
 
 import BusquedaScreen from "./screens/Busqueda";
-import BusquedaAvanzada from "./screens/BusquedaAvanzada";
 import AtractivoScreen from "./screens/Atractivo";
 import AlojamientoScreen from "./screens/Alojamiento";
 import AlojamientosScreen from "./screens/Alojamientos";
@@ -76,7 +75,6 @@ function App() {
             <Route path="/destino/:id/:filtros" element={<DestinoScreen />} />
             <Route path="/destinos" element={<DestinosScreen />} />
             <Route path="/destinos/:id" element={<DestinosScreen />} />
-            <Route path="/avanzada/:id/:tipo/:nombre/:fechadesde/:fechahasta" element={<BusquedaAvanzada />} />
             <Route path="/busqueda/:nombre" element={<BusquedaScreen />} />
             <Route path="/busqueda" element={<BusquedaScreen />} />
             <Route path="/atractivo" element={<AtractivoScreen />} />

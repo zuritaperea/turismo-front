@@ -39,7 +39,7 @@ instance.interceptors.response.use(
           throw new Error("No refresh token available");
         }
 
-        const response = await axios.post(`${apiUrl}/o/token/`, {
+        const response = await axios.post(`${apiUrl}/oauth2/token/`, {
           grant_type: "refresh_token",
           refresh_token: refreshToken,
           client_id: process.env.REACT_APP_CLIENT_ID,

@@ -9,13 +9,16 @@ const Modal = ({ show, onHide, children }) => {
       {/* Overlay */}
       <div
         className="fixed inset-0 bg-gray-600 bg-opacity-50 z-50"
+        style={{ zIndex: 401 }}
         onClick={onHide}
       />
 
       {/* Modal */}
-      <div className="fixed inset-0 flex items-center justify-center z-50">
+      <div className="fixed inset-0 flex items-center justify-center z-50"
+        style={{ zIndex: 401 }}
+      >
         <div
-          className="bg-white p-6 rounded-lg shadow-lg min-w-96 max-w-xl"
+          className="bg-white p-6 rounded-lg shadow-lg min-w-96 max-w-4xl"
           onClick={(e) => e.stopPropagation()} // Evitar que el modal se cierre al hacer click dentro
         >
           {children}

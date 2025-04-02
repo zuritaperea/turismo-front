@@ -15,4 +15,10 @@ export default {
   buscarObjeto: function (nombre) {
     return api.get(`${apiVersion}/objeto_turistico_merge/?nombre=${nombre}`);
   },
+  obtenerConstantes: function(){
+    return api.get(`${apiVersion}/constantes/`);
+  },
+  obtenerServicios: function(){
+    return api.get(`${apiVersion}/servicio/`);
+  }
 };
