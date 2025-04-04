@@ -5,6 +5,7 @@ import service from "../axios/services/producto_turistico";
 import Splash from "../components/Splash";
 import { AuthContext } from "../components/AuthContext";
 import { useNavigate } from 'react-router-dom';
+//TODO Arreglar error de refresh token
 
 const MisReservas = () => {
   const [reservas, setReservas] = useState([]);

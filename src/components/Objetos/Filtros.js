@@ -33,12 +33,11 @@ const FiltroSelect = ({ label, name, options, selected, onChange, isMulti = fals
     )}
   </div>
 );
-
-const FiltroTiempo = ({ label, name, value, onChange }) => (
+const FiltroFecha = ({ label, name, value, onChange }) => (
   <div className="flex-1">
     <label className="text-sm">{label}</label>
     <input
-      type="time"
+      type="date"
       name={name}
       value={value}
       onChange={onChange}
@@ -69,13 +68,14 @@ const Filtros = ({ objetoService, setObjetosFiltrados }) => {
   const limpiarFiltros = () => {
     setFilters({
       name: "",
-      amenity_feature: [],
       tourist_type: [],
+      destino: "",
+      //parametros de target = alojamiento
+      amenity_feature: [],
       price_range: "",
       checkin_time: "",
       checkout_time: "",
       accommodation_type: [],
-      destino: "",
     });
   };
 
@@ -83,6 +83,7 @@ const Filtros = ({ objetoService, setObjetosFiltrados }) => {
     if (Array.isArray(value)) return value.length > 0;
     return value !== "";
   }).length;
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -102,16 +103,33 @@ const Filtros = ({ objetoService, setObjetosFiltrados }) => {
   }, []);
 
   const handleFilterChange = (e, fieldName) => {
+    const updateFilters = (key, val) =>
+      setFilters((prev) => {
+        if (!val || (Array.isArray(val) && val.length === 0)) {
+          const { [key]: _, ...rest } = prev;
+          return rest;
+        }
+        return { ...prev, [key]: val };
+      });
+
     if (Array.isArray(e)) {
-      setFilters((prev) => ({ ...prev, [fieldName]: e.map((option) => option.value) }));
-    } else {
-      const { name, value, type, checked } = e.target;
-      setFilters((prev) => ({
-        ...prev,
-        [name]: type === "checkbox" ? (checked ? [...prev[name], value] : prev[name].filter((v) => v !== value)) : value,
-      }));
+      return updateFilters(fieldName, e.map((o) => o.value));
     }
+
+    const { name, value, type, checked } = e.target;
+
+    if (type === "checkbox") {
+      const prevValues = filters[name] || [];
+      const newValues = checked
+        ? [...prevValues, value]
+        : prevValues.filter((v) => v !== value);
+      return updateFilters(name, newValues);
+    }
+
+    const val = type === "datetime-local" ? new Date(value).toISOString() : value;
+    updateFilters(name, val);
   };
+
 
   const aplicarFiltros = async () => {
     try {
@@ -181,8 +199,8 @@ const Filtros = ({ objetoService, setObjetosFiltrados }) => {
                 onChange={(selected) => setFilters((prev) => ({ ...prev, price_range: selected ? selected.value : "" }))} // Manejo del cambio
                 className="mt-1"
               />       </div>     <div className="flex space-x-2">
-              <FiltroTiempo label="Check-in" name="checkin_time" value={filters.checkin_time} onChange={handleFilterChange} />
-              <FiltroTiempo label="Check-out" name="checkout_time" value={filters.checkout_time} onChange={handleFilterChange} />
+              <FiltroFecha label="Check-in" name="checkin_time" value={filters.checkin_time} onChange={handleFilterChange} />
+              <FiltroFecha label="Check-out" name="checkout_time" value={filters.checkout_time} onChange={handleFilterChange} />
             </div>
           </div>
         </Modal.Body>
