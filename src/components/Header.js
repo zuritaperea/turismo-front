@@ -4,6 +4,7 @@ import logo from '../assets/img/logomark.png';
 import { ConfigContext } from '../extras/ConfigContext';
 import { AuthContext } from "./AuthContext";
 import { Menu, X, LogIn, LogOut, User } from 'lucide-react';
+import MenuLink from "./MenuLink";
 
 export default function Header() {
   const [personaDenominacion, setPersonaDenominacion] = useState(null);
@@ -15,6 +16,7 @@ export default function Header() {
   const [headerLogo, setHeaderLogo] = useState(logo);
   const [headerTitle, setHeaderTitle] = useState('Sistema de Turismo');
   const config = useContext(ConfigContext);
+  const [menuItems, setMenuItems] = useState([])
 
   const isHomePage = location.pathname === "/" || location.pathname === "/inicio";
 
@@ -22,6 +24,7 @@ export default function Header() {
     if (config) {
       setHeaderLogo(config.logo || logo);
       setHeaderTitle(config.title || 'Sistema de Turismo');
+      setMenuItems(config?.menus?.[0]?.attributes?.items || []);
     }
   }, [config]);
 
@@ -58,13 +61,14 @@ export default function Header() {
         </div>
 
         <nav className="hidden md:flex gap-6 items-center">
-          <Link to="/" className="font-medium text-base">Inicio</Link>
-          <Link to="/alojamientos" className="font-light text-base">Alojamiento</Link>
-          <Link to="/atractivos" className="font-light text-base">Actividades</Link>
-          <Link to="/eventos" className="font-light text-base">Eventos</Link>
-
-          {user && <Link to="/mis-reservas" className="font-light text-base">Mis Reservas</Link>}
-
+          {menuItems.map(item => (
+            <MenuLink
+              key={item.id}
+              item={item}
+              onClick={() => setMenuOpen(false)}
+              className="font-light text-base"
+            />
+          ))}
           {user ? (
             // Icono de usuario con menú desplegable
             <div className="relative">
@@ -75,8 +79,8 @@ export default function Header() {
               {userMenuOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg py-2 z-20">
                   <p className="px-4 py-2 text-gray-700 font-medium">{personaDenominacion}</p>
-                  <button 
-                    onClick={handleLogout} 
+                  <button
+                    onClick={handleLogout}
                     className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-200 flex items-center gap-2"
                   >
                     <LogOut size={18} className="text-gray-700" />
@@ -119,9 +123,9 @@ export default function Header() {
             {user && <Link to="/mis-reservas" className="font-light text-base" onClick={() => setMenuOpen(false)}>Mis Reservas</Link>}
 
             {user ? (
-              <button 
-                onClick={() => { setMenuOpen(false); handleLogout(); }} 
-                title="Cerrar sesión" 
+              <button
+                onClick={() => { setMenuOpen(false); handleLogout(); }}
+                title="Cerrar sesión"
                 className="flex items-center gap-2"
               >
                 <LogOut size={24} className="text-gray-700" />

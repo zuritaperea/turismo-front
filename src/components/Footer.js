@@ -3,11 +3,13 @@ import logo from '../assets/img/logomark.png';
 import { ConfigContext } from '../extras/ConfigContext'; // Importa el contexto
 import SocialLinks from "./SocialLinks";
 import { Link } from "react-router-dom";
+import MenuLink from "./MenuLink";
 
 export default function Footer() {
   const [footerLogo, setFooterLogo] = useState(logo);
   const config = useContext(ConfigContext);
   const [footerDescription, setFooterDescription] = useState("");
+  const [footerItems, setFooterItems] = useState([]);
 
   useEffect(() => {
     if (config) {
@@ -16,6 +18,7 @@ export default function Footer() {
         config.footer_description ||
         "Este es un párrafo descriptivo marketinero de cada uno de los destinos."
       );
+      setFooterItems(config?.menus?.[0]?.attributes?.items || []);
     }
   }, [config]);
 
@@ -33,22 +36,13 @@ export default function Footer() {
             <img className="logo" src={footerLogo} alt="Logo Footer" />
           </div>
           <div className="flex flex-wrap justify-center gap-8">
-            <div>
-              <h3 className="titulo mb-4 text-center">          <Link to="/" className="font-medium text-base">Inicio</Link>
-              </h3>
-            </div>
-            <div>
-              <h3 className="titulo mb-4 text-center">          <Link to="/alojamientos" className="font-light text-base">Alojamiento</Link>
-              </h3>
-            </div>
-            <div>
-              <h3 className="titulo mb-4 text-center">          <Link to="/atractivos" className="font-light text-base">Actividades</Link>
-              </h3>
-            </div>
-            <div>
-              <h3 className="titulo mb-4 text-center">          <Link to="/eventos" className="font-light text-base">Eventos</Link>
-              </h3>
-            </div>
+            {footerItems.map(item => (
+              <div key={item.id}>
+                <h3 className="titulo mb-4 text-center">
+                  <MenuLink item={item} className="font-light text-base" />
+                </h3>
+              </div>
+            ))}
           </div>
         </div>
 
