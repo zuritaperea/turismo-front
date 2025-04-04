@@ -79,11 +79,12 @@ const Filtros = ({ objetoService, setObjetosFiltrados }) => {
     });
   };
 
-  const filtrosSeleccionados = Object.values(filters).filter(value => {
+  const filtrosSeleccionados = Object.entries(filters).filter(([key, value]) => {
+    if (key === "name") return false;
     if (Array.isArray(value)) return value.length > 0;
     return value !== "";
   }).length;
-
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
