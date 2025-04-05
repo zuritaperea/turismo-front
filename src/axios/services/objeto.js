@@ -20,5 +20,8 @@ export default {
   },
   obtenerServicios: function(){
     return api.get(`${apiVersion}/servicio/`);
+  },
+  obtenerActividades: function(){
+    return api.get(`${apiVersion}/actividad/`);
   }
 };

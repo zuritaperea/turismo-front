@@ -4,10 +4,12 @@ import { ConfigContext } from '../extras/ConfigContext'; // Importa el contexto
 import SocialLinks from "./SocialLinks";
 import { Link } from "react-router-dom";
 import MenuLink from "./MenuLink";
+import { AuthContext } from "./AuthContext";
 
 export default function Footer() {
   const [footerLogo, setFooterLogo] = useState(logo);
   const config = useContext(ConfigContext);
+  const { user } = useContext(AuthContext);
   const [footerDescription, setFooterDescription] = useState("");
   const [footerItems, setFooterItems] = useState([]);
 
@@ -36,7 +38,12 @@ export default function Footer() {
             <img className="logo" src={footerLogo} alt="Logo Footer" />
           </div>
           <div className="flex flex-wrap justify-center gap-8">
-            {footerItems.map(item => (
+            {footerItems.filter(item => {
+              if (item.requires_authentication) {
+                return user !== null; // solo si hay usuario
+              }
+              return true; // siempre muestra si no requiere auth
+            }).map(item => (
               <div key={item.id}>
                 <h3 className="titulo mb-4 text-center">
                   <MenuLink item={item} className="font-light text-base" />

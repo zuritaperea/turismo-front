@@ -117,7 +117,7 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
 
 
         <div className=" md:w-1/2 lg:ml-10 ">
-          <Filtros objetoService={objetoService} setObjetosFiltrados={setObjetosFiltrados} />
+          <Filtros objetoService={objetoService} setObjetosFiltrados={setObjetosFiltrados} target={target} />
 
           {!hasCoordinates ? (
             <div className="flex items-center justify-center h-full bg-[#f9fafb] text-[#667085] text-sm text-center ">

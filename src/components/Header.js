@@ -61,13 +61,18 @@ export default function Header() {
         </div>
 
         <nav className="hidden md:flex gap-6 items-center">
-          {menuItems.map(item => (
+          {menuItems.filter(item => {
+            if (item.requires_authentication) {
+              return user !== null; // solo si hay usuario
+            }
+            return true; // siempre muestra si no requiere auth
+          }).map(item => (
             <MenuLink
               key={item.id}
               item={item}
               onClick={() => setMenuOpen(false)}
               className="font-light text-base"
-            />
+            /> 
           ))}
           {user ? (
             // Icono de usuario con menú desplegable

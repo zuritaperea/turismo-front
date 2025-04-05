@@ -26,7 +26,7 @@ function CookieConsent({ onConsent }) {
         </Modal.Header>
         <Modal.Body>
           <p>
-            Este sitio web utiliza cookies para mejorar la experiencia del usuario.
+            Este sitio web utiliza cookies para mejorar la experiencia del usuario. <br />
             Acepta para dar el consentimiento al uso de cookies o rechaza si no estás de acuerdo.
           </p>
         </Modal.Body>

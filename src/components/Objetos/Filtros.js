@@ -5,34 +5,60 @@ import Button from "../Button";
 import Form from "../Form";
 import service from "../../axios/services/objeto";
 import Select from "react-select";
+const FiltroSelect = ({
+  label,
+  name,
+  options,
+  selected,
+  onChange,
+  isMulti = false,
+  isBoolean = false,
+  forceSelect = false,
+  includeEmpty = true
+}) => {
+  const actualOptions = isBoolean
+    ? [
+      { value: "", label: "-" },
+      { value: "true", label: "Sí" },
+      { value: "false", label: "No" },
+    ]
+    : includeEmpty
+      ? [{ value: "", label: "--" }, ...options]
+      : options;
 
-const FiltroSelect = ({ label, name, options, selected, onChange, isMulti = false }) => (
-  <div>
-    <label className="text-sm">{label}</label>
-    {options.length <= 5 ? (
-      options.map((option) => (
-        <Form.Check
-          key={option.value}
-          type="checkbox"
-          label={option.label}
+  return (
+    <div>
+      <label className="text-sm">{label}</label>
+      {actualOptions.length <= 5 && !forceSelect ? (
+        actualOptions.map((option) => (
+          <Form.Check
+            key={option.value}
+            type="checkbox"
+            label={option.label}
+            name={name}
+            value={option.value}
+            onChange={onChange}
+          />
+        ))
+      ) : (
+        <Select
+          isMulti={isMulti}
+          isSearchable
           name={name}
-          value={option.value}
-          onChange={onChange}
+          options={actualOptions}
+          value={
+            isMulti
+              ? actualOptions.filter((o) => selected?.includes(o.value))
+              : actualOptions.find((o) => o.value === selected) || null
+          }
+          onChange={(selected) => onChange(selected, name)}
+          className="mt-1"
         />
-      ))
-    ) : (
-      <Select
-        isMulti={isMulti}
-        isSearchable
-        name={name}
-        options={options}
-        value={options.filter((o) => selected.includes(o.value))}
-        onChange={(selected) => onChange(selected, name)}
-        className="mt-1"
-      />
-    )}
-  </div>
-);
+      )}
+    </div>
+  );
+};
+
 const FiltroFecha = ({ label, name, value, onChange }) => (
   <div className="flex-1">
     <label className="text-sm">{label}</label>
@@ -46,36 +72,56 @@ const FiltroFecha = ({ label, name, value, onChange }) => (
   </div>
 );
 
-const Filtros = ({ objetoService, setObjetosFiltrados }) => {
+const Filtros = ({ objetoService, setObjetosFiltrados, target }) => {
+  console.log('target: ', target)
   const [filters, setFilters] = useState({
+    //parametros para todos los targets
     name: "",
-    amenity_feature: [],
     tourist_type: [],
+    destino: "",
+    //parametros de target = Alojamiento
+    amenity_feature: [],
     price_range: "",
     checkin_time: "",
     checkout_time: "",
     accommodation_type: [],
-    destino: "",
+    //parametros de target = Atractivo
+    services: [],
+    activities: [],
+    type_attractive: "",
+    subtype_attractive: "",
+    free_access: "",
   });
 
   const [constantes, setConstantes] = useState({
     rango_precio: [],
     tipo_turismo: [],
     tipo_alojamiento: [],
+    tipo_atractivo: []
   });
   const [servicios, setServicios] = useState([]);
+  const [actividades, setActividades] = useState([]);
+
   const [showModal, setShowModal] = useState(false);
   const limpiarFiltros = () => {
     setFilters({
+      //parametros para todos los targets
       name: "",
       tourist_type: [],
       destino: "",
-      //parametros de target = alojamiento
+      //parametros de target = Alojamiento
       amenity_feature: [],
       price_range: "",
       checkin_time: "",
       checkout_time: "",
       accommodation_type: [],
+      //parametros de target = Atractivo
+      services: [],
+      activities: [],
+      type_attractive: "",
+      subtype_attractive: "",
+      free_access: "",
+
     });
   };
 
@@ -84,17 +130,22 @@ const Filtros = ({ objetoService, setObjetosFiltrados }) => {
     if (Array.isArray(value)) return value.length > 0;
     return value !== "";
   }).length;
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [resConstantes, resServicios] = await Promise.all([
+        const [resConstantes, resServicios, resActividades] = await Promise.all([
           service.obtenerConstantes(),
           service.obtenerServicios(),
+          service.obtenerActividades(),
+
         ]);
         setConstantes(resConstantes.data.data);
         setServicios(
           resServicios.data.data.map((s) => ({ value: s.id, label: s.attributes.name }))
+        );
+        setActividades(
+          resActividades.data.data.map((s) => ({ value: s.id, label: s.attributes.name }))
         );
       } catch (error) {
         console.error("Error obteniendo datos de API", error);
@@ -113,10 +164,18 @@ const Filtros = ({ objetoService, setObjetosFiltrados }) => {
         return { ...prev, [key]: val };
       });
 
-    if (Array.isArray(e)) {
-      return updateFilters(fieldName, e.map((o) => o.value));
+    // Caso react-select
+    if (fieldName) {
+      if (Array.isArray(e)) {
+        // isMulti = true
+        return updateFilters(fieldName, e.map((o) => o.value));
+      } else {
+        // isMulti = false
+        return updateFilters(fieldName, e?.value || "");
+      }
     }
 
+    // Caso nativo (inputs)
     const { name, value, type, checked } = e.target;
 
     if (type === "checkbox") {
@@ -130,6 +189,7 @@ const Filtros = ({ objetoService, setObjetosFiltrados }) => {
     const val = type === "datetime-local" ? new Date(value).toISOString() : value;
     updateFilters(name, val);
   };
+
 
 
   const aplicarFiltros = async () => {
@@ -164,6 +224,12 @@ const Filtros = ({ objetoService, setObjetosFiltrados }) => {
             name="name"
             placeholder="Buscar por nombre"
             value={filters.name}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault(); // Previene que se recargue la página o haga submit
+                aplicarFiltros();
+              }
+            }}
             onChange={handleFilterChange}
             className="text-[#344054] text-base w-full outline-none bg-transparent"
           />
@@ -189,20 +255,48 @@ const Filtros = ({ objetoService, setObjetosFiltrados }) => {
         <Modal.Body className="overflow-y-auto p-2">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <FiltroSelect label="Tipo de turista" name="tourist_type" options={constantes.tipo_turismo} selected={filters.tourist_type} onChange={handleFilterChange} isMulti />
-            <FiltroSelect label="Tipo de alojamiento" name="accommodation_type" options={constantes.tipo_alojamiento} selected={filters.accommodation_type} onChange={handleFilterChange} isMulti />
-            <FiltroSelect label="Servicios" name="amenity_feature" options={servicios} selected={filters.amenity_feature} onChange={handleFilterChange} isMulti />
-            <div>
-              <label className="text-sm">Rango de precio</label> <Select
-                isSearchable
+            {target == 'Alojamiento' &&
+              <FiltroSelect label="Tipo de alojamiento"
+                name="accommodation_type"
+                options={constantes.tipo_alojamiento}
+                selected={filters.accommodation_type} onChange={handleFilterChange} isMulti />}
+            {target == 'Alojamiento' &&
+              <FiltroSelect label="Servicios" name="amenity_feature" options={servicios} selected={filters.amenity_feature} onChange={handleFilterChange} isMulti />
+            }
+            {target == 'Atractivo' &&
+              <FiltroSelect label="Servicios" name="services" options={servicios} selected={filters.services} onChange={handleFilterChange} isMulti />
+            }
+            {target == 'Atractivo' &&
+              <FiltroSelect label="Actividades" name="actividades" options={actividades} selected={filters.activities} onChange={handleFilterChange} isMulti />
+            }
+            {target == 'Atractivo' &&
+              <FiltroSelect label="Tipo de atractivo" name="type_attractive" options={constantes.tipo_atractivo} selected={filters.type_attractive} onChange={handleFilterChange} />
+            }
+            {target === 'Atractivo' && (
+              <FiltroSelect
+                label="Acceso Gratuito"
+                name="free_access"
+                selected={filters.free_access}
+                forceSelect
+                isBoolean
+                onChange={handleFilterChange}
+              />
+            )}
+            {['Alojamiento', 'Atractivo'].includes(target) &&
+              <FiltroSelect
+                label="Rango de precio"
                 name="price_range"
-                options={constantes.rango_precio} // Asegúrate de que es [{ value: "...", label: "..." }]
-                value={constantes.rango_precio.find(t => t.value === filters.price_range) || null} // Busca el seleccionado
-                onChange={(selected) => setFilters((prev) => ({ ...prev, price_range: selected ? selected.value : "" }))} // Manejo del cambio
-                className="mt-1"
-              />       </div>     <div className="flex space-x-2">
+                selected={filters.price_range}
+                forceSelect
+                options={constantes.rango_precio}
+                onChange={handleFilterChange}
+              />
+            }
+            {target == 'Alojamiento' && <div className="flex space-x-2">
               <FiltroFecha label="Check-in" name="checkin_time" value={filters.checkin_time} onChange={handleFilterChange} />
               <FiltroFecha label="Check-out" name="checkout_time" value={filters.checkout_time} onChange={handleFilterChange} />
-            </div>
+            </div>}
+
           </div>
         </Modal.Body>
         <Modal.Footer>
