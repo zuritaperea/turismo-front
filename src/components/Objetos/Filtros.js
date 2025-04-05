@@ -22,14 +22,14 @@ const FiltroSelect = ({
       { value: "true", label: "Sí" },
       { value: "false", label: "No" },
     ]
-    : includeEmpty
+    : includeEmpty && !isMulti
       ? [{ value: "", label: "--" }, ...options]
       : options;
 
   return (
     <div>
       <label className="text-sm">{label}</label>
-      {actualOptions.length <= 5 && !forceSelect ? (
+      {actualOptions.length <= 5 && !forceSelect && isMulti? (
         actualOptions.map((option) => (
           <Form.Check
             key={option.value}
