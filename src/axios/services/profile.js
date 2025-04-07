@@ -91,6 +91,7 @@ export default {
               nombre: data.nombre,
               apellido: data.apellido,
               fecha_nacimiento: data.fecha_nacimiento,
+              tipo_documento: data.tipo_documento,
               //nacionalidad_id: data.nacionalidad,
               telefono: data.telefono,
               correo_electronico: data.email,

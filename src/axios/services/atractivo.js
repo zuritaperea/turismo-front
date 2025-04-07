@@ -26,6 +26,8 @@ export default {
 
     if (params.name) queryParams.append("name", params.name);
     if (params.tourist_type) queryParams.append("tourist_type", params.tourist_type.join(","));
+    if (params.destino) queryParams.append("destino", params.destino);
+
     if (params.price_range) queryParams.append("price_range", params.price_range);
 
     if (params.services) {
@@ -38,7 +40,6 @@ export default {
     }
 
     if (params.free_access) queryParams.append("free_access", params.free_access);
-    if (params.destino) queryParams.append("destino", params.destino);
 
     return api.get(`${baseUrl}?${queryParams.toString()}`);
   },

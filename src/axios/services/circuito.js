@@ -19,4 +19,17 @@ export default {
     obtenerDestino: function (id) {
         return api.get(`${apiVersion}/getCircuito?id_destino_inicio_fin=${id}`);
     },
+    
+  obtenerFiltrado: function (params) {
+    const baseUrl = `${apiVersion}/${contentType}/`;
+    // Construimos los parámetros dinámicos
+    const queryParams = new URLSearchParams();
+
+    if (params.name) queryParams.append("name", params.name);
+    if (params.tourist_type) queryParams.append("tourist_type", params.tourist_type.join(","));
+    if (params.destino) queryParams.append("destino", params.destino);
+    if (params.type_attractive) queryParams.append("type_attractive", params.type_attractive);
+
+    return api.get(`${baseUrl}?${queryParams.toString()}`);
+  },
 };
