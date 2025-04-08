@@ -24,6 +24,7 @@ import ActividadesListaPresentacion from '../EventosProductosLista.jsx';
 import serviceProducto from '../../axios/services/producto_turistico.js';
 import SocialLinks from '../SocialLinks.js';
 import Estrellas from '../Items/Estrellas.js';
+import ObjetoOpinion from './ObjetoOpinion.js';
 
 function ItemScreen({ tipoObjeto }) {
   const { id, fechadesde, fechahasta } = useParams();
@@ -179,6 +180,10 @@ function ItemScreen({ tipoObjeto }) {
           )}
 
           <Recomendaciones />
+          <ObjetoOpinion objeto={{
+            puntuacion: item.attributes.evaluation,
+            evaluaciones: item.attributes.evaluaciones,
+          }} />
           <BotonesAccion contentType={item.attributes.content_type} objectId={item.id}
             className="block sm:hidden w-full flex items-center justify-center" />
 
