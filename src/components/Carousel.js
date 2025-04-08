@@ -7,23 +7,22 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 
 function Carousel({ images, detail = false }) {
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   if (!images || images.length === 0) {
-    return null; 
+    return null;
   }
 
   return (
-    <div 
-      className={`relative w-full sm:w-11/12 mx-0 sm:mx-auto mt-0 sm:mt-5 ${
-        detail ? 'max-w-[1600px] px-0 sm:px-4 md:px-0' : 'max-w-[1376px] px-0 sm:px-10 md:px-0'
-      }`}
-      style={{ height: 'auto', minHeight: '280px', maxHeight: '436px', marginBottom: '1rem' }} 
+    <div
+      className={`relative w-full sm:w-11/12 mx-0 sm:mx-auto mt-0 sm:mt-5 ${detail ? 'max-w-[1600px] px-0 sm:px-4 md:px-0' : 'max-w-[1376px] px-0 sm:px-10 md:px-0'
+        }`}
+      style={{ height: 'auto', minHeight: '280px', maxHeight: '436px', marginBottom: '1rem' }}
     >
       <Swiper
         modules={[Navigation, Pagination]}
         spaceBetween={20}
-        slidesPerView={1}
+        slidesPerView={detail ? images.length > 2 ? 3 : 1 : 1}
         navigation={true}
         pagination={{ clickable: true }}
       >

@@ -112,21 +112,19 @@ export default function Header() {
       {menuOpen && (
         <div className="md:hidden absolute top-16 left-0 w-full bg-white shadow-md p-4 transition-all duration-300 z-50">
           <nav className="flex flex-col gap-4 items-center">
-            <Link to="/" className="font-medium text-base" onClick={() => setMenuOpen(false)}>Inicio</Link>
-            <Link to="/alojamientos" className="font-light text-base" onClick={() => setMenuOpen(false)}>Alojamiento</Link>
-            <Link to="/atractivos" className="font-light text-base" onClick={() => setMenuOpen(false)}>Actividades</Link>
-            <Link to="/eventos" className="font-light text-base" onClick={() => setMenuOpen(false)}>Eventos</Link>
-            <a
-              href="https://fidibonito.ciceroneweb.com/register-user"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-light text-base"
+          {menuItems.filter(item => {
+            if (item.requires_authentication) {
+              return user !== null; // solo si hay usuario
+            }
+            return true; // siempre muestra si no requiere auth
+          }).map(item => (
+            <MenuLink
+              key={item.id}
+              item={item}
               onClick={() => setMenuOpen(false)}
-            >
-              Planificador Inteligente
-            </a>
-            {user && <Link to="/mis-reservas" className="font-light text-base" onClick={() => setMenuOpen(false)}>Mis Reservas</Link>}
-
+              className="font-light text-base"
+            /> 
+          ))}
             {user ? (
               <button
                 onClick={() => { setMenuOpen(false); handleLogout(); }}
