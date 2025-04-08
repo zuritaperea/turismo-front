@@ -25,6 +25,7 @@ import serviceProducto from '../../axios/services/producto_turistico.js';
 import SocialLinks from '../SocialLinks.js';
 import Estrellas from '../Items/Estrellas.js';
 import ObjetoOpinion from './ObjetoOpinion.js';
+import RangoPrecios from './RangoPrecios.js';
 
 function ItemScreen({ tipoObjeto }) {
   const { id, fechadesde, fechahasta } = useParams();
@@ -174,6 +175,7 @@ function ItemScreen({ tipoObjeto }) {
               )}
             <SocialLinks redes={item.attributes.redes_sociales} />
           </div>
+          <RangoPrecios item={item} />
 
           {item.attributes.certificaciones && item.attributes.certificaciones.length > 0 && (
             <Certificaciones item={item} />
