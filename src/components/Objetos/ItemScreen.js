@@ -11,7 +11,6 @@ import TagsList from '../../components/TagsList';
 import BotonesAccion from './BotonesAccion';
 import FechasHorarios from './FechasHorarios';
 import Contacto from './Contacto';
-import RedesSociales from './RedesSociales';
 import Certificaciones from './Certificaciones';
 import Alert from '../Alert';
 import Splash from '../../components/Splash';
@@ -23,6 +22,8 @@ import { AuthContext } from '../../components/AuthContext';
 import Mapa from './Mapa.js';
 import ActividadesListaPresentacion from '../EventosProductosLista.jsx';
 import serviceProducto from '../../axios/services/producto_turistico.js';
+import SocialLinks from '../SocialLinks.js';
+import Estrellas from '../Items/Estrellas.js';
 
 function ItemScreen({ tipoObjeto }) {
   const { id, fechadesde, fechahasta } = useParams();
@@ -111,7 +112,7 @@ function ItemScreen({ tipoObjeto }) {
 
       <div className="container mx-auto p-4">
         <div className="pb-4">
-          <BotonesAccion contentType={item.attributes.content_type} objectId={item.id} />
+          <BotonesAccion contentType={item.attributes.content_type} objectId={item.id} className="hidden md:flex" />
           <div className="pb-3 text-center lg:text-left">
             <h2 className="text-sm font-semibold mt-2 color-principal">
               {item.attributes.type}
@@ -122,7 +123,12 @@ function ItemScreen({ tipoObjeto }) {
             <div className="space-x-1 mt-2 mb-5 flex justify-center lg:justify-start">
               <TagsList tags={item.attributes.tourist_type} />
             </div>
-
+            <div className="flex items-center justify-center md:justify-start mt-2">
+              <Estrellas puntuacion={item?.attributes?.evaluation} size={'sm'} />
+              <span className="puntacion font-semibold mx-1">
+                {item?.attributes?.evaluation}
+              </span>
+            </div>
           </div>
 
 
@@ -165,7 +171,7 @@ function ItemScreen({ tipoObjeto }) {
                   }}
                 />
               )}
-            <RedesSociales idAtractivo={item.id} />
+            <SocialLinks redes={item.attributes.redes_sociales} />
           </div>
 
           {item.attributes.certificaciones && item.attributes.certificaciones.length > 0 && (
@@ -173,6 +179,9 @@ function ItemScreen({ tipoObjeto }) {
           )}
 
           <Recomendaciones />
+          <BotonesAccion contentType={item.attributes.content_type} objectId={item.id}
+            className="block sm:hidden w-full flex items-center justify-center" />
+
         </div>
       </div>
 

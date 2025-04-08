@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import OpinionDialog from './OpinionDialog';
 import evaluacionService from '../../axios/services/evaluacion';
 
-const BotonesAccion = ({ contentType, objectId }) => {
+const BotonesAccion = ({ contentType, objectId, className }) => {
   const [showModal, setShowModal] = useState(false);
 
   const handleSubmitOpinion = async (data) => {
@@ -12,7 +12,7 @@ const BotonesAccion = ({ contentType, objectId }) => {
       content_type: contentType,
       object_id: objectId,
     };
-  
+
     try {
       await evaluacionService
         .agregarEvaluacion(obj);
@@ -21,11 +21,11 @@ const BotonesAccion = ({ contentType, objectId }) => {
       return { success: false, message: "Hubo un error al enviar tu opinión" };
     }
   };
-  
+
 
   return (
     <>
-      <div className="hidden sm:flex justify-center md:justify-end items-center gap-2 mt-4 md:mt-0">
+      <div className={`"flex justify-center md:justify-end items-center gap-2 mt-4 md:mt-0 ${className}`} >
         <button
           className="bg-white shadow-sm px-6 py-2 font-semibold rounded-lg flex items-center"
           onClick={() => setShowModal(true)}

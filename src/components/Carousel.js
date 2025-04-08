@@ -22,7 +22,17 @@ function Carousel({ images, detail = false }) {
       <Swiper
         modules={[Navigation, Pagination]}
         spaceBetween={20}
-        slidesPerView={detail ? images.length > 2 ? 3 : 1 : 1}
+        breakpoints={{
+          0: {
+            slidesPerView: 1, // para móviles
+          },
+          640: {
+            slidesPerView: detail && images.length > 1 ? 2 : 1, // desde sm (640px en adelante)
+          },
+          800: {
+            slidesPerView: detail && images.length > 2 ? 3 : 1, // desde sm (800px en adelante)
+          }
+        }}
         navigation={true}
         pagination={{ clickable: true }}
       >
