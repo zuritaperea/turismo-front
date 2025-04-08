@@ -7,18 +7,27 @@ import Col from "../components/Col";
 import Alert from "../components/Alert";
 import { Link, useNavigate } from 'react-router-dom';
 import registroService from "../axios/services/profile";
+import objetoService from "../axios/services/objeto";
+
 import logo from '../assets/img/logomark.png';
-import { v4 as uuidv4 } from 'uuid';
 import functions from "../extras/functions";
 import Turnstile from "react-turnstile";
 
 import { ConfigContext } from '../extras/ConfigContext'; // Importa el contexto
 import Separador from '../components/Separador';
+import Splash from '../components/Splash';
+
 
 const Registro = () => {
   const [logoLogin, setLogoLogin] = useState(logo);
-  const [token, setToken] = useState("");
+  const [loading, setLoading] = useState(true);
 
+  const [token, setToken] = useState("");
+  const [paises, setPaises] = useState([]);
+  const [constantes, setConstantes] = useState({
+    tipo_documento: [],
+    genero: [],
+  });
   const [mensaje, setMensaje] = useState(null);
   const navigate = useNavigate();
 
@@ -31,11 +40,28 @@ const Registro = () => {
     nombre: '',
     apellido: '',
     documento_identidad: '',
+    tipo_documento: '',
+    nacionalidad: '',
+    company: '',
+    position: ''
   });
   const [error, setError] = useState([]);
   const [registroExitoso, setRegistroExitoso] = useState(false);
   const config = useContext(ConfigContext); // Usa el contexto para acceder a la configuración
 
+  const agregarOpcionVacia = (items, label = "Seleccione...") => [
+    { value: "", label },
+    ...(Array.isArray(items) ? items : []),
+  ];
+
+  const procesarConstantes = (data) => {
+    const resultado = {};
+    for (const key in data) {
+      const value = data[key];
+      resultado[key] = Array.isArray(value) ? agregarOpcionVacia(value) : value;
+    }
+    return resultado;
+  };
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setDatosUsuario({
@@ -51,28 +77,20 @@ const Registro = () => {
       alert("Por favor, completa el captcha.");
       return;
     }
-    // Agregar un UUID único al campo documento_identidad
-    // Generar un UUID y tomar solo los primeros 9 caracteres después del prefijo "t-"
-    const uuidParcial = uuidv4().replace(/-/g, '').slice(0, 9); // Eliminar guiones y tomar los primeros 9 caracteres
-    const documentoIdentidadTemporal = `t-${uuidParcial}`; // Aseguramos que el total no sea mayor a 12 caracteres
-    const datosConDocumento = {
-      ...datosUsuario,
-      documento_identidad: documentoIdentidadTemporal
-    };
     // Realiza validación de los datos
     if (datosUsuario.password === datosUsuario.password_2) {
       if (
         datosUsuario.email &&
-        datosUsuario.password
+        datosUsuario.password && datosUsuario.documento_identidad
       ) {
         try {
           registroService
-            .registro(datosConDocumento)
+            .registro(datosUsuario)
             .then((response) => {
               setMensaje(
                 <span>
                   Su registro se ha realizado exitosamente,
-                  <Alert.Link href="/perfil"> a continuación podrá completar datos adicionales</Alert.Link>
+                  <Alert.Link href="/login"> a continuación Ingresá con tus datos de acceso</Alert.Link>
                 </span>
               );
               setError([]);
@@ -106,6 +124,27 @@ const Registro = () => {
 
 
   useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+
+      try {
+        const [resConstantes, resPaises] = await Promise.all([
+          objetoService.obtenerConstantes(),
+          registroService.getPaises(),
+        ]);
+        setConstantes(procesarConstantes(resConstantes.data.data));
+        setPaises(agregarOpcionVacia(
+          resPaises.data.data.map((s) => ({ value: s.id, label: s.attributes.nombre }))
+        ));
+      } catch (error) {
+        console.error("Error obteniendo datos de API", error);
+      }
+      setLoading(false);
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
     if (registroExitoso) {
       console.log(registroExitoso)
       // Si el registro fue exitoso, redirige a la siguiente pantalla
@@ -122,6 +161,10 @@ const Registro = () => {
       setLogoLogin(config.logo || logo);
     }
   }, [config]); // El useEffect se ejecuta cada vez que config cambia
+
+  if (loading) {
+    return <Splash />;
+  }
 
   return (
     <>
@@ -149,7 +192,7 @@ const Registro = () => {
               </Alert>
             )}
             <Form onSubmit={handleSubmit}>
-
+              <h1 className='text-xl font-bold my-4'>Datos personales</h1>
               <Form.Group controlId="nombre">
                 <Form.Label>Nombre *</Form.Label>
                 <Form.Control
@@ -171,7 +214,26 @@ const Registro = () => {
                   required
                 />
               </Form.Group>
-
+              <Form.Group controlId="tipo_documento">
+                <Form.Label>Tipo Documento *</Form.Label>
+                <Form.Select
+                  name="tipo_documento"
+                  value={datosUsuario.tipo_documento}
+                  onChange={handleInputChange}
+                  required
+                  options={constantes.tipo_documento}
+                />
+              </Form.Group>
+              <Form.Group controlId="documento_identidad">
+                <Form.Label>Número de Documento *</Form.Label>
+                <Form.Control
+                  type="number"
+                  name="documento_identidad"
+                  value={datosUsuario.documento_identidad}
+                  onChange={handleInputChange}
+                  required
+                />
+              </Form.Group>
               <Form.Group controlId="telefono">
                 <Form.Label>Teléfono</Form.Label>
                 <Form.Control
@@ -181,6 +243,36 @@ const Registro = () => {
                   onChange={handleInputChange}
                 />
               </Form.Group>
+              <Form.Group controlId="nacionalidad">
+                <Form.Label>Nacionalidad *</Form.Label>
+                <Form.Select
+                  name="nacionalidad"
+                  value={datosUsuario.nacionalidad}
+                  onChange={handleInputChange}
+                  required
+                  options={paises}
+                />
+              </Form.Group>
+              <Form.Group controlId="company">
+                <Form.Label>Empresa u Organización</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="company"
+                  value={datosUsuario.company}
+                  onChange={handleInputChange}
+                />
+              </Form.Group>
+
+              <Form.Group controlId="position">
+                <Form.Label>Cargo / Posición</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="position"
+                  value={datosUsuario.position}
+                  onChange={handleInputChange}
+                />
+              </Form.Group>
+              <h1 className='text-xl font-bold my-4'>Datos de acesso</h1>
 
               <Form.Group controlId="email">
                 <Form.Label>Email *</Form.Label>

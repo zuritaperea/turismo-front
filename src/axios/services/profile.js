@@ -92,9 +92,11 @@ export default {
               apellido: data.apellido,
               fecha_nacimiento: data.fecha_nacimiento,
               tipo_documento: data.tipo_documento,
-              //nacionalidad_id: data.nacionalidad,
+              nacionalidad_id: data.nacionalidad,
               telefono: data.telefono,
               correo_electronico: data.email,
+              position: data.position,
+              company: data.company,
               //domicilio: data.domicilio,
               //genero: data.genero,
               //localidad_id: data.localidad,
@@ -111,7 +113,7 @@ export default {
   },
   recuperarCuenta: async function (correo_electronico) {
     const body = {
-        correo_electronico:correo_electronico,      
+      correo_electronico: correo_electronico,
     };
     return await api.post(`${apiVersion}/usuario/recuperar-cuenta/`, JSON.stringify(body), {
       headers: {
