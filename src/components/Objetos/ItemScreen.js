@@ -111,7 +111,7 @@ function ItemScreen({ tipoObjeto }) {
 
       <div className="container mx-auto p-4">
         <div className="pb-4">
-          <BotonesAccion />
+          <BotonesAccion contentType={item.attributes.content_type} objectId={item.id} />
           <div className="pb-3 text-center lg:text-left">
             <h2 className="text-sm font-semibold mt-2 color-principal">
               {item.attributes.type}

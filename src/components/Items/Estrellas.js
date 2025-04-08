@@ -1,15 +1,48 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 
-const Estrellas = ({ puntuacion, size }) => {
+const Estrellas = ({ puntuacion = 0, setPuntuacion = null, size = "lg" }) => {
+  const [valor, setValor] = useState(puntuacion);
+  const [hover, setHover] = useState(null); // estado para el hover
+
+  useEffect(() => {
+    setValor(puntuacion);
+  }, [puntuacion]);
+
+  const handleClick = (index) => {
+    if (setPuntuacion) {
+      setValor(index);
+      setPuntuacion(index);
+    }
+  };
+
+  const isInteractive = !!setPuntuacion;
+
   return (
-    <div style={{ display: "flex", justifyContent: "flex-start", alignItems: "center" }}>
-      <FontAwesomeIcon icon={faStar} color={puntuacion > 0 ? "gold" : "lightgray"} size={size} />
-      <FontAwesomeIcon icon={faStar} color={puntuacion > 1 ? "gold" : "lightgray"} size={size} />
-      <FontAwesomeIcon icon={faStar} color={puntuacion > 2 ? "gold" : "lightgray"} size={size} />
-      <FontAwesomeIcon icon={faStar} color={puntuacion > 3 ? "gold" : "lightgray"} size={size} />
-      <FontAwesomeIcon icon={faStar} color={puntuacion > 4 ? "gold" : "lightgray"} size={size} />
+    <div className="flex items-center gap-1">
+      {[1, 2, 3, 4, 5].map((i) => (
+        <FontAwesomeIcon
+          key={i}
+          icon={faStar}
+          size={size}
+          className={`transition-colors duration-200 ${
+            isInteractive ? "cursor-pointer" : "cursor-default"
+          }`}
+          color={
+            hover !== null
+              ? i <= hover
+                ? "gold"
+                : "lightgray"
+              : i <= valor
+              ? "gold"
+              : "lightgray"
+          }
+          onMouseEnter={() => isInteractive && setHover(i)}
+          onMouseLeave={() => isInteractive && setHover(null)}
+          onClick={() => handleClick(i)}
+        />
+      ))}
     </div>
   );
 };
