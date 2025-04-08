@@ -1,10 +1,15 @@
 import { Link } from "react-router-dom";
 import Card from "../Card";
 
-const Recomendaciones = ({ items, tipoObjeto }) => {
+const Recomendaciones = ({ items, tipoObjeto, objectId }) => {
   if (!items || items.length === 0) {
-    return null; // No renderiza nada si no hay recomendaciones
+    return null;
   }
+
+  // Filtra el item actual y toma hasta 4 recomendaciones
+  const recomendaciones = items
+    .filter(item => item.id !== objectId)
+    .slice(0, 4);
 
   return (
     <div className="py-4">
@@ -19,10 +24,9 @@ const Recomendaciones = ({ items, tipoObjeto }) => {
         También puede interesarte...
       </div>
       <div className="slider-horizontal flex space-x-4 overflow-x-auto pl-2">
-        {items.map((item) => (
+        {recomendaciones.map((item) => (
           <Link key={item.id} to={`/${tipoObjeto}/${item.id}`}>
             <Card
-              key={item.id}
               imgSrc={item.image}
               title={item.title}
               category={item.type}

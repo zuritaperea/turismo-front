@@ -181,7 +181,7 @@ function ItemScreen({ tipoObjeto }) {
             <Certificaciones item={item} />
           )}
 
-          <Recomendaciones />
+          <Recomendaciones items={items} tipoObjeto={tipoObjeto} objectId={item.id} />
           <ObjetoOpinion objeto={{
             puntuacion: item.attributes.evaluation,
             evaluaciones: item.attributes.evaluaciones,
