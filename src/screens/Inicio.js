@@ -17,6 +17,7 @@ import { Ticket, MapPinned, Hotel, Bus, ShoppingBag, Utensils } from 'lucide-rea
 import ItemSection from "../components/ItemSection";
 import medallaAtractivos from "../assets/img/medalla.png";
 import medallaEventos from "../assets/img/calendario.png";
+import DirectAccessList from "../components/DirectAccessList";
 
 export default function Inicio() {
   const [loading, setLoading] = useState(false);
@@ -24,6 +25,8 @@ export default function Inicio() {
   const [eventos, setEventos] = useState([]);
 
   const [images, setImages] = useState([]);
+  const [directAccessItems, setDirectAccessItems] = useState([]);
+
   const [naturalAttractions, setNaturalAttractions] = useState([]);
 
   const [loadingAtractivos, setLoadingAtractivos] = useState(true);
@@ -42,6 +45,7 @@ export default function Inicio() {
   useEffect(() => {
     if (config) {
       setImages(config.carousel_items || imagesTest);
+      setDirectAccessItems(config.direct_access_items);
     }
   }, [config]);
 
@@ -124,11 +128,7 @@ export default function Inicio() {
         <SeccionesSlider secciones={secciones} />
       </div>
 
-      <div className="flex overflow-x-auto md:overflow-hidden whitespace-nowrap justify-start md:justify-center gap-4 px-4 md:px-0 pb-4">
-        {/** aqui van los logos */}
-
-
-      </div >
+      <DirectAccessList items={directAccessItems} />
 
 
       <div className="border-t border-[#E4E7EC] h-[1px] md:hidden my-4"></div>
