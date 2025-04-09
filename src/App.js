@@ -40,6 +40,8 @@ import Marketplace from "./screens/Marketplace";
 import ConfirmacionReserva from "./screens/ConfirmacionReserva";
 import ComprobanteReserva from "./screens/ComprobanteReserva";
 import MisReservas from "./screens/MisReservas";
+import Paginas from "./screens/Paginas";
+import Pagina from "./screens/Pagina";
 
 function App() {
 
@@ -113,6 +115,9 @@ function App() {
             <Route path="/confirmacion-reserva" element={<ConfirmacionReserva />} />
             <Route path="/comprobante-reserva" element={<ComprobanteReserva />} />
             <Route path="/mis-reservas" element={<MisReservas />} />
+            <Route path="/paginas" element={<Paginas/>} />
+            <Route path="/page/:slug" element={<Pagina/>} />
+
           </Routes>
         </BrowserRouter>      <ScrollToTopButton />
       </></AuthProvider></ConfigProvider>
