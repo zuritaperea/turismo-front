@@ -8,6 +8,7 @@ import Container from "../components/Container";
 import Row from "../components/Row";
 import Col from "../components/Col";
 import DOMPurify from 'dompurify';
+import Carousel from "../components/Carousel";
 
 export default function Pagina() {
   const { slug } = useParams();
@@ -51,30 +52,43 @@ export default function Pagina() {
     };
     obtenerPagina();
   }, [paginas]);
-
+  if (!pagina) {
+    return null;
+  }
   return (
     <>
       {loading ? <Splash /> : null}
 
       <Header />
+      {pagina.attributes?.image_url && (<div className="w-full max-w-[1376px] mx-auto p-4">
+        <img
+          className="w-full h-64 object-cover object-center rounded-xl shadow-md"
+          src={process.env.REACT_APP_API_URL + pagina.attributes.image_url}
+          alt="Imagen 1"
+        />
+      </div>)}
       <Container className='md:w-6/12 w-full'>
         <Row className="m-2">
           <Col>
             <Row className="destination-box mb-2 mt-5">
               {pagina.attributes?.name && (
-                <div className="text-2xl">{pagina.attributes.name}</div>
+                <h1 className="py-2 text-4xl font-semibold text-slate-900 tracking-tight dark:text-slate-200">
+                  {pagina.attributes.name}</h1>
               )
               }
-
+            </Row>
+            <Row>
               {pagina.attributes?.content && (
                 <div
-                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(pagina.attributes.content) }}
+                  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(pagina.attributes.content) }}
                 />
               )}
 
 
             </Row></Col></Row></Container>
 
+      <Carousel images={pagina.attributes.contenidos} detail={true} 
+      imagePrincipalUrl={process.env.REACT_APP_API_URL + pagina.attributes.image_url} />
 
       <Footer />
     </>

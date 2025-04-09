@@ -156,7 +156,9 @@ function ItemScreen({ tipoObjeto }) {
 
           {item.attributes.contenidos && item.attributes.contenidos.length > 1 && (
             <div className="w-full max-w-[1376px] mx-auto">
-              <Carousel images={item.attributes.contenidos} detail={true} />
+              <Carousel images={item.attributes?.contenidos} detail={true} imagePrincipalUrl={item.attributes.image_url
+            ? process.env.REACT_APP_API_URL + item.attributes.image_url
+            : process.env.REACT_APP_IMAGE_DEFAULT}/>
             </div>
           )}
 

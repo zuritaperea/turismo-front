@@ -44,7 +44,7 @@ export default function Paginas() {
             <Row className="destination-box mb-2 mt-5">
               <ul>
                 {paginas.map((pagina, index) => (
-                  <li><Link className="text-md font-semibold" to={`page/${pagina.attributes?.slug}`}>{pagina.attributes?.name}</Link></li>
+                  <li key={index}><Link className="text-md font-semibold" to={`/page/${pagina.attributes?.slug}`}>{pagina.attributes?.name}</Link></li>
                 ))
                 }
               </ul>
