@@ -44,14 +44,15 @@ const ItemSection = ({ data, title, subtitle, target, imgSrc, marketplace }) => 
         }
     };
 
+    const justifyCenter = data.length > 3 ?  'md:justify-start' : 'md:justify-center';
     return (
         <div className="relative py-4 px-4 sm:px-6 md:px-0">
             {!marketplace && <SectionTitle title={title} subtitle={subtitle} imgSrc={imgSrc} />}
-            
+
             <div className="relative">
                 {/* Botón izquierdo */}
                 {canScrollLeft && (
-                    <button 
+                    <button
                         className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white p-2 rounded-full shadow-md"
                         onClick={() => scroll(-1)}
                     >
@@ -60,7 +61,7 @@ const ItemSection = ({ data, title, subtitle, target, imgSrc, marketplace }) => 
                 )}
 
                 {/* Contenedor scrollable */}
-                <div ref={scrollContainerRef} className="slider-horizontal flex md:justify-center space-x-4 overflow-x-auto scrollbar-hide scroll-smooth">
+                <div ref={scrollContainerRef} className={`slider-horizontal flex ${justifyCenter} space-x-4 overflow-x-auto scrollbar-hide scroll-smooth`}>
                     {data.map((item) => (
                         <Link key={item.id} to={`/${target.toLowerCase()}/${item.id}`}>
                             <Card
@@ -77,7 +78,7 @@ const ItemSection = ({ data, title, subtitle, target, imgSrc, marketplace }) => 
 
                 {/* Botón derecho */}
                 {canScrollRight && (
-                    <button 
+                    <button
                         className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white p-2 rounded-full shadow-md"
                         onClick={() => scroll(1)}
                     >
