@@ -72,7 +72,7 @@ export default function Header() {
               item={item}
               onClick={() => setMenuOpen(false)}
               className="font-light text-base"
-            /> 
+            />
           ))}
           {user ? (
             // Icono de usuario con menú desplegable
@@ -84,6 +84,13 @@ export default function Header() {
               {userMenuOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg py-2 z-20">
                   <p className="px-4 py-2 text-gray-700 font-medium">{personaDenominacion}</p>
+                  <Link
+                    to="/perfil"
+                    className="block px-4 py-2 text-gray-700 hover:bg-gray-200 font-medium"
+                    onClick={() => setUserMenuOpen(false)}
+                  >
+                    Mi Perfil
+                  </Link>
                   <button
                     onClick={handleLogout}
                     className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-200 flex items-center gap-2"
@@ -112,28 +119,38 @@ export default function Header() {
       {menuOpen && (
         <div className="md:hidden absolute top-16 left-0 w-full bg-white shadow-md p-4 transition-all duration-300 z-50">
           <nav className="flex flex-col gap-4 items-center">
-          {menuItems.filter(item => {
-            if (item.requires_authentication) {
-              return user !== null; // solo si hay usuario
-            }
-            return true; // siempre muestra si no requiere auth
-          }).map(item => (
-            <MenuLink
-              key={item.id}
-              item={item}
-              onClick={() => setMenuOpen(false)}
-              className="font-light text-base"
-            /> 
-          ))}
+            {menuItems.filter(item => {
+              if (item.requires_authentication) {
+                return user !== null; // solo si hay usuario
+              }
+              return true; // siempre muestra si no requiere auth
+            }).map(item => (
+              <MenuLink
+                key={item.id}
+                item={item}
+                onClick={() => setMenuOpen(false)}
+                className="font-light text-base"
+              />
+            ))}
             {user ? (
-              <button
-                onClick={() => { setMenuOpen(false); handleLogout(); }}
-                title="Cerrar sesión"
-                className="flex items-center gap-2"
-              >
-                <LogOut size={24} className="text-gray-700" />
-                <span>Cerrar sesión</span>
-              </button>
+              <>
+                <Link
+                  to="/perfil"
+                  className="flex items-center gap-2"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <User size={24} className="text-gray-700" />
+                  <span>Mi Perfil</span>
+                </Link>
+                <button
+                  onClick={() => { setMenuOpen(false); handleLogout(); }}
+                  title="Cerrar sesión"
+                  className="flex items-center gap-2"
+                >
+                  <LogOut size={24} className="text-gray-700" />
+                  <span>Cerrar sesión</span>
+                </button>  </>
+
             ) : (
               <Link to="/login" title="Iniciar sesión" className="flex items-center gap-2" onClick={() => setMenuOpen(false)}>
                 <span>Iniciar sesión</span>
