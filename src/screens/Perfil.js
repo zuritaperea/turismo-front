@@ -12,6 +12,7 @@ import logo from '../assets/img/logomark.png';
 import { ConfigContext } from '../extras/ConfigContext';
 import Separador from '../components/Separador';
 import Splash from '../components/Splash';
+import Turnstile from "react-turnstile";
 
 const MiPerfil = () => {
   const [logoLogin, setLogoLogin] = useState(logo);
@@ -19,6 +20,8 @@ const MiPerfil = () => {
   const [mensaje, setMensaje] = useState(null);
   const [error, setError] = useState([]);
   const [paises, setPaises] = useState([]);
+  const [token, setToken] = useState("");
+
   const [constantes, setConstantes] = useState({
     tipo_documento: [],
     genero: [],
@@ -34,7 +37,9 @@ const MiPerfil = () => {
     tipo_documento: '',
     nacionalidad: '',
     company: '',
-    position: ''
+    position: '',
+    password: '',
+    password_2: ''
   });
 
   const config = useContext(ConfigContext);
@@ -65,6 +70,23 @@ const MiPerfil = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!token) {
+      alert("Por favor, completa el captcha.");
+      return;
+    }
+    // Validaciones para contraseña
+    const quiereCambiarPassword = datosUsuario.password || datosUsuario.password_2;
+
+    if (quiereCambiarPassword) {
+      if (!datosUsuario.password || !datosUsuario.password_2) {
+        setError(['Debes completar ambos campos de contraseña para cambiarla.']);
+        return;
+      }
+      if (datosUsuario.password !== datosUsuario.password_2) {
+        setError(['Las contraseñas no son iguales']);
+        return;
+      }
+    }
     try {
       const response = await profileService.updateProfile(datosUsuario); // PUT/PATCH según el backend
       setMensaje("Datos actualizados correctamente.");
@@ -73,6 +95,8 @@ const MiPerfil = () => {
       setMensaje(null);
       setError(["No se pudo actualizar el perfil."]);
     }
+
+
   };
 
   const transformarDatosUsuario = (response) => {
@@ -80,7 +104,7 @@ const MiPerfil = () => {
     const personaId = response.data.relationships?.persona?.data?.id;
     const persona = response.included?.find(item => item.type === "Persona" && item.id === personaId);
     const personaAttributes = persona?.attributes || {};
-  
+
     return {
       id: response.data.id,
       username: userAttributes.username || "",
@@ -96,13 +120,13 @@ const MiPerfil = () => {
       domicilio: personaAttributes.domicilio || "",
       correo_electronico: personaAttributes.correo_electronico || "",
       telefono: personaAttributes.telefono || "",
-      localidad: personaAttributes.localidad || "",
-      nacionalidad: personaAttributes.nacionalidad || "",
+      localidad: personaAttributes.localidad?.id || "",
+      nacionalidad: personaAttributes.nacionalidad?.id || "",
       genero: personaAttributes.genero || "",
       is_children: personaAttributes.is_children || false,
     };
   };
-  
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -118,7 +142,7 @@ const MiPerfil = () => {
         ));
         const perfilTransformado = transformarDatosUsuario(resPerfil.data);
         setDatosUsuario(prev => ({ ...prev, ...perfilTransformado }));
-  
+
       } catch (error) {
         console.error("Error cargando datos de perfil", error);
         setError(["Error al cargar tus datos."]);
@@ -197,14 +221,48 @@ const MiPerfil = () => {
               <Form.Control type="text" name="position" value={datosUsuario.position} onChange={handleInputChange} />
             </Form.Group>
 
-            <h1 className='text-xl font-bold my-4'>Email</h1>
+            <h1 className='text-xl font-bold my-4'>Datos de Ingreso</h1>
             <Form.Group controlId="email">
               <Form.Label>Email *</Form.Label>
               <Form.Control type="email" name="email" value={datosUsuario.email} onChange={handleInputChange} required />
             </Form.Group>
+            <Form.Group controlId="password">
+              <Form.Label>Nueva Contraseña</Form.Label>
+              <Form.Control
+                type='password'
+                name="password"
+                value={datosUsuario.password}
+                onChange={handleInputChange}
+                placeholder="Solo si deseas cambiarla"
+              />
+            </Form.Group>
 
+            <Form.Group controlId="password_2">
+              <Form.Label>Confirmar nueva contraseña</Form.Label>
+              <Form.Control
+                type='password'
+                name="password_2"
+                value={datosUsuario.password_2}
+                onChange={handleInputChange}
+                placeholder="Confirmar nueva contraseña"
+
+              />
+            </Form.Group>
+            {/* Turnstile */}
+            <div className="flex justify-center">
+              <Turnstile
+                sitekey={process.env.REACT_APP_TURNSTILE_SITE_KEY} // Para Create React App
+                // sitekey={import.meta.env.VITE_TURNSTILE_SITE_KEY} // Para Vite
+                onVerify={(token) => setToken(token)}
+              /></div>
             <Button variant="primary" className="w-full bg-principal mt-4">Guardar cambios</Button>
           </Form>
+          <Row><Col className='mt-3'>{error.length > 0 && (
+            <Alert variant="danger">
+              <ul>{error.map((err, i) => <li key={i}>{err}</li>)}</ul>
+            </Alert>
+          )}
+          {mensaje && <Alert variant="success">{mensaje}</Alert>}</Col></Row>
         </Col>
       </Row>
 

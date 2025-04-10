@@ -11,46 +11,41 @@ export default {
   getProfile: function () {
     return api.get(`${apiVersion}/usuario/me/?include=persona`);
   },
-
-  updateProfile: function (data) {
+  updateProfile: function (data) { 
     const body = {
-      data: {
-        type: "Usuario",
-        id: data.id?.toString(),
-        attributes: {
-          email: data.email,
-          username: data.email,
-          first_name: data.nombre,
-          last_name: data.apellido,
-        },
-        relationships: {
-          persona: {
-            data: {
-              documento_identidad: data.documento_identidad,
-              nombre: data.nombre,
-              apellido: data.apellido,
-              fecha_nacimiento: data.fecha_nacimiento,
-              tipo_documento: data.tipo_documento,
-              nacionalidad_id: data.nacionalidad,
-              telefono: data.telefono,
-              correo_electronico: data.email,
-              position: data.position,
-              company: data.company,
-              //domicilio: data.domicilio,
-              //genero: data.genero,
-              //localidad_id: data.localidad,
-            },
-          },
-        },
+      email: data.email,
+      username: data.email,
+      first_name: data.nombre,
+      last_name: data.apellido,
+      persona: {
+        documento_identidad: data.documento_identidad,
+        nombre: data.nombre,
+        apellido: data.apellido,
+        //fecha_nacimiento: data.fecha_nacimiento,
+        tipo_documento: data.tipo_documento,
+        nacionalidad_id: data.nacionalidad,
+        telefono: data.telefono,
+        correo_electronico: data.email,
+        position: data.position,
+        company: data.company,
+        // domicilio: data.domicilio,
+        // genero: data.genero,
+        // localidad_id: data.localidad,
       },
     };
+    if (data.password) {
+      body.password = data.password;
+    }
+    if (data.password_2) {
+      body.password_2 = data.password_2;
+    }
     return api.patch(
       `${apiVersion}/usuario/me/`,
       JSON.stringify(body),
-      { headers: { "Content-Type": "application/vnd.api+json" } }
+      { headers: { "Content-Type": "application/json" } } // <- importante!
     );
   },
-
+  
   updateFotoPersona: function (id, data) {
     return api.patch(
       `${apiVersion}/perfil-usuario/${id}/actualizar-avatar/`,

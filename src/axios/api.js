@@ -13,7 +13,7 @@ instance.defaults.withCredentials = true;
 
 const getToken = () => {
   const user = JSON.parse(localStorage.getItem("user"));
-  return user ? user.token : null;
+  return user ? user.access_token : null;
 };
 
 const getRefreshToken = () => {
