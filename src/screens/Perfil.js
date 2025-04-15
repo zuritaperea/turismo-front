@@ -221,7 +221,7 @@ const MiPerfil = () => {
               <Form.Control type="text" name="position" value={datosUsuario.position} onChange={handleInputChange} />
             </Form.Group>
 
-            <h1 className='text-xl font-bold my-4'>Datos de Ingreso</h1>
+            <h1 className='text-xl font-bold my-4'>Datos de Acceso</h1>
             <Form.Group controlId="email">
               <Form.Label>Email *</Form.Label>
               <Form.Control type="email" name="email" value={datosUsuario.email} onChange={handleInputChange} required />

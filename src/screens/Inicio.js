@@ -34,17 +34,11 @@ export default function Inicio() {
   const [loadingEventos, setLoadingEventos] = useState(true);
   const config = useContext(ConfigContext);
 
-
-  const imagesTest = [
-    { file: 'https://picsum.photos/id/227/300/200' },
-    { file: 'https://picsum.photos/id/217/300/200' },
-    { file: 'https://picsum.photos/id/237/300/200' },
-  ];
   const navigate = useNavigate();
 
   useEffect(() => {
     if (config) {
-      setImages(config.carousel_items || imagesTest);
+      setImages(config.carousel_items);
       setDirectAccessItems(config.direct_access_items);
     }
   }, [config]);

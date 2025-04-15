@@ -14,6 +14,9 @@ export default {
   obtenerMisReservas: function (id) {
     return api.get(`${apiVersion}/reserva/me/`);
   },
+  obtenerReserva: function (id) {
+    return api.get(`${apiVersion}/reserva/${id}/`);
+  },
   crearReserva: function (data) {
     return api.post(
       `${apiVersion}/reserva/`,
