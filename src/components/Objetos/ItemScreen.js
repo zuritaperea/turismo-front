@@ -1,4 +1,3 @@
-// src/screens/ItemScreen.js
 import React, { useEffect, useState, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
@@ -17,15 +16,14 @@ import Splash from '../../components/Splash';
 import SeccionConTitulo from './SeccionConTitulo';
 import Servicios from './Servicios';
 import Recomendaciones from './Recomendaciones';
-import FiltrosBusqueda from './FiltrosBusqueda';
 import { AuthContext } from '../../components/AuthContext';
 import Mapa from './Mapa.js';
 import ActividadesListaPresentacion from '../EventosProductosLista.jsx';
-import serviceProducto from '../../axios/services/producto_turistico.js';
 import SocialLinks from '../SocialLinks.js';
-import Estrellas from '../Items/Estrellas.js';
 import ObjetoOpinion from './ObjetoOpinion.js';
 import RangoPrecios from './RangoPrecios.js';
+import EncabezadoAtractivo from '../EncabezadoAtractivo.jsx';
+import { SeccionDescripcionMultilingue } from '../DescripcionBilingue.jsx';
 
 function ItemScreen({ tipoObjeto }) {
   const { id, fechadesde, fechahasta } = useParams();
@@ -40,6 +38,7 @@ function ItemScreen({ tipoObjeto }) {
   const [loadingItems, setLoadingItems] = useState(true);
   const [selectedDate, setSelectedDate] = useState(null);
   const [atractivoData, setAtractivoData] = useState(null);
+
 
   const handleReserva = () => {
     if (!selectedDate) return;
@@ -102,45 +101,25 @@ function ItemScreen({ tipoObjeto }) {
   return (
     <>
       <Header />
-      <div className="w-full max-w-[1376px] mx-auto p-4">
-        <img
-          className="w-full h-64 object-cover object-center rounded-xl shadow-md"
-          src={item.attributes.image_url
-            ? process.env.REACT_APP_API_URL + item.attributes.image_url
-            : process.env.REACT_APP_IMAGE_DEFAULT}
-          alt="Imagen 1"
-        />
-      </div>
-
-      <div className="container mx-auto p-4">
-        <div className="pb-4">
-          <BotonesAccion contentType={item.attributes.content_type} objectId={item.id} className="hidden md:flex" />
-          <div className="pb-3 text-center lg:text-left">
-            <h2 className="text-sm font-semibold mt-2 color-principal">
-              {item.attributes.type}
-            </h2>
-            <h1 className="py-2 text-4xl font-semibold text-slate-900 tracking-tight dark:text-slate-200">
-              {item.attributes.name}
-            </h1>
-            <div className="space-x-1 mt-2 mb-5 flex justify-center lg:justify-start">
-              <TagsList tags={item.attributes.tourist_type} />
+      <EncabezadoAtractivo item={item} />
+      <div className="container  mt-62 lg:mt-20 mx-auto p-4 pt-28">
+        <div className="pb-4 mt-40 lg:mt-1">
+          <SeccionDescripcionMultilingue
+            titulo="Descripción"
+            descripcion={item.attributes.description}
+          />
+          {item.attributes.contenidos && item.attributes.contenidos.length > 1 && (
+            <div className="w-full max-w-[1376px] mx-auto my-10">
+              <Carousel images={item.attributes?.contenidos} detail={true} imagePrincipalUrl={item.attributes.image_url
+                ? process.env.REACT_APP_API_URL + item.attributes.image_url
+                : process.env.REACT_APP_IMAGE_DEFAULT} />
             </div>
-            <div className="flex items-center justify-center md:justify-start mt-2">
-              <Estrellas puntuacion={item?.attributes?.evaluation} size={'sm'} />
-              <span className="puntacion font-semibold mx-1">
-                {item?.attributes?.evaluation}
-              </span>
-            </div>
-          </div>
-
-
-          {/* Listado de productos */}
-          {item.attributes.productos_turisticos?.length > 0 && (
-            <ActividadesListaPresentacion listData={item.attributes.productos_turisticos} />
           )}
-          <SeccionConTitulo titulo="Descripción" contenido={item.attributes.description} />
+          {/* {item.attributes.productos_turisticos?.length > 0 && (
+            <ActividadesListaPresentacion listData={item.attributes.productos_turisticos} />
+          )} */}
           <SeccionConTitulo titulo="Dirección" contenido={item.attributes.street_address} />
-          {item.attributes.point && (
+          {/* {item.attributes.point && (
             <Mapa
               objetosFiltrados={[
                 {
@@ -150,20 +129,13 @@ function ItemScreen({ tipoObjeto }) {
                 },
               ]}
             />
-          )}
-
+          )} */}
           {item.attributes.amenity_feature && <Servicios servicios={item.attributes.amenity_feature} />}
 
-          {item.attributes.contenidos && item.attributes.contenidos.length > 1 && (
-            <div className="w-full max-w-[1376px] mx-auto">
-              <Carousel images={item.attributes?.contenidos} detail={true} imagePrincipalUrl={item.attributes.image_url
-            ? process.env.REACT_APP_API_URL + item.attributes.image_url
-            : process.env.REACT_APP_IMAGE_DEFAULT}/>
-            </div>
-          )}
-
           <div className="grid grid-cols-1 md:grid-cols-3">
-            <FechasHorarios item={item} tipoObjeto={tipoObjeto} />
+            {item.attributes.opening_hours && Object.keys(item.attributes.opening_hours).length > 0 && (
+              <FechasHorarios item={item} tipoObjeto={tipoObjeto} />
+            )}
             {(item.attributes.telefonos?.length > 0 ||
               item.attributes.correos_electronicos?.length > 0 ||
               item.attributes.url) && (
@@ -184,13 +156,23 @@ function ItemScreen({ tipoObjeto }) {
           )}
 
           <Recomendaciones items={items} tipoObjeto={tipoObjeto} objectId={item.id} />
-          <ObjetoOpinion objeto={{
+          {item.attributes.point && (
+            <Mapa
+              objetosFiltrados={[
+                {
+                  id: item.id,
+                  title: item.attributes.name,
+                  coordinates: item.attributes.point,
+                },
+              ]}
+            />
+          )}
+          {/* <ObjetoOpinion objeto={{
             puntuacion: item.attributes.evaluation,
             evaluaciones: item.attributes.evaluaciones,
-          }} />
-          <BotonesAccion contentType={item.attributes.content_type} objectId={item.id}
-            className="block sm:hidden w-full flex items-center justify-center" />
-
+          }} /> */}
+          {/* <BotonesAccion contentType={item.attributes.content_type} objectId={item.id}
+            className="block sm:hidden w-full flex items-center justify-center" /> */}
         </div>
       </div>
 

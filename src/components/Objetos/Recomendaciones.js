@@ -6,7 +6,6 @@ const Recomendaciones = ({ items, tipoObjeto, objectId }) => {
     return null;
   }
 
-  // Filtra el item actual y toma hasta 4 recomendaciones
   const recomendaciones = items
     .filter(item => item.id !== objectId)
     .slice(0, 4);
@@ -23,20 +22,20 @@ const Recomendaciones = ({ items, tipoObjeto, objectId }) => {
       >
         También puede interesarte...
       </div>
-      <div className="slider-horizontal flex space-x-4 overflow-x-auto pl-2">
-        {recomendaciones.map((item) => (
-          <Link key={item.id} to={`/${tipoObjeto}/${item.id}`}>
-            <Card
-              imgSrc={item.image}
-              title={item.title}
-              category={item.type}
-              description={item.description}
-              tags={item.tourist_type}
-              puntuacion={item.puntuacion}
-            />
-          </Link>
-        ))}
-      </div>
+      <div className="slider-horizontal flex flex-wrap justify-center gap-4 px-2">
+  {recomendaciones.map((item) => (
+    <Link key={item.id} to={`/${tipoObjeto}/${item.id}`}>
+      <Card
+        imgSrc={item.image}
+        title={item.title}
+        category={item.type}
+        description={item.description}
+        tags={item.tourist_type}
+        puntuacion={item.puntuacion}
+      />
+    </Link>
+  ))}
+</div>
     </div>
   );
 };
