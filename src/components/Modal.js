@@ -18,8 +18,9 @@ const Modal = ({ show, onHide, children }) => {
         style={{ zIndex: 401 }}
       >
         <div
-          className="bg-white p-6 rounded-lg shadow-lg min-w-96 max-w-4xl"
-          onClick={(e) => e.stopPropagation()} // Evitar que el modal se cierre al hacer click dentro
+          className="p-6 rounded-lg shadow-lg min-w-96 max-w-4xl"
+          style={{ backgroundColor: 'rgba(46, 45, 44, 0.95)' }}
+          onClick={(e) => e.stopPropagation()} 
         >
           {children}
         </div>
@@ -34,9 +35,9 @@ Modal.Header = ({ children, onHide }) => (
     <h2 className="text-xl font-semibold">{children}</h2>
     <button
       className="text-gray-500 hover:text-gray-700"
-      onClick={onHide} // Corrección: ahora ejecuta la función correctamente
+      onClick={onHide} 
     >
-      <span className="font-bold text-xl">&times;</span> {/* Icono de cierre */}
+      <span className="font-bold text-xl">&times;</span> 
     </button>
   </div>
 );

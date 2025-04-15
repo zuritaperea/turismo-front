@@ -1,38 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { Filter, Search, SlidersHorizontal, XCircle } from "lucide-react";
+import { Filter, Search, SlidersHorizontal } from "lucide-react";
 import Modal from "../Modal";
 import Button from "../Button";
-import Form from "../Form";
 import service from "../../axios/services/objeto";
-import Select from "react-select";
 import FiltroSelect from "./FiltroSelect";
 import FiltroInput from "./FiltroInput";
+
 const initialFilters = {
-  // Comunes a todos los target
   name: "",
   tourist_type: [],
   destino: "",
-  // Alojamiento, Atractivo y Gastronomia
   price_range: "",
-  // Alojamiento
   amenity_feature: [],
   checkin_time: "",
   checkout_time: "",
   accommodation_type: [],
-  // Atractivo y Circuito
   type_attractive: "",
-  // Solo Atractivo
   services: [],
   activities: [],
   subtype_attractive: "",
   free_access: "",
-  // Comercio
   type_commerce: "",
-  // Gastronomía
   resto_type: "",
   served_cuisine: [],
   accepts_reservations: "",
-  // Evento
   event_class: "",
   speaker_name: "",
   presentador_name: "",
@@ -40,9 +31,9 @@ const initialFilters = {
   start_date: "",
   end_date: "",
 };
+
 const Filtros = ({ objetoService, setObjetosFiltrados, target }) => {
   const [filters, setFilters] = useState(initialFilters);
-
   const [constantes, setConstantes] = useState({
     rango_precio: [],
     tipo_turismo: [],
@@ -55,10 +46,9 @@ const Filtros = ({ objetoService, setObjetosFiltrados, target }) => {
   });
   const [servicios, setServicios] = useState([]);
   const [actividades, setActividades] = useState([]);
-
   const [showModal, setShowModal] = useState(false);
-  const limpiarFiltros = () => setFilters(initialFilters);
 
+  const limpiarFiltros = () => setFilters(initialFilters);
 
   const filtrosSeleccionados = Object.entries(filters).filter(([key, value]) => {
     if (key === "name") return false;
@@ -98,20 +88,15 @@ const Filtros = ({ objetoService, setObjetosFiltrados, target }) => {
         return { ...prev, [key]: val };
       });
 
-    // Caso react-select
     if (fieldName) {
       if (Array.isArray(e)) {
-        // isMulti = true
         return updateFilters(fieldName, e.map((o) => o.value));
       } else {
-        // isMulti = false
         return updateFilters(fieldName, e?.value || "");
       }
     }
 
-    // Caso nativo (inputs)
     const { name, value, type, checked } = e.target;
-
     if (type === "checkbox") {
       const prevValues = filters[name] || [];
       const newValues = checked
@@ -123,8 +108,6 @@ const Filtros = ({ objetoService, setObjetosFiltrados, target }) => {
     const val = type === "datetime-local" ? new Date(value).toISOString() : value;
     updateFilters(name, val);
   };
-
-
 
   const aplicarFiltros = async () => {
     try {
@@ -150,10 +133,13 @@ const Filtros = ({ objetoService, setObjetosFiltrados, target }) => {
   };
 
   return (
-    <div className="bg-[#f08400] p-4">
-      <div className="space-y-3 p-5 rounded-lg" style={{ backgroundColor: "#F08400" }}>
-        <div className="bg-white rounded-lg p-4 flex items-center">
-          <Search className="text-[#667085] mr-2" size={20} />
+    <div className="w-full px-4">
+      <div
+        className="bg-black bg-opacity-95 rounded-2xl shadow-md flex flex-col lg:flex-row items-center justify-center gap-3 px-4 py-7 flex-wrap"
+        style={{ backgroundColor: "rgba(46, 45, 44, 0.95)" }}
+      >
+        <div className="flex items-center bg-white rounded-full px-4 py-2 w-full md:w-auto">
+          <Search className="text-gray-500 mr-2" size={18} />
           <input
             type="text"
             name="name"
@@ -161,137 +147,89 @@ const Filtros = ({ objetoService, setObjetosFiltrados, target }) => {
             value={filters.name}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
-                e.preventDefault(); // Previene que se recargue la página o haga submit
+                e.preventDefault();
                 aplicarFiltros();
               }
             }}
             onChange={handleFilterChange}
-            className="text-[#344054] text-base w-full outline-none bg-transparent"
+            className="text-gray-700 placeholder-gray-400 bg-transparent outline-none w-full"
           />
         </div>
-        {target == 'Alojamiento' &&
-          <FiltroSelect label="Tipo de alojamiento" name="accommodation_type"
-            classLabel="text-white text-base font-medium"
-            options={constantes.tipo_alojamiento}
-            selected={filters.accommodation_type} onChange={handleFilterChange} isMulti />}
-        {['Atractivo', 'Circuito'].includes(target)  &&
-          <FiltroSelect label="Tipo de atractivo" name="type_attractive"
-            classLabel="text-white text-base font-medium"
-            options={constantes.tipo_atractivo}
-            selected={filters.type_attractive} onChange={handleFilterChange} />
-        }
-        {target == 'Comercio' &&
-          <FiltroSelect label="Tipo de comercio" name="type_commerce"
-            classLabel="text-white text-base font-medium"
-            options={constantes.tipo_comercio}
-            selected={filters.type_commerce} onChange={handleFilterChange} />
-        }
-        {target == 'Gastronomia' &&
-          <FiltroSelect label="Tipo de restaurante" name="resto_type"
-            classLabel="text-white text-base font-medium"
-            options={constantes.tipo_restaurante}
-            selected={filters.resto_type} onChange={handleFilterChange} />
-        }
-        {target == 'Evento' &&
-          <FiltroSelect label="Tipo de evento" name="event_class"
-            classLabel="text-white text-base font-medium"
-            options={constantes.tipo_evento}
-            selected={filters.event_class} onChange={handleFilterChange} />
-        }
-        <div className="bg-white rounded-lg p-4 flex items-center cursor-pointer" onClick={() => setShowModal(true)}>
-          <Filter className="text-[#667085] mr-2" size={20} />
-          <span className="text-[#344054] text-base">
-            {filtrosSeleccionados > 0 ? `${filtrosSeleccionados} filtros seleccionados` : "Filtros avanzados"}</span>
-          <SlidersHorizontal className="ml-auto text-[#667085]" size={20} />
-        </div>
-        <div className="flex space-x-2">
 
-          <button className="bg-white text-[#f08400] px-4 py-2 rounded-lg w-full font-semibold mt-2" onClick={aplicarFiltros}>
-            Aplicar Filtros
-          </button>
-          <button className="bg-white text-red-600 px-4 py-2 rounded-lg font-semibold mt-2 flex items-center" onClick={limpiarFiltros}>
-            <XCircle size={18} />
-          </button></div>
+        {['Atractivo', 'Circuito'].includes(target) && (
+          <FiltroSelect
+            className="w-full md:w-auto"
+            name="type_attractive"
+            placeholder="Tipo de atractivo"
+            options={constantes.tipo_atractivo}
+            selected={filters.type_attractive}
+            onChange={handleFilterChange}
+          />
+        )}
+
+        <button
+          onClick={() => setShowModal(true)}
+          className="flex items-center bg-white rounded-full px-4 py-2 text-gray-700 hover:bg-gray-100 transition w-full md:w-auto"
+        >
+          <Filter className="text-gray-500 mr-2" size={18} />
+          <span className="text-gray-700 text-sm pt-1">
+            {filtrosSeleccionados > 0
+              ? `${filtrosSeleccionados} filtros seleccionados`
+              : "Filtros avanzados"}
+          </span>
+          <SlidersHorizontal className="ml-2 text-gray-500" size={18} />
+        </button>
+
+        <button
+          onClick={aplicarFiltros}
+          className="bg-black text-white font-semibold rounded-full px-6 py-2 hover:bg-gray-900 transition w-full md:w-auto"
+        >
+          Aplicar
+        </button>
       </div>
 
       <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Body className="overflow-y-auto p-2">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <Modal.Body className="bg-[#2e2d2c]/95 text-white p-4 rounded-xl max-h-[80vh] overflow-y-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 px-2 sm:px-4">
             <FiltroSelect label="Tipo de turista" name="tourist_type" options={constantes.tipo_turismo} selected={filters.tourist_type} onChange={handleFilterChange} isMulti />
-            {target == 'Alojamiento' &&
+            {target === "Alojamiento" && (
               <FiltroSelect label="Servicios" name="amenity_feature" options={servicios} selected={filters.amenity_feature} onChange={handleFilterChange} isMulti />
-            }
-            {target == 'Atractivo' && (
+            )}
+            {target === "Atractivo" && (
               <>
                 <FiltroSelect label="Servicios" name="services" options={servicios} selected={filters.services} onChange={handleFilterChange} isMulti />
                 <FiltroSelect label="Actividades" name="actividades" options={actividades} selected={filters.activities} onChange={handleFilterChange} isMulti />
-                <FiltroSelect
-                  label="Acceso Gratuito"
-                  name="free_access"
-                  selected={filters.free_access}
-                  forceSelect
-                  isBoolean
-                  onChange={handleFilterChange}
-                />
+                <FiltroSelect label="Acceso Gratuito" name="free_access" selected={filters.free_access} forceSelect isBoolean onChange={handleFilterChange} />
               </>
-
             )}
-            {target === 'Gastronomia' && (
-              <FiltroSelect
-                label="Acepta reservas"
-                name="accepts_reservations"
-                selected={filters.accepts_reservations}
-                forceSelect
-                isBoolean
-                onChange={handleFilterChange}
-              />
-            )}
-            {['Alojamiento', 'Atractivo', 'Gastronomia'].includes(target) &&
-              <FiltroSelect
-                label="Rango de precio"
-                name="price_range"
-                selected={filters.price_range}
-                forceSelect
-                options={constantes.rango_precio}
-                onChange={handleFilterChange}
-              />
-            }
-            {target === 'Gastronomia' && (
-              <FiltroSelect
-                label="Tipo de cocina"
-                name="served_cuisine"
-                selected={filters.served_cuisine}
-                forceSelect
-                isMulti
-                options={constantes.tipo_cocina}
-                onChange={handleFilterChange}
-              />
-            )}
-            {target === 'Evento' && (
-              <><FiltroInput
-                label="Nombre orador"
-                name="speaker_name"
-                selected={filters.speaker_name}
-                onChange={handleFilterChange}
-              />
-                <FiltroInput
-                  label="Nombre moderador"
-                  name="moderador_name"
-                  selected={filters.moderador_name}
-                  onChange={handleFilterChange}
-                /><FiltroInput
-                  label="Nombre presentador"
-                  name="presentador_name"
-                  selected={filters.presentador_name}
-                  onChange={handleFilterChange}
-                />
+            {target === "Gastronomia" && (
+              <>
+                <FiltroSelect label="Acepta reservas" name="accepts_reservations" selected={filters.accepts_reservations} forceSelect isBoolean onChange={handleFilterChange} />
+                <FiltroSelect label="Tipo de cocina" name="served_cuisine" selected={filters.served_cuisine} forceSelect isMulti options={constantes.tipo_cocina} onChange={handleFilterChange} />
               </>
-
+            )}
+            {["Alojamiento", "Atractivo", "Gastronomia"].includes(target) && (
+              <FiltroSelect label="Rango de precio" name="price_range" selected={filters.price_range} forceSelect options={constantes.rango_precio} onChange={handleFilterChange} />
+            )}
+            {target === "Evento" && (
+              <>
+                <FiltroSelect label="Tipo de evento" name="event_class" options={constantes.tipo_evento} selected={filters.event_class} onChange={handleFilterChange} />
+                <FiltroInput label="Nombre orador" name="speaker_name" selected={filters.speaker_name} onChange={handleFilterChange} />
+                <FiltroInput label="Nombre moderador" name="moderador_name" selected={filters.moderador_name} onChange={handleFilterChange} />
+                <FiltroInput label="Nombre presentador" name="presentador_name" selected={filters.presentador_name} onChange={handleFilterChange} />
+              </>
             )}
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>Listo</Button>
+          <div className="flex justify-between w-full px-4">
+            <Button variant="secondary" onClick={limpiarFiltros}>
+              Limpiar filtros
+            </Button>
+            <Button variant="secondary" onClick={() => setShowModal(false)}>
+              Listo
+            </Button>
+          </div>
         </Modal.Footer>
       </Modal>
     </div>

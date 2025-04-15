@@ -52,30 +52,31 @@ const Mapa = ({ objetosFiltrados }) => {
           <option key={key} value={key}>{key}</option>
         ))}
       </select>
-
-      <MapContainer center={position} zoom={14} scrollWheelZoom={true} className="h-full w-full">
-        <TileLayer attribution='&copy; OpenStreetMap & Google' url={TILES[tileLayer]} />
-        <FitBounds objetosFiltrados={objetosFiltrados} />
-        {objetosFiltrados.map(({ id, title, coordinates }) =>
-          coordinates ? (
-            <Marker key={id} icon={defaultIcon} position={[coordinates.latitude, coordinates.longitude]}>
-              <Popup>
-                <div className="text-center">
-                  <h3 className="font-semibold">{title}</h3>
-                  <a
-                    href={`http://maps.google.com/maps?q=${coordinates.latitude},${coordinates.longitude}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-500 underline"
-                  >
-                    Ver en Google Maps
-                  </a>
-                </div>
-              </Popup>
-            </Marker>
-          ) : null
-        )}
-      </MapContainer>
+      <div className="w-full h-[400px] rounded-xl overflow-hidden shadow-md">
+        <MapContainer center={position} zoom={14} scrollWheelZoom={true} className="h-full w-full">
+          <TileLayer attribution='&copy; OpenStreetMap & Google' url={TILES[tileLayer]} />
+          <FitBounds objetosFiltrados={objetosFiltrados} />
+          {objetosFiltrados.map(({ id, title, coordinates }) =>
+            coordinates ? (
+              <Marker key={id} icon={defaultIcon} position={[coordinates.latitude, coordinates.longitude]}>
+                <Popup>
+                  <div className="text-center">
+                    <h3 className="font-semibold">{title}</h3>
+                    <a
+                      href={`http://maps.google.com/maps?q=${coordinates.latitude},${coordinates.longitude}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-500 underline"
+                    >
+                      Ver en Google Maps
+                    </a>
+                  </div>
+                </Popup>
+              </Marker>
+            ) : null
+          )}
+        </MapContainer>
+      </div>
     </div>
   );
 };

@@ -17,7 +17,7 @@ const EncabezadoAtractivo = ({ item }) => {
     return (
         <div className="relative w-full mt-4 px-4 max-w-[1376px] mx-auto">
             <img
-                className="w-full h-64 object-cover object-center rounded-xl"
+                className="w-full h-96 object-cover object-center rounded-xl"
                 src={imagen}
                 alt={`Imagen de ${nombre}`}
             />

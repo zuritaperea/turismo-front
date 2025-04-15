@@ -22,7 +22,7 @@ const Recomendaciones = ({ items, tipoObjeto, objectId }) => {
       >
         También puede interesarte...
       </div>
-      <div className="slider-horizontal flex flex-wrap justify-center gap-4 px-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-2">
   {recomendaciones.map((item) => (
     <Link key={item.id} to={`/${tipoObjeto}/${item.id}`}>
       <Card
