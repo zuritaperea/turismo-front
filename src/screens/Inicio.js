@@ -104,7 +104,6 @@ export default function Inicio() {
     obtenerAtractivos();
   }, []);
 
-
   const handleSearch = (query) => {
     navigate(`/busqueda/${query}`);
   };
@@ -119,20 +118,24 @@ export default function Inicio() {
   return (
     <>
       {loading ? <Splash /> : null}
-
       <Header config={config} />
-      <Carousel images={images} />
 
-      <div className="flex justify-center flex-col items-center px-8">
-        <SearchComponent onSearch={handleSearch} />
+      <div className="relative">
+        <Carousel images={images} />
+        <div className="flex justify-center -mt-28 z-10 relative px-4">
+          <div className="w-full max-w-md">
+            <SearchComponent onSearch={handleSearch} />
+          </div>
+        </div>
+      </div>
+
+      <div className="flex justify-center flex-col mt-3 items-center px-8">
         <SeccionesSlider secciones={secciones} />
       </div>
 
       <DirectAccessList items={directAccessItems} />
 
-
       <div className="border-t border-[#E4E7EC] h-[1px] md:hidden my-4"></div>
-
       {
         loadingAtractivos ? (
           <Spinner animation="border" role="status" />
@@ -146,8 +149,6 @@ export default function Inicio() {
           />)
       }
       <div className="border-t border-[#E4E7EC] h-[1px] md:hidden my-4"></div>
-
-
       {
         loadingEventos ? (
           <Spinner animation="border" role="status" />
@@ -161,7 +162,6 @@ export default function Inicio() {
             marketplace={false}
           />)
       }
-
       <Footer />
     </>
   );
