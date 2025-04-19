@@ -28,4 +28,9 @@ export default {
       }
     );
   },
+  cancelarReserva: function (id) {
+    return api.post(
+      `${apiVersion}/reserva/${id}/cancelar/`,
+      );
+  }
 };

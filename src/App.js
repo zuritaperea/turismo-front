@@ -42,6 +42,7 @@ import ComprobanteReserva from "./screens/ComprobanteReserva";
 import MisReservas from "./screens/MisReservas";
 import Paginas from "./screens/Paginas";
 import Pagina from "./screens/Pagina";
+import Reserva from "./screens/Reserva";
 
 function App() {
 
@@ -117,6 +118,8 @@ function App() {
             <Route path="/mis-reservas" element={<MisReservas />} />
             <Route path="/paginas" element={<Paginas/>} />
             <Route path="/page/:slug" element={<Pagina/>} />
+            <Route path="/reserva/:id" element={<Reserva />} />
+
 
           </Routes>
         </BrowserRouter>      <ScrollToTopButton />

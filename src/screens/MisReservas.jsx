@@ -59,14 +59,37 @@ const MisReservas = () => {
   const handleVer = (reserva) => {
     // Redirigir o mostrar modal
     console.log("Ver reserva:", reserva.id);
+    navigate(`/reserva/${reserva.id}`); // Redirigir a la página de detalles de la reserva 
   };
 
-  const handleEliminar = (reserva) => {
+  const handleEliminar = async (reserva) => {
     if (window.confirm("¿Estás seguro de que querés cancelar esta reserva?")) {
-      // Lógica para eliminar, fetch o axios DELETE, etc.
-      console.log("Cancelar reserva:", reserva.id);
+      if (reserva.id) {
+        try {
+          await service.cancelarReserva(reserva.id);
+  
+          // Actualizar el estado local cambiando solo esa reserva a "CANCELADA"
+          setReservas((prevReservas) =>
+            prevReservas.map((r) =>
+              r.id === reserva.id
+                ? {
+                    ...r,
+                    attributes: {
+                      ...r.attributes,
+                      estado: "CANCELADA",
+                    },
+                  }
+                : r
+            )
+          );
+        } catch (error) {
+          console.error("Error al cancelar la reserva:", error);
+          alert("Hubo un problema al cancelar la reserva.");
+        }
+      }
     }
   };
+  
   useEffect(() => {
     const fetchedReservas = async () => {
       if (!user) {
@@ -167,7 +190,7 @@ const MisReservas = () => {
                           <button
                             className="text-red-600 hover:text-red-800"
                             onClick={() => handleEliminar(reserva)}
-                            title="Eliminar reserva"
+                            title="Cancelar reserva"
                           >
                             <Trash2 className="w-5 h-5" />
                           </button>
