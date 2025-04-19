@@ -25,6 +25,15 @@ if (getToken()) {
   instance.defaults.headers.common["Authorization"] = `Bearer ${getToken()}`;
 }
 
+// Obtener el UUID guardado en el localStorage
+const uuid = localStorage.getItem("userIdentifier");
+
+// Verificar si hay un UUID y agregarlo como encabezado personalizado
+if (uuid) {
+  instance.defaults.headers.common["X-Session-UUID"] = uuid;
+}
+
+
 instance.interceptors.response.use(
   (response) => response,
   async (error) => {

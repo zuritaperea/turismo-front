@@ -23,6 +23,8 @@ import SocialLinks from '../SocialLinks.js';
 import ObjetoOpinion from './ObjetoOpinion.js';
 import RangoPrecios from './RangoPrecios.js';
 import EncabezadoAtractivo from '../EncabezadoAtractivo.jsx';
+import serviceInteraccion from '../../axios/services/interacciones.js';
+
 import { SeccionDescripcionMultilingue } from '../DescripcionBilingue.jsx';
 
 function ItemScreen({ tipoObjeto }) {
@@ -39,15 +41,28 @@ function ItemScreen({ tipoObjeto }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [atractivoData, setAtractivoData] = useState(null);
 
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const source = queryParams.get("source");
+    console.log(queryParams)
+    if (item && item.id && source === "QR") {
+      const data = {
+        content_type: item.attributes?.content_type,
+        object_id: item.id,
+        latitude: null, 
+        longitude: null,
+      };
 
-  const handleReserva = () => {
-    if (!selectedDate) return;
-    if (!user) {
-      navigate('/login');
-    } else {
-      navigate('/confirmacion-reserva');
+      serviceInteraccion.generarInteraccionQR(data)
+        .then((response) => {
+          console.log("Interacción QR generada:", response);
+        })
+        .catch((error) => {
+          console.error("Error generando interacción QR:", error);
+        });
     }
-  };
+  }, [location.search, item]);
+
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
