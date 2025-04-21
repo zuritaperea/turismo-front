@@ -130,9 +130,9 @@ function ItemScreen({ tipoObjeto }) {
                 : process.env.REACT_APP_IMAGE_DEFAULT} />
             </div>
           )}
-          {/* {item.attributes.productos_turisticos?.length > 0 && (
+          {item.attributes.productos_turisticos?.length > 0 && (
             <ActividadesListaPresentacion listData={item.attributes.productos_turisticos} />
-          )} */}
+          )}
           <SeccionConTitulo titulo="Dirección" contenido={item.attributes.street_address} />
           {/* {item.attributes.point && (
             <Mapa
@@ -182,12 +182,13 @@ function ItemScreen({ tipoObjeto }) {
               ]}
             />
           )}
-          {/* <ObjetoOpinion objeto={{
+          <ObjetoOpinion objeto={{
             puntuacion: item.attributes.evaluation,
             evaluaciones: item.attributes.evaluaciones,
-          }} /> */}
+          }} />
           {/* <BotonesAccion contentType={item.attributes.content_type} objectId={item.id}
             className="block sm:hidden w-full flex items-center justify-center" /> */}
+        
         </div>
       </div>
 
