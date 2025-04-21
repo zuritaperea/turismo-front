@@ -9,6 +9,7 @@ import { BadgeCheck, Hourglass, XCircle, DollarSign, CreditCard } from "lucide-r
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { Eye, Trash2 } from "lucide-react"; // ya que usás lucide-react
+import {QRCodeSVG } from 'qrcode.react';
 
 const renderEstado = (estado) => {
   switch (estado) {
@@ -57,7 +58,6 @@ const Reserva = () => {
   const [loading, setLoading] = useState(true);
   const { user } = useContext(AuthContext);  // Se obtiene el contexto del usuario autenticado
   const navigate = useNavigate();  // Para la redirección
-
 
   const handleEliminar = async (reserva) => {
     if (window.confirm("¿Estás seguro de que querés cancelar esta reserva?")) {
@@ -139,89 +139,101 @@ const Reserva = () => {
     return <Splash />; // Mostrar el splash mientras cargan los datos
   }
 
+
   return (
     <div className="bg-gray-100 min-h-screen">
       <Header />
       <div className="max-w-5xl mx-auto p-6 bg-white shadow-md rounded-lg mt-6">
-        <h2 className="text-2xl font-bold mb-4">Reserva</h2>
-
-        <div className="max-w-4xl mx-auto bg-white p-6 rounded-xl shadow-lg space-y-6">
-
-          {/* Estado de la reserva */}
-          <div className="flex items-center gap-2">
-            {renderEstado(reserva.attributes.estado)}
-          </div>
-
-          {/* Producto turístico */}
+        {reserva === null ? (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">Error mostrando reserva</div>
+        ) : (
           <div>
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">Producto Turístico</h2>
-            <p className="text-gray-700 font-medium">{reserva.attributes.producto_turistico.name}</p>
-            <p className="text-gray-500">{reserva.attributes.producto_turistico.description}</p>
-          </div>
+            <h2 className="text-2xl font-bold mb-4">Reserva</h2>
 
-          {/* Objeto (Evento, etc.) */}
-          <div>
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">Objeto</h2>
-            {reserva.attributes.producto_turistico.objeto.attributes.image_url && <img
-              src={reserva.attributes.producto_turistico.objeto.attributes.image_url ? process.env.REACT_APP_API_URL + reserva.attributes.producto_turistico.objeto.attributes.image_url : null}
-              alt={reserva.attributes.producto_turistico.objeto.attributes.name}
-              className="w-full max-w-md rounded shadow-md mb-3"
-            />}
-            <p className="text-gray-700 font-medium">{reserva.attributes.producto_turistico.objeto.attributes.name}</p>
-            <p className="text-gray-500">{reserva.attributes.producto_turistico.objeto.attributes.description}</p>
-            <p className="text-sm text-gray-600">Ubicación: {reserva.attributes.producto_turistico.objeto.attributes.location}</p>
-            <p className="text-sm text-gray-600">
-              Fecha: {formatearFecha(reserva.attributes.producto_turistico.objeto.attributes.start_date)} - {formatearFecha(reserva.attributes.producto_turistico.objeto.attributes.end_date)}
-            </p>
-          </div>
+            <div className="max-w-4xl mx-auto bg-white space-y-6">
 
-          {/* Fechas de reserva */}
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <h3 className="text-sm font-semibold text-gray-700">Fecha de Entrada</h3>
-              <p className="text-gray-600">{formatearFecha(reserva.attributes.start_date)}</p>
+              {/* Estado de la reserva */}
+              <div className="flex items-center gap-2">
+                {renderEstado(reserva.attributes.estado)}
+              </div>
+
+              {/* Producto turístico */}
+              <div>
+                <h2 className="text-xl font-semibold text-gray-800 mb-2">Producto Turístico</h2>
+                <p className="text-gray-700 font-medium">{reserva.attributes.producto_turistico.name}</p>
+                <p className="text-gray-500">{reserva.attributes.producto_turistico.description}</p>
+              </div>
+
+              {/* Objeto (Evento, etc.) */}
+              <div>
+                <h2 className="text-xl font-semibold text-gray-800 mb-2">Objeto</h2>
+                {reserva.attributes.producto_turistico.objeto.attributes.image_url && <img
+                  src={reserva.attributes.producto_turistico.objeto.attributes.image_url ? process.env.REACT_APP_API_URL + reserva.attributes.producto_turistico.objeto.attributes.image_url : null}
+                  alt={reserva.attributes.producto_turistico.objeto.attributes.name}
+                  className="w-full max-w-md rounded shadow-md mb-3"
+                />}
+                <p className="text-gray-700 font-medium">{reserva.attributes.producto_turistico.objeto.attributes.name}</p>
+                <p className="text-gray-500">{reserva.attributes.producto_turistico.objeto.attributes.description}</p>
+                <p className="text-sm text-gray-600">Ubicación: {reserva.attributes.producto_turistico.objeto.attributes.location}</p>
+                <p className="text-sm text-gray-600">
+                  Fecha: {formatearFecha(reserva.attributes.producto_turistico.objeto.attributes.start_date)} - {formatearFecha(reserva.attributes.producto_turistico.objeto.attributes.end_date)}
+                </p>
+              </div>
+
+              {/* Fechas de reserva */}
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <h3 className="text-sm font-semibold text-gray-700">Fecha de Entrada</h3>
+                  <p className="text-gray-600">{formatearFecha(reserva.attributes.start_date)}</p>
+                </div>
+                <div>
+                  <h3 className="text-sm font-semibold text-gray-700">Fecha de Salida</h3>
+                  <p className="text-gray-600">{formatearFecha(reserva.attributes.end_date)}</p>
+                </div>
+              </div>
+
+              {/* Titular */}
+              <div>
+                <h2 className="text-xl font-semibold text-gray-800 mb-2">Titular</h2>
+                <p className="text-gray-700"><strong>Nombre:</strong> {reserva.attributes.titular.nombre} {reserva.attributes.titular.apellido}</p>
+                <p className="text-gray-700"><strong>DNI:</strong> {reserva.attributes.titular.documento_identidad}</p>
+                <p className="text-gray-700"><strong>Email:</strong> {reserva.attributes.titular.correo_electronico}</p>
+                <p className="text-gray-700"><strong>Teléfono:</strong> {reserva.attributes.titular.telefono}</p>
+              </div>
+
+              {/* Acompañantes */}
+              {reserva.attributes.acompaniante.length > 0 && (
+                <div>
+                  <h2 className="text-xl font-semibold text-gray-800 mb-2">Acompañantes</h2>
+                  <ul className="space-y-2">
+                    {reserva.attributes.acompaniante.map((a, index) => (
+                      <li key={index} className="border rounded p-3 bg-gray-50">
+                        <p className="text-gray-700"><strong>Nombre:</strong> {a.nombre} {a.apellido}</p>
+                        <p className="text-gray-700"><strong>DNI:</strong> {a.documento_identidad}</p>
+                        <p className="text-gray-700"><strong>Email:</strong> {a.correo_electronico}</p>
+                        <p className="text-gray-700"><strong>Teléfono:</strong> {a.telefono}</p>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+<div className="mt-4">
+  <h2 className="text-lg font-semibold text-gray-800 mb-2">Código QR para validar</h2>
+  <QRCodeSVG value={`${process.env.REACT_APP_API_URL}/admin/reserva/${reserva.id}/`} size={128} />
+</div>
+              <button
+                className="text-red-600 hover:text-red-800 flex"
+                onClick={() => handleEliminar(reserva)}
+                title="Cancelar reserva"
+              >
+                <Trash2 className="w-5 h-5" /> Cancelar Reserva
+              </button>
+
             </div>
-            <div>
-              <h3 className="text-sm font-semibold text-gray-700">Fecha de Salida</h3>
-              <p className="text-gray-600">{formatearFecha(reserva.attributes.end_date)}</p>
-            </div>
+
+
           </div>
-
-          {/* Titular */}
-          <div>
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">Titular</h2>
-            <p className="text-gray-700"><strong>Nombre:</strong> {reserva.attributes.titular.nombre} {reserva.attributes.titular.apellido}</p>
-            <p className="text-gray-700"><strong>DNI:</strong> {reserva.attributes.titular.documento_identidad}</p>
-            <p className="text-gray-700"><strong>Email:</strong> {reserva.attributes.titular.correo_electronico}</p>
-            <p className="text-gray-700"><strong>Teléfono:</strong> {reserva.attributes.titular.telefono}</p>
-          </div>
-
-          {/* Acompañantes */}
-          {reserva.attributes.acompaniante.length > 0 && (
-            <div>
-              <h2 className="text-xl font-semibold text-gray-800 mb-2">Acompañantes</h2>
-              <ul className="space-y-2">
-                {reserva.attributes.acompaniante.map((a, index) => (
-                  <li key={index} className="border rounded p-3 bg-gray-50">
-                    <p className="text-gray-700"><strong>Nombre:</strong> {a.nombre} {a.apellido}</p>
-                    <p className="text-gray-700"><strong>DNI:</strong> {a.documento_identidad}</p>
-                    <p className="text-gray-700"><strong>Email:</strong> {a.correo_electronico}</p>
-                    <p className="text-gray-700"><strong>Teléfono:</strong> {a.telefono}</p>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-        </div>
-
-        <button
-          className="text-red-600 hover:text-red-800"
-          onClick={() => handleEliminar(reserva)}
-          title="Cancelar reserva"
-        >
-          <Trash2 className="w-5 h-5" /> Cancelar Reserva
-        </button>
+        )}
       </div>
       <Footer />
     </div>
