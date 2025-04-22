@@ -27,7 +27,7 @@ function SeccionesSlider({ secciones, onSectionClick, selectedSection }) {
                   </Link>
                 ) : (
                   <div
-                    onClick={() => onSectionClick(seccion.titulo)}
+                    onClick={() => onSectionClick(seccion)}
                     className="flex flex-col items-center cursor-pointer"
                   >
                     <div className="text-2xl" style={{ color: isSelected ? "#f08400" : "#667085", textOverflow: "ellipsis" }}>

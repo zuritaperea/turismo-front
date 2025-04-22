@@ -12,14 +12,14 @@ export const DatePickerComponent = ({ setSelectedDate }) => {
       display: 'flex',
       alignItems: 'start',
       justifyContent: 'center',
-      height: '100px',
+  //    height: '100px',
     }}>
       <I18nProvider locale="es-AR-u-ca-gregory">
         <DatePicker value={date} onChange={(newDate) => {
           setDate(newDate);
           setSelectedDate(newDate);
         }} style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '200px' }}>
-          <Label style={{ color: 'white', cursor: 'default' }}>Date</Label>
+{/*          <Label style={{ color: 'white', cursor: 'default' }}>Date</Label> */}
           <Group style={{
             display: 'flex',
             borderRadius: '8px',

@@ -15,7 +15,7 @@ const items = [
     title: 'Gestión de reservas',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sit amet sapien eget diam commodo semper.',
     image: gestion,
-    url: '/reservas',
+    url: '/marketplace',
   },
   {
     title: 'Planifica tu viaje',

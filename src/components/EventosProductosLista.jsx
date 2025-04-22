@@ -3,17 +3,18 @@ import { Ticket, ArrowUpRight } from "lucide-react";
 import Modal from "./Modal";
 import service from "../axios/services/producto_turistico.js";
 import { AuthContext } from "./AuthContext";
+import { DatePickerComponent } from "./DatePicker.tsx";
 
 const ActividadesListaPresentacion = ({ listData }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [selectedActividad, setSelectedActividad] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(null);
   const [reservaId, setReservaId] = useState(null);
   const { user } = useContext(AuthContext);
+  const [selectedStartDate, setSelectedStartDate] = useState(null);
+  const [selectedEndDate, setSelectedEndDate] = useState(null);
 
-  const fechasDisponibles = ["2025-03-19", "2025-03-20", "2025-03-21", "2025-03-22"];
-//TODO Agregar fechas calendario
+  //TODO Agregar fechas calendario
   const formatHour = (dateString) => {
     if (!dateString) return "Sin horario";
     const date = new Date(dateString);
@@ -30,12 +31,13 @@ const ActividadesListaPresentacion = ({ listData }) => {
     }
 
     const persona = user.profile.find((p) => p.type === "Persona");
-    if (!selectedDate) return;
+    if (!selectedStartDate || !selectedEndDate) {
+      alert("Seleccioná una fecha de inicio y una de fin");
+      return;
+    }
 
-    const startDateTime = new Date(`${selectedDate}T00:00:00`);
-    const endDateTime = new Date(startDateTime);
-    endDateTime.setDate(startDateTime.getDate() + 1);
-
+    const startDateTime = new Date(`${selectedStartDate}T00:00:00`);
+    const endDateTime = new Date(`${selectedEndDate}T23:59:59`);
     try {
       const data = {
         data: {
@@ -137,39 +139,33 @@ const ActividadesListaPresentacion = ({ listData }) => {
           >
             <div className="flex flex-col h-full">
               <Modal.Header onHide={() => setModalOpen(false)}>
-                Seleccionar Fecha
+                <span className="text-gray-200">Seleccionar Fecha</span>
               </Modal.Header>
               <Modal.Body className="flex-grow overflow-y-auto scrollbar-hide">
                 <div className="mb-4">
-                  <h3 className="text-md font-semibold mb-2">Selecciona una fecha:</h3>
-                  <div className="flex flex-col gap-2">
-                    {fechasDisponibles.map((fecha) => (
-                      <button
-                        key={fecha}
-                        onClick={() => setSelectedDate(fecha)}
-                        className={`px-4 py-2 rounded-md border ${
-                          selectedDate === fecha ? "bg-principal text-white" : "border-gray-300"
-                        }`}
-                      >
-                        {new Date(`${fecha}T12:00:00`).toLocaleDateString("es-AR", {
-                          day: "2-digit",
-                          month: "2-digit",
-                          year: "numeric",
-                        })}
-                      </button>
-                    ))}
+                  <h3 className="text-md font-semibold mb-2 text-gray-200">Seleccioná el rango de fechas:</h3>
+                  <div className="flex flex-col gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-200 mb-1">Desde:</label>
+                      <DatePickerComponent setSelectedDate={setSelectedStartDate} />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-200 mb-1">Hasta:</label>
+                      <DatePickerComponent setSelectedDate={setSelectedEndDate} />
+                    </div>
                   </div>
                 </div>
+
               </Modal.Body>
               <Modal.Footer>
                 <div className="flex justify-center w-full">
                   <div
                     className="bg-[#f08400] text-[#ffffff] rounded-2xl py-1 px-4 flex items-center font-medium text-xl transition-colors"
                     style={{
-                      backgroundColor: selectedDate ? "#F08400" : "#CCCCCC",
+                      backgroundColor: selectedStartDate && selectedEndDate ? "#F08400" : "#CCCCCC",
                       color: "#FFFFFF",
-                      cursor: selectedDate ? "pointer" : "not-allowed",
-                      pointerEvents: selectedDate ? "auto" : "none",
+                      cursor: selectedStartDate && selectedEndDate ? "pointer" : "not-allowed",
+                      pointerEvents: selectedStartDate && selectedEndDate ? "auto" : "none",
                     }}
                     onClick={handleReservar}
                   >
