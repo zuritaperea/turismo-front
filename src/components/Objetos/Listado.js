@@ -1,8 +1,32 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Card from "../Card";
+const keepLocalAsUTC = (date) => {
+  // Si no hay fecha, retornamos null
+  if (!date) return null;
 
-const Listado = ({ objetosFiltrados, target, title }) => {
+  // Si la fecha es una cadena en formato ISO, la convertimos a Date
+  if (typeof date === "string") {
+    date = new Date(date);
+  }
+
+  // Verificamos si es un objeto Date válido
+  if (!(date instanceof Date) || isNaN(date)) {
+    return null; // Si no es una fecha válida, retornamos null
+  }
+
+  const year = date.getFullYear();
+  const month = date.getMonth(); // Los meses son 0-indexados, sin cambios
+  const day = date.getDate();
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const seconds = date.getSeconds();
+
+  // Crea una nueva fecha en UTC con los mismos valores de la fecha local
+  return new Date(Date.UTC(year, month, day, hours, minutes, seconds));
+};
+
+const Listado = ({ objetosFiltrados, target,  desde, hasta, cantidad, pasaporte }) => {
   return (
     <div className="w-full p-4 flex justify-center">
       <div className="max-w-7xl w-full">
@@ -10,8 +34,8 @@ const Listado = ({ objetosFiltrados, target, title }) => {
           {Array.isArray(objetosFiltrados) ? objetosFiltrados.map((item) => (
             <Link
               key={item.id}
-              to={`/${target ? target.toLowerCase() : item.tipo.toLowerCase()}/${item.id}`}
-            >
+              to={`/${target ? target.toLowerCase() : item.tipo.toLowerCase()}/${item.id}?fechadesde=${keepLocalAsUTC(desde)?.toISOString()}&fechahasta=${ keepLocalAsUTC(hasta)?.toISOString()}&cantidad=${cantidad}&pasaporte=${pasaporte}`}
+              >
               <div className="w-64 h-80">
                 <Card
                   imgSrc={item.image}

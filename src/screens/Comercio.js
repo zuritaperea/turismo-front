@@ -5,14 +5,12 @@ import ItemScreen from '../components/Objetos/ItemScreen';
 
 function ComercioScreen() {
   // Obtén los parámetros de la URL, como el 'id' del evento
-  const { id, fechadesde, fechahasta } = useParams(); 
+  const { id } = useParams(); 
 
   return (
     <ItemScreen 
       tipoObjeto="comercio" 
       id={id} 
-      fechadesde={fechadesde} 
-      fechahasta={fechahasta} 
     />
   );
 }

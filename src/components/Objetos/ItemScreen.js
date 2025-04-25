@@ -18,7 +18,7 @@ import Servicios from './Servicios';
 import Recomendaciones from './Recomendaciones';
 import { AuthContext } from '../../components/AuthContext';
 import Mapa from './Mapa.js';
-import ActividadesListaPresentacion from '../EventosProductosLista.jsx';
+import ListaProductosTuristicos from '../ListaProductosTuristicos.jsx';
 import SocialLinks from '../SocialLinks.js';
 import ObjetoOpinion from './ObjetoOpinion.js';
 import RangoPrecios from './RangoPrecios.js';
@@ -26,9 +26,19 @@ import EncabezadoAtractivo from '../EncabezadoAtractivo.jsx';
 import serviceInteraccion from '../../axios/services/interacciones.js';
 
 import { SeccionDescripcionMultilingue } from '../DescripcionBilingue.jsx';
+const toLocalMidnight = (isoString) => {
+  const utcDate = new Date(isoString);
+  const localDate = new Date(
+    utcDate.getUTCFullYear(),
+    utcDate.getUTCMonth(),
+    utcDate.getUTCDate(), // <-- mantiene la "fecha" original
+    0, 0, 0
+  );
+  return localDate;
+};
 
 function ItemScreen({ tipoObjeto }) {
-  const { id, fechadesde, fechahasta } = useParams();
+  const { id } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
@@ -40,16 +50,28 @@ function ItemScreen({ tipoObjeto }) {
   const [loadingItems, setLoadingItems] = useState(true);
   const [selectedDate, setSelectedDate] = useState(null);
   const [atractivoData, setAtractivoData] = useState(null);
+  const [fechaDesde, setFechaDesde] = useState(null);
+  const [fechaHasta, setFechaHasta] = useState(null);
+  const [cantidad, setCantidad] = useState(null);
+  const [esPasaporte, setPasaporte] = useState(null);
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const source = queryParams.get("source");
-    console.log(queryParams)
+
+    if (queryParams.get("fechadesde")) 
+      setFechaDesde(toLocalMidnight(queryParams.get("fechadesde")));
+    if (queryParams.get("fechahasta"))
+       setFechaHasta(toLocalMidnight(queryParams.get("fechahasta")));
+
+    setCantidad(queryParams.get("cantidad"));
+    setPasaporte(queryParams.get("pasaporte") === "true");
+
     if (item && item.id && source === "QR") {
       const data = {
         content_type: item.attributes?.content_type,
         object_id: item.id,
-        latitude: null, 
+        latitude: null,
         longitude: null,
       };
 
@@ -73,7 +95,7 @@ function ItemScreen({ tipoObjeto }) {
 
     const obtenerItem = async () => {
       try {
-        const datosItem = await service.obtenerDatos(tipoObjeto, id, fechadesde, fechahasta);
+        const datosItem = await service.obtenerDatos(tipoObjeto, id);
         setItem(datosItem);
         setLoading(false);
       } catch (error) {
@@ -95,7 +117,7 @@ function ItemScreen({ tipoObjeto }) {
     obtenerItem();
 
     obtenerItems();
-  }, [id, fechadesde, fechahasta, tipoObjeto]);
+  }, [id, tipoObjeto]);
 
   if (loading) {
     return <Splash />;
@@ -131,7 +153,8 @@ function ItemScreen({ tipoObjeto }) {
             </div>
           )}
           {item.attributes.productos_turisticos?.length > 0 && (
-            <ActividadesListaPresentacion listData={item.attributes.productos_turisticos} />
+            <ListaProductosTuristicos listData={item.attributes.productos_turisticos}
+              fechaDesde={fechaDesde} fechaHasta={fechaHasta} cantidad={cantidad} esPasaporte={esPasaporte} />
           )}
           <SeccionConTitulo titulo="Dirección" contenido={item.attributes.street_address} />
           {/* {item.attributes.point && (
@@ -188,7 +211,7 @@ function ItemScreen({ tipoObjeto }) {
           }} />
           {/* <BotonesAccion contentType={item.attributes.content_type} objectId={item.id}
             className="block sm:hidden w-full flex items-center justify-center" /> */}
-        
+
         </div>
       </div>
 

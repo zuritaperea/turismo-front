@@ -1,10 +1,45 @@
 import { useState } from "react";
 import { Calendar, Users } from "lucide-react";
 import { DatePickerComponent } from "../components/DatePicker.tsx";
+const formatForInput = (date) => {
+  if (!date) return ""; // Si no hay fecha, retorna un string vacío.
+
+  // Si la fecha es una cadena en formato ISO
+  if (typeof date === "string") {
+    // Intentamos convertirla a un objeto Date
+    date = new Date(date);
+  }
+
+  // Verificar si es una instancia de Date válida
+  if (!(date instanceof Date) || isNaN(date)) {
+    return ""; // Si no es una fecha válida, retornamos vacío.
+  }
+  
+
+  const pad = (n) => String(n).padStart(2, "0");
+
+  const year = date.getFullYear();
+  const month = pad(date.getMonth() + 1); // El mes es 0-indexado, sumamos 1
+  const day = pad(date.getDate());
+  const hours = pad(date.getHours());
+  const minutes = pad(date.getMinutes());
+
+  return `${year}-${month}-${day}T${hours}:${minutes}`;
+};
+
 
 export default function FiltrosMarketPlace({ onSearch }) {
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
+  const [startDate, setStartDate] = useState(() => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return today;
+  });
+  const [endDate, setEndDate] = useState(() => {
+    const tomorrow = new Date();
+    tomorrow.setHours(0, 0, 0, 0);
+    tomorrow.setDate(tomorrow.getDate() + 1); // ⬅️ Le sumás un día
+    return tomorrow;
+  });
   const [cantidad, setCantidad] = useState(1);
 
   const handleSearch = () => {
@@ -27,12 +62,46 @@ export default function FiltrosMarketPlace({ onSearch }) {
           <div className="flex flex-col gap-4 w-full">
             <div>
               <label className="block text-sm font-medium text-gray-600 mb-1">Desde:</label>
-              <DatePickerComponent setSelectedDate={setStartDate} />
-            </div>
+
+              <input
+                type="datetime-local"
+                className="w-full border rounded p-2"
+                value={formatForInput(startDate)}
+                onChange={(e) => {
+                  const newStart = new Date(e.target.value);
+                  setStartDate(newStart);
+
+                  if (!endDate || newStart >= endDate) {
+                    const newEnd = new Date(newStart);
+                    newEnd.setDate(newStart.getDate() + 1);
+                    setEndDate(newEnd);
+                  }
+                }} />            </div>
             <div>
               <label className="block text-sm font-medium text-gray-600 mb-1">Hasta:</label>
-              <DatePickerComponent setSelectedDate={setEndDate} />
-            </div>
+
+              <input
+                type="datetime-local"
+                className="w-full border rounded p-2"
+                value={formatForInput(endDate)}
+                onChange={(e) => {
+                  const newEnd = new Date(e.target.value);
+                  const today = new Date();
+                  today.setHours(0, 0, 0, 0);
+
+                  if (newEnd < today) {
+                    alert("La fecha hasta no puede ser menor a hoy");
+                    return;
+                  }
+
+                  if (startDate && newEnd <= startDate) {
+                    alert("La fecha hasta no puede ser menor o igual a la fecha desde");
+                    return;
+                  }
+
+                  setEndDate(newEnd);
+                }}
+              />            </div>
           </div>
         </div>
 

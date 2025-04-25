@@ -4,14 +4,12 @@ import { useParams } from 'react-router-dom';
 import ItemScreen from '../components/Objetos/ItemScreen';
 
 function EventoScreen() {
-  const { id, fechadesde, fechahasta } = useParams(); 
+  const { id  } = useParams(); 
 
   return (
     <ItemScreen 
       tipoObjeto="evento" 
       id={id} 
-      fechadesde={fechadesde} 
-      fechahasta={fechahasta} 
     />
   );
 }

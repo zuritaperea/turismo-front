@@ -10,31 +10,6 @@ import { Ticket, MapPinned, Hotel, Bus, ShoppingBag, Utensils } from "lucide-rea
 import FiltrosMarketPlace from "./FiltrosMarketPlace";
 import reservaService from "../axios/services/producto_turistico"
 import Listado from "../components/Objetos/Listado";
-const keepLocalAsUTC = (date) => {
-  // Si no hay fecha, retornamos null
-  if (!date) return null;
-
-  // Si la fecha es una cadena en formato ISO, la convertimos a Date
-  if (typeof date === "string") {
-    date = new Date(date);
-  }
-
-  // Verificamos si es un objeto Date válido
-  if (!(date instanceof Date) || isNaN(date)) {
-    return null; // Si no es una fecha válida, retornamos null
-  }
-
-  const year = date.getFullYear();
-  const month = date.getMonth(); // Los meses son 0-indexados, sin cambios
-  const day = date.getDate();
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-  const seconds = date.getSeconds();
-
-  // Crea una nueva fecha en UTC con los mismos valores de la fecha local
-  return new Date(Date.UTC(year, month, day, hours, minutes, seconds));
-};
-
 
 export default function Marketplace() {
   const [loading, setLoading] = useState(false);
@@ -58,11 +33,11 @@ export default function Marketplace() {
       setObjetosFiltrados([]);
       try {
         const response = await reservaService.obtenerTodosProductoTuristicoFiltro({
-          start_date: keepLocalAsUTC(desde)?.toISOString(),
-          end_date: keepLocalAsUTC(hasta)?.toISOString(),
+          start_date: desde,
+          end_date: hasta,
           maximum_number_persons_max: cantidad,
           content_type__model: model,
-          integrates_discount_passport: false
+          integrates_discount_passport: true
         });
         const data = response.data.data;
 
@@ -159,10 +134,10 @@ export default function Marketplace() {
       <div className="flex justify-center flex-col items-center px-8">
         <SeccionesSlider secciones={secciones} onSectionClick={handleSectionClick} selectedSection={selectedSection} />
       </div>
-      <FiltrosMarketPlace onSearch={handleSearch}  />
+      <FiltrosMarketPlace onSearch={handleSearch} />
       <Listado objetosFiltrados={objetosFiltrados} navigation={navigate} desde={filtroDesde}
         hasta={filtroHasta}
-        cantidad={filtroCantidad} pasaporte={false} />
+        cantidad={filtroCantidad} pasaporte={true}/>
       {loading ? <Spinner size={10} className="mx-auto" /> : null}
       {busquedaRealizada && objetosFiltrados.length === 0 && !loading ? (
         <div className="flex justify-center items-center mt-4 text-gray-500">

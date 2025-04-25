@@ -1,19 +1,16 @@
 // src/axios/services/service.js
 import api from "../api";
 
-const obtenerDatos = async (tipo, id, fechadesde, fechahasta) => {
+const obtenerDatos = async (tipo, id) => {
   try {
     const response = await api.get(`${process.env.REACT_APP_API_URL}${process.env.REACT_APP_API_VERSION}/${tipo}/${id}/`);
     const datos = {
       ...response.data.data,
-      fechadesde,
-      fechahasta,
       image: response.data.data.attributes.image_url
         ? process.env.REACT_APP_API_URL + response.data.data.attributes.image_url
         : process.env.REACT_APP_IMAGE_DEFAULT,
       tipo,
     };
-    console.log(datos);
     return datos;
   } catch (error) {
     throw new Error('Hubo un error al cargar los datos');

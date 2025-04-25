@@ -87,20 +87,16 @@ function App() {
             <Route path="/gastronomia/:id" element={<GastronomiaScreen />} />
             <Route path="/comercios" element={<ComerciosScreen />} />
             <Route path="/comercio/:id" element={<ComercioScreen />} />
-            <Route path="/atractivo/:id/:fechadesde/:fechahasta" element={<AtractivoScreen />} />
             <Route path="/atractivo/:id" element={<AtractivoScreen />} />
             <Route path="/alojamiento/:id" element={<AlojamientoScreen />} />
             <Route path="/alojamientos" element={<AlojamientosScreen />} />
-            <Route path="/puntointeres/:id/:fechadesde/:fechahasta" element={<PuntoInteresScreen />} />
             <Route path="/puntointeres/:id" element={<PuntoInteresScreen />} />
             <Route path="/puntointeres" element={<PuntoInteresScreen />} />
             <Route path="/puntosinteres/:id" element={<PuntosInteres />} />
             <Route path="/puntosinteres" element={<PuntosInteres />} />
-            <Route path="/circuito/:id/:fechadesde/:fechahasta" element={<CircuitoScreen />} />
             <Route path="/circuito/:id" element={<CircuitoScreen />} />
             <Route path="/circuitos" element={<CircuitosScreen />} />
             <Route path="/circuitos/:id" element={<CircuitosScreen />} />
-            <Route path="/evento/:id/:fechadesde/:fechahasta" element={<EventoScreen />} />
             <Route path="/evento/:id" element={<EventoScreen />} />
             <Route path="/eventos/:id" element={<Eventos />} />
             <Route path="/eventos" element={<Eventos />} />
