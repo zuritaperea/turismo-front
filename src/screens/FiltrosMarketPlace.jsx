@@ -54,7 +54,7 @@ export default function FiltrosMarketPlace({ onSearch }) {
     <div className="flex flex-col items-center justify-center bg-principal sm:mx-20 rounded-xl p-6">
       <div className="w-full max-w-md space-y-6">
         <h1 className="text-white text-lg font-semibold">
-          Selecciona las fechas y pasajeros
+         Seleccioná las fechas y pasajeros
         </h1>
 
         <div className="w-full bg-white rounded-xl p-4 flex items-start gap-3 text-[#344054]">

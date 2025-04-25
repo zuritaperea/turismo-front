@@ -43,6 +43,7 @@ import MisReservas from "./screens/MisReservas";
 import Paginas from "./screens/Paginas";
 import Pagina from "./screens/Pagina";
 import Reserva from "./screens/Reserva";
+import Pasaporte from "./screens/Pasaporte";
 
 function App() {
 
@@ -109,6 +110,7 @@ function App() {
             <Route path="/favoritos" element={<FavoritoScreen />} />
             <Route path="/visitados" element={<VisitadoScreen />} />
             <Route path="/marketplace" element={<Marketplace />} />
+            <Route path="/pasaporte" element={<Pasaporte />} />
             <Route path="/confirmacion-reserva" element={<ConfirmacionReserva />} />
             <Route path="/comprobante-reserva" element={<ComprobanteReserva />} />
             <Route path="/mis-reservas" element={<MisReservas />} />
