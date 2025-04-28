@@ -7,7 +7,7 @@ const Comentario = ({ item }) => (
         <User size={34} className="text-gray-700" />
             <div>
                 <p className="font-semibold">{item.user}</p>
-                <Estrellas puntuacion={item.evaluation} size={14} />
+                <Estrellas puntuacion={item.evaluation} size={'sm'} />
             </div>
         </div>
         {item.estado === 'aprobado' && <p>{item.description}</p>}
@@ -19,7 +19,7 @@ const ObjetoOpinion = ({ objeto }) => (
         <div className="text-2xl font-bold text-slate-900 tracking-tight dark:text-slate-200 my-4">
             Opiniones</div>
         <div className="mb-4">
-            <Estrellas puntuacion={objeto.puntuacion} size={30} />
+            <Estrellas puntuacion={objeto.puntuacion} size={'lg'} />
             <p className="text-gray-500">
                 Comentarios: {objeto.evaluaciones?.length || 0}
             </p>

@@ -5,6 +5,7 @@ import { ConfigContext } from '../extras/ConfigContext';
 import { AuthContext } from "./AuthContext";
 import { Menu, X, LogIn, LogOut, User } from 'lucide-react';
 import MenuLink from "./MenuLink";
+import BotonTraductor from "./BotonTraductor";
 
 export default function Header() {
   const [personaDenominacion, setPersonaDenominacion] = useState(null);
@@ -106,6 +107,8 @@ export default function Header() {
               <LogIn size={24} className="text-gray-700" />
             </Link>
           )}
+                        <BotonTraductor />
+
         </nav>
 
         <div className="md:hidden flex items-center gap-4">
@@ -156,6 +159,7 @@ export default function Header() {
                 <span>Iniciar sesión</span>
               </Link>
             )}
+          <div className="flex items-center"> <BotonTraductor />Traducir</div> 
           </nav>
         </div>
       )}

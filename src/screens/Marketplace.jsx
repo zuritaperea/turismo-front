@@ -41,6 +41,8 @@ export default function Marketplace() {
   const [selectedSection, setSelectedSection] = useState("");
   const [objetosFiltrados, setObjetosFiltrados] = useState([]);
   const [model, setModel] = useState(null);
+  const [interes, setInteres] = useState(null);
+
   const config = useContext(ConfigContext);
   const [busquedaRealizada, setBusquedaRealizada] = useState(false);
   const [filtroDesde, setFiltroDesde] = useState(null);
@@ -131,16 +133,17 @@ export default function Marketplace() {
 
 
   const secciones = [
-    { icono: <Ticket size={30} />, titulo: "Eventos", model: 'evento' },
-    { icono: <MapPinned size={30} />, titulo: "Atractivos", model: 'atractivoturistico' },
-    { icono: <Hotel size={30} />, titulo: "Alojamientos", model: 'alojamiento' },
-    { icono: <Bus size={30} />, titulo: "Circuitos", model: 'circuito' },
-    { icono: <ShoppingBag size={30} />, titulo: "Comercios", model: 'comercio' },
-    { icono: <Utensils size={30} />, titulo: "Gastronomía", model: 'gastronomia' },
+    { icono: <Ticket size={30} />, titulo: "Eventos", model: 'evento', value: 'evento' },
+    { icono: <MapPinned size={30} />, titulo: "Atractivos", model: 'atractivoturistico', value: 'atractivo' },
+    { icono: <Hotel size={30} />, titulo: "Alojamientos", model: 'alojamiento', value: 'alojamiento' },
+    { icono: <Bus size={30} />, titulo: "Circuitos", model: 'circuito', value: 'circuito' },
+    { icono: <ShoppingBag size={30} />, titulo: "Comercios", model: 'comercio', value: 'comercio' },
+    { icono: <Utensils size={30} />, titulo: "Gastronomía", model: 'gastronomia', value: 'gastronomia' },
   ];
 
   const handleSectionClick = (seccion) => {
     setModel(seccion.model);
+    setInteres(seccion.interes);
     if (selectedSection === seccion.titulo) {
       setSelectedSection("");
     } else {
@@ -159,7 +162,7 @@ export default function Marketplace() {
       <div className="flex justify-center flex-col items-center px-8">
         <SeccionesSlider secciones={secciones} onSectionClick={handleSectionClick} selectedSection={selectedSection} />
       </div>
-      <FiltrosMarketPlace onSearch={handleSearch}  />
+      <FiltrosMarketPlace onSearch={handleSearch} />
       <Listado objetosFiltrados={objetosFiltrados} navigation={navigate} desde={filtroDesde}
         hasta={filtroHasta}
         cantidad={filtroCantidad} pasaporte={false} />
