@@ -5,6 +5,55 @@ function padTo2Digits(num) {
 }
 
 const funciones = {
+  keepLocalAsUTC: function   (date)  {
+    // Si no hay fecha, retornamos null
+    if (!date) return null;
+  
+    // Si la fecha es una cadena en formato ISO, la convertimos a Date
+    if (typeof date === "string") {
+      date = new Date(date);
+    }
+  
+    // Verificamos si es un objeto Date válido
+    if (!(date instanceof Date) || isNaN(date)) {
+      return null; // Si no es una fecha válida, retornamos null
+    }
+  
+    const year = date.getFullYear();
+    const month = date.getMonth(); // Los meses son 0-indexados, sin cambios
+    const day = date.getDate();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
+  
+    // Crea una nueva fecha en UTC con los mismos valores de la fecha local
+    return new Date(Date.UTC(year, month, day, hours, minutes, seconds));
+  },
+   formatForInput : function (date) {
+    if (!date) return ""; // Si no hay fecha, retorna un string vacío.
+  
+    // Si la fecha es una cadena en formato ISO
+    if (typeof date === "string") {
+      // Intentamos convertirla a un objeto Date
+      date = new Date(date);
+    }
+  
+    // Verificar si es una instancia de Date válida
+    if (!(date instanceof Date) || isNaN(date)) {
+      return ""; // Si no es una fecha válida, retornamos vacío.
+    }
+  
+  
+    const pad = (n) => String(n).padStart(2, "0");
+  
+    const year = date.getFullYear();
+    const month = pad(date.getMonth() + 1); // El mes es 0-indexado, sumamos 1
+    const day = pad(date.getDate());
+    const hours = pad(date.getHours());
+    const minutes = pad(date.getMinutes());
+  
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  },
   getColorFromText: function (text, index) {
     const colors = ['yellow', 'red', 'pink', 'blue', 'purple', 'green'];
     const colorStyles = [
@@ -26,6 +75,10 @@ const funciones = {
     return colorStyles[indexColor];
   },
   formatDate: function (date) {
+    // Verificar si es una instancia de Date válida
+    if (!(date instanceof Date) || isNaN(date)) {
+      return ""; // Si no es una fecha válida, retornamos vacío.
+    }
     return [
       padTo2Digits(date.getDate()),
       padTo2Digits(date.getMonth() + 1),

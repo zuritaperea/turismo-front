@@ -1,9 +1,6 @@
 import React, { useState } from "react";
-
-const SeleccionComposicionViaje = ({ composicion_viaje }) => {
-  const [composicionViajeSelected, setComposicionViajeSelected] = useState(null);
+const SeleccionComposicionViaje = ({ composicion_viaje , setComposicionViajeSelected, composicionViajeSelected}) => {
   if (!composicion_viaje) return null;
-
   return (
     <div className="w-full mt-6 pb-4 px-4 md:px-0">
       <div className="overflow-x-auto lg:overflow-hidden flex justify-start lg:justify-center space-x-4">
@@ -18,12 +15,12 @@ const SeleccionComposicionViaje = ({ composicion_viaje }) => {
               >
                 <div
                   className={`p-4 rounded-lg shadow-md p-10 m-3 flex flex-col items-center transition-transform transform hover:scale-105 w-full ${
-                    isSelected ? "bg-orange-100 border border-orange-400" : "bg-white"
+                    isSelected ? "bg-yellow-100 border border-yellow-400" : "bg-white"
                   }`}
                 >
                   <p
                     className={`text-sm lg:text-md font-medium truncate ${
-                      isSelected ? "text-orange-600" : "text-slate-700"
+                      isSelected ? "text-yellow-600" : "text-slate-700"
                     }`}
                   >
                     {item.label}
