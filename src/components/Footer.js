@@ -40,9 +40,9 @@ export default function Footer() {
           <div className="flex flex-wrap justify-center gap-8">
             {footerItems.filter(item => {
               if (item.requires_authentication) {
-                return user !== null; // solo si hay usuario
+                return user !== null; 
               }
-              return true; // siempre muestra si no requiere auth
+              return true; 
             }).map(item => (
               <div key={item.id}>
                 <h3 className="titulo mb-4 text-center">
@@ -52,16 +52,9 @@ export default function Footer() {
             ))}
           </div>
         </div>
-
-
-
       </div>
 
-      {/* Sección inferior del footer */}
       <div className="footer-bottom py-5 px-10 flex flex-col md:flex-row items-center justify-center gap-4 mx-auto">
-        <span className="py-5 sm:px-10 sm:mx-10">
-          © 2024 Instituto Ciudades del Futuro. All rights reserved.
-        </span>
         <div className="flex py-5 px-10 mx-10">
           <SocialLinks redes={config.redes_sociales} />
         </div>

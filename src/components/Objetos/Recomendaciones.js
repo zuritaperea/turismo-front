@@ -22,20 +22,25 @@ const Recomendaciones = ({ items, tipoObjeto, objectId }) => {
       >
         También puede interesarte...
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-2">
-  {recomendaciones.map((item) => (
-    <Link key={item.id} to={`/${tipoObjeto}/${item.id}`}>
-      <Card
-        imgSrc={item.image}
-        title={item.title}
-        category={item.type}
-        description={item.description}
-        tags={item.tourist_type}
-        puntuacion={item.puntuacion}
-      />
-    </Link>
-  ))}
-</div>
+      <div
+        className="grid gap-6 px-2"
+        style={{
+          gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+        }}
+      >
+        {recomendaciones.map((item) => (
+          <Link key={item.id} to={`/${tipoObjeto}/${item.id}`}>
+            <Card
+              imgSrc={item.image}
+              title={item.title}
+              category={item.type}
+              description={item.description}
+              tags={item.tourist_type}
+              puntuacion={item.puntuacion}
+            />
+          </Link>
+        ))}
+      </div>
     </div>
   );
 };

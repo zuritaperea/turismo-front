@@ -10,11 +10,12 @@ import { Ticket, MapPinned, Hotel, Bus, ShoppingBag, Utensils } from "lucide-rea
 import FiltrosMarketPlace from "./FiltrosMarketPlace";
 import reservaService from "../axios/services/producto_turistico"
 import Listado from "../components/Objetos/Listado";
+import BannerImagenFija from '../components/BannerImagenFija';
+
 const keepLocalAsUTC = (date) => {
   // Si no hay fecha, retornamos null
   if (!date) return null;
 
-  // Si la fecha es una cadena en formato ISO, la convertimos a Date
   if (typeof date === "string") {
     date = new Date(date);
   }
@@ -156,10 +157,13 @@ export default function Marketplace() {
   return (
     <>
       <Header />
+      <BannerImagenFija titulo="Marketplace" />
+      <div className="relative z-10 -mt-16 px-4">
+        <FiltrosMarketPlace onSearch={handleSearch} />
+      </div>
       <div className="flex justify-center flex-col items-center px-8">
         <SeccionesSlider secciones={secciones} onSectionClick={handleSectionClick} selectedSection={selectedSection} />
       </div>
-      <FiltrosMarketPlace onSearch={handleSearch} />
       <Listado objetosFiltrados={objetosFiltrados} navigation={navigate} desde={filtroDesde}
         hasta={filtroHasta}
         cantidad={filtroCantidad} pasaporte={false} />
