@@ -1,24 +1,37 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import 'swiper/css/scrollbar';
 
 function Carousel({ images, detail = false, imagePrincipalUrl = null }) {
-  if (!images || images.length === 0) {
-    return null;
-  }
-  console.log(imagePrincipalUrl)
-  // Excluye la imagen principal si se pasa la URL
+  const videoRefs = useRef([]);
+
   const filteredImages = imagePrincipalUrl
     ? images.filter(img => img.file !== imagePrincipalUrl)
     : images;
 
-  if (!filteredImages || filteredImages.length === 0) {
-    return null;
-  }
+  // Pausa todos los videos
+  const pauseAllVideos = () => {
+    videoRefs.current.forEach((video) => {
+      if (video) {
+        video.pause();
+        video.currentTime = 0;
+      }
+    });
+  };
+
+  // Reproduce el video del slide activo
+  const handleSlideChange = (swiper) => {
+    pauseAllVideos();
+    const activeSlide = swiper.activeIndex;
+    const video = videoRefs.current[activeSlide];
+    if (video) {
+      video.play();
+    }
+  };
+
   return (
     <div
       className={`relative w-full sm:w-11/12 mx-0 sm:mx-auto mt-0 sm:mt-5 ${detail ? 'max-w-[1600px] px-0 sm:px-4 md:px-0' : 'max-w-[1376px] px-0 sm:px-10 md:px-0'}`}
@@ -27,48 +40,44 @@ function Carousel({ images, detail = false, imagePrincipalUrl = null }) {
       <Swiper
         modules={[Navigation, Pagination]}
         spaceBetween={20}
-        breakpoints={{
-          0: {
-            slidesPerView: 1,
-          },
-          640: {
-            slidesPerView: detail && filteredImages.length > 1 ? 2 : 1,
-          },
-          800: {
-            slidesPerView: detail && filteredImages.length > 2 ? 3 : 1,
-          }
-        }}
-        navigation={true}
+        onSlideChange={handleSlideChange}
+        navigation
         pagination={{ clickable: true }}
+        breakpoints={{
+          0: { slidesPerView: 1 },
+          640: { slidesPerView: detail && filteredImages.length > 1 ? 2 : 1 },
+          800: { slidesPerView: detail && filteredImages.length > 2 ? 3 : 1 }
+        }}
       >
-{filteredImages.map((media, index) => {
-  const isVideo = media.file.endsWith('.mp4') || media.file.endsWith('.webm') || media.file.endsWith('.ogg');
-  return (
-    <SwiperSlide key={index} className="rounded-lg overflow-hidden">
-      {isVideo ? (
-        <video
-          controls
-          className="w-full max-h-[436px] object-cover mx-auto rounded-lg"
-          style={{ height: 'auto', minHeight: '280px', maxHeight: '430px', marginBottom: '1rem', borderRadius: '1rem' }}
-        >
-          <source src={media.file} type={`video/${media.file.split('.').pop()}`} />
-          Tu navegador no soporta el video.
-        </video>
-      ) : (
-        <img
-          style={{ height: 'auto', minHeight: '280px', maxHeight: '430px', marginBottom: '1rem', borderRadius: '1rem' }}
-          className="w-full max-h-[436px] object-cover mx-auto rounded-lg"
-          src={media.file}
-          alt={media.title}
-        />
-      )}
-    </SwiperSlide>
-  );
-})}
-
+        {filteredImages.map((media, index) => {
+          const isVideo = media.file.match(/\.(mp4|webm|ogg)$/);
+          return (
+            <SwiperSlide key={index} className="rounded-lg overflow-hidden">
+              {isVideo ? (
+                <video
+                  ref={(el) => videoRefs.current[index] = el}
+                  muted
+                  playsInline
+                  className="w-full max-h-[436px] object-cover mx-auto rounded-lg"
+                  style={{ height: 'auto', minHeight: '280px', maxHeight: '430px', marginBottom: '1rem', borderRadius: '1rem' }}
+                >
+                  <source src={media.file} type={`video/${media.file.split('.').pop()}`} />
+                  Tu navegador no soporta el video.
+                </video>
+              ) : (
+                <img
+                  className="w-full max-h-[436px] object-cover mx-auto rounded-lg"
+                  style={{ height: 'auto', minHeight: '280px', maxHeight: '430px', marginBottom: '1rem', borderRadius: '1rem' }}
+                  src={media.file}
+                  alt={media.title}
+                />
+              )}
+            </SwiperSlide>
+          );
+        })}
       </Swiper>
     </div>
   );
-};
+}
 
 export default Carousel;
