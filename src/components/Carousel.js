@@ -41,16 +41,31 @@ function Carousel({ images, detail = false, imagePrincipalUrl = null }) {
         navigation={true}
         pagination={{ clickable: true }}
       >
-        {filteredImages.map((img, index) => (
-          <SwiperSlide key={index} className="rounded-lg overflow-hidden">
-            <img
-              style={{ height: 'auto', minHeight: '280px', maxHeight: '430px', marginBottom: '1rem', borderRadius: '1rem' }}
-              className="w-full max-h-[436px] object-cover mx-auto rounded-lg"
-              src={img.file}
-              alt={img.title}
-            />
-          </SwiperSlide>
-        ))}
+{filteredImages.map((media, index) => {
+  const isVideo = media.file.endsWith('.mp4') || media.file.endsWith('.webm') || media.file.endsWith('.ogg');
+  return (
+    <SwiperSlide key={index} className="rounded-lg overflow-hidden">
+      {isVideo ? (
+        <video
+          controls
+          className="w-full max-h-[436px] object-cover mx-auto rounded-lg"
+          style={{ height: 'auto', minHeight: '280px', maxHeight: '430px', marginBottom: '1rem', borderRadius: '1rem' }}
+        >
+          <source src={media.file} type={`video/${media.file.split('.').pop()}`} />
+          Tu navegador no soporta el video.
+        </video>
+      ) : (
+        <img
+          style={{ height: 'auto', minHeight: '280px', maxHeight: '430px', marginBottom: '1rem', borderRadius: '1rem' }}
+          className="w-full max-h-[436px] object-cover mx-auto rounded-lg"
+          src={media.file}
+          alt={media.title}
+        />
+      )}
+    </SwiperSlide>
+  );
+})}
+
       </Swiper>
     </div>
   );
