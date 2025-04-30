@@ -220,7 +220,6 @@ export default function Pasaporte() {
       <div className="relative z-10 -mt-16 px-4">
         {!viaje && (
           <div className="bg-black bg-opacity-80 rounded-2xl shadow-md px-6 py-8 mx-auto mb-8 max-w-5xl flex flex-wrap justify-center gap-4 items-end">
-            {/* Fecha desde */}
             <div className="bg-white rounded-full px-4 py-3 flex items-center gap-2">
               <Calendar size={18} className="text-gray-500" />
               <input
@@ -238,7 +237,6 @@ export default function Pasaporte() {
                 className="bg-transparent text-sm text-gray-700 outline-none w-full"
               />
             </div>
-            {/* Fecha hasta */}
             <div className="bg-white rounded-full px-4 py-3 flex items-center gap-2">
               <Calendar size={18} className="text-gray-500" />
               <input
@@ -251,7 +249,6 @@ export default function Pasaporte() {
                 className="bg-transparent text-sm text-gray-700 outline-none w-full"
               />
             </div>
-            {/* Cantidad */}
             <div className="bg-white rounded-full px-4 py-3 flex items-center gap-2">
               <Users size={18} className="text-gray-500" />
               <input
@@ -303,14 +300,17 @@ export default function Pasaporte() {
         </Row>
       </div>
 
-
       <div className="flex justify-center flex-col items-center px-8">
+        <p className="text-2xl font-bold my-2">¿Qué te interesa?</p>
         <SeccionesSlider secciones={secciones} onSectionClick={handleSectionClick} selectedSection={selectedSection} />
       </div>
 
       {!viaje && (
         <>
-          <FiltroSubtipo interes={interes} constantes={constantes} filtroSubtipo={filtroSubtipo} setFiltroSubtipo={setFiltroSubtipo} />
+          <div className="flex justify-center flex-col items-center px-8">
+            <p className="text-2xl font-bold mt-8">¿Cómo viajas?</p>
+            <FiltroSubtipo interes={interes} constantes={constantes} filtroSubtipo={filtroSubtipo} setFiltroSubtipo={setFiltroSubtipo} />
+          </div>
           <SeleccionComposicionViaje composicion_viaje={constantes.composicion_viaje} composicionViajeSelected={composicionViajeSelected} setComposicionViajeSelected={setComposicionViajeSelected} />
 
           <div className="flex justify-center mt-6">
@@ -323,7 +323,6 @@ export default function Pasaporte() {
           </div>
         </>
       )}
-
 
       {viaje && (
         <div className="text-center my-8">
@@ -343,8 +342,6 @@ export default function Pasaporte() {
           </button>
         </div>
       )}
-
-
 
       <Listado
         objetosFiltrados={objetosFiltrados}
