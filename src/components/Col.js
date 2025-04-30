@@ -29,7 +29,7 @@ const Col = ({ children, className = '', sm = '12', md = '12', lg = '12' }) => {
     <div
       className={`
        w-full
-       md:${getColumnClasses(sm)} 
+       sm:${getColumnClasses(sm)} 
        md:${getColumnClasses(md)} 
        lg:${getColumnClasses(lg)} 
        px-2 

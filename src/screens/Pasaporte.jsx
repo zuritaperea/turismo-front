@@ -17,6 +17,7 @@ import personaService from "../axios/services/profile";
 import serviceObjeto from "../axios/services/objeto";
 import reservaService from "../axios/services/producto_turistico";
 import viajeService from "../axios/services/viaje";
+import { AuthContext } from "../components/AuthContext";
 
 export default function Pasaporte() {
   const [viaje, setViaje] = useState(null);
@@ -56,6 +57,7 @@ export default function Pasaporte() {
   const [paises, guardarPaises] = useState([]);
   const [provincias, guardarProvincias] = useState([]);
   const [composicionViajeSelected, setComposicionViajeSelected] = useState(null);
+  const { user } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -69,13 +71,23 @@ export default function Pasaporte() {
   ];
 
   useEffect(() => {
-    const viajeGuardado = localStorage.getItem("viaje");
-    if (viajeGuardado) {
-      try {
-        setViaje(JSON.parse(viajeGuardado));
-      } catch { }
+    if (!user) {
+      setLoading(false);
+      navigate('/login');
+      return;
+    } else {
+
+      const viajeGuardado = localStorage.getItem("viaje");
+      if (viajeGuardado) {
+        try {
+          const viajeJson = JSON.parse(viajeGuardado)
+          if (user.username === viajeJson.attributes.user.username)
+            setViaje(JSON.parse(viajeGuardado));
+        } catch { }
+      }
     }
-  }, []);
+  }, [user, navigate]);
+
 
   useEffect(() => {
     const obtenerConstantes = async () => {
@@ -263,53 +275,56 @@ export default function Pasaporte() {
           </div>
         )}
       </div>
+      {!viaje && (
+        <>
+          <div className="mx-auto max-w-5xl px-4 mb-6">
+            <Row className="gap-4">
+              <Col sm={12} md={6}>
+                <label className="block text-sm font-medium text-gray-700 mb-1">País de residencia</label>
+                <select
+                  className="border border-gray-300 rounded-md px-3 py-2 w-full"
+                  value={paisSelected.id}
+                  onChange={(e) => {
+                    const id = e.target.value;
+                    const nombre = e.target.options[e.target.selectedIndex].text;
+                    setPaisSelected({ id, nombre });
+                  }}
+                >
+                  <option value="">Seleccione un país</option>
+                  {paises.map((pais) => (
+                    <option key={pais.id} value={pais.id}>{pais.nombre}</option>
+                  ))}
+                </select>
+              </Col>
 
-      <div className="mx-auto max-w-5xl px-4 mb-6">
-        <Row className="gap-4">
-          <Col sm={12} md={6}>
-            <label className="block text-sm font-medium text-gray-700 mb-1">País de residencia</label>
-            <select
-              className="border border-gray-300 rounded-md px-3 py-2 w-full"
-              value={paisSelected.id}
-              onChange={(e) => {
-                const id = e.target.value;
-                const nombre = e.target.options[e.target.selectedIndex].text;
-                setPaisSelected({ id, nombre });
-              }}
-            >
-              <option value="">Seleccione un país</option>
-              {paises.map((pais) => (
-                <option key={pais.id} value={pais.id}>{pais.nombre}</option>
-              ))}
-            </select>
-          </Col>
+              <Col sm={12} md={6}>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Provincia</label>
+                <select
+                  className="border border-gray-300 rounded-md px-3 py-2 w-full"
+                  value={provinciaSelected}
+                  onChange={(e) => setProvinciaSelected(e.target.value)}
+                >
+                  <option value="">Seleccione una provincia</option>
+                  {provincias.map((prov) => (
+                    <option key={prov.id} value={prov.title}>{prov.title}</option>
+                  ))}
+                </select>
+              </Col>
+            </Row>
+          </div>
 
-          <Col sm={12} md={6}>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Provincia</label>
-            <select
-              className="border border-gray-300 rounded-md px-3 py-2 w-full"
-              value={provinciaSelected}
-              onChange={(e) => setProvinciaSelected(e.target.value)}
-            >
-              <option value="">Seleccione una provincia</option>
-              {provincias.map((prov) => (
-                <option key={prov.id} value={prov.title}>{prov.title}</option>
-              ))}
-            </select>
-          </Col>
-        </Row>
-      </div>
+          <div className="flex justify-center flex-col items-center px-8">
+            <p className="text-2xl font-bold my-2">¿Qué te interesa?</p>
+            <SeccionesSlider secciones={secciones} onSectionClick={handleSectionClick} selectedSection={selectedSection} />
+          </div>
+        </>)}
 
-      <div className="flex justify-center flex-col items-center px-8">
-        <p className="text-2xl font-bold my-2">¿Qué te interesa?</p>
-        <SeccionesSlider secciones={secciones} onSectionClick={handleSectionClick} selectedSection={selectedSection} />
-      </div>
 
       {!viaje && (
         <>
-        <div className="flex justify-center w-full items-center">
-        <FiltroSubtipo interes={interes} constantes={constantes} filtroSubtipo={filtroSubtipo} setFiltroSubtipo={setFiltroSubtipo} />
-        </div>
+          <div className="flex justify-center w-full items-center">
+            <FiltroSubtipo interes={interes} constantes={constantes} filtroSubtipo={filtroSubtipo} setFiltroSubtipo={setFiltroSubtipo} />
+          </div>
           <div className="flex justify-center flex-col items-center px-8">
             <p className="text-2xl font-bold mt-8">¿Cómo viajas?</p>
           </div>
@@ -327,7 +342,7 @@ export default function Pasaporte() {
       )}
 
       {viaje && (
-        <div className="text-center my-8">
+        <div className="text-center my-8 mt-10 pt-10">
           <h2 className="text-2xl font-bold">Tu viaje registrado</h2>
           <p><strong>Desde:</strong> {funciones.toDateLocalFormat(viaje.attributes.start_date)}</p>
           <p><strong>Hasta:</strong> {funciones.toDateLocalFormat(viaje.attributes.end_date)}</p>
