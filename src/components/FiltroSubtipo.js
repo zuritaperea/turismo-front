@@ -8,26 +8,26 @@ function FiltroSubtipo({ interes, constantes, setFiltroSubtipo, filtroSubtipo })
         circuito: "tipo_turismo",
         comercio: "tipo_comercio",
         gastronomia: "tipo_restaurante",
-      };
+    };
 
-useEffect(() => {
-  if (interes) {
-    setFiltroSubtipo('');
-  }
-}, [interes, constantes]);
+    useEffect(() => {
+        if (interes) {
+            setFiltroSubtipo('');
+        }
+    }, [interes, constantes]);
 
     if (!interes) return null;
 
-    const tipoClave = tipoConstantesMap[interes]; // Ej: 'tipo_restaurante'
+    const tipoClave = tipoConstantesMap[interes];
     const opciones = constantes[tipoClave] || [];
 
     return (
-        <div>
+        <div className="w-full flex justify-center px-4 mt-4">
             <select
                 id="subtipo-select"
                 value={filtroSubtipo}
                 onChange={(e) => setFiltroSubtipo(e.target.value)}
-                className="mt-1 mx-10 block w-1/2 border rounded p-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                className="w-[90%] sm:w-[220px] md:w-[280px] lg:w-[340px] border rounded-md p-2 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             >
                 <option value="">Seleccione</option>
                 {opciones.map((opcion, index) => (
@@ -39,4 +39,5 @@ useEffect(() => {
         </div>
     );
 }
+
 export default FiltroSubtipo;

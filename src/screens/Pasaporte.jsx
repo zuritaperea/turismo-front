@@ -307,9 +307,11 @@ export default function Pasaporte() {
 
       {!viaje && (
         <>
+        <div className="flex justify-center w-full items-center">
+        <FiltroSubtipo interes={interes} constantes={constantes} filtroSubtipo={filtroSubtipo} setFiltroSubtipo={setFiltroSubtipo} />
+        </div>
           <div className="flex justify-center flex-col items-center px-8">
             <p className="text-2xl font-bold mt-8">¿Cómo viajas?</p>
-            <FiltroSubtipo interes={interes} constantes={constantes} filtroSubtipo={filtroSubtipo} setFiltroSubtipo={setFiltroSubtipo} />
           </div>
           <SeleccionComposicionViaje composicion_viaje={constantes.composicion_viaje} composicionViajeSelected={composicionViajeSelected} setComposicionViajeSelected={setComposicionViajeSelected} />
 
