@@ -26,30 +26,40 @@ const items = [
 ];
 
 const DirectAccessList = () => {
-  return (
-    <div className="max-w-screen-xl mx-auto grid grid-flow-col auto-cols-max justify-center gap-8 p-8">
-      {items.map((item, index) => (
-        <div
-          key={index}
-          className="w-[300px] flex flex-col items-center text-center p-6 "
-        >
-          <img src={item.image} alt={item.title} className="w-24 h-24 mb-4" />
-          <h3 className="text-2xl font-semibold text-gray-800 mb-2">{item.title}</h3>
-          <p
-            className="text-gray-600 font-normal text-base mb-4"
-            dangerouslySetInnerHTML={{ __html: item.description }}
-          />
-          <Link
-            to={item.url}
-            className="bg-gray-600 text-white text-sm px-6 py-2 rounded-xl hover:bg-gray-800 transition"
-          >
-            Ver &rsaquo;
-          </Link>
-        </div>
-      ))}
-    </div>
+  const isCentered = items.length === 2;
 
+  return (
+    <div className="flex justify-center px-4">
+      <div
+        className={`
+          grid gap-8 p-6 w-full
+          ${isCentered ? 'grid-cols-1 sm:grid-cols-2 justify-center' : 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3'}
+          max-w-screen-lg
+        `}
+      >
+        {items.map((item, index) => (
+          <div
+            key={index}
+            className="flex flex-col items-center text-center p-6 "
+          >
+            <img src={item.image} alt={item.title} className="w-20 h-20 mb-4" />
+            <h3 className="text-xl font-semibold text-gray-800 mb-2">{item.title}</h3>
+            <p
+              className="text-gray-600 text-base mb-4"
+              dangerouslySetInnerHTML={{ __html: item.description }}
+            />
+            <Link
+              to={item.url}
+              className="bg-gray-600 text-white text-sm px-6 py-2 rounded-xl hover:bg-gray-800 transition"
+            >
+              Ver &rsaquo;
+            </Link>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 };
+
 
 export default DirectAccessList;

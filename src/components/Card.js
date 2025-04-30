@@ -25,7 +25,7 @@ function Card({ imgSrc, category, title, description, tags, puntuacion, location
           src={imgSrc} 
           alt={title} 
           className="w-full h-[200px] min-h-[198px] object-cover"
-          style={{ minHeight: '198px' }}
+          style={{ minHeight: '198px', maxHeight: '200px' }}
         />
       </div>
 
