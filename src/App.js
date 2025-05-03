@@ -44,6 +44,7 @@ import Paginas from "./screens/Paginas";
 import Pagina from "./screens/Pagina";
 import Reserva from "./screens/Reserva";
 import Pasaporte from "./screens/Pasaporte";
+import CargaEvidencia from "./screens/CargaEvidencia";
 
 function App() {
 
@@ -117,6 +118,8 @@ function App() {
             <Route path="/paginas" element={<Paginas/>} />
             <Route path="/page/:slug" element={<Pagina/>} />
             <Route path="/reserva/:id" element={<Reserva />} />
+
+            <Route path="/cargar-evidencia" element={<CargaEvidencia/>} />
 
 
           </Routes>
