@@ -45,6 +45,7 @@ import Pagina from "./screens/Pagina";
 import Reserva from "./screens/Reserva";
 import Pasaporte from "./screens/Pasaporte";
 import CargaEvidencia from "./screens/CargaEvidencia";
+import MisEvidencias from "./screens/MisEvidencias";
 
 function App() {
 
@@ -115,6 +116,8 @@ function App() {
             <Route path="/confirmacion-reserva" element={<ConfirmacionReserva />} />
             <Route path="/comprobante-reserva" element={<ComprobanteReserva />} />
             <Route path="/mis-reservas" element={<MisReservas />} />
+            <Route path="/mis-evidencias" element={<MisEvidencias />} />
+
             <Route path="/paginas" element={<Paginas/>} />
             <Route path="/page/:slug" element={<Pagina/>} />
             <Route path="/reserva/:id" element={<Reserva />} />
