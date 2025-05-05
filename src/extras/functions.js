@@ -96,6 +96,57 @@ const funciones = {
     newDate = newDate[2] + "/" + newDate[1] + "/" + newDate[0];
     return newDate;
   },
+  formatearFecha: function (fechaISO) {
+    if (!fechaISO) return "-";
+
+    // Crear un objeto Date a partir de la fecha ISO
+    const fecha = new Date(fechaISO);
+
+    // Configurar opciones para obtener la fecha y hora de acuerdo con la zona horaria local
+    const opcionesFecha = {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    };
+
+    const opcionesHora = {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false, // Para formato 24 horas
+    };
+
+    // Formatear la fecha y hora en el formato dd/mm/yyyy hh:mm
+    const fechaFormateada = fecha.toLocaleDateString("es-AR", opcionesFecha);
+
+    // Devolver la fecha formateada como dd/mm/yyyy hh:mm
+    // return `${fechaFormateada} ${horaFormateada}`;
+    return `${fechaFormateada}`;
+  },
+  formatearFechayHora: function (fechaISO) {
+    if (!fechaISO) return "-";
+
+    // Crear un objeto Date a partir de la fecha ISO
+    const fecha = new Date(fechaISO);
+
+    // Configurar opciones para obtener la fecha y hora de acuerdo con la zona horaria local
+    const opcionesFecha = {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    };
+
+    const opcionesHora = {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false, // Para formato 24 horas
+    };
+
+    // Formatear la fecha y hora en el formato dd/mm/yyyy hh:mm
+    const fechaFormateada = fecha.toLocaleDateString("es-AR", opcionesFecha);
+    const horaFormateada = fecha.toLocaleTimeString("es-AR", opcionesHora);
+    // Devolver la fecha formateada como dd/mm/yyyy hh:mm
+   return `${fechaFormateada} ${horaFormateada}`;
+  },
   errorMaker: function (error) {
     try {
       let messages = [];

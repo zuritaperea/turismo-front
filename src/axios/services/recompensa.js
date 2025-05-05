@@ -11,6 +11,9 @@ export default {
   obtenerNiveles: function () {
     return api.get(`${apiVersion}/recompensa_niveles/`);
   },
+  obtenerBeneficios: function () {
+    return api.get(`${apiVersion}/recompensa_beneficios/`);
+  },
   obtenerBeneficiosUsuario: function () {
     return api.get(`${apiVersion}/usuario_beneficios/`);
   },

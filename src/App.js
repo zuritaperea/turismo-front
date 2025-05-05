@@ -25,8 +25,6 @@ import Recupero from "./screens/Recupero";
 import Eventos from "./screens/Eventos";
 import PuntosInteres from "./screens/PuntosInteres";
 import ViajeScreen from "./screens/Viaje";
-import FavoritoScreen from "./screens/Favoritos";
-import VisitadoScreen from "./screens/Visitados";
 import CircuitosScreen from "./screens/Circuitos";
 import GastronomiasScreen from "./screens/Gastronomias";
 import GastronomiaScreen from "./screens/Gastronomia";
@@ -46,6 +44,7 @@ import Reserva from "./screens/Reserva";
 import Pasaporte from "./screens/Pasaporte";
 import CargaEvidencia from "./screens/CargaEvidencia";
 import MisEvidencias from "./screens/MisEvidencias";
+import PerfilAmbiental from "./screens/PerfilAmbiental";
 
 function App() {
 
@@ -109,8 +108,6 @@ function App() {
             <Route path="/terminos-y-condiciones" element={<Terminos />} />
             <Route path="/recuperar-clave" element={<Recupero />} />
             <Route path="/viajes" element={<ViajeScreen />} />
-            <Route path="/favoritos" element={<FavoritoScreen />} />
-            <Route path="/visitados" element={<VisitadoScreen />} />
             <Route path="/marketplace" element={<Marketplace />} />
             <Route path="/pasaporte" element={<Pasaporte />} />
             <Route path="/confirmacion-reserva" element={<ConfirmacionReserva />} />
@@ -123,6 +120,7 @@ function App() {
             <Route path="/reserva/:id" element={<Reserva />} />
 
             <Route path="/cargar-evidencia" element={<CargaEvidencia/>} />
+            <Route path="/perfil-ambiental" element={<PerfilAmbiental/>} />
 
 
           </Routes>

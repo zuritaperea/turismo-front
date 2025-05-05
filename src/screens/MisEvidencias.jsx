@@ -7,7 +7,7 @@ import { AuthContext } from "../components/AuthContext";
 import { useNavigate } from 'react-router-dom';
 import { BadgeCheck, Hourglass, XCircle, DollarSign, CreditCard } from "lucide-react";
 import { Eye } from "lucide-react"; // ya que usás lucide-react
-
+import funciones from "../extras/functions";
 const renderEstado = (estado) => {
   switch (estado) {
     case "approved":
@@ -41,15 +41,15 @@ const MisEvidencias = () => {
   const { user } = useContext(AuthContext);  // Se obtiene el contexto del usuario autenticado
   const navigate = useNavigate();  // Para la redirección
   const handleVer = (image) => {
-    if (image?.file && typeof image.file === "string" && image.file.startsWith("http")) {
-      window.open(image.file, "_blank");
+    if (image && typeof image === "string" && image.startsWith("http")) {
+      window.open(image, "_blank");
     } else {
       alert("La URL del archivo no es válida.");
     }
   };
 
   useEffect(() => {
-    const fetchedReservas = async () => {
+    const fetchedEvidencias = async () => {
       if (!user) {
         // Si no hay usuario, redirigir al login
         setLoading(false);
@@ -67,36 +67,9 @@ const MisEvidencias = () => {
       }
     };
 
-    fetchedReservas();
+    fetchedEvidencias();
   }, [user, navigate]);  // Dependencias: 'user' y 'navigate'
 
-  const formatearFecha = (fechaISO) => {
-    if (!fechaISO) return "-";
-
-    // Crear un objeto Date a partir de la fecha ISO
-    const fecha = new Date(fechaISO);
-
-    // Configurar opciones para obtener la fecha y hora de acuerdo con la zona horaria local
-    const opcionesFecha = {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    };
-
-    const opcionesHora = {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false, // Para formato 24 horas
-    };
-
-    // Formatear la fecha y hora en el formato dd/mm/yyyy hh:mm
-    const fechaFormateada = fecha.toLocaleDateString("es-AR", opcionesFecha);
-    const horaFormateada = fecha.toLocaleTimeString("es-AR", opcionesHora);
-
-    // Devolver la fecha formateada como dd/mm/yyyy hh:mm
-    // return `${fechaFormateada} ${horaFormateada}`;
-    return `${fechaFormateada}`;
-  };
 
   if (loading) {
     return <Splash />; // Mostrar el splash mientras cargan los datos
@@ -107,6 +80,14 @@ const MisEvidencias = () => {
       <Header />
       <div className="max-w-5xl mx-auto p-6 bg-white shadow-md rounded-lg mt-6">
         <h2 className="text-2xl font-bold mb-4">Mis Evidencias</h2>
+        <div className="mb-4">
+          <button
+            className="bg-principal text-white px-4 py-2 rounded-md hover:bg-blue-700"
+            onClick={() => navigate('/cargar-evidencia')}
+          >
+            Cargar Evidencia
+          </button>
+        </div>
         {reservas.length === 0 ? (
           <p className="text-gray-600">No tienes evidencias registradas.</p>
         ) : (
@@ -132,14 +113,14 @@ const MisEvidencias = () => {
                       {reserva.attributes.comment || "-"}
                     </td>
                     <td className="p-3">{reserva.attributes.location}</td>
-                    <td className="p-3">{formatearFecha(reserva.attributes.created_at)}</td>
+                    <td className="p-3">{funciones.formatearFecha(reserva.attributes.created_at)}</td>
                     <td className="p-3">  {renderEstado(reserva.attributes.status)}
                     </td>
                     <td className="p-3">
                         <div className="flex items-center justify-center h-full gap-2">
                           <button
                             className="text-blue-600 hover:text-blue-800"
-                            onClick={() => handleVer(reserva.attributes.file)}
+                            onClick={() => handleVer(reserva.attributes.image)}
                             title="Ver archivo"
                           >
                             <Eye className="w-5 h-5" />

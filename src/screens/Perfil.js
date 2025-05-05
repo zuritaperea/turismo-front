@@ -267,11 +267,19 @@ const MiPerfil = () => {
       </Row>
 
       <Separador />
-      <Row className="text-center">
+      <Row>
         <Col>
-          <p className="mt-4">
-            ¿Querés ver tus reservas?
-            <Link className="color-principal ml-2" to="/mis-reservas">Ir a Mis Reservas</Link>
+          <p className="text-xl font-bold mt-4">
+            <Link className="color-principal ml-2" to="/mis-reservas">Mis Reservas</Link>
+          </p>
+          <p className="text-xl font-bold mt-4">
+            <Link className="color-principal ml-2" to="/viajes">Mis viajes</Link>
+          </p>
+          <p className="text-xl font-bold mt-4">
+            <Link className="color-principal ml-2" to="/pasaporte">Mi pasaporte</Link>
+          </p>
+          <p className="text-xl font-bold my-4">
+            <Link className="color-principal ml-2" to="/perfil-ambiental">Mi Perfil Ambiental</Link>
           </p>
         </Col>
       </Row>
