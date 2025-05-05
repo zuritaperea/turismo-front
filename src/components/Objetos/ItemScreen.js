@@ -154,7 +154,7 @@ function ItemScreen({ tipoObjeto }) {
           )}
           {item.attributes.productos_turisticos?.length > 0 && (
             <ListaProductosTuristicos listData={item.attributes.productos_turisticos}
-              fechaDesde={fechaDesde} fechaHasta={fechaHasta} cantidad={cantidad} esPasaporte={esPasaporte} />
+              fechaDesde={fechaDesde} fechaHasta={fechaHasta} cantidadPersonas={cantidad} esPasaporte={esPasaporte} />
           )}
           <SeccionConTitulo titulo="Dirección" contenido={item.attributes.street_address} />
           {/* {item.attributes.point && (

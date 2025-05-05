@@ -3,6 +3,7 @@ import { Ticket, ArrowUpRight } from "lucide-react";
 import Modal from "./Modal.js";
 import service from "../axios/services/producto_turistico.js";
 import { AuthContext } from "./AuthContext.js";
+import { useNavigate } from "react-router-dom";
 
 const formatForInput = (date) => {
   if (!date) return "";
@@ -12,8 +13,10 @@ const formatForInput = (date) => {
   return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
 };
 
-const ListaProductosTuristicos = ({ listData, fechaDesde, fechaHasta, cantidad = 1, esPasaporte = false }) => {
+const ListaProductosTuristicos = ({ listData, fechaDesde, fechaHasta, cantidadPersonas = 1, esPasaporte = false }) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const navigate = useNavigate();
+
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [selectedProductoTuristico, setSelectedProductoTuristico] = useState(null);
   const [reservaId, setReservaId] = useState(null);
@@ -21,15 +24,16 @@ const ListaProductosTuristicos = ({ listData, fechaDesde, fechaHasta, cantidad =
   const [selectedStartDate, setSelectedStartDate] = useState(null);
   const [selectedEndDate, setSelectedEndDate] = useState(null);
   const [acompaniantes, setAcompaniantes] = useState([]);
+  const [cantidadProducto, setCantidadProducto] = useState(1);
 
   useEffect(() => {
-    if (cantidad > 1) {
-      const nuevos = Array.from({ length: cantidad - 1 }, () => ({
+    if (cantidadPersonas > 1) {
+      const nuevos = Array.from({ length: cantidadPersonas - 1 }, () => ({
         documento_identidad: "", nombre: "", apellido: "",
       }));
       setAcompaniantes(nuevos);
     }
-  }, [cantidad]);
+  }, [cantidadPersonas]);
 
   useEffect(() => {
     if (fechaDesde) setSelectedStartDate(new Date(fechaDesde));
@@ -65,7 +69,7 @@ const ListaProductosTuristicos = ({ listData, fechaDesde, fechaHasta, cantidad =
           attributes: {
             start_date: selectedStartDate.toISOString(),
             end_date: endDate,
-            cantidad: 1,
+            cantidad: cantidadProducto,
           },
           relationships: {
             titular: {
@@ -124,7 +128,7 @@ const ListaProductosTuristicos = ({ listData, fechaDesde, fechaHasta, cantidad =
           .filter((p) => p.active)
           .filter((p) => isDentroDeRango(p, fechaDesde, fechaHasta))
           .filter((p) => p.integrates_discount_passport === esPasaporte)
-          .filter((p) => p.maximum_number_persons <= cantidad)
+          .filter((p) => p.maximum_number_persons <= cantidadPersonas)
           .map((producto_turistico, index) => (
             <div
               key={producto_turistico?.id || index}
@@ -187,8 +191,20 @@ const ListaProductosTuristicos = ({ listData, fechaDesde, fechaHasta, cantidad =
                         readOnly={isReadOnly}
                       />
                     </div>
+                      <div className="mb-4">
+                        <label className="block text-sm font-medium text-gray-200 mb-1">
+                          Cantidad a reservar:
+                        </label>
+                        <input
+                          type="number"
+                          min={1}
+                          value={cantidadProducto}
+                          onChange={(e) => setCantidadProducto(Number(e.target.value))}
+                          className="w-full border rounded p-2"
+                        />
+                      </div>
                   </div>
-                  {cantidad > 1 && acompaniantes.map((a, idx) => (
+                  {cantidadPersonas > 1 && acompaniantes.map((a, idx) => (
                     <div key={idx} className="mt-4">
                       <label className="block text-sm text-gray-200 mb-1">Acompañante {idx + 1}</label>
                       <input type="text" placeholder="Nombres" className="w-full border p-2 mb-2"

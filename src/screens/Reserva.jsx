@@ -97,6 +97,10 @@ const Reserva = () => {
                 <h3 className="text-sm font-semibold text-gray-700">Fecha de Salida</h3>
                 <p className="text-gray-600">{formatearFecha(reserva.attributes.end_date)}</p>
               </div>
+              <div>
+                <h3 className="text-sm font-semibold text-gray-700">Cantidad</h3>
+                <p className="text-gray-600">{reserva.attributes.cantidad}</p>
+              </div>
             </div>
 
             <div>
