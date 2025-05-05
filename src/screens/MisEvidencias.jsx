@@ -7,7 +7,7 @@ import { AuthContext } from "../components/AuthContext";
 import { useNavigate } from 'react-router-dom';
 import { BadgeCheck, Hourglass, XCircle, DollarSign, CreditCard } from "lucide-react";
 import { Eye } from "lucide-react"; // ya que usás lucide-react
-
+import funciones from "../extras/functions";
 const renderEstado = (estado) => {
   switch (estado) {
     case "approved":
@@ -70,33 +70,6 @@ const MisEvidencias = () => {
     fetchedEvidencias();
   }, [user, navigate]);  // Dependencias: 'user' y 'navigate'
 
-  const formatearFecha = (fechaISO) => {
-    if (!fechaISO) return "-";
-
-    // Crear un objeto Date a partir de la fecha ISO
-    const fecha = new Date(fechaISO);
-
-    // Configurar opciones para obtener la fecha y hora de acuerdo con la zona horaria local
-    const opcionesFecha = {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    };
-
-    const opcionesHora = {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false, // Para formato 24 horas
-    };
-
-    // Formatear la fecha y hora en el formato dd/mm/yyyy hh:mm
-    const fechaFormateada = fecha.toLocaleDateString("es-AR", opcionesFecha);
-    const horaFormateada = fecha.toLocaleTimeString("es-AR", opcionesHora);
-
-    // Devolver la fecha formateada como dd/mm/yyyy hh:mm
-    // return `${fechaFormateada} ${horaFormateada}`;
-    return `${fechaFormateada}`;
-  };
 
   if (loading) {
     return <Splash />; // Mostrar el splash mientras cargan los datos
@@ -140,7 +113,7 @@ const MisEvidencias = () => {
                       {reserva.attributes.comment || "-"}
                     </td>
                     <td className="p-3">{reserva.attributes.location}</td>
-                    <td className="p-3">{formatearFecha(reserva.attributes.created_at)}</td>
+                    <td className="p-3">{funciones.formatearFecha(reserva.attributes.created_at)}</td>
                     <td className="p-3">  {renderEstado(reserva.attributes.status)}
                     </td>
                     <td className="p-3">

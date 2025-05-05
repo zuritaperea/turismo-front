@@ -4,7 +4,7 @@ const apiVersion = process.env.REACT_APP_API_URL + process.env.REACT_APP_API_VER
 const contentType = "viaje";
 export default {
   obtenerTodos: function () {
-    return api.get(`${apiVersion}/${contentType}/?ordering=name`);
+    return api.get(`${apiVersion}/${contentType}/`);
   },
   obtener: function (id) {
     return api.get(`${apiVersion}/${contentType}/${id}/`);
