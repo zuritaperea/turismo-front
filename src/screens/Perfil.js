@@ -273,7 +273,7 @@ const MiPerfil = () => {
             <Link className="color-principal ml-2" to="/mis-reservas">Mis Reservas</Link>
           </p>
           <p className="text-xl font-bold mt-4">
-            <Link className="color-principal ml-2" to="/viaje">Mis viajes</Link>
+            <Link className="color-principal ml-2" to="/viajes">Mis viajes</Link>
           </p>
           <p className="text-xl font-bold mt-4">
             <Link className="color-principal ml-2" to="/pasaporte">Mi pasaporte</Link>

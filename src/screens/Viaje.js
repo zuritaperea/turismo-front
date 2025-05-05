@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Row from '../components/Row';
 import Col from '../components/Col';
 import Alert from '../components/Alert';
@@ -23,7 +23,7 @@ function ViajeScreen() {
   const [selectedViaje, setSelectedViaje] = useState(null); // Para almacenar el viaje seleccionado
   const [showModal, setShowModal] = useState(false); // Para controlar la visibilidad del modal
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     if (!user) {
       setLoading(false);
