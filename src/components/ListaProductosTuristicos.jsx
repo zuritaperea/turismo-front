@@ -13,7 +13,14 @@ const formatForInput = (date) => {
   return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
 };
 
-const ListaProductosTuristicos = ({ listData, fechaDesde, fechaHasta, cantidadPersonas = 1, esPasaporte = false }) => {
+const ListaProductosTuristicos = (props) => {
+  const {
+    listData,
+    fechaDesde,
+    fechaHasta,
+    cantidadPersonas: cantidadPersonasProp,
+    esPasaporte = false
+  } = props;
   const [modalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -25,6 +32,9 @@ const ListaProductosTuristicos = ({ listData, fechaDesde, fechaHasta, cantidadPe
   const [selectedEndDate, setSelectedEndDate] = useState(null);
   const [acompaniantes, setAcompaniantes] = useState([]);
   const [cantidadProducto, setCantidadProducto] = useState(1);
+  const [cantidadPersonas, setCantidadPersonas] = useState(cantidadPersonasProp ?? 1);
+  const cantidadPersonasFuePasada = props.cantidadPersonas != null;
+
 
   useEffect(() => {
     if (cantidadPersonas > 1) {
@@ -59,15 +69,21 @@ const ListaProductosTuristicos = ({ listData, fechaDesde, fechaHasta, cantidadPe
       alert("Seleccioná una fecha de inicio y una de fin");
       return;
     }
-
-    const endDate = selectedEndDate.toISOString();
+    function ensureDate(value) {
+      if (value instanceof Date) {
+        return value;
+      }
+      return new Date(value);
+    }
+    const startDate = ensureDate(selectedStartDate).toISOString();
+    const endDate = ensureDate(selectedEndDate).toISOString();
 
     try {
       const data = {
         data: {
           type: "Reserva",
           attributes: {
-            start_date: selectedStartDate.toISOString(),
+            start_date: startDate,
             end_date: endDate,
             cantidad: cantidadProducto,
           },
@@ -166,7 +182,7 @@ const ListaProductosTuristicos = ({ listData, fechaDesde, fechaHasta, cantidadPe
                 <span className="text-gray-200">Realizá tu reserva</span>
               </Modal.Header>
               <Modal.Body className="flex-grow overflow-y-auto scrollbar-hide">
-                <div className="mb-4">
+              <div className="mb-4 overflow-y-auto max-h-80 sm:max-h-80 md:max-h-96 lg:max-h-96 pr-2">
                   <h3 className="text-md font-semibold mb-2 text-gray-200">
                     {isReadOnly ? 'Rango de Fechas' : 'Seleccioná el rango de fechas'}:
                   </h3>
@@ -191,18 +207,32 @@ const ListaProductosTuristicos = ({ listData, fechaDesde, fechaHasta, cantidadPe
                         readOnly={isReadOnly}
                       />
                     </div>
+                    <div className="mb-4">
+                      <label className="block text-sm font-medium text-gray-200 mb-1">
+                        Cantidad a reservar:
+                      </label>
+                      <input
+                        type="number"
+                        min={1}
+                        value={cantidadProducto}
+                        onChange={(e) => setCantidadProducto(Number(e.target.value))}
+                        className="w-full border rounded p-2"
+                      />
+                    </div>
+                    {!cantidadPersonasFuePasada && (
                       <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-200 mb-1">
-                          Cantidad a reservar:
+                          Cantidad de personas:
                         </label>
                         <input
                           type="number"
                           min={1}
-                          value={cantidadProducto}
-                          onChange={(e) => setCantidadProducto(Number(e.target.value))}
+                          value={cantidadPersonas}
+                          onChange={(e) => setCantidadPersonas(Number(e.target.value))}
                           className="w-full border rounded p-2"
                         />
                       </div>
+                    )}
                   </div>
                   {cantidadPersonas > 1 && acompaniantes.map((a, idx) => (
                     <div key={idx} className="mt-4">
@@ -259,7 +289,8 @@ const ListaProductosTuristicos = ({ listData, fechaDesde, fechaHasta, cantidadPe
             </p>
             <button
               className="mt-6 bg-[#f08400] text-white px-6 py-2 rounded-lg text-lg"
-              onClick={() => {setConfirmDialogOpen(false);
+              onClick={() => {
+                setConfirmDialogOpen(false);
                 navigate(`/reserva/${reservaId}`); // Redirigir a la página de detalles de la reserva 
               }}
             >
