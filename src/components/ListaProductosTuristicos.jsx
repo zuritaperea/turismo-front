@@ -95,7 +95,7 @@ const ListaProductosTuristicos = (props) => {
                 documento_identidad: persona?.attributes?.documento_identidad,
                 fecha_nacimiento: persona?.attributes?.fecha_nacimiento,
                 domicilio: persona?.attributes?.domicilio,
-                correo_electronico: persona?.attributes?.correo_electronico,
+                correo_electronico: persona?.attributes?.correo_electronico || user.username,
               },
             },
             acompaniantes: {
