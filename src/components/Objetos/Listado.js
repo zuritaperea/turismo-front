@@ -26,30 +26,44 @@ const keepLocalAsUTC = (date) => {
   return new Date(Date.UTC(year, month, day, hours, minutes, seconds));
 };
 
-const Listado = ({ objetosFiltrados, target,  desde, hasta, cantidad, pasaporte }) => {
+const Listado = ({ objetosFiltrados, target, desde, hasta, cantidad, pasaporte }) => {
+
+
   return (
     <div className="w-full p-4 flex justify-center">
       <div className="max-w-7xl w-full">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center">
-          {Array.isArray(objetosFiltrados) ? objetosFiltrados.map((item) => (
-            <Link
-              key={item.id}
-              to={`/${target ? target.toLowerCase() : item.tipo.toLowerCase()}/${item.id}?fechadesde=${keepLocalAsUTC(desde)?.toISOString()}&fechahasta=${ keepLocalAsUTC(hasta)?.toISOString()}&cantidad=${cantidad}&pasaporte=${pasaporte}`}
-              >
-              <div className="w-64 h-80">
-                <Card
-                  imgSrc={item.image}
-                  title={item.title}
-                  category={item.type}
-                  description={item.description}
-                  tags={item.tourist_type}
-                  puntuacion={item.puntuacion}
-                  location={item.location}
-                  startDate={item.startDate}
-                />
-              </div>
-            </Link>
-          )) : null}
+          {Array.isArray(objetosFiltrados) ? objetosFiltrados.map((item) => {
+            const queryParams = new URLSearchParams();
+
+            const fechaDesdeUTC = keepLocalAsUTC(desde);
+            const fechaHastaUTC = keepLocalAsUTC(hasta);
+
+            if (fechaDesdeUTC) queryParams.append("fechadesde", fechaDesdeUTC.toISOString());
+            if (fechaHastaUTC) queryParams.append("fechahasta", fechaHastaUTC.toISOString());
+            if (cantidad != null) queryParams.append("cantidad", cantidad);
+            if (pasaporte != null) queryParams.append("pasaporte", pasaporte);
+
+            const path = `/${target ? target.toLowerCase() : item.tipo.toLowerCase()}/${item.id}`;
+            const fullPath = `${path}?${queryParams.toString()}`;
+
+            return (
+              <Link key={item.id} to={fullPath}>
+                <div className="w-64 h-80">
+                  <Card
+                    imgSrc={item.image}
+                    title={item.title}
+                    category={item.type}
+                    description={item.description}
+                    tags={item.tourist_type}
+                    puntuacion={item.puntuacion}
+                    location={item.location}
+                    startDate={item.startDate}
+                  />
+                </div>
+              </Link>
+            );
+          }) : null}
         </div>
       </div>
     </div>

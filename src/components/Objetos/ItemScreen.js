@@ -59,10 +59,10 @@ function ItemScreen({ tipoObjeto }) {
     const queryParams = new URLSearchParams(location.search);
     const source = queryParams.get("source");
 
-    if (queryParams.get("fechadesde")) 
+    if (queryParams.get("fechadesde"))
       setFechaDesde(toLocalMidnight(queryParams.get("fechadesde")));
     if (queryParams.get("fechahasta"))
-       setFechaHasta(toLocalMidnight(queryParams.get("fechahasta")));
+      setFechaHasta(toLocalMidnight(queryParams.get("fechahasta")));
 
     setCantidad(queryParams.get("cantidad"));
     setPasaporte(queryParams.get("pasaporte") === "true");
@@ -118,6 +118,23 @@ function ItemScreen({ tipoObjeto }) {
 
     obtenerItems();
   }, [id, tipoObjeto]);
+
+  const manejarInteraccionRed = (red) => {
+    const data = {
+      content_type: item.attributes?.content_type,
+      object_id: item.id,
+      latitude: null,
+      longitude: null,
+    };
+
+    return serviceInteraccion.generarInteraccionRedes(data)
+      .then((response) => {
+        console.log("Interacción Redes generada:", response);
+      })
+      .catch((error) => {
+        console.error("Error generando interacción Redes:", error);
+      });
+  };
 
   if (loading) {
     return <Splash />;
@@ -185,7 +202,7 @@ function ItemScreen({ tipoObjeto }) {
                   }}
                 />
               )}
-            <SocialLinks redes={item.attributes.redes_sociales} />
+            <SocialLinks redes={item.attributes.redes_sociales} onClickRed={manejarInteraccionRed} />
           </div>
           <RangoPrecios item={item} />
 
