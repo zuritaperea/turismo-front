@@ -41,15 +41,15 @@ const MisEvidencias = () => {
   const { user } = useContext(AuthContext);  // Se obtiene el contexto del usuario autenticado
   const navigate = useNavigate();  // Para la redirección
   const handleVer = (image) => {
-    if (image?.file && typeof image.file === "string" && image.file.startsWith("http")) {
-      window.open(image.file, "_blank");
+    if (image && typeof image === "string" && image.startsWith("http")) {
+      window.open(image, "_blank");
     } else {
       alert("La URL del archivo no es válida.");
     }
   };
 
   useEffect(() => {
-    const fetchedReservas = async () => {
+    const fetchedEvidencias = async () => {
       if (!user) {
         // Si no hay usuario, redirigir al login
         setLoading(false);
@@ -67,7 +67,7 @@ const MisEvidencias = () => {
       }
     };
 
-    fetchedReservas();
+    fetchedEvidencias();
   }, [user, navigate]);  // Dependencias: 'user' y 'navigate'
 
   const formatearFecha = (fechaISO) => {
@@ -107,6 +107,14 @@ const MisEvidencias = () => {
       <Header />
       <div className="max-w-5xl mx-auto p-6 bg-white shadow-md rounded-lg mt-6">
         <h2 className="text-2xl font-bold mb-4">Mis Evidencias</h2>
+        <div className="mb-4">
+          <button
+            className="bg-principal text-white px-4 py-2 rounded-md hover:bg-blue-700"
+            onClick={() => navigate('/cargar-evidencia')}
+          >
+            Cargar Evidencia
+          </button>
+        </div>
         {reservas.length === 0 ? (
           <p className="text-gray-600">No tienes evidencias registradas.</p>
         ) : (
@@ -139,7 +147,7 @@ const MisEvidencias = () => {
                         <div className="flex items-center justify-center h-full gap-2">
                           <button
                             className="text-blue-600 hover:text-blue-800"
-                            onClick={() => handleVer(reserva.attributes.file)}
+                            onClick={() => handleVer(reserva.attributes.image)}
                             title="Ver archivo"
                           >
                             <Eye className="w-5 h-5" />

@@ -22,10 +22,8 @@ function CookieConsent({ onConsent }) {
   if (consentAccepted === null) {
     return (
       <Modal show={showModal} onHide={handleModalClose}>
-        <Modal.Header closeButton>
-        </Modal.Header>
         <Modal.Body>
-          <p>
+          <p className="text-gray-200">
             Este sitio web utiliza cookies para mejorar la experiencia del usuario. <br />
             Acepta para dar el consentimiento al uso de cookies o rechaza si no estás de acuerdo.
           </p>

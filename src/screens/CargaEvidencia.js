@@ -5,12 +5,13 @@ import recompensaService from "../axios/services/recompensa";
 import Splash from "../components/Splash";
 import { AuthContext } from "../components/AuthContext";
 import { useNavigate } from "react-router-dom";
+import Modal from "../components/Modal";
 
 const CargaEvidencia = () => {
     const { user } = useContext(AuthContext);
 
     const navigate = useNavigate();
-
+    const [showModal, setShowModal] = useState(false);
     const [acciones, setAcciones] = useState([]);
     const [formData, setFormData] = useState({
         comment: "",
@@ -56,7 +57,7 @@ const CargaEvidencia = () => {
         setSubmitting(true);
         try {
             await recompensaService.agregarEvidencia(formData);
-            alert("Evidencia enviada correctamente.");
+            setShowModal(true);
             // Limpiar formulario
             setFormData({
                 comment: "",
@@ -141,6 +142,14 @@ const CargaEvidencia = () => {
                 </form>
             </div>
             <Footer />
+            <Modal show={showModal} onHide={() => setShowModal(false)} centered>    
+                <Modal.Body><p className="text-gray-200">Tu evidencia ha sido enviada exitosamente.</p></Modal.Body>
+                <Modal.Footer>
+                    <button className="bg-principal text-white px-4 py-2 rounded" onClick={() => setShowModal(false)}>
+                        Cerrar
+                    </button>
+                </Modal.Footer>    
+            </Modal>
         </div>
     );
 };

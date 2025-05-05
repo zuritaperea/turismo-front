@@ -46,6 +46,7 @@ import Reserva from "./screens/Reserva";
 import Pasaporte from "./screens/Pasaporte";
 import CargaEvidencia from "./screens/CargaEvidencia";
 import MisEvidencias from "./screens/MisEvidencias";
+import PerfilAmbiental from "./screens/PerfilAmbiental";
 
 function App() {
 
@@ -123,6 +124,7 @@ function App() {
             <Route path="/reserva/:id" element={<Reserva />} />
 
             <Route path="/cargar-evidencia" element={<CargaEvidencia/>} />
+            <Route path="/perfil-ambiental" element={<PerfilAmbiental/>} />
 
 
           </Routes>
