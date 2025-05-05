@@ -156,8 +156,8 @@ const MisReservas = () => {
             <table className="w-full border border-gray-300 rounded-lg overflow-hidden shadow-md">
               <thead className="bg-gray-200">
                 <tr>
-                  <th className="p-3 text-left">Producto</th>
                   <th className="p-3 text-left">Objeto</th>
+                  <th className="p-3 text-left">Producto</th>
                   <th className="p-3 text-left">Entrada</th>
                   <th className="p-3 text-left">Salida</th>
                   <th className="p-3 text-left">Estado</th>

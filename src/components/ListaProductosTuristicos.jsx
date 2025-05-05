@@ -243,7 +243,9 @@ const ListaProductosTuristicos = ({ listData, fechaDesde, fechaHasta, cantidad =
             </p>
             <button
               className="mt-6 bg-[#f08400] text-white px-6 py-2 rounded-lg text-lg"
-              onClick={() => setConfirmDialogOpen(false)}
+              onClick={() => {setConfirmDialogOpen(false);
+                navigate(`/reserva/${reservaId}`); // Redirigir a la página de detalles de la reserva 
+              }}
             >
               Aceptar
             </button>
