@@ -23,6 +23,7 @@ const ListaProductosTuristicos = (props) => {
   } = props;
   const [modalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
+  const [isLoadingReserva, setIsLoadingReserva] = useState(false);
 
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [selectedProductoTuristico, setSelectedProductoTuristico] = useState(null);
@@ -57,7 +58,6 @@ const ListaProductosTuristicos = (props) => {
     const date = new Date(dateString);
     return date.toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit" });
   };
-
   const handleReservar = async () => {
     if (!user) {
       alert("¡Por favor, inicia sesión para realizar una reserva!");
@@ -69,12 +69,16 @@ const ListaProductosTuristicos = (props) => {
       alert("Seleccioná una fecha de inicio y una de fin");
       return;
     }
+
+    setIsLoadingReserva(true); // ⬅️ Activar loading
+
     function ensureDate(value) {
       if (value instanceof Date) {
         return value;
       }
       return new Date(value);
     }
+
     const startDate = ensureDate(selectedStartDate).toISOString();
     const endDate = ensureDate(selectedEndDate).toISOString();
 
@@ -118,9 +122,10 @@ const ListaProductosTuristicos = (props) => {
     } catch (error) {
       console.error("Error al crear reserva:", error);
       alert("Error al procesar la reserva.");
+    } finally {
+      setIsLoadingReserva(false); // ⬅️ Desactivar loading al finalizar
+      setModalOpen(false);
     }
-
-    setModalOpen(false);
   };
 
   const isDentroDeRango = (producto, fechaDesde, fechaHasta) => {
@@ -182,7 +187,7 @@ const ListaProductosTuristicos = (props) => {
                 <span className="text-gray-200">Realizá tu reserva</span>
               </Modal.Header>
               <Modal.Body className="flex-grow overflow-y-auto scrollbar-hide">
-              <div className="mb-4 overflow-y-auto max-h-80 sm:max-h-80 md:max-h-96 lg:max-h-96 pr-2">
+                <div className="mb-4 overflow-y-auto max-h-80 sm:max-h-80 md:max-h-96 lg:max-h-96 pr-2">
                   <h3 className="text-md font-semibold mb-2 text-gray-200">
                     {isReadOnly ? 'Rango de Fechas' : 'Seleccioná el rango de fechas'}:
                   </h3>
@@ -262,16 +267,28 @@ const ListaProductosTuristicos = (props) => {
               <Modal.Footer>
                 <div className="flex justify-center w-full">
                   <div
-                    className="bg-[#f08400] text-white rounded-2xl py-1 px-4 flex items-center font-medium text-xl transition-colors"
+                    className={`text-white rounded-2xl py-1 px-4 flex items-center font-medium text-xl transition-colors ${isLoadingReserva ? "bg-gray-400" : "bg-[#f08400]"
+                      }`}
                     style={{
-                      backgroundColor: selectedStartDate && selectedEndDate ? "#F08400" : "#CCCCCC",
-                      cursor: selectedStartDate && selectedEndDate ? "pointer" : "not-allowed",
-                      pointerEvents: selectedStartDate && selectedEndDate ? "auto" : "none",
+                      cursor: selectedStartDate && selectedEndDate && !isLoadingReserva ? "pointer" : "not-allowed",
+                      pointerEvents: selectedStartDate && selectedEndDate && !isLoadingReserva ? "auto" : "none",
                     }}
-                    onClick={handleReservar}
+                    onClick={!isLoadingReserva ? handleReservar : undefined}
                   >
-                    <ArrowUpRight className="w-5 h-5 mr-1" />
-                    ¡Reservar!
+                    {isLoadingReserva ? (
+                      <>
+                        <svg className="animate-spin h-5 w-5 mr-2 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                        </svg>
+                        Reservando...
+                      </>
+                    ) : (
+                      <>
+                        <ArrowUpRight className="w-5 h-5 mr-1" />
+                        ¡Reservar!
+                      </>
+                    )}
                   </div>
                 </div>
               </Modal.Footer>
