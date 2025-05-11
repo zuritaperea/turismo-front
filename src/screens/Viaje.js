@@ -90,8 +90,8 @@ function ViajeScreen() {
                   {viajes?.map((data, index) => {
                     return (
                       <tr key={index}>
-                        <td>{data.attributes.start_date ? funciones.toDateLocalFormat(data.attributes.start_date) : ''}</td>
-                        <td>{data.attributes.end_date ? funciones.toDateLocalFormat(data.attributes.end_date) : ''}</td>
+                        <td>{data.attributes.start_date ? funciones.forzarComoUTCyConvertir(data.attributes.start_date) : ''}</td>
+                        <td>{data.attributes.end_date ? funciones.forzarComoUTCyConvertir(data.attributes.end_date) : ''}</td>
 
                         <td>{data.attributes.origin}</td>
                         <td>{data.attributes.administrative_division_of_origin}</td>
@@ -129,11 +129,11 @@ function ViajeScreen() {
           <Row className='text-gray-200'>
             <Col xs={12} md={6}>
               <h3 className="text-lg font-semibold">Fecha Inicio</h3>
-              <p>{selectedViaje?.attributes.start_date ? funciones.toDateLocalFormat(selectedViaje.attributes.start_date) : ''}</p>
+              <p>{selectedViaje?.attributes.start_date ? funciones.forzarComoUTCyConvertir(selectedViaje.attributes.start_date) : ''}</p>
             </Col>
             <Col xs={12} md={6}>
               <h3 className="text-lg font-semibold">Fecha Fin</h3>
-              <p>{selectedViaje?.attributes.end_date ? funciones.toDateLocalFormat(selectedViaje.attributes.end_date) : ''}</p>
+              <p>{selectedViaje?.attributes.end_date ? funciones.forzarComoUTCyConvertir(selectedViaje.attributes.end_date) : ''}</p>
             </Col>
             <Col xs={12} md={6}>
               <h3 className="text-lg font-semibold">Pais de origen</h3>

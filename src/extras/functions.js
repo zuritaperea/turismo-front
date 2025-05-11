@@ -122,6 +122,23 @@ const funciones = {
     // return `${fechaFormateada} ${horaFormateada}`;
     return `${fechaFormateada}`;
   },
+   forzarComoUTCyConvertir: function (fechaISO) {
+ // Quitar la zona horaria original y reemplazar por Z (UTC)
+ const fechaSinZona = fechaISO.replace(/([+-]\d{2}:\d{2})$/, "Z");
+ const dateUTC = new Date(fechaSinZona);
+
+ // Formatear en horario de Buenos Aires
+ return new Intl.DateTimeFormat("es-AR", {
+   day: "2-digit",
+   month: "2-digit",
+   year: "numeric",
+   hour: "2-digit",
+   minute: "2-digit",
+   hour12: false,
+   timeZone: "America/Argentina/Buenos_Aires"
+ }).format(dateUTC);
+  }
+,  
   formatearFechayHora: function (fechaISO) {
     if (!fechaISO) return "-";
 
