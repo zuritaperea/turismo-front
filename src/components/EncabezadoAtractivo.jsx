@@ -8,7 +8,7 @@ const EncabezadoAtractivo = ({ item }) => {
         ? process.env.REACT_APP_API_URL + item.attributes.image_url
         : process.env.REACT_APP_IMAGE_DEFAULT;
 
-    const categoria = item.attributes.category || 'Naturaleza';
+    const categoria = item.type || 'Naturaleza';
     const nombre = item.attributes.name;
     const tags = item.attributes.tourist_type || [];
     const puntaje = item.attributes.evaluation || 0;
