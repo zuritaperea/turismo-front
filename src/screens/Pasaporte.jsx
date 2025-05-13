@@ -91,7 +91,7 @@ export default function Pasaporte() {
 
   useEffect(() => {
     const obtenerConstantes = async () => {
-      const resConstantes = await serviceObjeto.obtenerConstantes();
+      const resConstantes = await serviceObjeto.obtenerConstantesUsadas();
       setConstantes(resConstantes.data.data);
     };
 

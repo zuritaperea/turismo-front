@@ -18,6 +18,12 @@ export default {
   obtenerConstantes: function(){
     return api.get(`${apiVersion}/constantes/`);
   },
+  obtenerConstantesUsadas: function(){
+    return api.get(`${apiVersion}/constantes/?filtrar_usados=true`);
+  },
+  obtenerConstantesUsadasTipo: function(tipo){
+    return api.get(`${apiVersion}/constantes/?filtrar_usados=true&tipo_objeto=${tipo}`);
+  },
   obtenerServicios: function(){
     return api.get(`${apiVersion}/servicio/`);
   },

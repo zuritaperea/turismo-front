@@ -60,7 +60,7 @@ const Filtros = ({ objetoService, setObjetosFiltrados, target }) => {
     const fetchData = async () => {
       try {
         const [resConstantes, resServicios, resActividades] = await Promise.all([
-          service.obtenerConstantes(),
+          service.obtenerConstantesUsadasTipo(target),
           service.obtenerServicios(),
           service.obtenerActividades(),
         ]);
@@ -191,7 +191,7 @@ const Filtros = ({ objetoService, setObjetosFiltrados, target }) => {
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Body className="bg-[#2e2d2c]/95 text-white p-4 rounded-xl max-h-[80vh] overflow-y-auto">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 px-2 sm:px-4">
-            <FiltroSelect label="Tipo de turista" name="tourist_type" options={constantes.tipo_turismo} selected={filters.tourist_type} onChange={handleFilterChange} isMulti />
+            <FiltroSelect label="Tipo de turista" name="tourist_type" options={constantes.tipo_turismo} forceSelect selected={filters.tourist_type} onChange={handleFilterChange} isMulti />
             {target === "Alojamiento" && (
               <FiltroSelect label="Servicios" name="amenity_feature" options={servicios} selected={filters.amenity_feature} onChange={handleFilterChange} isMulti />
             )}

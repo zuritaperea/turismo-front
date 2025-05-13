@@ -18,16 +18,7 @@ const FiltroSelect = ({
   placeholder = 'Seleccionar',
   emptyOption = 'Seleccionar'
 }) => {
-  const actualOptions = isBoolean
-    ? [
-        { value: "", label: emptyOption },
-        { value: "true", label: "Sí" },
-        { value: "false", label: "No" },
-      ]
-    : includeEmpty && !isMulti
-    ? [{ value: "", label: emptyOption }, ...options]
-    : options;
-
+  
   const iconByName = {
     type_attractive: <MapIcon size={18} className="text-gray-500 mr-2" />,
     price_range: <DollarSign size={18} className="text-gray-500 mr-2" />,
@@ -45,6 +36,30 @@ const FiltroSelect = ({
       </components.Control>
     );
   };
+
+  let actualOptions = [];
+
+  if (isBoolean) {
+    actualOptions = [
+      { value: "", label: emptyOption },
+      { value: "true", label: "Sí" },
+      { value: "false", label: "No" },
+    ];
+  } else {
+    if (options.length === 0) return null;
+
+    actualOptions = options;
+
+    if (includeEmpty && !isMulti && options.length > 0) {
+      actualOptions = [{ value: "", label: emptyOption }, ...options];
+    }
+  }
+
+    // Si solo hay una opción vacía, no mostramos nada
+    const isOnlyEmptyOption =
+    actualOptions.length === 1 && actualOptions[0].value === "";
+
+  if (isOnlyEmptyOption) return null;
 
   return (
     <div className={`${className}`}>
