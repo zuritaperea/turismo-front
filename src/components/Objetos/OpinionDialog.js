@@ -43,7 +43,7 @@ const OpinionDialog = ({ show, onClose, onSubmit, contentType, objectId }) => {
   return (
     <Modal show={show} onHide={onClose}>
       <Modal.Header onHide={onClose}>
-       Calificá esta publicación
+        <span className="text-gray-200">Calificá esta publicación</span>       
       </Modal.Header>
       <Modal.Body>
         <div className="flex flex-col gap-4">
