@@ -155,7 +155,7 @@ const Reserva = () => {
             <div className="flex flex-col items-start gap-4 mt-6">
               <div>
                 <h2 className="text-lg font-semibold text-gray-800 mb-2">Código QR para validar</h2>
-                <QRCodeSVG value={`${process.env.REACT_APP_API_URL}/admin/reserva/${reserva.id}/`} size={128} />
+                <QRCodeSVG value={`${process.env.REACT_APP_API_URL}/admin/reserva/reserva/${reserva.id}/`} size={128} />
               </div>
 
               <button
