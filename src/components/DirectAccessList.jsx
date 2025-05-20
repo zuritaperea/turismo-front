@@ -13,7 +13,7 @@ const items = [
   },
   {
     title: 'Gestión de reservas',
-    description: 'Consultá, reservá y organizá tus actividades turísticas de forma fácil y rápida, <br /> todo en un solo lugar.',
+    description: 'Consultá, reservá y organizá tus actividades turísticas de forma fácil y rápida, todo en un solo lugar.',
     image: gestion,
     url: '/marketplace',
   },

@@ -102,6 +102,10 @@ body {
   padding-bottom: 7px;
 }
 
+.slider-horizontal .card-basica {
+  min-width: 300px;
+}
+
 .tarjeta-tag {
   margin: 2px 0px;
   display: block;
