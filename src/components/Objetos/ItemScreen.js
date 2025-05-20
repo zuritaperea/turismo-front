@@ -209,7 +209,6 @@ function ItemScreen({ tipoObjeto }) {
             <Certificaciones item={item} />
           )}
 
-          <Recomendaciones items={items} tipoObjeto={tipoObjeto} objectId={item.id} />
           <SeccionConTitulo titulo="Dirección" contenido={item.attributes.street_address} />
           {item.attributes.point && (
             <Mapa
@@ -228,7 +227,7 @@ function ItemScreen({ tipoObjeto }) {
           }} />
           {/* <BotonesAccion contentType={item.attributes.content_type} objectId={item.id}
             className="block sm:hidden w-full flex items-center justify-center" /> */}
-
+          <Recomendaciones items={items} tipoObjeto={tipoObjeto} objectId={item.id} />
         </div>
       </div>
 

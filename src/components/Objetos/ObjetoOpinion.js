@@ -15,7 +15,7 @@ const Comentario = ({ item }) => (
 );
 
 const ObjetoOpinion = ({ objeto }) => (
-    <div className="mt-8">
+    <div className="mt-8 mb-20">
         <div className="text-2xl font-bold text-slate-900 tracking-tight dark:text-slate-200 my-4">
             Opiniones</div>
         <div className="mb-4">
