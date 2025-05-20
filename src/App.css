@@ -257,6 +257,7 @@ footer .titulo {
 
 .slider-horizontal {
   padding-bottom: 10px;
+  overflow-x: hidden;
   /* width: fit-content; */
 }
 
