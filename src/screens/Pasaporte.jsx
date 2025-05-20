@@ -344,8 +344,8 @@ export default function Pasaporte() {
       {viaje && (
         <div className="text-center my-8 mt-10 pt-10">
           <h2 className="text-2xl font-bold">Tu viaje registrado</h2>
-          <p><strong>Desde:</strong> {funciones.toDateLocalFormat(viaje.attributes.start_date)}</p>
-          <p><strong>Hasta:</strong> {funciones.toDateLocalFormat(viaje.attributes.end_date)}</p>
+          <p><strong>Desde:</strong> {funciones.formatearFechayHora(viaje.attributes.start_date)}</p>
+          <p><strong>Hasta:</strong> {funciones.formatearFechayHora(viaje.attributes.end_date)}</p>
           <p><strong>Personas:</strong> {viaje.attributes.number_of_people_in_group}</p>
           <button
             onClick={() => {
