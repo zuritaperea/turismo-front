@@ -409,3 +409,7 @@ footer .titulo {
     background: white;
     box-shadow: 0 5px 6px rgba(0, 0, 0, 0.1);
 }
+
+.back-to-top-btn {
+  z-index: 99999;
+}
