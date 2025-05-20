@@ -98,7 +98,6 @@ body {
 }
 
 .card-basica {
-  width: 300px;
   flex: none;
   padding-bottom: 7px;
 }
@@ -391,4 +390,15 @@ footer .titulo {
 
 .filtros-container .align-right {
   margin-left: auto;
+}
+
+.social-icon {
+    border-radius: 100%;
+    height: 50px;
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    box-shadow: 0 5px 6px rgba(0, 0, 0, 0.1);
 }

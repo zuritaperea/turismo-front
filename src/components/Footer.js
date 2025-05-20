@@ -28,7 +28,7 @@ export default function Footer() {
     <footer className="hidden md:block">
       {/* Sección superior del footer */}
       <div id="menu-footer" className="bg-white mt-10 py-5 px-10 mx-auto">
-        <p className="descripcion text-center sm:mx-10 my-7 text-sm text-gray-600">
+        <p className="descripcion text-center sm:mx-10 my-7 text-sm text-gray-600 mb-10">
           {footerDescription}
         </p>
 
@@ -45,8 +45,8 @@ export default function Footer() {
               return true; 
             }).map(item => (
               <div key={item.id}>
-                <h3 className="titulo mb-4 text-center">
-                  <MenuLink item={item} className="font-light text-base" />
+                <h3 className="titulo text-center">
+                  <MenuLink item={item} className="font-bold text-base" />
                 </h3>
               </div>
             ))}

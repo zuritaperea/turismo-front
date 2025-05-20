@@ -3,7 +3,7 @@ import { User } from 'lucide-react';
 
 const Comentario = ({ item }) => (
     <div key={item.id} className="border-b py-4">
-        <div className="flex items-center gap-4 mb-2">
+        <div className="flex items-center gap-4 mb-4">
         <User size={34} className="text-gray-700" />
             <div>
                 <p className="font-semibold">{item.user}</p>
@@ -20,8 +20,8 @@ const ObjetoOpinion = ({ objeto }) => (
             Opiniones</div>
         <div className="mb-4">
             <Estrellas puntuacion={objeto.puntuacion} size={'lg'} />
-            <p className="text-gray-500">
-                Comentarios: {objeto.evaluaciones?.length || 0}
+            <p className="text-gray-500 mt-5">
+                Comentarios: <span className="text-gray-700 font-bold">{objeto.evaluaciones?.length || 0}</span>
             </p>
         </div>
         {objeto.evaluaciones?.map((item) => (

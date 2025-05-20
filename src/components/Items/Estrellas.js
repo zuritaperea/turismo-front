@@ -20,7 +20,7 @@ const Estrellas = ({ puntuacion = 0, setPuntuacion = null, size = "lg" }) => {
   const isInteractive = !!setPuntuacion;
 
   return (
-    <div className="flex items-center gap-1">
+    <div className="flex items-center gap-1 mt-1">
       {[1, 2, 3, 4, 5].map((i) => (
         <FontAwesomeIcon
           key={i}

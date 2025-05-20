@@ -21,7 +21,7 @@ export const SeccionDescripcionMultilingue = ({ titulo, descripcion }) => {
         {titulo}
       </h2>
 
-      <div className="w-full space-y-12">
+      <div className="w-full space-y-12 mb-20">
         {contenidoPOR && (
           <div>
             <p className="text-sm sm:text-base italic font-bold mb-3">🇧🇷 POR</p>

@@ -163,7 +163,7 @@ function ItemScreen({ tipoObjeto }) {
             descripcion={item.attributes.description}
           />
           {item.attributes.contenidos && item.attributes.contenidos.length > 1 && (
-            <div className="w-full max-w-[1376px] mx-auto my-10">
+            <div className="w-full max-w-[1376px] mx-auto my-10 mb-20">
               <Carousel images={item.attributes?.contenidos} detail={true} imagePrincipalUrl={item.attributes.image_url
                 ? process.env.REACT_APP_API_URL + item.attributes.image_url
                 : process.env.REACT_APP_IMAGE_DEFAULT} />
@@ -173,7 +173,6 @@ function ItemScreen({ tipoObjeto }) {
             <ListaProductosTuristicos listData={item.attributes.productos_turisticos}
               fechaDesde={fechaDesde} fechaHasta={fechaHasta} cantidadPersonas={cantidad} esPasaporte={esPasaporte} />
           )}
-          <SeccionConTitulo titulo="Dirección" contenido={item.attributes.street_address} />
           {/* {item.attributes.point && (
             <Mapa
               objetosFiltrados={[
@@ -187,7 +186,7 @@ function ItemScreen({ tipoObjeto }) {
           )} */}
           {item.attributes.amenity_feature && <Servicios servicios={item.attributes.amenity_feature} />}
 
-          <div className="grid grid-cols-1 md:grid-cols-3">
+          <div className="mb-20">
             {item.attributes.opening_hours && Object.keys(item.attributes.opening_hours).length > 0 && (
               <FechasHorarios item={item} tipoObjeto={tipoObjeto} />
             )}
@@ -211,6 +210,7 @@ function ItemScreen({ tipoObjeto }) {
           )}
 
           <Recomendaciones items={items} tipoObjeto={tipoObjeto} objectId={item.id} />
+          <SeccionConTitulo titulo="Dirección" contenido={item.attributes.street_address} />
           {item.attributes.point && (
             <Mapa
               objetosFiltrados={[

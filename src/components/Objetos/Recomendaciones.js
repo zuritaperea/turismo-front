@@ -11,13 +11,13 @@ const Recomendaciones = ({ items, tipoObjeto, objectId }) => {
     .slice(0, 4);
 
   return (
-    <div className="py-4">
+    <div className="py-4 mb-20">
       <div
-        className="mb-4"
+        className="mb-5"
         style={{
           color: "#101828",
-          fontSize: "30px",
-          fontWeight: "600",
+          fontSize: "1.5rem",
+          fontWeight: "700",
         }}
       >
         También puede interesarte...

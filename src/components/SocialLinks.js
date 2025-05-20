@@ -37,8 +37,8 @@ const SocialLinks = ({ redes, onClickRed }) => {
           onClick={(e) => handleClick(e, red)}
         >
           {socialIconsFA[red.red_social] && (
-            <div className="border rounded-lg border-[#98a2b3] px-1.5 py-0">
-              <FontAwesomeIcon icon={socialIconsFA[red.red_social]} className="text-sm" color="#98a2b3" />
+            <div className="social-icon border rounded-lg border-[#98a2b3] px-1.5 py-0">
+              <FontAwesomeIcon icon={socialIconsFA[red.red_social]} className="text-xl" color="#000" />
             </div>
           )}
         </a>

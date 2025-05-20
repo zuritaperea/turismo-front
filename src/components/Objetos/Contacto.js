@@ -7,15 +7,15 @@ const Contacto = ({ contactoData }) => {
   if (!contactoData) return null;
 
   return (
-    <div id="contacto">
-      <div className="text-xl font-bold text-slate-900 tracking-tight dark:text-slate-200 my-4">
+    <div id="contacto" className="mb-5">
+      <div className="text-2xl font-bold text-slate-900 tracking-tight dark:text-slate-200 my-4">
         Contacto
       </div>
       {/* Mostrar los teléfonos */}
       {contactoData.telefonos && contactoData.telefonos.length > 0 && (
         contactoData.telefonos.map((telefono, index) => (
           <div key={index} className="flex descripcion">
-            <img src={phoneIcon} className="mr-3" alt="Teléfono" />
+            <img src={phoneIcon} className="mr-3 object-contain" alt="Teléfono" />
             {telefono.type}: {telefono.contact_point}
           </div>
         ))
@@ -25,7 +25,7 @@ const Contacto = ({ contactoData }) => {
       {contactoData.correos_electronicos && contactoData.correos_electronicos.length > 0 && (
         contactoData.correos_electronicos.map((correo, index) => (
           <div key={index} className="flex descripcion">
-            <img src={mailIcon} className="mr-3" alt="Correo" />
+            <img src={mailIcon} className="mr-3 object-contain" alt="Correo" />
             {correo.type}: {correo.contact_point}
           </div>
         ))
@@ -34,7 +34,7 @@ const Contacto = ({ contactoData }) => {
       {/* Mostrar el sitio web */}
       {contactoData.url && (
         <div className="flex descripcion">
-          <img src={linkIcon} className="mr-3" alt="Sitio web" />
+          <img src={linkIcon} className="mr-3 object-contain" alt="Sitio web" />
           {contactoData.url}
         </div>
       )}

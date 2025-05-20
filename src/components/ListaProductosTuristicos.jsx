@@ -139,7 +139,7 @@ const ListaProductosTuristicos = (props) => {
   };
 
   return (
-    <div>
+    <div  className="mb-20">
       <h2 className="text-2xl font-bold text-slate-900 tracking-tight dark:text-slate-200 my-4">
         Realizá tu reserva
       </h2>

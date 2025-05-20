@@ -21,7 +21,7 @@ const EncabezadoAtractivo = ({ item }) => {
                 src={imagen}
                 alt={`Imagen de ${nombre}`}
             />
-            <div className="absolute left-1/2 top-[75%] transform -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-[900px] bg-white rounded-2xl shadow-lg p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 z-10">
+            <div className="absolute left-1/2 top-[75%] transform -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-[900px] bg-white rounded-2xl shadow-lg p-6 flex flex-col xl:flex-row justify-between items-start gap-4 z-10">
                 <div className='flex-1'>
                     <p className="text-xs text-orange-500 font-semibold mb-1">{categoria}</p>
                     <h1 className="text-3xl font-bold text-gray-900">{nombre}</h1>
@@ -36,7 +36,7 @@ const EncabezadoAtractivo = ({ item }) => {
                         <span className="ml-2 text-sm text-gray-500">{cantidadRespuestas} respuestas</span>
                     </div>
                 </div>
-                <div className="flex-shrink-0 mb-24">
+                <div className="flex-shrink-0 mt-3">
                     <BotonesAccion
                         contentType={item.attributes.content_type}
                         objectId={item.id}

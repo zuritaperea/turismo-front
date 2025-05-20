@@ -34,7 +34,7 @@ function Carousel({ images, detail = false, imagePrincipalUrl = null }) {
 
   return (
     <div
-      className={`relative w-full sm:w-11/12 mx-0 sm:mx-auto mt-0 sm:mt-5 ${detail ? 'max-w-[1600px] px-0 sm:px-4 md:px-0' : 'max-w-[1376px] px-0 sm:px-10 md:px-0'}`}
+      className={`relative w-full mx-0 sm:mx-auto mt-0 sm:mt-5 ${detail ? 'max-w-[1600px] px-0 sm:px-4 md:px-0' : 'max-w-[1376px] px-0 sm:px-10 md:px-0'}`}
       style={{ height: 'auto', minHeight: '280px', maxHeight: '436px', marginBottom: '1rem' }}
     >
       <Swiper

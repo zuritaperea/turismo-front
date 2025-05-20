@@ -62,7 +62,7 @@ const OpeningHours = ({ openingHoursText }) => {
 
   return (
     <div>
-      <ul className="list-disc ml-10">
+      <ul className="list-disc ml-10 mb-5">
         {formattedOpeningHours.length === 0 ? (
           <li style={{ color: "#475467", fontWeight: "400", fontSize: "16px" }}>
             No hay horarios disponibles.
