@@ -92,6 +92,13 @@ export default function Header() {
                   >
                     Mi Perfil
                   </Link>
+                  <Link
+                    to="/mis-reservas"
+                    className="block px-4 py-2 text-gray-700 hover:bg-gray-200 font-medium"
+                    onClick={() => setUserMenuOpen(false)}
+                  >
+                    Mis Reservas
+                  </Link>
                   <button
                     onClick={handleLogout}
                     className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-200 flex items-center gap-2"
