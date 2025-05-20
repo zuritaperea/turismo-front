@@ -156,7 +156,7 @@ function ItemScreen({ tipoObjeto }) {
     <>
       <Header />
       <EncabezadoAtractivo item={item} />
-      <div className="container  mt-62 lg:mt-20 mx-auto p-4 pt-28">
+      <div className="container mt-20 mx-auto p-4 pt-28">
         <div className="pb-4 mt-40 lg:mt-1">
           <SeccionDescripcionMultilingue
             titulo="Descripción"
