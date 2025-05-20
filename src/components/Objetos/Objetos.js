@@ -100,15 +100,15 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
         className="relative w-full pt-12 pb-6 md:pb-10 lg:pb-16 flex flex-col items-center text-white bg-cover bg-center h-auto lg:h-96"
         style={{ backgroundImage: `url(${backgroundImage})` }}
       >
-        <div className="absolute inset-0 bg-black bg-opacity-25 z-0" />
-        <div className="relative z-10 w-full px-4 flex flex-col justify-center">
-          <div className="flex justify-center items-center h-full">
-            <h1 className="text-white text-4xl md:text-5xl lg:text-6xl font-bold text-center">
+        <div className="absolute inset-0 bg-black bg-opacity-50 z-0" />
+        <div className="z-10 w-full px-4 flex flex-col justify-center h-full">
+          <div className="flex justify-center items-center">
+            <h1 className="header-title text-white text-4xl md:text-5xl lg:text-6xl font-black text-center">
               {title}
             </h1>
           </div>
 
-          <div className="lg:absolute lg:-bottom-96 lg:mb-14   w-full flex justify-center px-4 z-20 mt-4 lg:mt-0">
+          <div className="filtros-container lg:absolute w-full flex justify-center px-4 z-20 mt-4 lg:mt-0">
             <div className="w-full max-w-6xl px-4 sm:px-6 lg:px-8 mx-auto">
               <Filtros
                 objetoService={objetoService}

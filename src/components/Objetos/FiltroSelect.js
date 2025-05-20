@@ -20,10 +20,10 @@ const FiltroSelect = ({
 }) => {
   
   const iconByName = {
-    type_attractive: <MapIcon size={18} className="text-gray-500 mr-2" />,
-    price_range: <DollarSign size={18} className="text-gray-500 mr-2" />,
-    resto_type: <Utensils size={18} className="text-gray-500 mr-2" />,
-    tourist_type: <Users size={18} className="text-gray-500 mr-2" />,
+    type_attractive: <MapIcon size={18} className="text-black mr-2" />,
+    price_range: <DollarSign size={18} className="text-black mr-2" />,
+    resto_type: <Utensils size={18} className="text-black mr-2" />,
+    tourist_type: <Users size={18} className="text-black mr-2" />,
   };
 
   const Icon = iconByName[name] || null;

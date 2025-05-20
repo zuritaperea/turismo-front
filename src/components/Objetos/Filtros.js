@@ -138,8 +138,8 @@ const Filtros = ({ objetoService, setObjetosFiltrados, target }) => {
         className="bg-black bg-opacity-95 rounded-2xl shadow-md flex flex-col lg:flex-row items-center justify-center gap-3 px-4 py-7 flex-wrap"
         style={{ backgroundColor: "rgba(46, 45, 44, 0.95)" }}
       >
-        <div className="flex items-center bg-white rounded-full px-4 py-2 w-full md:w-auto">
-          <Search className="text-gray-500 mr-2" size={18} />
+        <div className="flex items-center bg-white rounded-full px-4 py-2 w-full lg:w-auto">
+          <Search className="text-black mr-2" size={18} />
           <input
             type="text"
             name="name"
@@ -152,13 +152,13 @@ const Filtros = ({ objetoService, setObjetosFiltrados, target }) => {
               }
             }}
             onChange={handleFilterChange}
-            className="text-gray-700 placeholder-gray-400 bg-transparent outline-none w-full"
+            className="text-gray-700 placeholder-gray-700 bg-transparent outline-none w-full"
           />
         </div>
 
         {['Atractivo', 'Circuito'].includes(target) && (
           <FiltroSelect
-            className="w-full md:w-auto"
+            className="w-full lg:w-auto"
             name="type_attractive"
             placeholder="Tipo de atractivo"
             options={constantes.tipo_atractivo}
@@ -169,15 +169,18 @@ const Filtros = ({ objetoService, setObjetosFiltrados, target }) => {
 
         <button
           onClick={() => setShowModal(true)}
-          className="flex items-center bg-white rounded-full px-4 py-2 text-gray-700 hover:bg-gray-100 transition w-full md:w-auto"
+          className="flex items-center bg-white rounded-full px-4 py-2 text-gray-700 hover:bg-gray-100 transition w-full lg:w-auto"
         >
-          <Filter className="text-gray-500 mr-2" size={18} />
-          <span className="text-gray-700 text-sm pt-1">
+          <Filter className="text-black mr-2" size={18} />
+          <span className="text-gray-700">
             {filtrosSeleccionados > 0
               ? `${filtrosSeleccionados} filtros seleccionados`
               : "Filtros avanzados"}
           </span>
-          <SlidersHorizontal className="ml-2 text-gray-500" size={18} />
+
+          <div className="align-right">
+            <SlidersHorizontal className="ml-2 text-black" size={18} />
+          </div>
         </button>
 
         <button
