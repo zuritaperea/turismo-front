@@ -59,7 +59,7 @@ function Carousel({ images, detail = false, imagePrincipalUrl = null }) {
                   muted
                   playsInline
                   className="w-full max-h-[436px] object-cover mx-auto rounded-lg"
-                  style={{ height: 'auto', minHeight: '280px', maxHeight: '430px', marginBottom: '1rem', borderRadius: '1rem' }}
+                  style={{height: '280px', marginBottom: '1rem', borderRadius: '1rem' }}
                 >
                   <source src={media.file} type={`video/${media.file.split('.').pop()}`} />
                   Tu navegador no soporta el video.
@@ -67,7 +67,7 @@ function Carousel({ images, detail = false, imagePrincipalUrl = null }) {
               ) : (
                 <img
                   className="w-full max-h-[436px] object-cover mx-auto rounded-lg"
-                  style={{ height: 'auto', minHeight: '280px', maxHeight: '430px', marginBottom: '1rem', borderRadius: '1rem' }}
+                  style={{height: '280px', marginBottom: '1rem', borderRadius: '1rem' }}
                   src={media.file}
                   alt={media.title}
                 />
