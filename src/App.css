@@ -137,7 +137,7 @@ body {
 
 @media (min-width: 640px) {
   .card-basica {
-    min-width: 300px;
+    width: 300px;
   }
 
   .marketplace-img,
