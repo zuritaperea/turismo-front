@@ -35,7 +35,9 @@ const Contacto = ({ contactoData }) => {
       {contactoData.url && (
         <div className="flex descripcion">
           <img src={linkIcon} className="mr-3 object-contain" alt="Sitio web" />
-          {contactoData.url}
+          <a href={contactoData.url} target="_blank" rel="noopener noreferrer">
+            {contactoData.url}
+          </a>
         </div>
       )}
     </div>
