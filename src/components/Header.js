@@ -3,7 +3,7 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import logo from '../assets/img/logomark.png';
 import { ConfigContext } from '../extras/ConfigContext';
 import { AuthContext } from "./AuthContext";
-import { Menu, X, LogIn, LogOut, User } from 'lucide-react';
+import { Menu, X, LogIn, LogOut, User, Leaf } from 'lucide-react';
 import MenuLink from "./MenuLink";
 import BotonTraductor from "./BotonTraductor";
 
@@ -121,7 +121,7 @@ export default function Header() {
               <LogIn size={24} className="text-gray-700" />
             </Link>
           )}
-                        <BotonTraductor />
+          <BotonTraductor />
 
         </nav>
 
@@ -159,12 +159,12 @@ export default function Header() {
                   <User size={24} className="text-gray-700" />
                   <span>Mi Perfil</span>
                 </Link>
-                 <Link
+                <Link
                   to="/perfil-ambiental"
                   className="flex items-center gap-2"
                   onClick={() => setMenuOpen(false)}
                 >
-                  <User size={24} className="text-gray-700" />
+                  <Leaf size={24} className="text-green-600" />
                   <span>Mi Perfil Ambiental</span>
                 </Link>
                 <button
@@ -181,7 +181,7 @@ export default function Header() {
                 <span>Iniciar sesión</span>
               </Link>
             )}
-          <div className="flex items-center"> <BotonTraductor />Traducir</div> 
+            <div className="flex items-center"> <BotonTraductor />Traducir</div>
           </nav>
         </div>
       )}
