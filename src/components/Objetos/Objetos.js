@@ -97,8 +97,7 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
       <style>{mapStyles}</style>
       <Header />
       <div
-        className="relative w-full pt-12 pb-6 md:pb-10 lg:pb-16 flex flex-col items-center text-white bg-cover bg-center h-auto lg:h-96"
-        style={{ backgroundImage: `url(${backgroundImage})` }}
+        className="relative w-full pt-12 pb-6 md:pb-10 lg:pb-16 flex flex-col items-center text-white bg-cover bg-center h-auto lg:h-96 bg-principal"
       >
         <div className="absolute inset-0 bg-black bg-opacity-50 z-0" />
         <div className="z-10 w-full px-4 flex flex-col justify-center h-full">
