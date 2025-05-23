@@ -17,7 +17,7 @@ const renderEstado = (estado) => {
           Aprobada
         </span>
       );
-   case "rejected":
+    case "rejected":
       return (
         <span className="inline-flex items-center px-2 py-1 rounded-md border border-red-600 bg-red-100 text-red-700 text-sm font-medium">
           <XCircle className="w-4 h-4 mr-1" />
@@ -112,23 +112,43 @@ const MisEvidencias = () => {
                     <td className="p-3">
                       {reserva.attributes.comment || "-"}
                     </td>
-                    <td className="p-3">{reserva.attributes.location}</td>
-                    <td className="p-3">{funciones.formatearFecha(reserva.attributes.created_at)}</td>
-                    <td className="p-3">  {renderEstado(reserva.attributes.status)}
-                    </td>
                     <td className="p-3">
-                        <div className="flex items-center justify-center h-full gap-2">
-                          <button
-                            className="text-blue-600 hover:text-blue-800"
-                            onClick={() => handleVer(reserva.attributes.image)}
-                            title="Ver archivo"
-                          >
-                            <Eye className="w-5 h-5" />
-                          </button>
-                         
-                        </div>
+                      {(() => {
+                        const rawLocation = reserva?.attributes?.location;
+                        try {
+                          const parsed = JSON.parse(rawLocation);
+                          if (parsed?.lat && parsed?.lng) {
+                            const googleMapsLink = `https://www.google.com/maps?q=${parsed.lat},${parsed.lng}`;
+                            return (
+                              <a
+                                href={googleMapsLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-600 hover:underline"
+                              >
+                                Ver en Google Maps
+                              </a>
+                            );
+                          }
+                          return null; // JSON válido pero sin lat/lng
+                        } catch (e) {
+                          return rawLocation || "-"; // No es JSON, mostrar como string
+                        }
+                      })()}
                     </td>
-
+                    <td className="p-3">{funciones.formatearFecha(reserva.attributes.created_at)}</td>
+                    <td className="p-3">{renderEstado(reserva.attributes.status)}</td>
+                    <td className="p-3">
+                      <div className="flex items-center justify-center h-full gap-2">
+                        <button
+                          className="text-blue-600 hover:text-blue-800"
+                          onClick={() => handleVer(reserva.attributes.image)}
+                          title="Ver archivo"
+                        >
+                          <Eye className="w-5 h-5" />
+                        </button>
+                      </div>
+                    </td>
                   </tr>
                 ))}
               </tbody>

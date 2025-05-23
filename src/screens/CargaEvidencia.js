@@ -6,6 +6,17 @@ import Splash from "../components/Splash";
 import { AuthContext } from "../components/AuthContext";
 import { useNavigate } from "react-router-dom";
 import Modal from "../components/Modal";
+import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from "react-leaflet";
+import { Icon, latLngBounds } from "leaflet";
+import markerIconShadowPng from "leaflet/dist/images/marker-shadow.png";
+import markerIconPng from "leaflet/dist/images/marker-icon.png";
+
+const defaultIcon = new Icon({
+  iconUrl: markerIconPng,
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  shadowUrl: markerIconShadowPng,
+});
 
 const CargaEvidencia = () => {
     const { user } = useContext(AuthContext);
@@ -15,12 +26,29 @@ const CargaEvidencia = () => {
     const [acciones, setAcciones] = useState([]);
     const [formData, setFormData] = useState({
         comment: "",
-        location: "",
+        locationLat: null,
+        locationLng: null,
         image: null,
         sustainable_action_id: "",
     });
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
+
+    const ClickHandler = ({ setFormData }) => {
+        useMapEvents({
+          click(e) {
+            const { lat, lng } = e.latlng;
+            console.log("Ubicación seleccionada:", lat, lng);
+            setFormData((prev) => ({
+              ...prev,
+              locationLat: lat,
+              locationLng: lng,
+            }));
+          },
+        });
+        return null;
+      };
+
     useEffect(() => {
         if (!user) {
           setLoading(false);
@@ -61,7 +89,8 @@ const CargaEvidencia = () => {
             // Limpiar formulario
             setFormData({
                 comment: "",
-                location: "",
+                locationLat: null,
+                locationLng: null,
                 image: null,
                 sustainable_action_id: "",
             });
@@ -111,14 +140,54 @@ const CargaEvidencia = () => {
                     </div>
 
                     <div>
-                        <label className="block font-medium">Ubicación (opcional)</label>
-                        <input
-                            type="text"
-                            name="location"
-                            value={formData.location}
-                            onChange={handleChange}
-                            className="w-full border rounded p-2"
-                        />
+                        <h2 className="text-xl font-bold mb-4">Seleccionar Ubicación (opcional)</h2>
+                        <div className="mb-4">
+                            <MapContainer
+                                center={[
+                                    formData.locationLat || parseFloat(process.env.REACT_APP_DEFAULT_LAT) || -34.6037,
+                                    formData.locationLng || parseFloat(process.env.REACT_APP_DEFAULT_LNG) || -58.3816,
+                                ]}
+                                zoom={parseInt(process.env.REACT_APP_DEFAULT_ZOOM) || 15}
+                                style={{ height: "400px" }}
+                                doubleClickZoom={true}
+                                scrollWheelZoom={false}
+                                whenCreated={(map) => {
+                                    map.on("click", (e) => {
+                                        const { lat, lng } = e.latlng;
+                                        setFormData((prev) => ({
+                                            ...prev,
+                                            locationLat: lat,
+                                            locationLng: lng,
+                                        }));
+                                    });
+                                }}
+                            >
+                                <TileLayer
+                                    url={process.env.REACT_APP_TILE_LAYER_URL || "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"}
+                                    attribution={process.env.REACT_APP_TILE_LAYER_ATTRIBUTION || '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}
+                                />
+                                  <ClickHandler setFormData={setFormData} />
+
+{formData.locationLat !== null && formData.locationLng !== null && (
+                                    <Marker position={[formData.locationLat, formData.locationLng]}   icon={defaultIcon}
+>
+                                        <Popup>
+                                            <div>
+                                                <b>Ubicación seleccionada</b>
+                                                <br />
+                                                <a
+                                                    href={`http://maps.google.com/maps?q=${formData.locationLat},${formData.locationLng}`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                >
+                                                    Ver en Google Maps
+                                                </a>
+                                            </div>
+                                        </Popup>
+                                    </Marker>
+                                )}
+                            </MapContainer>
+                        </div>
                     </div>
 
                     <div>
@@ -142,13 +211,18 @@ const CargaEvidencia = () => {
                 </form>
             </div>
             <Footer />
-            <Modal show={showModal} onHide={() => setShowModal(false)} centered>    
-                <Modal.Body><p className="text-gray-200">Tu evidencia ha sido enviada exitosamente.</p></Modal.Body>
+            <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+                <Modal.Body>
+                    <p className="text-gray-200">Tu evidencia ha sido enviada exitosamente.</p>
+                </Modal.Body>
                 <Modal.Footer>
-                    <button className="bg-principal text-white px-4 py-2 rounded" onClick={() => setShowModal(false)}>
+                    <button
+                        className="bg-principal text-white px-4 py-2 rounded"
+                        onClick={() => setShowModal(false)}
+                    >
                         Cerrar
                     </button>
-                </Modal.Footer>    
+                </Modal.Footer>
             </Modal>
         </div>
     );

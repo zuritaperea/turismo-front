@@ -20,7 +20,12 @@ export default {
   agregarEvidencia: function (data) {
     const formData = new FormData();
     formData.append("comment", data.comment);
-    formData.append("location", data.location);
+    if (data.locationLat !== null && data.locationLng !== null) {
+      formData.append("location", JSON.stringify({
+      lat: data.locationLat,
+      lng: data.locationLng
+      }));
+    }
     formData.append("image", data.image);  // archivo tipo File
     formData.append("sustainable_action", data.sustainable_action_id);  // ID
     
