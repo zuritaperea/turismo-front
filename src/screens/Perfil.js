@@ -13,6 +13,8 @@ import { ConfigContext } from '../extras/ConfigContext';
 import Separador from '../components/Separador';
 import Splash from '../components/Splash';
 import Turnstile from "react-turnstile";
+import Footer from '../components/Footer';
+import Header from '../components/Header';
 
 const MiPerfil = () => {
   const [logoLogin, setLogoLogin] = useState(logo);
@@ -160,12 +162,13 @@ const MiPerfil = () => {
   if (loading) return <Splash />;
 
   return (
-    <Container className='md:w-6/12 w-full'>
-      <Row className="m-b-2 text-center sm:mt-10 mt-6">
+    <div className="bg-gray-100 min-h-screen">
+      <Header />
+      <div className="max-w-5xl mx-auto p-6 bg-white shadow-md rounded-lg mt-6">
+
+        <Row className="">
         <Col>
-          <img className="logo m-auto" src={logoLogin} alt="Logo" />
           <h1 className="text-2xl font-bold">Mi perfil</h1>
-          <h4 className="text-sm">Modificá tus datos personales.</h4>
         </Col>
       </Row>
 
@@ -282,8 +285,10 @@ const MiPerfil = () => {
             <Link className="color-principal ml-2" to="/perfil-ambiental">Mi Perfil Ambiental</Link>
           </p>
         </Col>
-      </Row>
-    </Container>
+      </Row></div>
+            <Footer />
+      
+    </div>
   );
 };
 

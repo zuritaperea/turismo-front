@@ -343,10 +343,27 @@ export default function Pasaporte() {
 
       {viaje && (
         <div className="text-center my-8 mt-10 pt-10">
-          <h2 className="text-2xl font-bold">Tu viaje registrado</h2>
-          <p><strong>Desde:</strong> {funciones.formatearFechayHora(viaje.attributes.start_date)}</p>
-          <p><strong>Hasta:</strong> {funciones.formatearFechayHora(viaje.attributes.end_date)}</p>
-          <p><strong>Personas:</strong> {viaje.attributes.number_of_people_in_group}</p>
+        </div>
+      )}
+
+      <Listado
+        objetosFiltrados={objetosFiltrados}
+        navigation={navigate}
+        desde={filtroDesde}
+        hasta={filtroHasta}
+        cantidad={filtroCantidad}
+        pasaporte={true}
+      />
+      {loading && <Spinner size={10} className="mx-auto mt-6" />}
+
+  {busquedaRealizada && objetosFiltrados.length === 0 && !loading && (
+    <div className="text-center text-gray-500 mt-2">
+      No se encontraron resultados para la búsqueda.
+    </div>
+  )}
+
+      {viaje && (
+        <div className="text-center">
           <button
             onClick={() => {
               localStorage.removeItem("viaje");
@@ -360,22 +377,8 @@ export default function Pasaporte() {
         </div>
       )}
 
-      <Listado
-        objetosFiltrados={objetosFiltrados}
-        navigation={navigate}
-        desde={filtroDesde}
-        hasta={filtroHasta}
-        cantidad={filtroCantidad}
-        pasaporte={true}
-      />
 
-      {loading && <Spinner size={10} className="mx-auto mt-6" />}
 
-      {busquedaRealizada && objetosFiltrados.length === 0 && !loading && (
-        <div className="text-center text-gray-500 mt-6">
-          No se encontraron resultados para la búsqueda.
-        </div>
-      )}
       <Footer />
     </>
   );
