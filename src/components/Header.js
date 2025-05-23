@@ -99,6 +99,13 @@ export default function Header() {
                   >
                     Mis Reservas
                   </Link>
+                  <Link
+                    to="/perfil-ambiental"
+                    className="block px-4 py-2 text-gray-700 hover:bg-gray-200 font-medium"
+                    onClick={() => setUserMenuOpen(false)}
+                  >
+                    Mi Perfil Ambiental
+                  </Link>
                   <button
                     onClick={handleLogout}
                     className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-200 flex items-center gap-2"
@@ -151,6 +158,14 @@ export default function Header() {
                 >
                   <User size={24} className="text-gray-700" />
                   <span>Mi Perfil</span>
+                </Link>
+                 <Link
+                  to="/perfil-ambiental"
+                  className="flex items-center gap-2"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <User size={24} className="text-gray-700" />
+                  <span>Mi Perfil Ambiental</span>
                 </Link>
                 <button
                   onClick={() => { setMenuOpen(false); handleLogout(); }}
