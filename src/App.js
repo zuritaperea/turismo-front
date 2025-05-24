@@ -45,6 +45,7 @@ import Pasaporte from "./screens/Pasaporte";
 import CargaEvidencia from "./screens/CargaEvidencia";
 import MisEvidencias from "./screens/MisEvidencias";
 import PerfilAmbiental from "./screens/PerfilAmbiental";
+import FaviconSetter from "./components/FaviconSetter";
 
 function App() {
 
@@ -65,67 +66,68 @@ function App() {
     }
   };
   return (
-    <ConfigProvider>   <AuthProvider>
-      <>
-        <CookieConsent onConsent={handleConsent} />
-        <BrowserRouter basename="/web">
-          <Routes>
-            <Route path="/" element={<Inicio />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/perfil" element={<Perfil />} />
-            <Route path="/logout" element={<Logout />} />
-            <Route path="/destino/:id/:fechadesde/:fechahasta" element={<DestinoScreen />} />
-            <Route path="/destino/:id/:fechadesde/:fechahasta/:filtros" element={<DestinoScreen />} />
-            <Route path="/destino/:id" element={<DestinoScreen />} />
-            <Route path="/destino/:id/:filtros" element={<DestinoScreen />} />
-            <Route path="/destinos" element={<DestinosScreen />} />
-            <Route path="/destinos/:id" element={<DestinosScreen />} />
-            <Route path="/busqueda/:nombre" element={<BusquedaScreen />} />
-            <Route path="/busqueda" element={<BusquedaScreen />} />
-            <Route path="/atractivo" element={<AtractivoScreen />} />
-            <Route path="/atractivos" element={<AtractivosScreen />} />
-            <Route path="/atractivos/:id" element={<AtractivosScreen />} />
-            <Route path="/gastronomia" element={<GastronomiasScreen />} />
-            <Route path="/gastronomia/:id" element={<GastronomiaScreen />} />
-            <Route path="/comercios" element={<ComerciosScreen />} />
-            <Route path="/comercio/:id" element={<ComercioScreen />} />
-            <Route path="/atractivo/:id" element={<AtractivoScreen />} />
-            <Route path="/alojamiento/:id" element={<AlojamientoScreen />} />
-            <Route path="/alojamientos" element={<AlojamientosScreen />} />
-            <Route path="/puntointeres/:id" element={<PuntoInteresScreen />} />
-            <Route path="/puntointeres" element={<PuntoInteresScreen />} />
-            <Route path="/puntosinteres/:id" element={<PuntosInteres />} />
-            <Route path="/puntosinteres" element={<PuntosInteres />} />
-            <Route path="/circuito/:id" element={<CircuitoScreen />} />
-            <Route path="/circuitos" element={<CircuitosScreen />} />
-            <Route path="/circuitos/:id" element={<CircuitosScreen />} />
-            <Route path="/evento/:id" element={<EventoScreen />} />
-            <Route path="/eventos/:id" element={<Eventos />} />
-            <Route path="/eventos" element={<Eventos />} />
-            <Route path="/evento" element={<EventoScreen />} />
-            <Route path="/registro" element={<Registro />} />
-            <Route path="/datos-adicionales" element={<DatosAdicionales />} />
-            <Route path="/terminos-y-condiciones" element={<Terminos />} />
-            <Route path="/recuperar-clave" element={<Recupero />} />
-            <Route path="/viajes" element={<ViajeScreen />} />
-            <Route path="/marketplace" element={<Marketplace />} />
-            <Route path="/pasaporte" element={<Pasaporte />} />
-            <Route path="/confirmacion-reserva" element={<ConfirmacionReserva />} />
-            <Route path="/comprobante-reserva" element={<ComprobanteReserva />} />
-            <Route path="/mis-reservas" element={<MisReservas />} />
-            <Route path="/mis-evidencias" element={<MisEvidencias />} />
+    <ConfigProvider>       <FaviconSetter />
+      <AuthProvider>
+        <>
+          <CookieConsent onConsent={handleConsent} />
+          <BrowserRouter basename="/web">
+            <Routes>
+              <Route path="/" element={<Inicio />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/perfil" element={<Perfil />} />
+              <Route path="/logout" element={<Logout />} />
+              <Route path="/destino/:id/:fechadesde/:fechahasta" element={<DestinoScreen />} />
+              <Route path="/destino/:id/:fechadesde/:fechahasta/:filtros" element={<DestinoScreen />} />
+              <Route path="/destino/:id" element={<DestinoScreen />} />
+              <Route path="/destino/:id/:filtros" element={<DestinoScreen />} />
+              <Route path="/destinos" element={<DestinosScreen />} />
+              <Route path="/destinos/:id" element={<DestinosScreen />} />
+              <Route path="/busqueda/:nombre" element={<BusquedaScreen />} />
+              <Route path="/busqueda" element={<BusquedaScreen />} />
+              <Route path="/atractivo" element={<AtractivoScreen />} />
+              <Route path="/atractivos" element={<AtractivosScreen />} />
+              <Route path="/atractivos/:id" element={<AtractivosScreen />} />
+              <Route path="/gastronomia" element={<GastronomiasScreen />} />
+              <Route path="/gastronomia/:id" element={<GastronomiaScreen />} />
+              <Route path="/comercios" element={<ComerciosScreen />} />
+              <Route path="/comercio/:id" element={<ComercioScreen />} />
+              <Route path="/atractivo/:id" element={<AtractivoScreen />} />
+              <Route path="/alojamiento/:id" element={<AlojamientoScreen />} />
+              <Route path="/alojamientos" element={<AlojamientosScreen />} />
+              <Route path="/puntointeres/:id" element={<PuntoInteresScreen />} />
+              <Route path="/puntointeres" element={<PuntoInteresScreen />} />
+              <Route path="/puntosinteres/:id" element={<PuntosInteres />} />
+              <Route path="/puntosinteres" element={<PuntosInteres />} />
+              <Route path="/circuito/:id" element={<CircuitoScreen />} />
+              <Route path="/circuitos" element={<CircuitosScreen />} />
+              <Route path="/circuitos/:id" element={<CircuitosScreen />} />
+              <Route path="/evento/:id" element={<EventoScreen />} />
+              <Route path="/eventos/:id" element={<Eventos />} />
+              <Route path="/eventos" element={<Eventos />} />
+              <Route path="/evento" element={<EventoScreen />} />
+              <Route path="/registro" element={<Registro />} />
+              <Route path="/datos-adicionales" element={<DatosAdicionales />} />
+              <Route path="/terminos-y-condiciones" element={<Terminos />} />
+              <Route path="/recuperar-clave" element={<Recupero />} />
+              <Route path="/viajes" element={<ViajeScreen />} />
+              <Route path="/marketplace" element={<Marketplace />} />
+              <Route path="/pasaporte" element={<Pasaporte />} />
+              <Route path="/confirmacion-reserva" element={<ConfirmacionReserva />} />
+              <Route path="/comprobante-reserva" element={<ComprobanteReserva />} />
+              <Route path="/mis-reservas" element={<MisReservas />} />
+              <Route path="/mis-evidencias" element={<MisEvidencias />} />
 
-            <Route path="/paginas" element={<Paginas/>} />
-            <Route path="/page/:slug" element={<Pagina/>} />
-            <Route path="/reserva/:id" element={<Reserva />} />
+              <Route path="/paginas" element={<Paginas />} />
+              <Route path="/page/:slug" element={<Pagina />} />
+              <Route path="/reserva/:id" element={<Reserva />} />
 
-            <Route path="/cargar-evidencia" element={<CargaEvidencia/>} />
-            <Route path="/perfil-ambiental" element={<PerfilAmbiental/>} />
+              <Route path="/cargar-evidencia" element={<CargaEvidencia />} />
+              <Route path="/perfil-ambiental" element={<PerfilAmbiental />} />
 
 
-          </Routes>
-        </BrowserRouter>      <ScrollToTopButton />
-      </></AuthProvider></ConfigProvider>
+            </Routes>
+          </BrowserRouter>      <ScrollToTopButton />
+        </></AuthProvider></ConfigProvider>
   );
 }
 
