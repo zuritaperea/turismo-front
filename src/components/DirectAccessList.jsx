@@ -16,7 +16,6 @@ const DirectAccessList = ({ items }) => {
         `}
       >
         {filteredItems.map((item, index) => {
-          console.log(item);
           const imageUrl = item.image_url
             ? (item.image_url.startsWith('http') ? item.image_url : `${process.env.REACT_APP_API_URL}${item.image_url}`)
             : item.image;

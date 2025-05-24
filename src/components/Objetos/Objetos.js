@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import "leaflet/dist/leaflet.css";
 import Listado from "./Listado";
 import Header from "../Header";
@@ -6,6 +6,7 @@ import Footer from "../Footer";
 import L from "leaflet";
 import Mapa from "./Mapa";
 import Filtros from "./Filtros";
+import { ConfigContext } from '../../extras/ConfigContext';
 
 const mapStyles = `
   .leaflet-control-zoom {
@@ -19,15 +20,29 @@ const mapStyles = `
 const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
   const [objetosFiltrados, setObjetosFiltrados] = useState([]);
   const [loading, setLoading] = useState(true);
-  const defaultImage = process.env.REACT_APP_IMAGE_DEFAULT;
-  const [backgroundImage, setBackgroundImage] = useState(defaultImage);
+  const [backgroundImage, setBackgroundImage] = useState("");
+  const config = useContext(ConfigContext);
 
-  useEffect(() => {
-    if (objetosFiltrados.length > 0) {
-      const randomIndex = Math.floor(Math.random() * objetosFiltrados.length);
-      setBackgroundImage(objetosFiltrados[randomIndex].image);
-    }
-  }, [objetosFiltrados]);
+
+    useEffect(() => {
+      if (config && target) {
+        const fieldMap = {
+          atractivo: 'image_bg_atractivo',
+          evento: 'image_bg_evento',
+          gastronomia: 'image_bg_gastronomia',
+          alojamiento: 'image_bg_alojamiento',
+          circuito: 'image_bg_circuito',
+          comercio: 'image_bg_comercio',
+        };
+
+        const fieldKey = fieldMap[target.toLowerCase()];
+        if (fieldKey) {
+          setBackgroundImage(config[fieldKey]);
+          console.log(config[fieldKey])
+        }
+      }
+    }, [config, target]);
+
 
   const customIcon = new L.Icon({
     iconUrl:
@@ -98,6 +113,7 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
       <Header />
       <div
         className="relative w-full pt-12 pb-6 md:pb-10 lg:pb-16 flex flex-col items-center text-white bg-cover bg-center h-auto lg:h-96 bg-principal"
+        style={{ backgroundImage: `url(${backgroundImage})` }}
       >
         <div className="absolute inset-0 bg-black bg-opacity-50 z-0" />
         <div className="z-10 w-full px-4 flex flex-col justify-center h-full">
