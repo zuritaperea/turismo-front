@@ -11,11 +11,6 @@ const defaultIcon = new Icon({
   shadowUrl: markerIconShadowPng,
 });
 
-// Opciones de mapas
-const TILES = {
-  GoogleMaps: "https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}",
-  OSM: "https://a.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png",
-};
 
 const FitBounds = ({ objetosFiltrados }) => {
   const map = useMap();
@@ -37,24 +32,19 @@ const FitBounds = ({ objetosFiltrados }) => {
 };
 
 const Mapa = ({ objetosFiltrados }) => {
-  const position = [-25.441105, -49.276855];
-  const [tileLayer, setTileLayer] = useState("GoogleMaps");
+  const position = [
+    parseFloat(process.env.REACT_APP_DEFAULT_LAT) || -25.441105,
+    parseFloat(process.env.REACT_APP_DEFAULT_LNG) || -49.276855
+  ];
 
   return (
     <div className="h-80 mx-auto rounded-lg overflow-hidden md:mt-5 lg:mt-5 my-5 z-10 mb-20">
-      <select
-        className="absolute top-2 right-2 bg-white p-2 rounded shadow-md text-xs hidden"
-        value={tileLayer}
-        style={{ zIndex: 401 }}
-        onChange={(e) => setTileLayer(e.target.value)}
-      >
-        {Object.keys(TILES).map((key) => (
-          <option key={key} value={key}>{key}</option>
-        ))}
-      </select>
       <div className="w-full h-[400px] rounded-xl overflow-hidden shadow-md">
         <MapContainer center={position} zoom={14} scrollWheelZoom={true} className="h-full w-full">
-          <TileLayer attribution='&copy; OpenStreetMap & Google' url={TILES[tileLayer]} />
+          <TileLayer
+            url={process.env.REACT_APP_TILE_LAYER_URL || "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"}
+            attribution={process.env.REACT_APP_TILE_LAYER_ATTRIBUTION || '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}
+          />
           <FitBounds objetosFiltrados={objetosFiltrados} />
           {objetosFiltrados.map(({ id, title, coordinates }) =>
             coordinates ? (
