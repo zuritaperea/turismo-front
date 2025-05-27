@@ -11,7 +11,7 @@ export default {
   getProfile: function () {
     return api.get(`${apiVersion}/usuario/me/?include=persona`);
   },
-  updateProfile: function (data) { 
+  updateProfile: function (data) {
     const body = {
       email: data.email,
       username: data.email,
@@ -45,7 +45,7 @@ export default {
       { headers: { "Content-Type": "application/json" } } // <- importante!
     );
   },
-  
+
   updateFotoPersona: function (id, data) {
     return api.patch(
       `${apiVersion}/perfil-usuario/${id}/actualizar-avatar/`,
@@ -146,4 +146,33 @@ export default {
       },
     });
   },
+  cambiarClaveConToken: async function (uid, token, password) {
+    const body = {
+      uidb64: uid,
+      token: token,
+      nueva_clave: password,
+    };
+    try {
+      const response = await api.post(`${apiVersion}/usuario/cambiar-clave-con-token/`, JSON.stringify(body), {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || { detail: "Error al cambiar la contraseña" };
+    }
+  },
+  changePassword: function (old_password, new_password) {
+    const body = {
+      "clave": old_password,
+      "clave_nueva": new_password,
+      "clave_nueva_2": new_password
+    }
+    return api.patch(apiVersion + `/usuario/cambiar-clave-secreta/`, body, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
 };

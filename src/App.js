@@ -46,6 +46,7 @@ import CargaEvidencia from "./screens/CargaEvidencia";
 import MisEvidencias from "./screens/MisEvidencias";
 import PerfilAmbiental from "./screens/PerfilAmbiental";
 import FaviconSetter from "./components/FaviconSetter";
+import CambiarClaveConToken from "./screens/CambiarClaveConToken";
 
 function App() {
 
@@ -123,6 +124,7 @@ function App() {
 
               <Route path="/cargar-evidencia" element={<CargaEvidencia />} />
               <Route path="/perfil-ambiental" element={<PerfilAmbiental />} />
+              <Route path="/recuperar-cuenta/:uid/:token" element={<CambiarClaveConToken />} />
 
 
             </Routes>

@@ -52,7 +52,7 @@ const Recupero = () => {
   
           if (response.status === 200) {
             setMensaje(
-              "Su contraseña ha sido reseteada, recibirá un correo electrónico con instrucciones"
+              "En breve recibirás un correo con el enlace para crear una nueva contraseña. Si no lo recibís revisá tu carpeta de spam o correo no deseado."
             );
             setAlerts([]);
             setRegistroExitoso(true);
