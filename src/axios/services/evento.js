@@ -10,7 +10,7 @@ export default {
     return api.get(`${apiVersion}/${contentType}/?lat=${lat}&lng=${lng}`);
   },
   obtenerMasVisitados: function () {
-    return api.get(`${apiVersion}/${contentType}/?ordering=-visits`);
+    return api.get(`${apiVersion}/${contentType}/?ordering=-start_date`);
   },
   obtener: function (id) {
     return api.get(`${apiVersion}/${contentType}/${id}/`);
