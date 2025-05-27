@@ -4,13 +4,13 @@ const apiVersion = process.env.REACT_APP_API_URL + process.env.REACT_APP_API_VER
 const contentType = "evento";
 export default {
   obtenerTodos: function () {
-    return api.get(`${apiVersion}/${contentType}/?ordering=name`);
+    return api.get(`${apiVersion}/${contentType}/?ordering=start_date`);
   },
   obtenerCercanos: function (lat, lng) {
     return api.get(`${apiVersion}/${contentType}/?lat=${lat}&lng=${lng}`);
   },
   obtenerMasVisitados: function () {
-    return api.get(`${apiVersion}/${contentType}/?ordering=-start_date`);
+    return api.get(`${apiVersion}/${contentType}/?ordering=-visits`);
   },
   obtener: function (id) {
     return api.get(`${apiVersion}/${contentType}/${id}/`);
@@ -28,7 +28,7 @@ export default {
     if (params.speaker_name) queryParams.append("destino", params.speaker_name);
     if (params.moderador_name) queryParams.append("destino", params.moderador_name);
     if (params.presentador_name) queryParams.append("destino", params.presentador_name);
-
+    queryParams.append("ordering", 'start_date');
     return api.get(`${baseUrl}?${queryParams.toString()}`);
   },
 };
