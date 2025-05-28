@@ -19,7 +19,7 @@ const BusquedaScreen = ({ target }) => {
   const { nombre } = useParams();
   const navigate = useNavigate();
   const [textoBusqueda, setTextoBusqueda] = useState("");
-  
+
   const handleSearch = (query) => {
     setTextoBuscar(query);
   };
@@ -77,13 +77,14 @@ const BusquedaScreen = ({ target }) => {
     <>
       <Header />
       <div className="p-5">
-        <div className="">
+        <div>
           <h2 className="text-sm font-semibold mt-2 color-principal">Estos son los</h2>
           <h1 className="py-2 text-4xl font-semibold text-slate-900 tracking-tight dark:text-slate-200">
             Resultados de Búsqueda
           </h1>
           <p className="mt-2 texto-tarjeta"></p>
         </div>
+  
         {loading ? (
           <div className="loading">Cargando...</div>
         ) : (
@@ -95,7 +96,13 @@ const BusquedaScreen = ({ target }) => {
             </Row>
             <Row>
               <Col>
-                <Listado objetosFiltrados={objetosFiltrados} navigation={navigate} />
+                {objetosFiltrados.length > 0 ? (
+                  <Listado objetosFiltrados={objetosFiltrados} navigation={navigate} />
+                ) : (
+                  <div className="text-center mt-5 text-gray-500">
+                    No se encontraron resultados para tu búsqueda. Probá cambiando las palabras o revisá si hay algún error de tipeo.
+                  </div>
+                )}
               </Col>
             </Row>
           </>
@@ -104,6 +111,6 @@ const BusquedaScreen = ({ target }) => {
       <Footer />
     </>
   );
-};
+}
 
 export default BusquedaScreen;

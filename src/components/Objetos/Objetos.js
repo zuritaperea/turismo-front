@@ -24,24 +24,24 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
   const config = useContext(ConfigContext);
 
 
-    useEffect(() => {
-      if (config && target) {
-        const fieldMap = {
-          atractivo: 'image_bg_atractivo',
-          evento: 'image_bg_evento',
-          gastronomia: 'image_bg_gastronomia',
-          alojamiento: 'image_bg_alojamiento',
-          circuito: 'image_bg_circuito',
-          comercio: 'image_bg_comercio',
-        };
+  useEffect(() => {
+    if (config && target) {
+      const fieldMap = {
+        atractivo: 'image_bg_atractivo',
+        evento: 'image_bg_evento',
+        gastronomia: 'image_bg_gastronomia',
+        alojamiento: 'image_bg_alojamiento',
+        circuito: 'image_bg_circuito',
+        comercio: 'image_bg_comercio',
+      };
 
-        const fieldKey = fieldMap[target.toLowerCase()];
-        if (fieldKey) {
-          setBackgroundImage(config[fieldKey]);
-          console.log(config[fieldKey])
-        }
+      const fieldKey = fieldMap[target.toLowerCase()];
+      if (fieldKey) {
+        setBackgroundImage(config[fieldKey]);
+        console.log(config[fieldKey])
       }
-    }, [config, target]);
+    }
+  }, [config, target]);
 
 
   const customIcon = new L.Icon({
@@ -136,12 +136,18 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
       </div>
 
       <div className="mt-20 flex justify-center align-middle items-center">
-        <Listado
-          objetosFiltrados={objetosFiltrados}
-          navigation={navigation}
-          target={target}
-          title={title}
-        />
+        {objetosFiltrados.length > 0 ? (
+          <Listado
+            objetosFiltrados={objetosFiltrados}
+            navigation={navigation}
+            target={target}
+            title={title}
+          />) : (
+          <div className="text-center mt-5 text-gray-500">
+            No se encontraron resultados para tu búsqueda. Probá cambiando las palabras o revisá si hay algún error de tipeo.
+          </div>
+        )}
+
       </div>
 
       <div className="flex flex-col md:flex-row flex-grow justify-center items-center align-middle mt-20">
