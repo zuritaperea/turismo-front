@@ -126,6 +126,8 @@ const MiPerfil = () => {
       nacionalidad: personaAttributes.nacionalidad?.id || "",
       genero: personaAttributes.genero || "",
       is_children: personaAttributes.is_children || false,
+      company: personaAttributes.company || "",
+      position: personaAttributes.position || "",
     };
   };
 
