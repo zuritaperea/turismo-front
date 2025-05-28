@@ -16,6 +16,7 @@ import Turnstile from "react-turnstile";
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import ErrorAlerts from '../components/ErrorAlerts/ErrorAlerts';
+import functions from '../extras/functions';
 
 const MiPerfil = () => {
   const [logoLogin, setLogoLogin] = useState(logo);
