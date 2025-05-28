@@ -100,18 +100,15 @@ const MiPerfil = () => {
       console.error("Error modificando el perfil:", error);
       // Manejo de error basado en la respuesta del servidor
       const serverErrors = error?.errors || error?.response?.data?.errors || [];
-      const uniqueError = serverErrors.find(err => 
-      err.detail === "Los campos tipo_documento, documento_identidad deben formar un conjunto único."
+      const uniqueError = serverErrors.find(err =>
+        err.detail === "Los campos tipo_documento, documento_identidad deben formar un conjunto único."
       );
-
       if (uniqueError) {
-      setError(["El tipo de documento y el número de documento ya están registrados. Por favor, verifica los datos ingresados."]);
+        setError([{ "description": "El tipo de documento y el número de documento ya están registrados. Por favor, verifica los datos ingresados." }]);
       } else {
-      setError(functions.errorMaker(error || error.response.data || [{ "description": "No se pudo actualizar el perfil. Por favor, intenta nuevamente." }]));
+        setError(functions.errorMaker(error || error.response.data || [{ "description": "No se pudo actualizar el perfil. Por favor, intenta nuevamente." }]));
       }
     }
-
-
   };
 
   const transformarDatosUsuario = (response) => {
@@ -283,7 +280,7 @@ const MiPerfil = () => {
         <Row>
           <Col>
             <p className="text-xl font-bold mt-4">
-              <Link className="color-principal ml-2" to="/mis-reservas">Mis Reservas</Link>
+              <Link className="color-principal ml-2" to="/mis-reservas">Mis reservas</Link>
             </p>
             <p className="text-xl font-bold mt-4">
               <Link className="color-principal ml-2" to="/viajes">Mis viajes</Link>
@@ -292,7 +289,7 @@ const MiPerfil = () => {
               <Link className="color-principal ml-2" to="/pasaporte">Mi pasaporte</Link>
             </p>
             <p className="text-xl font-bold my-4">
-              <Link className="color-principal ml-2" to="/perfil-ambiental">Mi Perfil Ambiental</Link>
+              <Link className="color-principal ml-2" to="/perfil-ambiental">Mi perfil ambiental</Link>
             </p>
           </Col>
         </Row></div>
