@@ -15,6 +15,7 @@ import Splash from '../components/Splash';
 import Turnstile from "react-turnstile";
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import ErrorAlerts from '../components/ErrorAlerts/ErrorAlerts';
 
 const MiPerfil = () => {
   const [logoLogin, setLogoLogin] = useState(logo);
@@ -95,7 +96,18 @@ const MiPerfil = () => {
       setError([]);
     } catch (error) {
       setMensaje(null);
-      setError(["No se pudo actualizar el perfil."]);
+      console.error("Error modificando el perfil:", error);
+      // Manejo de error basado en la respuesta del servidor
+      const serverErrors = error?.errors || error?.response?.data?.errors || [];
+      const uniqueError = serverErrors.find(err => 
+      err.detail === "Los campos tipo_documento, documento_identidad deben formar un conjunto único."
+      );
+
+      if (uniqueError) {
+      setError(["El tipo de documento y el número de documento ya están registrados. Por favor, verifica los datos ingresados."]);
+      } else {
+      setError(functions.errorMaker(error || error.response.data || [{ "description": "No se pudo actualizar el perfil. Por favor, intenta nuevamente." }]));
+      }
     }
 
 
@@ -169,127 +181,122 @@ const MiPerfil = () => {
       <div className="max-w-5xl mx-auto p-6 bg-white shadow-md rounded-lg mt-6">
 
         <Row className="">
-        <Col>
-          <h1 className="text-2xl font-bold">Mi perfil</h1>
-        </Col>
-      </Row>
+          <Col>
+            <h1 className="text-2xl font-bold">Mi perfil</h1>
+          </Col>
+        </Row>
 
-      <Row className="destination-box mb-2">
-        <Col>
-          {error.length > 0 && (
-            <Alert variant="danger">
-              <ul>{error.map((err, i) => <li key={i}>{err}</li>)}</ul>
-            </Alert>
-          )}
-          {mensaje && <Alert variant="success">{mensaje}</Alert>}
+        <Row className="destination-box mb-2">
+          <Col>
+            <ErrorAlerts alerts={error} />
 
-          <Form onSubmit={handleSubmit}>
-            <h1 className='text-xl font-bold my-4'>Datos personales</h1>
+            {mensaje && <Alert variant="success">{mensaje}</Alert>}
 
-            <Form.Group controlId="nombre">
-              <Form.Label>Nombre *</Form.Label>
-              <Form.Control type="text" name="nombre" value={datosUsuario.nombre} onChange={handleInputChange} required />
-            </Form.Group>
+            <Form onSubmit={handleSubmit}>
+              <h1 className='text-xl font-bold my-4'>Datos personales</h1>
 
-            <Form.Group controlId="apellido">
-              <Form.Label>Apellido *</Form.Label>
-              <Form.Control type="text" name="apellido" value={datosUsuario.apellido} onChange={handleInputChange} required />
-            </Form.Group>
+              <Form.Group controlId="nombre">
+                <Form.Label>Nombre *</Form.Label>
+                <Form.Control type="text" name="nombre" value={datosUsuario.nombre} onChange={handleInputChange} required />
+              </Form.Group>
 
-            <Form.Group controlId="tipo_documento">
-              <Form.Label>Tipo Documento *</Form.Label>
-              <Form.Select name="tipo_documento" value={datosUsuario.tipo_documento} onChange={handleInputChange} required options={constantes.tipo_documento} />
-            </Form.Group>
+              <Form.Group controlId="apellido">
+                <Form.Label>Apellido *</Form.Label>
+                <Form.Control type="text" name="apellido" value={datosUsuario.apellido} onChange={handleInputChange} required />
+              </Form.Group>
 
-            <Form.Group controlId="documento_identidad">
-              <Form.Label>Número de Documento *</Form.Label>
-              <Form.Control type="number" name="documento_identidad" value={datosUsuario.documento_identidad} onChange={handleInputChange} required />
-            </Form.Group>
+              <Form.Group controlId="tipo_documento">
+                <Form.Label>Tipo Documento *</Form.Label>
+                <Form.Select name="tipo_documento" value={datosUsuario.tipo_documento} onChange={handleInputChange} required options={constantes.tipo_documento} />
+              </Form.Group>
 
-            <Form.Group controlId="telefono">
-              <Form.Label>Teléfono</Form.Label>
-              <Form.Control type="tel" name="telefono" value={datosUsuario.telefono} onChange={handleInputChange} />
-            </Form.Group>
+              <Form.Group controlId="documento_identidad">
+                <Form.Label>Número de Documento *</Form.Label>
+                <Form.Control type="number" name="documento_identidad" value={datosUsuario.documento_identidad} onChange={handleInputChange} required />
+              </Form.Group>
 
-            <Form.Group controlId="nacionalidad">
-              <Form.Label>Nacionalidad *</Form.Label>
-              <Form.Select name="nacionalidad" value={datosUsuario.nacionalidad} onChange={handleInputChange} required options={paises} />
-            </Form.Group>
+              <Form.Group controlId="telefono">
+                <Form.Label>Teléfono</Form.Label>
+                <Form.Control type="tel" name="telefono" value={datosUsuario.telefono} onChange={handleInputChange} />
+              </Form.Group>
 
-            <Form.Group controlId="company">
-              <Form.Label>Empresa u Organización</Form.Label>
-              <Form.Control type="text" name="company" value={datosUsuario.company} onChange={handleInputChange} />
-            </Form.Group>
+              <Form.Group controlId="nacionalidad">
+                <Form.Label>Nacionalidad *</Form.Label>
+                <Form.Select name="nacionalidad" value={datosUsuario.nacionalidad} onChange={handleInputChange} required options={paises} />
+              </Form.Group>
 
-            <Form.Group controlId="position">
-              <Form.Label>Cargo / Posición</Form.Label>
-              <Form.Control type="text" name="position" value={datosUsuario.position} onChange={handleInputChange} />
-            </Form.Group>
+              <Form.Group controlId="company">
+                <Form.Label>Empresa u Organización</Form.Label>
+                <Form.Control type="text" name="company" value={datosUsuario.company} onChange={handleInputChange} />
+              </Form.Group>
 
-            <h1 className='text-xl font-bold my-4'>Datos de Acceso</h1>
-            <Form.Group controlId="email">
-              <Form.Label>Email *</Form.Label>
-              <Form.Control type="email" name="email" value={datosUsuario.email} onChange={handleInputChange} required />
-            </Form.Group>
-            <Form.Group controlId="password">
-              <Form.Label>Nueva Contraseña</Form.Label>
-              <Form.Control
-                type='password'
-                name="password"
-                value={datosUsuario.password}
-                onChange={handleInputChange}
-                placeholder="Solo si deseas cambiarla"
-              />
-            </Form.Group>
+              <Form.Group controlId="position">
+                <Form.Label>Cargo / Posición</Form.Label>
+                <Form.Control type="text" name="position" value={datosUsuario.position} onChange={handleInputChange} />
+              </Form.Group>
 
-            <Form.Group controlId="password_2">
-              <Form.Label>Confirmar nueva contraseña</Form.Label>
-              <Form.Control
-                type='password'
-                name="password_2"
-                value={datosUsuario.password_2}
-                onChange={handleInputChange}
-                placeholder="Confirmar nueva contraseña"
+              <h1 className='text-xl font-bold my-4'>Datos de Acceso</h1>
+              <Form.Group controlId="email">
+                <Form.Label>Email *</Form.Label>
+                <Form.Control type="email" name="email" value={datosUsuario.email} onChange={handleInputChange} required />
+              </Form.Group>
+              <Form.Group controlId="password">
+                <Form.Label>Nueva Contraseña</Form.Label>
+                <Form.Control
+                  type='password'
+                  name="password"
+                  value={datosUsuario.password}
+                  onChange={handleInputChange}
+                  placeholder="Solo si deseas cambiarla"
+                />
+              </Form.Group>
 
-              />
-            </Form.Group>
-            {/* Turnstile */}
-            <div className="flex justify-center">
-              <Turnstile
-                sitekey={process.env.REACT_APP_TURNSTILE_SITE_KEY} // Para Create React App
-                // sitekey={import.meta.env.VITE_TURNSTILE_SITE_KEY} // Para Vite
-                onVerify={(token) => setToken(token)}
-              /></div>
-            <Button variant="primary" className="w-full bg-principal mt-4">Guardar cambios</Button>
-          </Form>
-          <Row><Col className='mt-3'>{error.length > 0 && (
-            <Alert variant="danger">
-              <ul>{error.map((err, i) => <li key={i}>{err}</li>)}</ul>
-            </Alert>
-          )}
-          {mensaje && <Alert variant="success">{mensaje}</Alert>}</Col></Row>
-        </Col>
-      </Row>
+              <Form.Group controlId="password_2">
+                <Form.Label>Confirmar nueva contraseña</Form.Label>
+                <Form.Control
+                  type='password'
+                  name="password_2"
+                  value={datosUsuario.password_2}
+                  onChange={handleInputChange}
+                  placeholder="Confirmar nueva contraseña"
 
-      <Separador />
-      <Row>
-        <Col>
-          <p className="text-xl font-bold mt-4">
-            <Link className="color-principal ml-2" to="/mis-reservas">Mis Reservas</Link>
-          </p>
-          <p className="text-xl font-bold mt-4">
-            <Link className="color-principal ml-2" to="/viajes">Mis viajes</Link>
-          </p>
-          <p className="text-xl font-bold mt-4">
-            <Link className="color-principal ml-2" to="/pasaporte">Mi pasaporte</Link>
-          </p>
-          <p className="text-xl font-bold my-4">
-            <Link className="color-principal ml-2" to="/perfil-ambiental">Mi Perfil Ambiental</Link>
-          </p>
-        </Col>
-      </Row></div>
-            <Footer />
-      
+                />
+              </Form.Group>
+              {/* Turnstile */}
+              <div className="flex justify-center">
+                <Turnstile
+                  sitekey={process.env.REACT_APP_TURNSTILE_SITE_KEY} // Para Create React App
+                  // sitekey={import.meta.env.VITE_TURNSTILE_SITE_KEY} // Para Vite
+                  onVerify={(token) => setToken(token)}
+                /></div>
+              <Button variant="primary" className="w-full bg-principal mt-4">Guardar cambios</Button>
+            </Form>
+            <Row><Col className='mt-3'>{error.length > 0 && (
+              <ErrorAlerts alerts={error} />
+            )}
+              {mensaje && <Alert variant="success">{mensaje}</Alert>}</Col></Row>
+          </Col>
+        </Row>
+
+        <Separador />
+        <Row>
+          <Col>
+            <p className="text-xl font-bold mt-4">
+              <Link className="color-principal ml-2" to="/mis-reservas">Mis Reservas</Link>
+            </p>
+            <p className="text-xl font-bold mt-4">
+              <Link className="color-principal ml-2" to="/viajes">Mis viajes</Link>
+            </p>
+            <p className="text-xl font-bold mt-4">
+              <Link className="color-principal ml-2" to="/pasaporte">Mi pasaporte</Link>
+            </p>
+            <p className="text-xl font-bold my-4">
+              <Link className="color-principal ml-2" to="/perfil-ambiental">Mi Perfil Ambiental</Link>
+            </p>
+          </Col>
+        </Row></div>
+      <Footer />
+
     </div>
   );
 };
