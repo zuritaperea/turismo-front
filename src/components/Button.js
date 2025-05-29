@@ -19,7 +19,7 @@ const Button = ({ children, onClick, variant = 'primary', size = 'md', className
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`back-to-top-btn rounded-md ${buttonStyles[variant]} ${sizeStyles[size]} focus:outline-none ${className} ${disabled ? disabledStyles : ''}`}
+      className={`rounded-md ${buttonStyles[variant]} ${sizeStyles[size]} focus:outline-none ${className} ${disabled ? disabledStyles : ''}`}
     >
       {children}
     </button>

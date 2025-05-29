@@ -52,6 +52,8 @@ const Filtros = ({ objetoService, setObjetosFiltrados, target }) => {
 
   const filtrosSeleccionados = Object.entries(filters).filter(([key, value]) => {
     if (key === "name") return false;
+    if (key === "type_attractive") return false;
+
     if (Array.isArray(value)) return value.length > 0;
     return value !== "";
   }).length;
@@ -166,22 +168,31 @@ const Filtros = ({ objetoService, setObjetosFiltrados, target }) => {
             onChange={handleFilterChange}
           />
         )}
+        {target === "Alojamiento" && (
+          <FiltroSelect className="w-full lg:w-auto" name="amenity_feature" options={servicios} selected={filters.amenity_feature} onChange={handleFilterChange} isMulti />
+        )}
+        {target === "Evento" && (
+          <FiltroSelect className="w-full lg:w-auto" name="event_class" options={constantes.tipo_evento} selected={filters.event_class} onChange={handleFilterChange} />
+        )}
+        {target === "Comecio" && (
+          <FiltroSelect className="w-full lg:w-auto" name="type_commerce" options={constantes.tipo_comercio} selected={filters.type_commerce} onChange={handleFilterChange} />
+        )}
+        {target !== "Evento" && target !== "Comercio" && target !== "Alojamiento" && (
+          <button
+            onClick={() => setShowModal(true)}
+            className="flex items-center bg-white rounded-full px-4 py-2 text-gray-700 hover:bg-gray-100 transition w-full lg:w-auto"
+          >
+            <Filter className="text-black mr-2" size={18} />
+            <span className="text-gray-700">
+              {filtrosSeleccionados > 0
+                ? `${filtrosSeleccionados} filtros seleccionados`
+                : "Filtros avanzados"}
+            </span>
 
-        <button
-          onClick={() => setShowModal(true)}
-          className="flex items-center bg-white rounded-full px-4 py-2 text-gray-700 hover:bg-gray-100 transition w-full lg:w-auto"
-        >
-          <Filter className="text-black mr-2" size={18} />
-          <span className="text-gray-700">
-            {filtrosSeleccionados > 0
-              ? `${filtrosSeleccionados} filtros seleccionados`
-              : "Filtros avanzados"}
-          </span>
-
-          <div className="align-right">
-            <SlidersHorizontal className="ml-2 text-black" size={18} />
-          </div>
-        </button>
+            <div className="align-right">
+              <SlidersHorizontal className="ml-2 text-black" size={18} />
+            </div>
+          </button>)}
 
         <button
           onClick={aplicarFiltros}
@@ -194,14 +205,13 @@ const Filtros = ({ objetoService, setObjetosFiltrados, target }) => {
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Body className="bg-[#2e2d2c]/95 text-white p-4 rounded-xl max-h-[80vh] overflow-y-auto">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 px-2 sm:px-4">
-            <FiltroSelect label="Tipo de turista" name="tourist_type" options={constantes.tipo_turismo} forceSelect selected={filters.tourist_type} onChange={handleFilterChange} isMulti />
-            {target === "Alojamiento" && (
-              <FiltroSelect label="Servicios" name="amenity_feature" options={servicios} selected={filters.amenity_feature} onChange={handleFilterChange} isMulti />
+            {target === "Circuito" && (<FiltroSelect label="Tipo de turista" name="tourist_type" options={constantes.tipo_turismo} forceSelect selected={filters.tourist_type} onChange={handleFilterChange} isMulti />
             )}
+
             {target === "Atractivo" && (
               <>
                 <FiltroSelect label="Servicios" name="services" options={servicios} selected={filters.services} onChange={handleFilterChange} isMulti />
-                <FiltroSelect label="Actividades" name="actividades" options={actividades} selected={filters.activities} onChange={handleFilterChange} isMulti />
+                <FiltroSelect label="Actividades" name="activities" options={actividades} selected={filters.activities} onChange={handleFilterChange} isMulti forceSelect />
                 <FiltroSelect label="Acceso Gratuito" name="free_access" selected={filters.free_access} forceSelect isBoolean onChange={handleFilterChange} />
               </>
             )}
@@ -211,17 +221,7 @@ const Filtros = ({ objetoService, setObjetosFiltrados, target }) => {
                 <FiltroSelect label="Tipo de cocina" name="served_cuisine" selected={filters.served_cuisine} forceSelect isMulti options={constantes.tipo_cocina} onChange={handleFilterChange} />
               </>
             )}
-            {["Alojamiento", "Atractivo", "Gastronomia"].includes(target) && (
-              <FiltroSelect label="Rango de precio" name="price_range" selected={filters.price_range} forceSelect options={constantes.rango_precio} onChange={handleFilterChange} />
-            )}
-            {target === "Evento" && (
-              <>
-                <FiltroSelect label="Tipo de evento" name="event_class" options={constantes.tipo_evento} selected={filters.event_class} onChange={handleFilterChange} />
-                <FiltroInput label="Nombre orador" name="speaker_name" selected={filters.speaker_name} onChange={handleFilterChange} />
-                <FiltroInput label="Nombre moderador" name="moderador_name" selected={filters.moderador_name} onChange={handleFilterChange} />
-                <FiltroInput label="Nombre presentador" name="presentador_name" selected={filters.presentador_name} onChange={handleFilterChange} />
-              </>
-            )}
+
           </div>
         </Modal.Body>
         <Modal.Footer>
