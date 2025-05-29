@@ -38,7 +38,6 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
       const fieldKey = fieldMap[target.toLowerCase()];
       if (fieldKey) {
         setBackgroundImage(config[fieldKey]);
-        console.log(config[fieldKey])
       }
     }
   }, [config, target]);

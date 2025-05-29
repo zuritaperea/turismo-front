@@ -29,5 +29,8 @@ export default {
   },
   obtenerActividades: function(){
     return api.get(`${apiVersion}/actividad/`);
+  },
+  obtenerSubtipoAtractivos: function(tipo_atractivo){
+    return api.get(`/subtipos/atractivo/${tipo_atractivo}/`);
   }
 };

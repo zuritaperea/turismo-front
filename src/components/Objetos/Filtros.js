@@ -47,6 +47,7 @@ const Filtros = ({ objetoService, setObjetosFiltrados, target }) => {
   const [servicios, setServicios] = useState([]);
   const [actividades, setActividades] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [subtipoAtractivos, setSubtipoAtractivos] = useState([]);
 
   const limpiarFiltros = () => setFilters(initialFilters);
 
@@ -79,6 +80,28 @@ const Filtros = ({ objetoService, setObjetosFiltrados, target }) => {
     };
     fetchData();
   }, []);
+
+
+  useEffect(() => {
+    const fetchSubtipoAtractivos = async () => {
+      setSubtipoAtractivos([]);
+      if (filters.type_attractive) {
+        // Si no hay tipo de atractivo seleccionado, no hacemos la llamada
+        try {
+        const response = await service.obtenerSubtipoAtractivos(filters.type_attractive);
+          const subtipoOptions = response.data.map((s) => ({
+            value: s[0],
+            label: s[1],
+          }));
+          setSubtipoAtractivos(subtipoOptions);
+        } catch (error) {
+          console.error("Error obteniendo subtipo de atractivos", error);
+        }
+      }
+    }
+    fetchSubtipoAtractivos()
+  }, [filters.type_attractive]);
+
 
   const handleFilterChange = (e, fieldName) => {
     const updateFilters = (key, val) =>
@@ -210,6 +233,7 @@ const Filtros = ({ objetoService, setObjetosFiltrados, target }) => {
 
             {target === "Atractivo" && (
               <>
+                <FiltroSelect label="Subtipo de Atractivo" name="subtype_attractive" options={subtipoAtractivos} selected={filters.subtype_attractive} onChange={handleFilterChange} isMuli />
                 <FiltroSelect label="Servicios" name="services" options={servicios} selected={filters.services} onChange={handleFilterChange} isMulti />
                 <FiltroSelect label="Actividades" name="activities" options={actividades} selected={filters.activities} onChange={handleFilterChange} isMulti forceSelect />
                 <FiltroSelect label="Acceso Gratuito" name="free_access" selected={filters.free_access} forceSelect isBoolean onChange={handleFilterChange} />
