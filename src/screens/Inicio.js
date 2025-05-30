@@ -157,14 +157,20 @@ export default function Inicio() {
             marketplace={false}
           />)
       }
-      <img
-  src={bannerHome}
-  alt="Banner Home"
-  className="w-full mx-auto mt-8 rounded-xl 
-             max-h-[320px] sm:max-h-[280px] md:max-h-[300px] lg:max-h-[320px]
-             max-w-[95%] sm:max-w-[90%] md:max-w-4xl lg:max-w-5xl"
-/>
-
+      <a
+        href="https://hechoenmarchiquita.ar/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block w-full mx-auto mt-8 text-center"
+      >
+        <img
+          src={bannerHome}
+          alt="Banner Home"
+          className="w-full rounded-xl 
+               max-h-[320px] sm:max-h-[280px] md:max-h-[300px] lg:max-h-[320px]
+               max-w-[95%] sm:max-w-[90%] md:max-w-4xl lg:max-w-5xl mx-auto"
+        />
+      </a>
       <Footer />
     </>
   );
