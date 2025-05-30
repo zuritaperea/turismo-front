@@ -47,9 +47,9 @@ function PuntoInteresScreen() {
 
   const handleVisitedClick = async () => {
     try {
-      let newVisitedValue = 1; // Valor predeterminado
+      let newVisitedValue = 1; 
       if (puntoInteres && puntoInteres.visitado === 1) {
-        newVisitedValue = 0; // Si era 1, lo cambiamos a 0
+        newVisitedValue = 0; 
       }
       await favoritoService.agregarVisitado({ tipo: 'PuntoInteres', id, visitado: newVisitedValue })
         .then((response) => {
@@ -78,14 +78,14 @@ function PuntoInteresScreen() {
           tipo: "PuntoInteres"
         };
         setPuntoInteres(datosPuntoInteres);
-        setLoading(false); // Cambia el estado a false cuando los datos se cargan correctamente
+        setLoading(false); 
       } catch (error) {
         setError('Hubo un error al cargar el puntoInteres');
-        setLoading(false); // Cambia el estado a false en caso de error
+        setLoading(false); 
       }
     };
 
-    obtenerPuntoInteres(); // Llama a la función para obtener el puntoInteres
+    obtenerPuntoInteres(); 
   }, [id, fechadesde, fechahasta]);
 
   if (loading) {
