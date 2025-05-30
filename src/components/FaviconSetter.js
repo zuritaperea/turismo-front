@@ -7,24 +7,20 @@ const FaviconSetter = () => {
 
   if (!config) return null;
 
+  // Asegurarse de que los valores son realmente strings
+  const title = typeof config.title === 'string' ? config.title : '';
+  const logo = typeof config.logo === 'string' ? config.logo : '';
+  const description = typeof config.footer_description === 'string' ? config.footer_description : '';
+
   return (
     <Helmet>
-      {/* Título */}
-      {config.title && <title>{config.title}</title>}
-
-      {/* Favicon */}
-      {config.logo && <link rel="icon" href={config.logo} />}
-      {config.logo && <link rel="apple-touch-icon" href={config.logo} />}
-
-      {/* Meta tags para SEO y redes */}
-      {config.title && <meta property="og:title" content={config.title} />}
-      {config.logo && <meta property="og:image" content={config.logo} />}
-      {config.footer_description && (
-        <>
-          <meta name="description" content={config.footer_description} />
-          <meta property="og:description" content={config.footer_description} />
-        </>
-      )}
+      {title ? <title>{title}</title> : null}
+      {logo ? <link rel="icon" href={logo} /> : null}
+      {logo ? <link rel="apple-touch-icon" href={logo} /> : null}
+      {title ? <meta property="og:title" content={title} /> : null}
+      {logo ? <meta property="og:image" content={logo} /> : null}
+      {description ? <meta name="description" content={description} /> : null}
+      {description ? <meta property="og:description" content={description} /> : null}
     </Helmet>
   );
 };
