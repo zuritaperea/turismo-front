@@ -16,13 +16,13 @@ import functions from '../extras/functions';
 import registroService from "../axios/services/profile";
 import Separador from '../components/Separador';
 import ErrorAlerts from '../components/ErrorAlerts/ErrorAlerts';
-
+import Spinner from '../components/Spinner';
 const Recupero = () => {
   const [mensaje, setMensaje] = useState(null);
   const [logoLogin, setLogoLogin] = useState(logo);
   const config = useContext(ConfigContext); // Usa el contexto para acceder a la configuración
   const [token, setToken] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const [datosUsuario, setDatosUsuario] = useState({
     email: '',
     email2: ''
@@ -44,46 +44,49 @@ const Recupero = () => {
       alert("Por favor, completa el captcha.");
       return;
     }
-  
+
     if (datosUsuario.email === datosUsuario.email2) {
       if (datosUsuario.email) {
         try {
+          setLoading(true);
+          setRegistroExitoso(false);
           const response = await registroService.recuperarCuenta(datosUsuario.email);
-  
+
           if (response.status === 200) {
             setMensaje(
               "En breve recibirás un correo con el enlace para crear una nueva contraseña. Si no lo recibís revisá tu carpeta de spam o correo no deseado."
             );
             setAlerts([]);
             setRegistroExitoso(true);
+            setLoading(false);
           }
         } catch (error) {
           console.error("Error en la solicitud:", error);
-  
+          setLoading(false);
+          setRegistroExitoso(false);
+          // Manejo de error basado en la respuesta del servidor
           if (error.response) {
             // Manejo de error basado en la respuesta del servidor
             setAlerts(functions.errorMaker(error.response.data));
           } else {
             // Error inesperado
-            setAlerts([{"description": "Ocurrió un error inesperado. Intente nuevamente."}]);
+            setAlerts([{ "description": "Ocurrió un error inesperado. Intente nuevamente." }]);
           }
         }
       } else {
-        setAlerts([{"description": "El correo electrónico es obligatorio"}]);
+        setAlerts([{ "description": "El correo electrónico es obligatorio" }]);
       }
     } else {
-      setAlerts([{"description": "Los correos electrónicos no son iguales"},]);
+      setAlerts([{ "description": "Los correos electrónicos no son iguales" },]);
     }
   };
-  
+
 
   useEffect(() => {
     if (config) { // Verifica que config no sea null
       setLogoLogin(config.logo || logo);
     }
   }, [config]); // El useEffect se ejecuta cada vez que config cambia
-
-
 
   return (
     <>
@@ -143,12 +146,14 @@ const Recupero = () => {
                   <Button variant="primary" type="submit" className="w-full bg-principal mt-3" disabled={registroExitoso}>
                     Comenzar
                   </Button>
+                  {loading && (<div className="w-full flex justify-center mt-3">
+                    <Spinner />
+                  </div>)}
                 </Col>
                 <Separador />
               </Row>
               <Row className="destination-box mb-2 text-center">
                 <Col xs={12}>
-
                   <p className="text-sm text-center mt-0">
                     <Link to="/" className="color-principal text-sm"><FontAwesomeIcon icon={faArrowLeft} /> Regresar al inicio</Link>
                   </p> </Col>
