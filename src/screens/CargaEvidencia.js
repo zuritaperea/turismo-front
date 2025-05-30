@@ -231,7 +231,10 @@ const CargaEvidencia = () => {
                 <Modal.Footer>
                     <button
                         className="bg-principal text-white px-4 py-2 rounded"
-                        onClick={() => setShowModal(false)}
+                        onClick={() => {
+                            setShowModal(false);
+                            navigate("/mis-evidencias");
+                        }}
                     >
                         Cerrar
                     </button>
