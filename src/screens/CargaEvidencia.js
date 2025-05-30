@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext} from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import recompensaService from "../axios/services/recompensa";
@@ -12,10 +12,10 @@ import markerIconShadowPng from "leaflet/dist/images/marker-shadow.png";
 import markerIconPng from "leaflet/dist/images/marker-icon.png";
 
 const defaultIcon = new Icon({
-  iconUrl: markerIconPng,
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  shadowUrl: markerIconShadowPng,
+    iconUrl: markerIconPng,
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    shadowUrl: markerIconShadowPng,
 });
 
 const CargaEvidencia = () => {
@@ -36,24 +36,24 @@ const CargaEvidencia = () => {
 
     const ClickHandler = ({ setFormData }) => {
         useMapEvents({
-          click(e) {
-            const { lat, lng } = e.latlng;
-            console.log("Ubicación seleccionada:", lat, lng);
-            setFormData((prev) => ({
-              ...prev,
-              locationLat: lat,
-              locationLng: lng,
-            }));
-          },
+            click(e) {
+                const { lat, lng } = e.latlng;
+                console.log("Ubicación seleccionada:", lat, lng);
+                setFormData((prev) => ({
+                    ...prev,
+                    locationLat: lat,
+                    locationLng: lng,
+                }));
+            },
         });
         return null;
-      };
+    };
 
     useEffect(() => {
         if (!user) {
-          setLoading(false);
-          navigate('/login');
-          return;
+            setLoading(false);
+            navigate('/login');
+            return;
         }
     }, [user, navigate]);
 
@@ -109,6 +109,17 @@ const CargaEvidencia = () => {
             <Header />
             <div className="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-lg mt-6">
                 <h2 className="text-xl font-bold mb-4">Carga de Evidencia</h2>
+
+                <p className="mb-4 text-gray-700 bg-blue-100 p-4 rounded-md border-l-4 border-blue-500">
+                    Para acceder a los beneficios del programa, seguí los siguientes pasos:
+                    <ul className="list-disc list-inside">
+                        <li>Seleccioná la acción sustentable que realizaste.</li>
+                        <li>Adjuntá una imagen que demuestre tu participación.</li>
+                        <li>Si querés, podés agregar más detalles en la sección de comentarios.</li>
+                        <li>(Opcional) Indicá en el mapa el lugar donde realizaste la acción.</li>
+                    </ul>
+                    Cuando completes todos los pasos, hacé clic en "Enviar evidencia".
+                </p>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
                         <label className="block font-medium">Acción sustentable</label>
@@ -166,11 +177,11 @@ const CargaEvidencia = () => {
                                     url={process.env.REACT_APP_TILE_LAYER_URL || "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"}
                                     attribution={process.env.REACT_APP_TILE_LAYER_ATTRIBUTION || '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}
                                 />
-                                  <ClickHandler setFormData={setFormData} />
+                                <ClickHandler setFormData={setFormData} />
 
-{formData.locationLat !== null && formData.locationLng !== null && (
-                                    <Marker position={[formData.locationLat, formData.locationLng]}   icon={defaultIcon}
->
+                                {formData.locationLat !== null && formData.locationLng !== null && (
+                                    <Marker position={[formData.locationLat, formData.locationLng]} icon={defaultIcon}
+                                    >
                                         <Popup>
                                             <div>
                                                 <b>Ubicación seleccionada</b>
@@ -213,7 +224,9 @@ const CargaEvidencia = () => {
             <Footer />
             <Modal show={showModal} onHide={() => setShowModal(false)} centered>
                 <Modal.Body>
-                    <p className="text-gray-200">Tu evidencia ha sido enviada exitosamente.</p>
+                    <p className="text-gray-200">Evidencia enviada con éxito. Tu compromiso suma.  <br />
+                        Pronto verás tus puntos reflejados en tu perfil ambiental.
+                    </p>
                 </Modal.Body>
                 <Modal.Footer>
                     <button
