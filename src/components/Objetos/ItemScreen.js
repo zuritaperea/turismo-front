@@ -184,7 +184,7 @@ function ItemScreen({ tipoObjeto }) {
               ]}
             />
           )} */}
-          {item.attributes.amenity_feature && <Servicios servicios={item.attributes.amenity_feature} />}
+          {item.attributes.amenity_feature && Object.keys(item.attributes.amenity_feature).length > 0 && <Servicios services={item.attributes.amenity_feature} />}
 
           <div className="mb-20">
             {item.attributes.opening_hours && Object.keys(item.attributes.opening_hours).length > 0 && (
