@@ -242,7 +242,7 @@ const Filtros = ({ objetoService, setObjetosFiltrados, target }) => {
             {target === "Gastronomia" && (
               <>
                 <FiltroSelect label="Acepta reservas" name="accepts_reservations" selected={filters.accepts_reservations} forceSelect isBoolean onChange={handleFilterChange} />
-                <FiltroSelect label="Tipo de cocina" name="served_cuisine" selected={filters.served_cuisine} forceSelect isMulti options={constantes.tipo_cocina} onChange={handleFilterChange} />
+                <FiltroSelect label="Tipo de restaurante" name="resto_type" selected={filters.resto_type} forceSelect options={constantes.tipo_restaurante} onChange={handleFilterChange} />
               </>
             )}
 
