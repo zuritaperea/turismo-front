@@ -226,7 +226,7 @@ function ItemScreen({ tipoObjeto }) {
                   }}
                 />
               )}
-            <SocialLinks redes={item.attributes.redes_sociales} onClickRed={manejarInteraccionRed} />
+            {/*<SocialLinks redes={item.attributes.redes_sociales} onClickRed={manejarInteraccionRed} />*/}
           </div>
           <RangoPrecios item={item} />
 
