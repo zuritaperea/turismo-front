@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import { useParams, useLocation, useNavigate, Link } from 'react-router-dom';
 import service from '../../axios/services/service';
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
@@ -173,17 +173,42 @@ function ItemScreen({ tipoObjeto }) {
             <ListaProductosTuristicos listData={item.attributes.productos_turisticos}
               fechaDesde={fechaDesde} fechaHasta={fechaHasta} cantidadPersonas={cantidad} esPasaporte={esPasaporte} />
           )}
-          {/* {item.attributes.point && (
-            <Mapa
-              objetosFiltrados={[
-                {
-                  id: item.id,
-                  title: item.attributes.name,
-                  coordinates: item.attributes.point,
-                },
-              ]}
-            />
-          )} */}
+          {item.attributes.puntos && Object.keys(item.attributes.puntos).length > 0 && 
+            <table className="table-auto w-full border-collapse border border-gray-300 my-10">
+              <thead>
+                <tr>
+                  <th className="border border-gray-300 px-4 py-2">Orden</th>
+                  <th className="border border-gray-300 px-4 py-2">Nombre</th>
+                  <th className="border border-gray-300 px-4 py-2">Distancia</th>
+                  <th className="border border-gray-300 px-4 py-2">Tiempo</th>
+                </tr>
+              </thead>
+              <tbody>
+                {item.attributes.puntos
+                  .sort((a, b) => a.orden - b.orden) // Ordenar por el campo "orden"
+                  .map((punto, index) => (
+                    <tr key={index} className="hover:bg-gray-100">
+                      <td className="border border-gray-300 px-4 py-2 text-center">{punto.orden}</td>
+                      <td className="border border-gray-300 px-4 py-2">
+                        <Link
+                          to={
+                            punto.content_type === "atractivoturistico"
+                              ? `/atractivo/${punto.contenido.id}/`
+                              : `/${punto.content_type}/${punto.contenido.id}/`
+                          }
+                          className="text-blue-500 hover:underline"
+                        >
+                          {punto.contenido.name}
+                        </Link>
+                      </td>
+                      <td className="border border-gray-300 px-4 py-2 text-center">{punto.distancia} m</td>
+                      <td className="border border-gray-300 px-4 py-2 text-center">{punto.tiempo}</td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          }
+
           {item.attributes.amenity_feature && Object.keys(item.attributes.amenity_feature).length > 0 && <Servicios services={item.attributes.amenity_feature} />}
 
           <div className="mb-20">
@@ -209,7 +234,17 @@ function ItemScreen({ tipoObjeto }) {
             <Certificaciones item={item} />
           )}
 
-          <SeccionConTitulo titulo="Dirección" contenido={item.attributes.street_address} />
+          {item.attributes.street_address && <SeccionConTitulo titulo="Dirección" contenido={item.attributes.street_address} />}
+          {item.attributes.puntos && Object.keys(item.attributes.puntos).length > 0 && (
+            <Mapa
+              objetosFiltrados={item.attributes.puntos.map((punto) => ({
+                id: punto.contenido.id,
+                title: punto.contenido.name,
+                coordinates: punto.contenido.point,
+              }))}
+            />
+          )}
+
           {item.attributes.point && (
             <Mapa
               objetosFiltrados={[
@@ -225,8 +260,7 @@ function ItemScreen({ tipoObjeto }) {
             puntuacion: item.attributes.evaluation,
             evaluaciones: item.attributes.evaluaciones,
           }} />
-          {/* <BotonesAccion contentType={item.attributes.content_type} objectId={item.id}
-            className="block sm:hidden w-full flex items-center justify-center" /> */}
+
           <Recomendaciones items={items} tipoObjeto={tipoObjeto} objectId={item.id} />
         </div>
       </div>

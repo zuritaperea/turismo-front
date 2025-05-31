@@ -143,7 +143,7 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
             title={title}
           />) : (
           <div className="text-center mt-5 text-gray-500">
-            No se encontraron resultados para tu búsqueda. Probá cambiando las palabras o revisá si hay algún error de tipeo.
+            No se encontraron resultados para tu búsqueda. Probá ajustar tu búsqueda o limpiar los filtros para ver más opciones.
           </div>
         )}
 

@@ -1,7 +1,6 @@
 import React from "react";
 
 const Tags = ({ elementos }) => {
-  console.log("Elementos en Tags:", elementos);
   return (
     <div className="descripcion flex flex-wrap gap-2">
       {elementos?.map((item, i) => (

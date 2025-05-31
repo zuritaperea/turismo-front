@@ -8,25 +8,13 @@ import { ConfigContext } from "../extras/ConfigContext";
 import { Ticket, MapPinned, Hotel, Bus, ShoppingBag, Utensils } from "lucide-react";
 import reservaService from "../axios/services/producto_turistico";
 import Listado from "../components/Objetos/Listado";
-import { DateRange } from "react-date-range";
+import { DateRange, Calendar } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { es } from "date-fns/locale";
+import funciones from "../extras/functions";
 
-const keepLocalAsUTC = (date) => {
-  if (!date) return null;
-  if (typeof date === "string") date = new Date(date);
-  if (!(date instanceof Date) || isNaN(date)) return null;
 
-  const year = date.getFullYear();
-  const month = date.getMonth();
-  const day = date.getDate();
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-  const seconds = date.getSeconds();
-
-  return new Date(Date.UTC(year, month, day, hours, minutes, seconds));
-};
 
 export default function Marketplace() {
   const [loading, setLoading] = useState(false);
@@ -58,8 +46,8 @@ export default function Marketplace() {
       setObjetosFiltrados([]);
       try {
         const response = await reservaService.obtenerTodosProductoTuristicoFiltro({
-          start_date: keepLocalAsUTC(desde)?.toISOString(),
-          end_date: keepLocalAsUTC(hasta)?.toISOString(),
+          start_date: funciones.keepLocalAsUTC(desde)?.toISOString(),
+          end_date: funciones.keepLocalAsUTC(hasta)?.toISOString(),
           maximum_number_persons_max: cantidad,
           content_type__model: model,
           integrates_discount_passport: false,
@@ -137,12 +125,21 @@ export default function Marketplace() {
     } else {
       setSelectedSection(seccion.titulo);
     }
+    setDateRange([
+      {
+        startDate: new Date(),
+        endDate: new Date(),
+        key: "selection",
+      },
+    ]);
   };
 
   useEffect(() => {
     setBusquedaRealizada(false);
     setObjetosFiltrados([]);
   }, [model]);
+
+  const isAlojamiento = model === "alojamiento";
 
   return (
     <>
@@ -159,19 +156,45 @@ export default function Marketplace() {
         </div>
 
         <div className="flex flex-col my-5 items-center w-full">
-          <h2 className="text-center text-lg font-semibold mb-4">Fecha de llegada y partida</h2>
-          <DateRange
-            editableDateInputs={true}
-            onChange={(item) => {
-              setDateRange([item.selection]);
-              setFiltroDesde(item.selection.startDate);
-              setFiltroHasta(item.selection.endDate);
-            }}
-            moveRangeOnFirstSelection={false}
-            ranges={dateRange}
-            rangeColors={["#111827"]}
-            locale={es}
-          />
+          <h2 className="text-center text-lg font-semibold mb-4">
+          {isAlojamiento ? "Fechas de entrada y salida" : "¿Cuándo te interesa?"}
+          </h2>
+          {isAlojamiento ? (
+            <DateRange
+              editableDateInputs={true}
+              onChange={(item) => {
+                const selectedStart = item.selection.startDate;
+                const selectedEnd = item.selection.endDate;
+                setDateRange([item.selection]);
+                setFiltroDesde(selectedStart);
+                setFiltroHasta(selectedEnd);
+              }}
+              moveRangeOnFirstSelection={false}
+              ranges={dateRange}
+              rangeColors={["#111827"]}
+              locale={es}
+              months={1}
+              direction="horizontal"
+              showDateDisplay={true}
+              showSelectionPreview={true}
+              minDate={new Date()} // Prevent selecting past dates
+            />
+          ) : (
+            <Calendar
+              date={dateRange[0].startDate}
+              onChange={(date) => {
+                const start = new Date(date);
+                const end = new Date(date);
+                end.setHours(23, 59, 59, 999);
+                setDateRange([{ startDate: start, endDate: end, key: "selection" }]);
+                setFiltroDesde(start);
+                setFiltroHasta(end);
+              }}
+              locale={es}
+              color="#111827"
+              minDate={new Date()} // Prevent selecting past dates
+            />
+          )}
 
           <div className="mt-6 flex flex-col sm:flex-row items-center gap-4 w-full sm:justify-center">
             <div className="bg-white rounded-full px-4 py-3 flex items-center gap-2 shadow w-[200px]">
@@ -189,8 +212,8 @@ export default function Marketplace() {
             <button
               onClick={() =>
                 handleSearch({
-                  desde: dateRange[0].startDate,
-                  hasta: dateRange[0].endDate,
+                  desde: filtroDesde,
+                  hasta: filtroHasta,
                   cantidad: filtroCantidad,
                 })
               }
@@ -216,8 +239,7 @@ export default function Marketplace() {
 
       {busquedaRealizada && objetosFiltrados.length === 0 && !loading ? (
         <div className="flex justify-center items-center mt-4 text-gray-500">
-          No se encontraron resultados para la búsqueda.
-        </div>
+          No se encontraron resultados para tu búsqueda. Probá ajustar tus filtros para ver más opciones        </div>
       ) : null}
 
       <Footer />
