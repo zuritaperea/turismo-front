@@ -2,8 +2,9 @@ import React from 'react';
 import TagsList from './TagsList';
 import Estrellas from './Items/Estrellas';
 import BotonesAccion from './Objetos/BotonesAccion';
+import SocialLinks from "./SocialLinks";
 
-const EncabezadoAtractivo = ({ item }) => {
+const EncabezadoAtractivo = ({ item, redesSociales, onClickRed }) => {
     const imagen = item.attributes.image_url
         ? process.env.REACT_APP_API_URL + item.attributes.image_url
         : process.env.REACT_APP_IMAGE_DEFAULT;
@@ -21,28 +22,41 @@ const EncabezadoAtractivo = ({ item }) => {
                 src={imagen}
                 alt={`Imagen de ${nombre}`}
             />
-            <div className="absolute left-1/2 top-[75%] transform -translate-x-1/2 -translate-y-1/4 lg:-translate-y-1/2 w-[90%] max-w-[900px] bg-white rounded-2xl shadow-lg p-6 flex flex-col xl:flex-row justify-between items-start gap-4 z-10">
-                <div className='flex-1'>
-                    <p className="text-xs text-orange-500 font-semibold mb-1">{categoria}</p>
-                    <h1 className="text-3xl font-bold text-gray-900">{nombre}</h1>
 
-                    <div className="flex flex-wrap gap-2 mt-2 mb-3">
-                        <TagsList tags={tags} />
+            <div className="absolute left-1/2 top-[75%] transform -translate-x-1/2 -translate-y-1/4 lg:-translate-y-1/2 w-[90%] max-w-[900px] bg-white rounded-2xl shadow-lg p-6 flex flex-col gap-4 z-10">
+
+                {/* Parte superior: texto + botones */}
+                <div className="flex flex-col xl:flex-row justify-between items-start gap-4 w-full">
+                    <div className='flex-1'>
+                        <p className="text-xs text-orange-500 font-semibold mb-1">{categoria}</p>
+                        <h1 className="text-3xl font-bold text-gray-900">{nombre}</h1>
+
+                        <div className="flex flex-wrap gap-2 mt-2 mb-3">
+                            <TagsList tags={tags} />
+                        </div>
+
+                        <div className="flex items-center">
+                            <Estrellas puntuacion={puntaje} size="sm" />
+                            <span className="ml-2 font-semibold text-gray-800">{puntaje}</span>
+                            <span className="ml-2 text-sm text-gray-500">{cantidadRespuestas} respuestas</span>
+                        </div>
                     </div>
 
-                    <div className="flex items-center">
-                        <Estrellas puntuacion={puntaje} size="sm" />
-                        <span className="ml-2 font-semibold text-gray-800">{puntaje}</span>
-                        <span className="ml-2 text-sm text-gray-500">{cantidadRespuestas} respuestas</span>
+                    <div className="flex-shrink-0 mt-3">
+                        <BotonesAccion
+                            contentType={item.attributes.content_type}
+                            objectId={item.id}
+                            className="flex gap-2"
+                        />
                     </div>
                 </div>
-                <div className="flex-shrink-0 mt-3">
-                    <BotonesAccion
-                        contentType={item.attributes.content_type}
-                        objectId={item.id}
-                        className="flex gap-2"
-                    />
-                </div>
+
+                {/* Redes sociales centradas respecto a todo el bloque */}
+                {redesSociales && redesSociales.length > 0 && (
+                    <div className="w-full flex justify-center mt-2">
+                        <SocialLinks redes={redesSociales} onClickRed={onClickRed} />
+                    </div>
+                )}
             </div>
         </div>
     );

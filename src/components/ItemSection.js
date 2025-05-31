@@ -8,6 +8,8 @@ const ItemSection = ({ data, title, subtitle, target, imgSrc, marketplace }) => 
     const scrollContainerRef = useRef(null);
     const [canScrollLeft, setCanScrollLeft] = useState(false);
     const [canScrollRight, setCanScrollRight] = useState(false);
+    const cardRef = useRef(null);
+
 
     const checkScroll = () => {
         const container = scrollContainerRef.current;
@@ -36,11 +38,13 @@ const ItemSection = ({ data, title, subtitle, target, imgSrc, marketplace }) => 
 
     const scroll = (direction) => {
         const container = scrollContainerRef.current;
-        if (container) {
-            const scrollAmount = container.clientWidth * 0.8; // Desplazamiento relativo al ancho
-            container.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+        const card = cardRef.current;
 
-            setTimeout(checkScroll, 300); // Pequeña espera para actualizar el estado después del scroll
+        if (container && card) {
+            const cardWidth = card.offsetWidth + 16; // el `+16` es el gap `space-x-4` (4*4=16px)
+            container.scrollBy({ left: direction * cardWidth, behavior: 'smooth' });
+
+            setTimeout(checkScroll, 300);
         }
     };
 
@@ -60,18 +64,18 @@ const ItemSection = ({ data, title, subtitle, target, imgSrc, marketplace }) => 
   )}
 
   <div ref={scrollContainerRef} className={`slider-horizontal flex ${justifyCenter} space-x-4 overflow-x-auto scrollbar-hide scroll-smooth px-4 sm:px-6 md:px-10`}>
-    {data.map((item) => (
-      <Link key={item.id} to={`/${target.toLowerCase()}/${item.id}`}>
-        <Card
-          imgSrc={item.image}
-          title={item.title}
-          category={item.type}
-          description={item.description}
-          tags={item.tourist_type}
-          puntuacion={item.puntuacion}
-        />
-      </Link>
-    ))}
+      {data.map((item, index) => (
+          <Link key={item.id} to={`/${target.toLowerCase()}/${item.id}`} ref={index === 0 ? cardRef : null}>
+              <Card
+                  imgSrc={item.image}
+                  title={item.title}
+                  category={item.type}
+                  description={item.description}
+                  tags={item.tourist_type}
+                  puntuacion={item.puntuacion}
+              />
+          </Link>
+      ))}
   </div>
 
   {canScrollRight && (

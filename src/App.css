@@ -413,3 +413,27 @@ footer .titulo {
 .back-to-top-btn {
   z-index: 99999;
 }
+@media (max-width: 360px) {
+  .filtros-container div,
+  .filtros-container button,
+  .filtros-container input,
+  .filtros-container select {
+    padding: 3px 4px !important;
+    font-size: 12px !important;
+  }
+
+  .filtros-container svg {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  .filtros-container .rounded-full {
+    border-radius: 30px !important;
+  }
+
+  .filtros-container span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

@@ -15,36 +15,31 @@ const socialIconsFA = {
 const SocialLinks = ({ redes, onClickRed }) => {
   const handleClick = (e, red) => {
     if (onClickRed) {
-      e.preventDefault(); // Solo si hay función de manejo, evitamos la navegación automática
-
-      onClickRed(red)
-        .finally(() => {
-          window.open(red.url, "_blank", "noopener,noreferrer");
-        });
+      e.preventDefault();
+      onClickRed(red).finally(() => {
+        window.open(red.url, "_blank", "noopener,noreferrer");
+      });
     }
-    // Si no hay onClickRed, se deja que el <a> actúe por defecto
   };
 
   return (
-    <div className="flex items-center space-x-2">
-      {redes?.map((red) => (
-        <a
-          key={red.red_social}
-          href={red.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-gray-700"
-          onClick={(e) => handleClick(e, red)}
-        >
-          {socialIconsFA[red.red_social] && (
-            <div className="social-icon border rounded-lg border-[#98a2b3] px-1.5 py-0">
-              <FontAwesomeIcon icon={socialIconsFA[red.red_social]} className="text-xl" color="#000" />
-            </div>
-          )}
-        </a>
-      ))}
-    </div>
+      <div className="flex gap-4">
+        {redes?.map((red) => (
+            <a
+                key={red.red_social}
+                href={red.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full shadow-md w-10 h-10 flex items-center justify-center bg-white hover:scale-105 transition"
+                onClick={(e) => handleClick(e, red)}
+            >
+              <FontAwesomeIcon icon={socialIconsFA[red.red_social]} className="text-xl text-black" />
+            </a>
+        ))}
+      </div>
+
   );
 };
+
 
 export default SocialLinks;

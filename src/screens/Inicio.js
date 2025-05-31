@@ -129,20 +129,20 @@ export default function Inicio() {
       </div>
 
       <DirectAccessList items={directAccessItems} />
-
-      <div className="border-t border-[#E4E7EC] h-[1px] md:hidden my-4"></div>
       {
         loadingAtractivos ? (
-          <Spinner animation="border" role="status" />
+            <Spinner animation="border" role="status" />
         ) : (
-          <ItemSection
-            data={naturalAttractions.sort(() => Math.random() - Math.random())}
-            title="Atractivos más cercanos"
-            subtitle="Conocé los puntos más cercanos a tu ubicación."
-            target="atractivo"
-            imgSrc={medallaAtractivos}
-          />)
+            <ItemSection
+                data={naturalAttractions.sort(() => Math.random() - Math.random())}
+                title="Atractivos más cercanos"
+                subtitle="Conocé los puntos más cercanos a tu ubicación."
+                target="atractivo"
+                imgSrc={medallaAtractivos}
+            />)
       }
+      <div className="border-t border-[#E4E7EC] h-[1px] md:hidden my-4"></div>
+
       <div className="border-t border-[#E4E7EC] h-[1px] md:hidden my-4"></div>
       {
         loadingEventos ? (

@@ -42,8 +42,8 @@ const Mapa = ({ objetosFiltrados }) => {
       <div className="w-full h-[400px] rounded-xl overflow-hidden shadow-md">
         <MapContainer center={position} zoom={14} scrollWheelZoom={true} className="h-full w-full">
           <TileLayer
-            url={process.env.REACT_APP_TILE_LAYER_URL || "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"}
-            attribution={process.env.REACT_APP_TILE_LAYER_ATTRIBUTION || '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}
+            url={process.env.REACT_APP_TILE_LAYER_URL || "https://basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}.png"}
+            attribution={process.env.REACT_APP_TILE_LAYER_ATTRIBUTION || '&copy; <a href="https://carto.com/">Carto</a>'}
           />
           <FitBounds objetosFiltrados={objetosFiltrados} />
           {objetosFiltrados.map(({ id, title, coordinates }) =>

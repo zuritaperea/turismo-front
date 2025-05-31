@@ -1,41 +1,30 @@
 import React from "react";
 import Form from "../Form";
-import Select, { components } from "react-select";
 import { MapIcon, DollarSign, Utensils, Users } from "lucide-react";
 
 const FiltroSelect = ({
-  label,
-  name,
-  options = [],
-  selected,
-  onChange,
-  isMulti = false,
-  isBoolean = false,
-  forceSelect = false,
-  includeEmpty = true,
-  className = '',
-  classLabel = '',
-  placeholder = 'Seleccionar',
-  emptyOption = 'Seleccionar'
-}) => {
-  
+                        label,
+                        name,
+                        options = [],
+                        selected,
+                        onChange,
+                        isMulti = false,
+                        isBoolean = false,
+                        forceSelect = false,
+                        includeEmpty = true,
+                        className = '',
+                        classLabel = '',
+                        placeholder = 'Seleccionar',
+                        emptyOption = 'Seleccionar'
+                      }) => {
   const iconByName = {
-    type_attractive: <MapIcon size={18} className="text-black mr-2" />,
-    price_range: <DollarSign size={18} className="text-black mr-2" />,
-    resto_type: <Utensils size={18} className="text-black mr-2" />,
-    tourist_type: <Users size={18} className="text-black mr-2" />,
+    type_attractive: <MapIcon size={18} className="text-black mr-2 shrink-0" />,
+    price_range: <DollarSign size={18} className="text-black mr-2 shrink-0" />,
+    resto_type: <Utensils size={18} className="text-black mr-2 shrink-0" />,
+    tourist_type: <Users size={18} className="text-black mr-2 shrink-0" />,
   };
 
   const Icon = iconByName[name] || null;
-
-  const CustomControl = (props) => {
-    return (
-      <components.Control {...props}>
-        {Icon}
-        {props.children}
-      </components.Control>
-    );
-  };
 
   let actualOptions = [];
 
@@ -55,99 +44,64 @@ const FiltroSelect = ({
     }
   }
 
-    // Si solo hay una opción vacía, no mostramos nada
-    const isOnlyEmptyOption =
-    actualOptions.length === 1 && actualOptions[0].value === "";
+  const isOnlyEmptyOption =
+      actualOptions.length === 1 && actualOptions[0].value === "";
 
   if (isOnlyEmptyOption) return null;
 
   return (
-    <div className={`${className}`}>
-      {label && <label className={`text-sm ${classLabel}`}>{label}</label>}
-      {actualOptions.length <= 5 && !forceSelect && isMulti ? (
-        actualOptions.map((option) => (
-          <Form.Check
-            key={option.value}
-            type="checkbox"
-            label={option.label}
-            name={name}
-            value={option.value}
-            onChange={onChange}
-          />
-        ))
-      ) : (
-        <Select
-          isMulti={isMulti}
-          isSearchable
-          name={name}
-          options={actualOptions}
-          placeholder={placeholder}
-          value={
-            isMulti
-              ? actualOptions.filter((o) => selected?.includes(o.value))
-              : actualOptions.find((o) => o.value === selected) || null
-          }
-          onChange={(selected) => onChange(selected, name)}
-          className="mt-1"
-          styles={{
-            control: (base, state) => ({
-              ...base,
-              borderRadius: 9999, 
-              backgroundColor: "white",
-              borderColor: state.isFocused ? "#ccc" : "#e5e7eb",
-              boxShadow: state.isFocused ? "0 0 0 1px #f08400" : "none",
-              minHeight: "40px", 
-              paddingLeft: Icon ? 6 : 12,
-              paddingRight: 12,
-              fontSize: "14px",
-              lineHeight: "20px",
-              display: "flex",
-              alignItems: "center",
-              marginBottom: "5px"
-            }),
-            valueContainer: (base) => ({
-              ...base,
-              paddingTop: 0,
-              paddingBottom: 0,
-              paddingLeft: 0,
-            }),
-            indicatorsContainer: (base) => ({
-              ...base,
-              paddingTop: 0,
-              paddingBottom: 0,
-            }),
-            placeholder: (base) => ({
-              ...base,
-              color: "#9ca3af", 
-              fontWeight: 500,
-            }),
-            menu: (base) => ({
-              ...base,
-              backgroundColor: "white",
-              borderRadius: 12,
-              boxShadow: "0 0 0 1px #d1d5db",
-              zIndex: 50,
-            }),
-            option: (base, state) => ({
-              ...base,
-              backgroundColor: state.isFocused ? "#f3f4f6" : "white",
-              color: "#111827",
-              cursor: "pointer",
-              paddingTop: 8,
-              paddingBottom: 8,
-              paddingLeft: 12,
-              paddingRight: 12,
-              fontSize: "14px",
-              borderRadius: 8,
-              margin: "2px 4px",
-            }),
-          }}
-          components={{
-            Control: Icon ? CustomControl : components.Control,
-          }}
-        />
-      )}
-    </div>
+      <div className={`w-full ${className}`}>
+        {label && (
+            <label htmlFor={name} className={`block mb-1 text-sm font-medium text-white ${classLabel}`}>
+              {label}
+            </label>
+        )}
+
+        {/* Múltiple selección con checkboxes */}
+        {actualOptions.length <= 5 && !forceSelect && isMulti ? (
+            <div className="space-y-2">
+              {actualOptions.map((option) => (
+                  <Form.Check
+                      key={option.value}
+                      type="checkbox"
+                      label={option.label}
+                      name={name}
+                      value={option.value}
+                      onChange={onChange}
+                  />
+              ))}
+            </div>
+        ) : (
+            <div className="flex items-center bg-white rounded-full px-2 py-2 w-full overflow-hidden">
+              {Icon}
+              <select
+                  id={name}
+                  name={name}
+                  multiple={isMulti}
+                  value={selected}
+                  onChange={(e) => {
+                    const { options } = e.target;
+                    const selectedValues = Array.from(options)
+                        .filter((o) => o.selected)
+                        .map((o) => o.value);
+                    onChange(isMulti ? selectedValues : e.target.value, name);
+                  }}
+                  className="w-full bg-transparent outline-none text-gray-700 text-sm appearance-none"
+              >
+                {!isMulti && (
+                    <option value="" disabled>
+                      {placeholder}
+                    </option>
+                )}
+                {actualOptions.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                ))}
+              </select>
+            </div>
+        )}
+      </div>
   );
 };
 
