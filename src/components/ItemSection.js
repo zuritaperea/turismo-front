@@ -10,7 +10,6 @@ const ItemSection = ({ data, title, subtitle, target, imgSrc, marketplace }) => 
     const [canScrollRight, setCanScrollRight] = useState(false);
     const cardRef = useRef(null);
 
-
     const checkScroll = () => {
         const container = scrollContainerRef.current;
         if (container) {
@@ -23,14 +22,50 @@ const ItemSection = ({ data, title, subtitle, target, imgSrc, marketplace }) => 
         const container = scrollContainerRef.current;
         if (!container) return;
 
-        // Verificar scroll cuando se monta el componente
         setTimeout(checkScroll, 100);
 
-        // Escuchar eventos de scroll y resize
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        const startDragging = (e) => {
+            isDown = true;
+            container.classList.add('dragging');
+            startX = e.pageX || e.touches[0].pageX;
+            scrollLeft = container.scrollLeft;
+        };
+
+        const stopDragging = () => {
+            isDown = false;
+            container.classList.remove('dragging');
+        };
+
+        const handleMove = (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX || e.touches[0].pageX;
+            const walk = (x - startX) * 1.2;
+            container.scrollLeft = scrollLeft - walk;
+        };
+
+        container.addEventListener('mousedown', startDragging);
+        container.addEventListener('touchstart', startDragging, { passive: true });
+        container.addEventListener('mouseleave', stopDragging);
+        container.addEventListener('mouseup', stopDragging);
+        container.addEventListener('touchend', stopDragging);
+        container.addEventListener('mousemove', handleMove);
+        container.addEventListener('touchmove', handleMove);
         container.addEventListener('scroll', checkScroll);
         window.addEventListener('resize', checkScroll);
 
         return () => {
+            container.removeEventListener('mousedown', startDragging);
+            container.removeEventListener('touchstart', startDragging);
+            container.removeEventListener('mouseleave', stopDragging);
+            container.removeEventListener('mouseup', stopDragging);
+            container.removeEventListener('touchend', stopDragging);
+            container.removeEventListener('mousemove', handleMove);
+            container.removeEventListener('touchmove', handleMove);
             container.removeEventListener('scroll', checkScroll);
             window.removeEventListener('resize', checkScroll);
         };
@@ -41,55 +76,63 @@ const ItemSection = ({ data, title, subtitle, target, imgSrc, marketplace }) => 
         const card = cardRef.current;
 
         if (container && card) {
-            const cardWidth = card.offsetWidth + 16; // el `+16` es el gap `space-x-4` (4*4=16px)
+            const cardWidth = card.offsetWidth + 16;
             container.scrollBy({ left: direction * cardWidth, behavior: 'smooth' });
 
             setTimeout(checkScroll, 300);
         }
     };
 
-    const justifyCenter = data.length > 3 ?  'md:justify-start' : 'md:justify-center';
+    const justifyCenter = data.length > 3 ? 'md:justify-start' : 'md:justify-center';
+
     return (
         <div className="relative py-4 px-4 sm:px-6 md:px-0">
-  {!marketplace && <SectionTitle title={title} subtitle={subtitle} imgSrc={imgSrc} />}
+            {!marketplace && <SectionTitle title={title} subtitle={subtitle} imgSrc={imgSrc} />}
 
-  <div className="relative max-w-screen-xl mx-auto">
-  {canScrollLeft && (
-    <button
-      className="absolute -left-5 top-1/2 -translate-y-1/2 z-10 bg-white p-2 rounded-full shadow-md"
-      onClick={() => scroll(-1)}
-    >
-      <ChevronLeft size={24} />
-    </button>
-  )}
+            <div className="relative max-w-screen-xl mx-auto">
+                {/* Flechas solo en escritorio */}
+                {canScrollLeft && (
+                    <button
+                        className="hidden md:flex absolute -left-5 top-1/2 -translate-y-1/2 z-10 bg-white p-2 rounded-full shadow-md"
+                        onClick={() => scroll(-1)}
+                    >
+                        <ChevronLeft size={24} />
+                    </button>
+                )}
 
-  <div ref={scrollContainerRef} className={`slider-horizontal flex ${justifyCenter} space-x-4 overflow-x-auto scrollbar-hide scroll-smooth px-4 sm:px-6 md:px-10`}>
-      {data.map((item, index) => (
-          <Link key={item.id} to={`/${target.toLowerCase()}/${item.id}`} ref={index === 0 ? cardRef : null}>
-              <Card
-                  imgSrc={item.image}
-                  title={item.title}
-                  category={item.type}
-                  description={item.description}
-                  tags={item.tourist_type}
-                  puntuacion={item.puntuacion}
-              />
-          </Link>
-      ))}
-  </div>
+                <div
+                    ref={scrollContainerRef}
+                    className={`slider-horizontal flex ${justifyCenter} space-x-4 overflow-x-auto scroll-smooth px-4 sm:px-6 md:px-10 cursor-grab active:cursor-grabbing select-none`}
+                >
+                    {data.map((item, index) => (
+                        <Link
+                            key={item.id}
+                            to={`/${target.toLowerCase()}/${item.id}`}
+                            ref={index === 0 ? cardRef : null}
+                            className="snap-start shrink-0"
+                        >
+                            <Card
+                                imgSrc={item.image}
+                                title={item.title}
+                                category={item.type}
+                                description={item.description}
+                                tags={item.tourist_type}
+                                puntuacion={item.puntuacion}
+                            />
+                        </Link>
+                    ))}
+                </div>
 
-  {canScrollRight && (
-    <button
-      className="absolute -right-5 top-1/2 -translate-y-1/2 z-10 bg-white p-2 rounded-full shadow-md"
-      onClick={() => scroll(1)}
-    >
-      <ChevronRight size={24} />
-    </button>
-  )}
-</div>
-
-</div>
-
+                {canScrollRight && (
+                    <button
+                        className="hidden md:flex absolute -right-5 top-1/2 -translate-y-1/2 z-10 bg-white p-2 rounded-full shadow-md"
+                        onClick={() => scroll(1)}
+                    >
+                        <ChevronRight size={24} />
+                    </button>
+                )}
+            </div>
+        </div>
     );
 };
 
