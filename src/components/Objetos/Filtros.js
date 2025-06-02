@@ -165,9 +165,9 @@ const Filtros = ({objetoService, setObjetosFiltrados, target}) => {
     flex flex-col lg:flex-row items-center justify-center
     gap-2 px-2 py-4 w-full max-w-full
   "
-                style={{ overflow: 'visible', backgroundColor: "rgba(46, 45, 44, 0.95)" }}
+                style={{overflow: 'visible', backgroundColor: "rgba(46, 45, 44, 0.95)"}}
             >
-            <div className="flex items-center bg-white rounded-full px-4 py-2 w-full lg:w-auto">
+                <div className="flex items-center bg-white rounded-full px-4 py-2 w-full lg:w-auto">
                     <Search className="text-black mr-2" size={18}/>
                     <input
                         type="text"

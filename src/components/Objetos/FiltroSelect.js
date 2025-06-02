@@ -104,7 +104,7 @@ const FiltroSelect = ({
                             display: "flex",
                             alignItems: "center",
                             marginBottom: "5px",
-                            zIndex: 9999,
+                            zIndex: 1,
                         }),
                         valueContainer: (base) => ({
                             ...base,
