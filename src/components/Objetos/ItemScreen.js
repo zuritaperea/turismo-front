@@ -26,6 +26,7 @@ import EncabezadoAtractivo from '../EncabezadoAtractivo.jsx';
 import serviceInteraccion from '../../axios/services/interacciones.js';
 
 import { SeccionDescripcionMultilingue } from '../DescripcionBilingue.jsx';
+import TablaPuntosCircuito from './TablaPuntosCircuito.js';
 const toLocalMidnight = (isoString) => {
   const utcDate = new Date(isoString);
   const localDate = new Date(
@@ -173,41 +174,9 @@ function ItemScreen({ tipoObjeto }) {
             <ListaProductosTuristicos listData={item.attributes.productos_turisticos}
               fechaDesde={fechaDesde} fechaHasta={fechaHasta} cantidadPersonas={cantidad} esPasaporte={esPasaporte} />
           )}
-          {item.attributes.puntos && Object.keys(item.attributes.puntos).length > 0 && 
-            <table className="table-auto w-full border-collapse border border-gray-300 my-10">
-              <thead>
-                <tr>
-                  <th className="border border-gray-300 px-4 py-2">Orden</th>
-                  <th className="border border-gray-300 px-4 py-2">Nombre</th>
-                  <th className="border border-gray-300 px-4 py-2">Distancia</th>
-                  <th className="border border-gray-300 px-4 py-2">Tiempo</th>
-                </tr>
-              </thead>
-              <tbody>
-                {item.attributes.puntos
-                  .sort((a, b) => a.orden - b.orden) // Ordenar por el campo "orden"
-                  .map((punto, index) => (
-                    <tr key={index} className="hover:bg-gray-100">
-                      <td className="border border-gray-300 px-4 py-2 text-center">{punto.orden}</td>
-                      <td className="border border-gray-300 px-4 py-2">
-                        <Link
-                          to={
-                            punto.content_type === "atractivoturistico"
-                              ? `/atractivo/${punto.contenido.id}/`
-                              : `/${punto.content_type}/${punto.contenido.id}/`
-                          }
-                          className="text-blue-500 hover:underline"
-                        >
-                          {punto.contenido.name}
-                        </Link>
-                      </td>
-                      <td className="border border-gray-300 px-4 py-2 text-center">{punto.distancia} m</td>
-                      <td className="border border-gray-300 px-4 py-2 text-center">{punto.tiempo}</td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
-          }
+         {item.attributes.puntos && Object.keys(item.attributes.puntos).length > 0 && (
+  <TablaPuntosCircuito puntos={item.attributes.puntos} />
+)}
 
           {item.attributes.amenity_feature && Object.keys(item.attributes.amenity_feature).length > 0 && <Servicios services={item.attributes.amenity_feature} />}
 
