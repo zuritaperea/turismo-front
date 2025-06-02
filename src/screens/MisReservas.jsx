@@ -9,7 +9,7 @@ import { BadgeCheck, Hourglass, XCircle, DollarSign, CreditCard } from "lucide-r
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { Eye, Trash2 } from "lucide-react"; // ya que usás lucide-react
-
+import Table from "../components/Table";
 const renderEstado = (estado) => {
   switch (estado) {
     case "APROBADA":
@@ -67,18 +67,18 @@ const MisReservas = () => {
       if (reserva.id) {
         try {
           await service.cancelarReserva(reserva.id);
-  
+
           // Actualizar el estado local cambiando solo esa reserva a "CANCELADA"
           setReservas((prevReservas) =>
             prevReservas.map((r) =>
               r.id === reserva.id
                 ? {
-                    ...r,
-                    attributes: {
-                      ...r.attributes,
-                      estado: "CANCELADA",
-                    },
-                  }
+                  ...r,
+                  attributes: {
+                    ...r.attributes,
+                    estado: "CANCELADA",
+                  },
+                }
                 : r
             )
           );
@@ -89,7 +89,7 @@ const MisReservas = () => {
       }
     }
   };
-  
+
   useEffect(() => {
     const fetchedReservas = async () => {
       if (!user) {
@@ -145,68 +145,68 @@ const MisReservas = () => {
   }
 
   return (
-    <div className="bg-gray-100 min-h-screen">
-      <Header />
-      <div className="max-w-5xl mx-auto p-6 bg-white shadow-md rounded-lg mt-6">
-        <h2 className="text-2xl font-bold mb-4">Mis Reservas</h2>
-        {reservas.length === 0 ? (
-          <p className="text-gray-600">No tienes reservas registradas.</p>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full border border-gray-300 rounded-lg overflow-hidden shadow-md">
-              <thead className="bg-gray-200">
-                <tr>
-                  <th className="p-3 text-left">Objeto</th>
-                  <th className="p-3 text-left">Producto</th>
-                  <th className="p-3 text-left">Entrada</th>
-                  <th className="p-3 text-left">Salida</th>
-                  <th className="p-3 text-left">Estado</th>
-                  <th className="p-3 text-left">Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                {reservas.map((reserva) => (
-                  <tr key={reserva.id} className="border-t border-gray-300">
-                    <td className="p-3">
-                      {reserva.attributes.producto_turistico?.objeto?.attributes?.name || "-"}
-                    </td>
-                    <td className="p-3">
-                      {reserva.attributes.producto_turistico?.name || "-"}
-                    </td>
-                    <td className="p-3">{formatearFecha(reserva.attributes.start_date)}</td>
-                    <td className="p-3">{formatearFecha(reserva.attributes.end_date)}</td>
-                    <td className="p-3">  {renderEstado(reserva.attributes.estado)}
-                    </td>
-                    <td className="p-3">
-                      {reserva.attributes.estado !== "CANCELADA" && (
-                        <div className="flex items-center justify-center h-full gap-2">
-                          <button
-                            className="text-blue-600 hover:text-blue-800"
-                            onClick={() => handleVer(reserva)}
-                            title="Ver reserva"
-                          >
-                            <Eye className="w-5 h-5" />
-                          </button>
-                          <button
-                            className="text-red-600 hover:text-red-800"
-                            onClick={() => handleEliminar(reserva)}
-                            title="Cancelar reserva"
-                          >
-                            <Trash2 className="w-5 h-5" />
-                          </button>
-                        </div>
-                      )}
-                    </td>
+    <>     
+     <Header />
 
+        <div className="max-w-5xl mx-auto p-6 bg-white shadow-md rounded-lg mt-6">
+          <h2 className="text-2xl font-bold mb-4">Mis Reservas</h2>
+          {reservas.length === 0 ? (
+            <p className="text-gray-600">No tienes reservas registradas.</p>
+          ) : (
+            <div className="overflow-x-auto">
+              <Table responsive className="w-full border border-gray-300 rounded-lg overflow-hidden shadow-md">
+                <thead className="bg-gray-200">
+                  <tr>
+                    <th className="p-3 text-left">Objeto</th>
+                    <th className="p-3 text-left">Producto</th>
+                    <th className="p-3 text-left">Entrada</th>
+                    <th className="p-3 text-left">Salida</th>
+                    <th className="p-3 text-left">Estado</th>
+                    <th className="p-3 text-left">Acciones</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
-      <Footer />
-    </div>
+                </thead>
+                <tbody>
+                  {reservas.map((reserva) => (
+                    <tr key={reserva.id} className="border-t border-gray-300">
+                      <td className="p-3">
+                        {reserva.attributes.producto_turistico?.objeto?.attributes?.name || "-"}
+                      </td>
+                      <td className="p-3">
+                        {reserva.attributes.producto_turistico?.name || "-"}
+                      </td>
+                      <td className="p-3">{formatearFecha(reserva.attributes.start_date)}</td>
+                      <td className="p-3">{formatearFecha(reserva.attributes.end_date)}</td>
+                      <td className="p-3">  {renderEstado(reserva.attributes.estado)}
+                      </td>
+                      <td className="p-3">
+                        {reserva.attributes.estado !== "CANCELADA" && (
+                          <div className="flex items-center justify-center h-full gap-2">
+                            <button
+                              className="text-blue-600 hover:text-blue-800"
+                              onClick={() => handleVer(reserva)}
+                              title="Ver reserva"
+                            >
+                              <Eye className="w-5 h-5" />
+                            </button>
+                            <button
+                              className="text-red-600 hover:text-red-800"
+                              onClick={() => handleEliminar(reserva)}
+                              title="Cancelar reserva"
+                            >
+                              <Trash2 className="w-5 h-5" />
+                            </button>
+                          </div>
+                        )}
+                      </td>
+
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </div>
+          )}
+      </div>      <Footer />
+    </>
   );
 };
 

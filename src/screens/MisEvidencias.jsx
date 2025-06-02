@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { BadgeCheck, Hourglass, XCircle, DollarSign, CreditCard } from "lucide-react";
 import { Eye } from "lucide-react"; // ya que usás lucide-react
 import funciones from "../extras/functions";
+import Table from "../components/Table";
 const renderEstado = (estado) => {
   switch (estado) {
     case "approved":
@@ -76,7 +77,7 @@ const MisEvidencias = () => {
   }
 
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <>
       <Header />
       <div className="max-w-5xl mx-auto p-6 bg-white shadow-md rounded-lg mt-6">
         <h2 className="text-2xl font-bold mb-4">Mis Evidencias</h2>
@@ -92,7 +93,7 @@ const MisEvidencias = () => {
           <p className="text-gray-600">No tienes evidencias registradas.</p>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full border border-gray-300 rounded-lg overflow-hidden shadow-md">
+            <Table className="w-full border border-gray-300 rounded-lg overflow-hidden shadow-md">
               <thead className="bg-gray-200">
                 <tr>
                   <th className="p-3 text-left">Acción</th>
@@ -100,7 +101,7 @@ const MisEvidencias = () => {
                   <th className="p-3 text-left">Ubicación</th>
                   <th className="p-3 text-left">Fecha</th>
                   <th className="p-3 text-left">Estado</th>
-                  <th className="p-3 text-left">Acciones</th>
+                  <th className="p-3 text-left">Imagen</th>
                 </tr>
               </thead>
               <tbody>
@@ -152,12 +153,12 @@ const MisEvidencias = () => {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </Table>
           </div>
         )}
       </div>
       <Footer />
-    </div>
+    </>
   );
 };
 

@@ -13,6 +13,7 @@ import funciones from "../extras/functions";
 import { Eye } from 'lucide-react';
 import Modal from '../components/Modal';
 import { AuthContext } from "../components/AuthContext";
+import Table from '../components/Table';
 
 function ViajeScreen() {
   const { user } = useContext(AuthContext);
@@ -75,7 +76,7 @@ function ViajeScreen() {
             <p className="text-gray-600">No tienes evidencias registradas.</p>
           ) : (
             <div className="overflow-x-auto">
-              <table className="w-full border border-gray-300 rounded-lg overflow-hidden shadow-md">
+              <Table className="w-full border border-gray-300 rounded-lg overflow-hidden shadow-md">
                 <thead className="bg-gray-200">
                   <tr>
                     <th>Fecha Inicio</th>
@@ -117,7 +118,7 @@ function ViajeScreen() {
 
 
                 </tbody>
-              </table></div>
+              </Table></div>
           )}
         </div></div>
 

@@ -19,8 +19,6 @@ import AtractivosScreen from "./screens/Atractivos";
 import DestinosScreen from "./screens/Destinos";
 import CookieConsent from "./components/CookieConsent";
 import Registro from "./screens/Registro";
-import DatosAdicionales from "./screens/DatosAdicionales";
-import Terminos from "./screens/Terminos";
 import Recupero from "./screens/Recupero";
 import Eventos from "./screens/Eventos";
 import PuntosInteres from "./screens/PuntosInteres";
@@ -77,8 +75,6 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/perfil" element={<Perfil />} />
               <Route path="/logout" element={<Logout />} />
-              <Route path="/destino/:id/:fechadesde/:fechahasta" element={<DestinoScreen />} />
-              <Route path="/destino/:id/:fechadesde/:fechahasta/:filtros" element={<DestinoScreen />} />
               <Route path="/destino/:id" element={<DestinoScreen />} />
               <Route path="/destino/:id/:filtros" element={<DestinoScreen />} />
               <Route path="/destinos" element={<DestinosScreen />} />
@@ -107,8 +103,6 @@ function App() {
               <Route path="/eventos" element={<Eventos />} />
               <Route path="/evento" element={<EventoScreen />} />
               <Route path="/registro" element={<Registro />} />
-              <Route path="/datos-adicionales" element={<DatosAdicionales />} />
-              <Route path="/terminos-y-condiciones" element={<Terminos />} />
               <Route path="/recuperar-clave" element={<Recupero />} />
               <Route path="/viajes" element={<ViajeScreen />} />
               <Route path="/marketplace" element={<Marketplace />} />
