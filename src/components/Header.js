@@ -53,11 +53,9 @@ export default function Header() {
         <div className="flex items-center">
           <Link to="/" className="flex items-center">
             <img className="h-10" src={headerLogo} alt="Logo" />
-            {isHomePage && (
-              <h1 className="ml-3 font-semibold text-lg font-inter hidden sm:block">
-                {headerTitle}
-              </h1>
-            )}
+            <h1 className="ml-3 font-semibold text-lg font-inter hidden sm:block">
+              {headerTitle}
+            </h1>
           </Link>
         </div>
 
