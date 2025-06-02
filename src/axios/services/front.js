@@ -12,4 +12,7 @@ export default {
   obtener: function (id) {
     return api.get(`${apiVersion}/${contentType}/${id}/`);
   },
+  obtenerBanners: function () {
+    return api.get(`${apiVersion}/banner/`);
+  }
 };

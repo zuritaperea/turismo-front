@@ -19,6 +19,7 @@ import medallaAtractivos from "../assets/img/medalla.png";
 import medallaEventos from "../assets/img/calendario.png";
 import DirectAccessList from "../components/DirectAccessList";
 import bannerHome from "../assets/img/banner-home.png";
+import { key } from "localforage";
 
 export default function Inicio() {
   const [loading, setLoading] = useState(false);
@@ -26,6 +27,8 @@ export default function Inicio() {
   const [eventos, setEventos] = useState([]);
 
   const [images, setImages] = useState([]);
+  const [banners, setBanners] = useState([]);
+
   const [directAccessItems, setDirectAccessItems] = useState([]);
 
   const [naturalAttractions, setNaturalAttractions] = useState([]);
@@ -41,6 +44,7 @@ export default function Inicio() {
     if (config) {
       setImages(config.carousel_items);
       setDirectAccessItems(config.direct_access_items);
+      setBanners(config.banners);
     }
   }, [config]);
 
@@ -157,20 +161,27 @@ export default function Inicio() {
             marketplace={false}
           />)
       }
-      <a
-        href="https://hechoenmarchiquita.ar/"
+      {banners.map((banner) => (
+
+<a
+        href={banner.attributes.url}
+        key={banner.id}
         target="_blank"
         rel="noopener noreferrer"
         className="block w-full mx-auto mt-8 text-center"
       >
         <img
-          src={bannerHome}
-          alt="Banner Home"
+          src={banner.attributes.image}
+          alt={banner.attributes.name}
           className="w-full rounded-xl 
                max-h-[320px] sm:max-h-[280px] md:max-h-[300px] lg:max-h-[320px]
                max-w-[95%] sm:max-w-[90%] md:max-w-4xl lg:max-w-5xl mx-auto"
         />
       </a>
+
+
+))};
+        
       <Footer />
     </>
   );

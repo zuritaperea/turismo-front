@@ -15,17 +15,19 @@ const fetchConfig = async () => {
   }
 
   try {
-    const [configResponse, menuResponse] = await Promise.all([
+    const [configResponse, menuResponse, bannerResponse] = await Promise.all([
       service.obtenerUltimo(),
-      serviceMenu.obtenerTodos() // ✅ Obtener los menús también
+      serviceMenu.obtenerTodos(), // ✅ Obtener los menús también
+      service.obtenerBanners() // ✅ Obtener banners si es necesario
     ]);
 
     const config = configResponse.data.data.attributes;
     const menus = menuResponse.data.data;
-
+    const banners = bannerResponse.data.data; 
     const fullConfig = {
       ...config,
       menus, // ✅ Agregar los menús a la config
+      banners, // ✅ Agregar los banners a la config
     };
 
     localStorage.setItem('appConfig', JSON.stringify(fullConfig));
