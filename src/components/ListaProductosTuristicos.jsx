@@ -4,14 +4,11 @@ import Modal from "./Modal.js";
 import service from "../axios/services/producto_turistico.js";
 import { AuthContext } from "./AuthContext.js";
 import { useNavigate } from "react-router-dom";
-
-const formatForInput = (date) => {
-  if (!date) return "";
-  if (typeof date === "string") date = new Date(date);
-  if (!(date instanceof Date) || isNaN(date)) return "";
-  const pad = (n) => String(n).padStart(2, "0");
-  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
-};
+import funciones from "../extras/functions.js";
+import { DateRange, Calendar } from "react-date-range";
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
+import { es } from "date-fns/locale";
 
 const ListaProductosTuristicos = (props) => {
   const {
@@ -19,7 +16,8 @@ const ListaProductosTuristicos = (props) => {
     fechaDesde,
     fechaHasta,
     cantidadPersonas: cantidadPersonasProp,
-    esPasaporte = false
+    esPasaporte = false,
+    tipoObjeto
   } = props;
   const [modalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
@@ -31,10 +29,18 @@ const ListaProductosTuristicos = (props) => {
   const { user } = useContext(AuthContext);
   const [selectedStartDate, setSelectedStartDate] = useState(null);
   const [selectedEndDate, setSelectedEndDate] = useState(null);
+  const [dateRange, setDateRange] = useState([
+    {
+      startDate: selectedStartDate || fechaDesde || new Date(),
+      endDate: selectedEndDate || fechaHasta || new Date(),
+      key: "selection",
+    },
+  ]);
   const [acompaniantes, setAcompaniantes] = useState([]);
   const [cantidadProducto, setCantidadProducto] = useState(1);
   const [cantidadPersonas, setCantidadPersonas] = useState(cantidadPersonasProp ?? 1);
   const cantidadPersonasFuePasada = props.cantidadPersonas != null;
+  const isAlojamiento = tipoObjeto === "alojamiento";
 
 
   useEffect(() => {
@@ -47,9 +53,9 @@ const ListaProductosTuristicos = (props) => {
   }, [cantidadPersonas]);
 
   useEffect(() => {
-    if (fechaDesde) setSelectedStartDate(new Date(fechaDesde));
-    if (fechaHasta) setSelectedEndDate(new Date(fechaHasta));
-  }, [fechaDesde, fechaHasta]);
+    setSelectedStartDate(dateRange[0].startDate);
+    setSelectedEndDate(dateRange[0].endDate);
+  }, [dateRange]);
 
   const isReadOnly = fechaDesde && fechaHasta;
 
@@ -139,7 +145,7 @@ const ListaProductosTuristicos = (props) => {
   };
 
   return (
-    <div  className="mb-20">
+    <div className="mb-20">
       <h2 className="text-2xl font-bold text-slate-900 tracking-tight dark:text-slate-200 my-4">
         Realizá tu reserva
       </h2>
@@ -189,29 +195,53 @@ const ListaProductosTuristicos = (props) => {
               <Modal.Body className="flex-grow overflow-y-auto scrollbar-hide">
                 <div className="mb-4 overflow-y-auto max-h-80 sm:max-h-80 md:max-h-96 lg:max-h-96 pr-2">
                   <h3 className="text-md font-semibold mb-2 text-gray-200">
-                    {isReadOnly ? 'Rango de Fechas' : 'Seleccioná el rango de fechas'}:
-                  </h3>
+                    {isAlojamiento
+                      ? isReadOnly
+                        ? "Rango de Fechas"
+                        : "Seleccioná el rango de fechas"
+                      : isReadOnly
+                        ? "Fecha seleccionada"
+                        : "Seleccioná la fecha"}                  </h3>
                   <div className="flex flex-col gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-200 mb-1">Desde:</label>
-                      <input
-                        type="datetime-local"
-                        className="w-full border rounded p-2"
-                        value={formatForInput(selectedStartDate)}
-                        onChange={(e) => setSelectedStartDate(e.target.value)}
-                        readOnly={isReadOnly}
-                      />
+                    <div className="mb-4">
+
+
+                      {isAlojamiento ? (
+                        <DateRange
+                          editableDateInputs={!isReadOnly}
+                          onChange={(item) => {
+                            const selectedStart = item.selection.startDate;
+                            const selectedEnd = item.selection.endDate;
+                            setDateRange([item.selection]);
+                          }}
+                          moveRangeOnFirstSelection={false}
+                          ranges={dateRange}
+                          locale={es}
+                          minDate={fechaDesde || new Date()}
+                          maxDate={fechaHasta}
+                          className="rounded border shadow"
+                        />
+                      ) : (
+                        <Calendar
+                          date={dateRange[0].startDate}
+                          onChange={(date) => {
+                            const start = new Date(date);
+                            const end = new Date(date);
+                            end.setHours(23, 59, 59, 999);
+                            setDateRange([{ startDate: start, endDate: end, key: "selection" }]);
+                          }}
+                          locale={es}
+                          disabled={isReadOnly}
+                          color="#111827"
+                          minDate={fechaDesde || new Date()}
+                          maxDate={fechaHasta}
+                          className="rounded border shadow"
+
+                        />
+                      )}
                     </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-200 mb-1">Hasta:</label>
-                      <input
-                        type="datetime-local"
-                        className="w-full border rounded p-2"
-                        value={formatForInput(selectedEndDate)}
-                        onChange={(e) => setSelectedEndDate(e.target.value)}
-                        readOnly={isReadOnly}
-                      />
-                    </div>
+
+
                     <div className="mb-4">
                       <label className="block text-sm font-medium text-gray-200 mb-1">
                         Cantidad a reservar:

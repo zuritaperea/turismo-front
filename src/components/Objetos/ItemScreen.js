@@ -1,13 +1,11 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
-import { useParams, useLocation, useNavigate, Link } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import service from '../../axios/services/service';
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Carousel from '../../components/Carousel';
-import TagsList from '../../components/TagsList';
-import BotonesAccion from './BotonesAccion';
 import FechasHorarios from './FechasHorarios';
 import Contacto from './Contacto';
 import Certificaciones from './Certificaciones';
@@ -16,10 +14,8 @@ import Splash from '../../components/Splash';
 import SeccionConTitulo from './SeccionConTitulo';
 import Servicios from './Servicios';
 import Recomendaciones from './Recomendaciones';
-import { AuthContext } from '../../components/AuthContext';
 import Mapa from './Mapa.js';
 import ListaProductosTuristicos from '../ListaProductosTuristicos.jsx';
-import SocialLinks from '../SocialLinks.js';
 import ObjetoOpinion from './ObjetoOpinion.js';
 import RangoPrecios from './RangoPrecios.js';
 import EncabezadoAtractivo from '../EncabezadoAtractivo.jsx';
@@ -41,16 +37,11 @@ const toLocalMidnight = (isoString) => {
 function ItemScreen({ tipoObjeto }) {
   const { id } = useParams();
   const location = useLocation();
-  const navigate = useNavigate();
-  const { user } = useContext(AuthContext);
-
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [items, setItems] = useState([]);
   const [loadingItems, setLoadingItems] = useState(true);
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [atractivoData, setAtractivoData] = useState(null);
   const [fechaDesde, setFechaDesde] = useState(null);
   const [fechaHasta, setFechaHasta] = useState(null);
   const [cantidad, setCantidad] = useState(null);
@@ -96,6 +87,7 @@ function ItemScreen({ tipoObjeto }) {
 
     const obtenerItem = async () => {
       try {
+        setLoadingItems(true)
         const datosItem = await service.obtenerDatos(tipoObjeto, id);
         setItem(datosItem);
         setLoading(false);
@@ -106,6 +98,7 @@ function ItemScreen({ tipoObjeto }) {
     };
     const obtenerItems = async () => {
       try {
+        setLoadingItems(true)
         const datosItems = await service.obtenerTodos(tipoObjeto);
         setItems(datosItems);
         setLoadingItems(false);
@@ -120,7 +113,7 @@ function ItemScreen({ tipoObjeto }) {
     obtenerItems();
   }, [id, tipoObjeto]);
 
-  const manejarInteraccionRed = (red) => {
+  const manejarInteraccionRed = async (red) => {
     const data = {
       content_type: item.attributes?.content_type,
       object_id: item.id,
@@ -128,13 +121,12 @@ function ItemScreen({ tipoObjeto }) {
       longitude: null,
     };
 
-    return serviceInteraccion.generarInteraccionRedes(data)
-      .then((response) => {
-        console.log("Interacción Redes generada:", response);
-      })
-      .catch((error) => {
-        console.error("Error generando interacción Redes:", error);
-      });
+    try {
+      const response = await serviceInteraccion.generarInteraccionRedes(data);
+      console.log("Interacción Redes generada:", response);
+    } catch (error) {
+      console.error("Error generando interacción Redes:", error);
+    }
   };
 
   if (loading) {
@@ -172,11 +164,12 @@ function ItemScreen({ tipoObjeto }) {
           )}
           {item.attributes.productos_turisticos?.length > 0 && (
             <ListaProductosTuristicos listData={item.attributes.productos_turisticos}
-              fechaDesde={fechaDesde} fechaHasta={fechaHasta} cantidadPersonas={cantidad} esPasaporte={esPasaporte} />
+              fechaDesde={fechaDesde} fechaHasta={fechaHasta} cantidadPersonas={cantidad} esPasaporte={esPasaporte}
+              tipoObjeto={tipoObjeto} />
           )}
-         {item.attributes.puntos && Object.keys(item.attributes.puntos).length > 0 && (
-  <TablaPuntosCircuito puntos={item.attributes.puntos} />
-)}
+          {item.attributes.puntos && Object.keys(item.attributes.puntos).length > 0 && (
+            <TablaPuntosCircuito puntos={item.attributes.puntos} />
+          )}
 
           {item.attributes.amenity_feature && Object.keys(item.attributes.amenity_feature).length > 0 && <Servicios services={item.attributes.amenity_feature} />}
 
@@ -195,7 +188,6 @@ function ItemScreen({ tipoObjeto }) {
                   }}
                 />
               )}
-            {/*<SocialLinks redes={item.attributes.redes_sociales} onClickRed={manejarInteraccionRed} />*/}
           </div>
           <RangoPrecios item={item} />
 
