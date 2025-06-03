@@ -3,8 +3,9 @@ import TagsList from './TagsList';
 import Estrellas from './Items/Estrellas';
 import BotonesAccion from './Objetos/BotonesAccion';
 import SocialLinks from "./SocialLinks";
+import Fecha from './Objetos/Fecha';
 
-const EncabezadoAtractivo = ({ item, redesSociales, onClickRed }) => {
+const EncabezadoAtractivo = ({ item, redesSociales, onClickRed, inicio, final }) => {
     const imagen = item.attributes.image_url
         ? process.env.REACT_APP_API_URL + item.attributes.image_url
         : process.env.REACT_APP_IMAGE_DEFAULT;
@@ -30,7 +31,7 @@ const EncabezadoAtractivo = ({ item, redesSociales, onClickRed }) => {
                     <div className='flex-1'>
                         <p className="text-xs text-orange-500 font-semibold mb-1">{categoria}</p>
                         <h1 className="text-3xl font-bold text-gray-900">{nombre}</h1>
-
+                        <Fecha inicio={inicio} final={final} />
                         <div className="flex flex-wrap gap-2 mt-2 mb-3">
                             <TagsList tags={tags} />
                         </div>

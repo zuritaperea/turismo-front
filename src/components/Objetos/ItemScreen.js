@@ -148,7 +148,8 @@ function ItemScreen({ tipoObjeto }) {
   return (
     <>
       <Header />
-      <EncabezadoAtractivo item={item} redesSociales={item.attributes.redes_sociales} onClickRed={manejarInteraccionRed} />
+      <EncabezadoAtractivo item={item} redesSociales={item.attributes.redes_sociales} onClickRed={manejarInteraccionRed} 
+      inicio={item.attributes.start_date} final={item.attributes.end_date}/>
       <div className="container mt-20 mx-auto p-4 pt-28">
         <div className="pb-4 mt-40 lg:mt-1">
           <SeccionDescripcionMultilingue

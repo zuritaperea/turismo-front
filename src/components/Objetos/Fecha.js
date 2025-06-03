@@ -1,56 +1,55 @@
 import React from "react";
-import styles from "./styles.module.css";
 
 export default function Fecha({ inicio, final }) {
-  let date = new Date(inicio);
-  let date2 = new Date(final);
+  const date = new Date(inicio);
+  const date2 = new Date(final);
+  const currentYear = new Date().getFullYear();
+
   // INICIO
-  let dd = date.getDate();
-  let mm = date.getMonth(); // January is 0!
-  let hh = date.getHours();
-  let MM = (date.getMinutes() < 10 ? "0" : "") + date.getMinutes();
+  const dd = date.getDate();
+  const mm = date.getMonth();
+  const yyyy = date.getFullYear();
+  const hh = date.getHours();
+  const MM = date.getMinutes().toString().padStart(2, "0");
 
   // FIN
-  let dd2 = date2.getDate();
-  let mm2 = date2.getMonth(); // January is 0!
-  let hh2 = date2.getHours();
-  let MM2 = (date2.getMinutes() < 10 ? "0" : "") + date2.getMinutes();
+  const dd2 = date2.getDate();
+  const mm2 = date2.getMonth();
+  const yyyy2 = date2.getFullYear();
+  const hh2 = date2.getHours();
+  const MM2 = date2.getMinutes().toString().padStart(2, "0");
+
   const monthNames = [
-    "Enero",
-    "Febrero",
-    "Marzo",
-    "Abril",
-    "Mayo",
-    "Junio",
-    "Julio",
-    "Agosto",
-    "Septiembre",
-    "Octubre",
-    "Noviembre",
-    "Diciembre",
+    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
   ];
+
   return (
-    <div className={styles.listado}>
-      <span className={styles.dia}>{dd}</span>
-      <div className={styles.centro}>
-        <span className={styles.mes}>{monthNames[mm]}</span>
-        <span className={styles.text}>
-          {hh}:{MM} {dd === dd2 ? ` - ${hh2}:${MM2}` : ""}
-        </span>
+    <div className="flex items-center space-x-4 mt-2">
+      {/* Fecha de inicio */}
+      <div className="flex flex-col">
+        <div className="text-sm font-semibold">
+          📅 {dd} {monthNames[mm]} {yyyy !== currentYear ? yyyy : ""}
+        </div>
+        <div className="text-sm">
+          🕒 {hh}:{MM}
+          {dd === dd2 && mm === mm2 && yyyy === yyyy2 ? ` - ${hh2}:${MM2}` : null}
+        </div>
       </div>
-      {dd !== dd2 ? (
+
+      {/* Si las fechas son distintas, mostramos también la fecha final */}
+      {(dd !== dd2 || mm !== mm2 || yyyy !== yyyy2) && (
         <>
-          <span className={styles.separador}>-</span>
-          <span className={styles.dia}>{dd2}</span>
-          <div className={styles.centro}>
-            <span className={styles.mes}>{monthNames[mm2]}</span>
-            <span className={styles.text}>
-              {hh2}:{MM2}
-            </span>
+          <div className="text-xl font-bold px-2">-</div>
+          <div className="flex flex-col">
+            <div className="text-sm font-semibold">
+              📅 {dd2} {monthNames[mm2]} {yyyy2 !== currentYear ? yyyy2 : ""}
+            </div>
+            <div className="text-sm">
+              🕒 {hh2}:{MM2}
+            </div>
           </div>
         </>
-      ) : (
-        <></>
       )}
     </div>
   );
