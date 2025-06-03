@@ -166,7 +166,9 @@ function ItemScreen({ tipoObjeto }) {
           {item.attributes.productos_turisticos?.length > 0 && (
             <ListaProductosTuristicos listData={item.attributes.productos_turisticos}
               fechaDesde={fechaDesde} fechaHasta={fechaHasta} cantidadPersonas={cantidad} esPasaporte={esPasaporte}
-              tipoObjeto={tipoObjeto} />
+              tipoObjeto={tipoObjeto} 
+              inicio={item.attributes.start_date} final={item.attributes.end_date}
+              />
           )}
           {item.attributes.puntos && Object.keys(item.attributes.puntos).length > 0 && (
             <TablaPuntosCircuito puntos={item.attributes.puntos} />

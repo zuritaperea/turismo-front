@@ -17,7 +17,9 @@ const ListaProductosTuristicos = (props) => {
     fechaHasta,
     cantidadPersonas: cantidadPersonasProp,
     esPasaporte = false,
-    tipoObjeto
+    tipoObjeto,
+    inicio,
+    final
   } = props;
   const [modalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
@@ -233,8 +235,8 @@ const ListaProductosTuristicos = (props) => {
                           locale={es}
                           disabled={isReadOnly}
                           color="#111827"
-                          minDate={fechaDesde || new Date()}
-                          maxDate={fechaHasta}
+                          minDate={fechaDesde || inicio || new Date()}
+                          maxDate={fechaHasta || final }
                           className="rounded border shadow"
 
                         />
