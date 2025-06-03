@@ -1,6 +1,7 @@
 import React from "react";
 
 export default function Fecha({ inicio, final }) {
+  if (!inicio || !final) return null;
   const date = new Date(inicio);
   const date2 = new Date(final);
   const currentYear = new Date().getFullYear();
