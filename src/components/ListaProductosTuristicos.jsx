@@ -254,8 +254,9 @@ const ListaProductosTuristicos = (props) => {
                     {producto_turistico.validity_to ? formatHour(producto_turistico.validity_to) : ""}
                   </p>
                   <p className="text-[#475467] mt-2 text-lg">
-                    {producto_turistico.value}
-                  </p>
+                  {producto_turistico.value_type === "IMPORTE" && producto_turistico.value ? (
+                    <span>{new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(producto_turistico.value)}</span>
+                  ) : null}                  </p>
                 </div>
               </div>
             </div>
