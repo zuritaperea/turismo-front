@@ -111,7 +111,7 @@ const ListaProductosTuristicos = (props) => {
 
           if (horariosResponse?.data?.data) {
             const horarios = horariosResponse.data.data;
-            setHorariosDisponibles(horarios);
+            setHorariosDisponibles(horarios.horarios);
           }
         } else {
           // Tiene configuración pero no para este día
@@ -141,6 +141,9 @@ const ListaProductosTuristicos = (props) => {
   const handleReservar = async () => {
     if (!user) {
       alert("¡Por favor, inicia sesión para realizar una reserva!");
+      //agregar la url actual para poder volver despues de iniciar sesión
+      localStorage.setItem("redirectAfterLogin", window.location.href);
+      navigate("/login");
       return;
     }
 
@@ -342,7 +345,7 @@ const ListaProductosTuristicos = (props) => {
                             }}
                           >
                             <option value="">Seleccionar horario</option>
-                            {Object.entries(horariosDisponibles.horarios).map(([hora, disponible]) =>
+                            {Object.entries(horariosDisponibles).map(([hora, disponible]) =>
                               disponible >  0 ? (
                                 <option key={hora} value={hora}>
                                   {hora}

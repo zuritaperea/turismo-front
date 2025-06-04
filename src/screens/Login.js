@@ -1,5 +1,5 @@
 import React, { useState, useRef, useContext, useEffect } from 'react';
-import { Link, useNavigate, useLocation} from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Form from '../components/Form';
 import Button from '../components/Button';
@@ -41,8 +41,14 @@ const Login = () => {
     setAlerts([]);
     const response = await authService.login(username, password, login); // Pasa login como callback
     if (response === 'success') {
-      const redirectTo = location.state?.from?.pathname || "/"; // Redirige a la página anterior o a "/"
-      navigate(redirectTo);
+      const redirectAfterLogin = localStorage.getItem("redirectAfterLogin");
+      if (redirectAfterLogin) {
+        localStorage.removeItem("redirectAfterLogin");
+        window.location.href = redirectAfterLogin; // Use this for full URLs
+      }
+      else {
+        navigate("/"); // Redirige a la página principal
+      }
     } else {
       setAlerts(functions.errorMaker(response.data));
     }

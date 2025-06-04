@@ -87,7 +87,7 @@ const Reserva = () => {
         ) : (
           <>
             <div className="flex items-center gap-2">{renderEstado(reserva.attributes.estado)}</div>
-
+            <div className="text-gray-600 text-sm mb-4">Número de Reserva: {reserva.id}</div>
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <h3 className="text-sm font-semibold text-gray-700">Fecha de Entrada</h3>
