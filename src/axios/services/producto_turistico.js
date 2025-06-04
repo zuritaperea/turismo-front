@@ -26,6 +26,14 @@ export default {
   obtenerProductoTuristicoPorId: function (id) {
     return api.get(`${apiVersion}/${contentType}/${id}/`);
   },
+  obtenerHorariosDisponibles: function (producto_turistico_id, fecha) {
+    return api.get(`${apiVersion}/horarios/disponibles/`, {
+      params: {
+        producto_turistico_id,
+        fecha
+      }
+    });
+  },
   obtenerMisReservas: function (id) {
     return api.get(`${apiVersion}/reserva/me/`);
   },

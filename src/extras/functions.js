@@ -54,6 +54,30 @@ const funciones = {
   
     return `${year}-${month}-${day}T${hours}:${minutes}`;
   },
+  formatDateOnly : function (date) {
+    if (!date) return ""; // Si no hay fecha, retorna un string vacío.
+  
+    // Si la fecha es una cadena en formato ISO
+    if (typeof date === "string") {
+      // Intentamos convertirla a un objeto Date
+      date = new Date(date);
+    }
+  
+    // Verificar si es una instancia de Date válida
+    if (!(date instanceof Date) || isNaN(date)) {
+      return ""; // Si no es una fecha válida, retornamos vacío.
+    }
+  
+  
+    const pad = (n) => String(n).padStart(2, "0");
+  
+    const year = date.getFullYear();
+    const month = pad(date.getMonth() + 1); // El mes es 0-indexado, sumamos 1
+    const day = pad(date.getDate());
+    // No incluimos horas y minutos, solo la fecha
+  
+    return `${year}-${month}-${day}`;
+  },
   getColorFromText: function (text, index) {
     const colors = ['yellow', 'red', 'pink', 'blue', 'purple', 'green'];
     const colorStyles = [
@@ -123,9 +147,14 @@ const funciones = {
     return `${fechaFormateada}`;
   },
    forzarComoUTCyConvertir: function (fechaISO) {
- // Quitar la zona horaria original y reemplazar por Z (UTC)
- const fechaSinZona = fechaISO.replace(/([+-]\d{2}:\d{2})$/, "Z");
- const dateUTC = new Date(fechaSinZona);
+    if (!fechaISO) return "-";
+    // SI esta date lo transofrmamos a String
+    if (fechaISO instanceof Date) {
+      fechaISO = fechaISO.toString();
+    }
+    // Quitar la zona horaria original y reemplazar por Z (UTC)
+    const fechaSinZona = fechaISO.replace(/([+-]\d{2}:\d{2})$/, "Z");
+    const dateUTC = new Date(fechaSinZona);
 
  // Formatear en horario de Buenos Aires
  return new Intl.DateTimeFormat("es-AR", {

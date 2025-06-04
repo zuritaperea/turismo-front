@@ -9,7 +9,7 @@ import { DateRange, Calendar } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { es } from "date-fns/locale";
-
+import Spinner from "./Spinner.js";
 const ListaProductosTuristicos = (props) => {
   const {
     listData,
@@ -24,9 +24,12 @@ const ListaProductosTuristicos = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
   const [isLoadingReserva, setIsLoadingReserva] = useState(false);
+  const [isLoadingProducto, setIsLoadingProducto] = useState(false);
 
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [selectedProductoTuristico, setSelectedProductoTuristico] = useState(null);
+  const [productoTuristico, setProductoTuristico] = useState(null);
+  const [horariosDisponibles, setHorariosDisponibles] = useState([]);
   const [reservaId, setReservaId] = useState(null);
   const { user } = useContext(AuthContext);
   const [selectedStartDate, setSelectedStartDate] = useState(null);
@@ -43,6 +46,30 @@ const ListaProductosTuristicos = (props) => {
   const [cantidadPersonas, setCantidadPersonas] = useState(cantidadPersonasProp ?? 1);
   const cantidadPersonasFuePasada = props.cantidadPersonas != null;
   const isAlojamiento = tipoObjeto === "alojamiento";
+  const [intervaloMinutos, setIntervaloMinutos] = useState(null);
+  const [tieneHorariosConfigurados, setTieneHorariosConfigurados] = useState(false);
+  const [hayHorariosParaElDia, setHayHorariosParaElDia] = useState(false);
+
+
+  useEffect(() => {
+    const fetchProductoTuristico = async () => {
+      setProductoTuristico(null);
+      setIsLoadingProducto(true);
+      if (!selectedProductoTuristico) return;
+      try {
+        const response = await service.obtenerProductoTuristicoPorId(selectedProductoTuristico.id);
+        if (response?.data?.data) {
+          setProductoTuristico(response.data.data);
+        } else {
+          console.error("No se encontró el producto turístico");
+        }
+      } catch (error) {
+        console.error("Error al obtener el producto turístico:", error);
+      }
+      setIsLoadingProducto(false);
+    }
+    fetchProductoTuristico();
+  }, [selectedProductoTuristico]);
 
 
   useEffect(() => {
@@ -54,10 +81,55 @@ const ListaProductosTuristicos = (props) => {
     }
   }, [cantidadPersonas]);
 
+
+
   useEffect(() => {
     setSelectedStartDate(dateRange[0].startDate);
     setSelectedEndDate(dateRange[0].endDate);
-  }, [dateRange]);
+
+    const obtenerHorarios = async () => {
+      if (!productoTuristico) return;
+
+      const horariosConfig = productoTuristico.attributes?.horarios_disponibles;
+      //ajustamos el dia de la semana para que coincida con el formato de la API siendo 0 el Lunes y 6 el Domingo
+      const diaSemana = new Date(dateRange[0].startDate).getDay();
+      const adjustedDiaSemana = (diaSemana + 6) % 7; // Ajuste para que 0 sea Lunes y 6 sea Domingo
+      console.log("Día de la semana:", diaSemana);
+      if (horariosConfig && horariosConfig.length > 0) {
+        setTieneHorariosConfigurados(true);
+
+        const horarioDelDia = horariosConfig.find(h => h.dia_semana === adjustedDiaSemana);
+
+        if (horarioDelDia) {
+          setIntervaloMinutos(horarioDelDia.intervalo_minutos);
+          setHayHorariosParaElDia(true);
+
+          const horariosResponse = await service.obtenerHorariosDisponibles(
+            productoTuristico.id,
+            funciones.formatDateOnly(dateRange[0].startDate)
+          );
+
+          if (horariosResponse?.data?.data) {
+            const horarios = horariosResponse.data.data;
+            setHorariosDisponibles(horarios);
+          }
+        } else {
+          // Tiene configuración pero no para este día
+          setIntervaloMinutos(null);
+          setHayHorariosParaElDia(false);
+          setHorariosDisponibles(null);
+        }
+      } else {
+        // No hay configuración de horarios
+        setTieneHorariosConfigurados(false);
+        setIntervaloMinutos(null);
+        setHayHorariosParaElDia(false);
+        setHorariosDisponibles(null);
+      }
+    };
+
+    obtenerHorarios();
+  }, [dateRange, productoTuristico]);
 
   const isReadOnly = fechaDesde && fechaHasta;
 
@@ -189,112 +261,153 @@ const ListaProductosTuristicos = (props) => {
 
       {modalOpen && selectedProductoTuristico && (
         <Modal show={modalOpen} onHide={() => setModalOpen(false)}>
-          <div className="mx-4 sm:mx-auto max-w-md max-h-[90vh] overflow-y-auto pr-2">
+          <div className="mx-4 sm:mx-auto max-h-[90vh] overflow-y-auto pr-2">
             <div className="flex flex-col h-full">
               <Modal.Header onHide={() => setModalOpen(false)}>
                 <span className="text-gray-200">Realizá tu reserva</span>
               </Modal.Header>
               <Modal.Body className="flex-grow overflow-y-auto scrollbar-hide">
-                <div className="mb-4 overflow-y-auto max-h-80 sm:max-h-80 md:max-h-96 lg:max-h-96 pr-2">
-                  <h3 className="text-md font-semibold mb-2 text-gray-200">
-                    {isAlojamiento
-                      ? isReadOnly
-                        ? "Rango de Fechas"
-                        : "Seleccioná el rango de fechas"
-                      : isReadOnly
-                        ? "Fecha seleccionada"
-                        : "Seleccioná la fecha"}                  </h3>
-                  <div className="flex flex-col gap-4">
-                    <div className="mb-4">
+
+                {isLoadingProducto ? <Spinner /> : (<>
+                  <div className="mb-4 overflow-y-auto max-h-80 sm:max-h-80 md:max-h-96 lg:max-h-96 pr-2">
+                    <h1 className="text-gray-200 font-bold">{productoTuristico.attributes.name}</h1>
+                    <span className="text-gray-200">{productoTuristico.attributes.description}</span>
+
+                    <h3 className="text-md font-semibold mb-2 text-gray-200">
+                      {isAlojamiento
+                        ? isReadOnly
+                          ? "Rango de Fechas"
+                          : "Seleccioná el rango de fechas"
+                        : isReadOnly
+                          ? "Fecha seleccionada"
+                          : "Seleccioná la fecha"}                  </h3>
+                    <div className="flex flex-col gap-4">
+                      <div className="mb-4">
 
 
-                      {isAlojamiento ? (
-                        <DateRange
-                          editableDateInputs={!isReadOnly}
-                          onChange={(item) => {
-                            const selectedStart = item.selection.startDate;
-                            const selectedEnd = item.selection.endDate;
-                            setDateRange([item.selection]);
-                          }}
-                          moveRangeOnFirstSelection={false}
-                          ranges={dateRange}
-                          locale={es}
-                          minDate={fechaDesde || new Date()}
-                          maxDate={fechaHasta}
-                          className="rounded border shadow"
-                        />
-                      ) : (
-                        <Calendar
-                          date={dateRange[0].startDate}
-                          onChange={(date) => {
-                            const start = new Date(date);
-                            const end = new Date(date);
-                            end.setHours(23, 59, 59, 999);
-                            setDateRange([{ startDate: start, endDate: end, key: "selection" }]);
-                          }}
-                          locale={es}
-                          disabled={isReadOnly}
-                          color="#111827"
-                          minDate={fechaDesde || inicio || new Date()}
-                          maxDate={fechaHasta || final }
-                          className="rounded border shadow"
+                        {isAlojamiento ? (
+                          <DateRange
+                            editableDateInputs={!isReadOnly}
+                            onChange={(item) => {
+                              const selectedStart = item.selection.startDate;
+                              const selectedEnd = item.selection.endDate;
+                              setDateRange([item.selection]);
+                            }}
+                            moveRangeOnFirstSelection={false}
+                            ranges={dateRange}
+                            locale={es}
+                            minDate={fechaDesde || new Date()}
+                            maxDate={fechaHasta}
+                            className="rounded border shadow"
+                          />
+                        ) : (
+                          <Calendar
+                            date={dateRange[0].startDate}
+                            onChange={(date) => {
+                              const start = new Date(date);
+                              const end = new Date(date);
+                              end.setHours(23, 59, 59, 999);
+                              setDateRange([{ startDate: start, endDate: end, key: "selection" }]);
+                            }}
+                            locale={es}
+                            disabled={isReadOnly}
+                            color="#111827"
+                            minDate={fechaDesde || inicio || new Date()}
+                            maxDate={fechaHasta || final}
+                            className="rounded border shadow"
 
-                        />
+                          />
+                        )}
+                      </div>
+
+                      {tieneHorariosConfigurados && hayHorariosParaElDia && horariosDisponibles && (
+                        <div className="mb-4">
+                          <label className="block text-sm font-medium text-gray-200 mb-1">
+                            Horario disponible:
+                          </label>
+                          <select
+                            className="w-full border rounded p-2"
+                            onChange={(e) => {
+                              const selectedHour = e.target.value;
+                              if (selectedHour && intervaloMinutos) {
+                                const selectedStart = new Date(dateRange[0].startDate);
+                                const [hours, minutes] = selectedHour.split(":");
+                                selectedStart.setHours(hours, minutes, 0, 0);
+                                setSelectedStartDate(selectedStart);
+
+                                const selectedEnd = new Date(selectedStart);
+                                selectedEnd.setMinutes(selectedEnd.getMinutes() + intervaloMinutos);
+                                setSelectedEndDate(selectedEnd);
+                              }
+                            }}
+                          >
+                            <option value="">Seleccionar horario</option>
+                            {Object.entries(horariosDisponibles.horarios).map(([hora, disponible]) =>
+                              disponible >  0 ? (
+                                <option key={hora} value={hora}>
+                                  {hora}
+                                </option>
+                              ) : null
+                            )}
+                          </select>
+                        </div>
                       )}
-                    </div>
 
+                      {tieneHorariosConfigurados && !hayHorariosParaElDia && (
+                        <p className="text-sm text-yellow-300 mt-2">No hay horarios para este día.</p>
+                      )}
 
-                    <div className="mb-4">
-                      <label className="block text-sm font-medium text-gray-200 mb-1">
-                        Cantidad a reservar:
-                      </label>
-                      <input
-                        type="number"
-                        min={1}
-                        value={cantidadProducto}
-                        onChange={(e) => setCantidadProducto(Number(e.target.value))}
-                        className="w-full border rounded p-2"
-                      />
-                    </div>
-                    {!cantidadPersonasFuePasada && (
                       <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-200 mb-1">
-                          Cantidad de personas:
+                          Cantidad a reservar:
                         </label>
                         <input
                           type="number"
                           min={1}
-                          value={cantidadPersonas}
-                          onChange={(e) => setCantidadPersonas(Number(e.target.value))}
+                          value={cantidadProducto}
+                          onChange={(e) => setCantidadProducto(Number(e.target.value))}
                           className="w-full border rounded p-2"
                         />
                       </div>
-                    )}
-                  </div>
-                  {cantidadPersonas > 1 && acompaniantes.map((a, idx) => (
-                    <div key={idx} className="mt-4">
-                      <label className="block text-sm text-gray-200 mb-1">Acompañante {idx + 1}</label>
-                      <input type="text" placeholder="Nombres" className="w-full border p-2 mb-2"
-                        value={a.nombre} onChange={(e) => {
-                          const updated = [...acompaniantes];
-                          updated[idx].nombre = e.target.value;
-                          setAcompaniantes(updated);
-                        }} />
-                      <input type="text" placeholder="Apellido" className="w-full border p-2 mb-2"
-                        value={a.apellido} onChange={(e) => {
-                          const updated = [...acompaniantes];
-                          updated[idx].apellido = e.target.value;
-                          setAcompaniantes(updated);
-                        }} />
-                      <input type="text" placeholder="Número de Documento" className="w-full border p-2"
-                        value={a.documento_identidad} onChange={(e) => {
-                          const updated = [...acompaniantes];
-                          updated[idx].documento_identidad = e.target.value;
-                          setAcompaniantes(updated);
-                        }} />
+                      {!cantidadPersonasFuePasada && (
+                        <div className="mb-4">
+                          <label className="block text-sm font-medium text-gray-200 mb-1">
+                            Cantidad de personas:
+                          </label>
+                          <input
+                            type="number"
+                            min={1}
+                            value={cantidadPersonas}
+                            onChange={(e) => setCantidadPersonas(Number(e.target.value))}
+                            className="w-full border rounded p-2"
+                          />
+                        </div>
+                      )}
                     </div>
-                  ))}
-                </div>
+                    {cantidadPersonas > 1 && acompaniantes.map((a, idx) => (
+                      <div key={idx} className="mt-4">
+                        <label className="block text-sm text-gray-200 mb-1">Acompañante {idx + 1}</label>
+                        <input type="text" placeholder="Nombres" className="w-full border p-2 mb-2"
+                          value={a.nombre} onChange={(e) => {
+                            const updated = [...acompaniantes];
+                            updated[idx].nombre = e.target.value;
+                            setAcompaniantes(updated);
+                          }} />
+                        <input type="text" placeholder="Apellido" className="w-full border p-2 mb-2"
+                          value={a.apellido} onChange={(e) => {
+                            const updated = [...acompaniantes];
+                            updated[idx].apellido = e.target.value;
+                            setAcompaniantes(updated);
+                          }} />
+                        <input type="text" placeholder="Número de Documento" className="w-full border p-2"
+                          value={a.documento_identidad} onChange={(e) => {
+                            const updated = [...acompaniantes];
+                            updated[idx].documento_identidad = e.target.value;
+                            setAcompaniantes(updated);
+                          }} />
+                      </div>
+                    ))}
+                  </div></>)}
               </Modal.Body>
               <Modal.Footer>
                 <div className="flex justify-center w-full">
