@@ -15,7 +15,7 @@ import SeccionConTitulo from './SeccionConTitulo';
 import Servicios from './Servicios';
 import Recomendaciones from './Recomendaciones';
 import Mapa from './Mapa.js';
-import ListaProductosTuristicos from '../ListaProductosTuristicos.jsx';
+import ListaProductosTuristicos from './ProductoTuristico/ListaProductosTuristicos.js';
 import ObjetoOpinion from './ObjetoOpinion.js';
 import RangoPrecios from './RangoPrecios.js';
 import EncabezadoAtractivo from '../EncabezadoAtractivo.jsx';

@@ -1,15 +1,17 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Ticket, ArrowUpRight } from "lucide-react";
-import Modal from "./Modal.js";
-import service from "../axios/services/producto_turistico.js";
-import { AuthContext } from "./AuthContext.js";
+import Modal from "../../Modal.js";
+import service from "../../../axios/services/producto_turistico.js";
+import { AuthContext } from "../../AuthContext.js";
 import { useNavigate } from "react-router-dom";
-import funciones from "../extras/functions.js";
+import funciones from "../../../extras/functions.js";
 import { DateRange, Calendar } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { es } from "date-fns/locale";
-import Spinner from "./Spinner.js";
+import Spinner from "../../Spinner.js";
+import ProductoTuristicoCard from "./ProductoTuristicoCard";
+
 const ListaProductosTuristicos = (props) => {
   const {
     listData,
@@ -133,11 +135,6 @@ const ListaProductosTuristicos = (props) => {
 
   const isReadOnly = fechaDesde && fechaHasta;
 
-  const formatHour = (dateString) => {
-    if (!dateString) return "Sin horario";
-    const date = new Date(dateString);
-    return date.toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit" });
-  };
   const handleReservar = async () => {
     if (!user) {
       alert("¡Por favor, inicia sesión para realizar una reserva!");
@@ -234,32 +231,14 @@ const ListaProductosTuristicos = (props) => {
           .filter((p) => p.integrates_discount_passport === esPasaporte)
           .filter((p) => p.maximum_number_persons <= cantidadPersonas)
           .map((producto_turistico, index) => (
-            <div
-              key={producto_turistico?.id || index}
-              className="cursor-pointer"
-              onClick={() => {
-                setSelectedProductoTuristico(producto_turistico);
-                setModalOpen(true);
-              }}
-            >
-              <div className="rounded-3xl shadow-sm border border-[#e4e7ec] bg-white">
-                <div className="p-6">
-                  <div className="flex items-start gap-3">
-                    <Ticket size={24} className="text-[#f08400]" />
-                    <h2 className="text-xl font-semibold text-[#101828]">{producto_turistico.name}</h2>
-                  </div>
-                  <p className="text-[#475467] mt-4 text-lg">
-                    {producto_turistico.validity_from ? formatHour(producto_turistico.validity_from) : ""}
-                    {producto_turistico.validity_from && producto_turistico.validity_to ? " - " : ""}
-                    {producto_turistico.validity_to ? formatHour(producto_turistico.validity_to) : ""}
-                  </p>
-                  <p className="text-[#475467] mt-2 text-lg">
-                  {producto_turistico.value_type === "IMPORTE" && producto_turistico.value ? (
-                    <span>{new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(producto_turistico.value)}</span>
-                  ) : null}                  </p>
-                </div>
-              </div>
-            </div>
+            <ProductoTuristicoCard
+            key={producto_turistico.id || index}
+            producto={producto_turistico}
+            onClick={() => {
+              setSelectedProductoTuristico(producto_turistico);
+              setModalOpen(true);
+            }}
+          />
           ))}
       </div>
 

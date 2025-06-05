@@ -5,77 +5,82 @@ function padTo2Digits(num) {
 }
 
 const funciones = {
-  keepLocalAsUTC: function   (date)  {
+  formatHour: function (dateString) {
+    if (!dateString) return "Sin horario";
+    const date = new Date(dateString);
+    return date.toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit" });
+  },
+  keepLocalAsUTC: function (date) {
     // Si no hay fecha, retornamos null
     if (!date) return null;
-  
+
     // Si la fecha es una cadena en formato ISO, la convertimos a Date
     if (typeof date === "string") {
       date = new Date(date);
     }
-  
+
     // Verificamos si es un objeto Date válido
     if (!(date instanceof Date) || isNaN(date)) {
       return null; // Si no es una fecha válida, retornamos null
     }
-  
+
     const year = date.getFullYear();
     const month = date.getMonth(); // Los meses son 0-indexados, sin cambios
     const day = date.getDate();
     const hours = date.getHours();
     const minutes = date.getMinutes();
     const seconds = date.getSeconds();
-  
+
     // Crea una nueva fecha en UTC con los mismos valores de la fecha local
     return new Date(Date.UTC(year, month, day, hours, minutes, seconds));
   },
-   formatForInput : function (date) {
+  formatForInput: function (date) {
     if (!date) return ""; // Si no hay fecha, retorna un string vacío.
-  
+
     // Si la fecha es una cadena en formato ISO
     if (typeof date === "string") {
       // Intentamos convertirla a un objeto Date
       date = new Date(date);
     }
-  
+
     // Verificar si es una instancia de Date válida
     if (!(date instanceof Date) || isNaN(date)) {
       return ""; // Si no es una fecha válida, retornamos vacío.
     }
-  
-  
+
+
     const pad = (n) => String(n).padStart(2, "0");
-  
+
     const year = date.getFullYear();
     const month = pad(date.getMonth() + 1); // El mes es 0-indexado, sumamos 1
     const day = pad(date.getDate());
     const hours = pad(date.getHours());
     const minutes = pad(date.getMinutes());
-  
+
     return `${year}-${month}-${day}T${hours}:${minutes}`;
   },
-  formatDateOnly : function (date) {
+  formatDateOnly: function (date) {
     if (!date) return ""; // Si no hay fecha, retorna un string vacío.
-  
+
     // Si la fecha es una cadena en formato ISO
     if (typeof date === "string") {
       // Intentamos convertirla a un objeto Date
       date = new Date(date);
     }
-  
+
     // Verificar si es una instancia de Date válida
     if (!(date instanceof Date) || isNaN(date)) {
       return ""; // Si no es una fecha válida, retornamos vacío.
     }
-  
-  
+
+
     const pad = (n) => String(n).padStart(2, "0");
-  
+
     const year = date.getFullYear();
     const month = pad(date.getMonth() + 1); // El mes es 0-indexado, sumamos 1
     const day = pad(date.getDate());
     // No incluimos horas y minutos, solo la fecha
-  
+
     return `${year}-${month}-${day}`;
   },
   getColorFromText: function (text, index) {
@@ -146,7 +151,7 @@ const funciones = {
     // return `${fechaFormateada} ${horaFormateada}`;
     return `${fechaFormateada}`;
   },
-   forzarComoUTCyConvertir: function (fechaISO) {
+  forzarComoUTCyConvertir: function (fechaISO) {
     if (!fechaISO) return "-";
     // SI esta date lo transofrmamos a String
     if (fechaISO instanceof Date) {
@@ -156,18 +161,18 @@ const funciones = {
     const fechaSinZona = fechaISO.replace(/([+-]\d{2}:\d{2})$/, "Z");
     const dateUTC = new Date(fechaSinZona);
 
- // Formatear en horario de Buenos Aires
- return new Intl.DateTimeFormat("es-AR", {
-   day: "2-digit",
-   month: "2-digit",
-   year: "numeric",
-   hour: "2-digit",
-   minute: "2-digit",
-   hour12: false,
-   timeZone: "America/Argentina/Buenos_Aires"
- }).format(dateUTC);
+    // Formatear en horario de Buenos Aires
+    return new Intl.DateTimeFormat("es-AR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+      timeZone: "America/Argentina/Buenos_Aires"
+    }).format(dateUTC);
   }
-,  
+  ,
   formatearFechayHora: function (fechaISO) {
     if (!fechaISO) return "-";
 
@@ -191,7 +196,7 @@ const funciones = {
     const fechaFormateada = fecha.toLocaleDateString("es-AR", opcionesFecha);
     const horaFormateada = fecha.toLocaleTimeString("es-AR", opcionesHora);
     // Devolver la fecha formateada como dd/mm/yyyy hh:mm
-   return `${fechaFormateada} ${horaFormateada}`;
+    return `${fechaFormateada} ${horaFormateada}`;
   },
   errorMaker: function (error) {
     try {
