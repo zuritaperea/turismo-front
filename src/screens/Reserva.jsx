@@ -7,6 +7,7 @@ import { AuthContext } from "../components/AuthContext";
 import { useNavigate, useParams } from 'react-router-dom';
 import { BadgeCheck, Hourglass, XCircle, DollarSign, CreditCard, Trash2 } from "lucide-react";
 import { QRCodeSVG } from 'qrcode.react';
+import { SeccionDescripcionMultilingue } from "../components/DescripcionBilingue";
 
 const renderEstado = (estado) => {
   switch (estado) {
@@ -77,7 +78,7 @@ const Reserva = () => {
   if (loading) return <Splash />;
 
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div className="min-h-screen">
       <Header />
       <div className="max-w-5xl mx-auto p-6 bg-white shadow-md rounded-lg mt-6 space-y-6">
         <h2 className="text-2xl font-bold">Reserva</h2>
@@ -124,7 +125,7 @@ const Reserva = () => {
                   className="w-full max-w-md rounded shadow-md mb-3"
                 />
               )}
-              <p className="text-gray-500">{safeText(reserva.attributes.producto_turistico.objeto.attributes.description)}</p>
+              <p className="text-gray-500"><SeccionDescripcionMultilingue descripcion={safeText(reserva.attributes.producto_turistico.objeto.attributes.description)}/></p>
               <p className="text-sm text-gray-500 mt-2">
                 <span className="font-bold">Ubicación: </span>
                 <a
@@ -144,7 +145,7 @@ const Reserva = () => {
             </div>
 
             <div>
-              <h2 className="text-xl font-semibold text-gray-800 mb-2">Producto Turístico</h2>
+              <h2 className="text-xl font-semibold text-gray-800 mb-2">Producto Reservado</h2>
               <p className="text-gray-700 font-medium">{safeText(reserva.attributes.producto_turistico.name)}</p>
               <p className="text-gray-500">{safeText(reserva.attributes.producto_turistico.description)}</p>
             </div>

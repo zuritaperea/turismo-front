@@ -66,7 +66,7 @@ const PerfilAmbiental = () => {
             : 100;
 
     return (
-        <div className="bg-gray-100 min-h-screen">
+        <div className="min-h-screen">
             <Header />
             <div className="max-w-3xl mx-auto p-6 bg-white shadow-md rounded-lg mt-6 space-y-6">
                 <h2 className="text-2xl font-bold text-center mb-4">Mi Perfil Ambiental</h2>

@@ -174,7 +174,7 @@ const MiPerfil = () => {
   if (loading) return <Splash />;
 
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div className="min-h-screen">
       <Header />
       <div className="max-w-5xl mx-auto p-6 bg-white shadow-md rounded-lg mt-6">
 
