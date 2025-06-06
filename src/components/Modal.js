@@ -1,19 +1,19 @@
 import React from 'react';
 
 // Modal Component using Tailwind CSS
-const Modal = ({ show, onHide, children }) => {
+const Modal = ({ show, onHide, children , className=''}) => {
   if (!show) return null; // No renderizar si `show` es false
 
   return (
     <>
-      {/* Overlay */}
-      <div
-        className="fixed inset-0 bg-gray-600 bg-opacity-50 z-50"
-        style={{ zIndex: 401 }}
-        onClick={onHide}
-      />
+      /* Overlay */
+        <div
+          className={`fixed inset-0 bg-gray-600 bg-opacity-50 z-50 ${className || ''}`}
+          style={{ zIndex: 401 }}
+          onClick={onHide}
+        />
 
-      {/* Modal */}
+        {/* Modal */}
       <div className="fixed inset-0 flex items-center justify-center z-50"
         style={{ zIndex: 401 }}
       >

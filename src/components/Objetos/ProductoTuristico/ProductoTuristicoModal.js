@@ -6,6 +6,7 @@ import Spinner from "../../Spinner"; // si usás uno
 import { ArrowUpRight } from "lucide-react";
 import Tags from "../Tags";
 import FormularioAcompaniantes from "./FormularioAcompaniantes";
+import Carousel from "../../Carousel";
 
 const ProductoTuristicoModal = ({
   producto,
@@ -38,65 +39,57 @@ const ProductoTuristicoModal = ({
   isLoadingReserva,
   handleReservar,
 }) => {
-  if (!producto) return null;
   return (
 
     <Modal show={show} onHide={onClose}>
-  <div className="mx-auto max-w-5xl max-h-[90vh] overflow-y-auto px-4">
-  <div className="flex flex-col h-full">
+      <div className="mx-auto max-w-5xl max-h-screen overflow-auto px-4">
+        <div className="flex flex-col h-full">
           <Modal.Header onHide={onClose}>
             <span className="text-gray-200">Realizá tu reserva</span>
           </Modal.Header>
-          <Modal.Body className="flex-grow overflow-y-auto scrollbar-hide">
+          <Modal.Body className="flex-grow overflow-y-auto scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-300 ">
 
-            {isLoadingProducto ? <Spinner /> : (<>
-              <div className="mb-4 overflow-y-auto max-h-80 sm:max-h-80 md:max-h-96 lg:max-h-96 pr-2">
-                <h1 className="text-gray-200 font-bold">{producto.attributes.name}</h1>
-                <p className="text-gray-200">{producto.attributes.description}</p>
-                {producto.attributes.contenidos?.length > 0 && (
-                  <div className="my-4">
-                    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-4">
-                      {producto.attributes.contenidos.map((contenido, i) => (
-                        <img
-                          key={i}
-                          src={contenido.file}
-                          alt={`Contenido ${i + 1}`}
-                          className="w-full h-32 object-cover rounded cursor-pointer hover:opacity-80 transition"
-                          onClick={() => window.open(contenido.file, "_blank")}
-                        />
-                      ))}
+            {!producto || isLoadingProducto ? <Spinner /> : (<>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-4 pr-2 overflow-y-auto">
+                {/* Columna izquierda: info del producto */}
+                <div className="overflow-y-auto ">
+                  <h1 className="text-gray-200 font-bold">{producto.attributes.name}</h1>
+                  <p className="text-gray-200">{producto.attributes.description}</p>
+
+                  {producto.attributes.contenidos?.length > 0 && (
+                    <div className="my-4">
+                      <Carousel images={producto.attributes.contenidos} detail={true} />
                     </div>
-                  </div>
-                )}
+                  )}
 
-                {producto.attributes.amenity_feature_includes.length > 0 && (<>
-                  <span className="text-gray-200 font-semibold">Servicios incluidos:</span>
-                  <Tags elementos={producto.attributes.amenity_feature_includes}
-                    className="border-2 border-gray-200 " /></>)
-                }
-                {producto.attributes.amenity_feature_does_not_include.length > 0 && (<>
-                  <span className="text-gray-200 font-semibold">No incluye:</span>
-                  <Tags elementos={producto.attributes.amenity_feature_does_not_include}
-                    className="border-2 border-gray-200 " /></>)
-                }
-                <h3 className="text-md font-semibold mb-2 text-gray-200">
-                  {isAlojamiento
-                    ? isReadOnly
-                      ? "Rango de Fechas"
-                      : "Seleccioná el rango de fechas"
-                    : isReadOnly
-                      ? "Fecha seleccionada"
-                      : "Seleccioná la fecha"}                  </h3>
-                <div className="flex flex-col gap-4">
+                  {producto.attributes.amenity_feature_includes.length > 0 && (
+                    <>
+                      <span className="text-gray-200 font-semibold">Servicios incluidos:</span>
+                      <Tags elementos={producto.attributes.amenity_feature_includes} className="border-2 border-gray-200" />
+                    </>
+                  )}
+
+                  {producto.attributes.amenity_feature_does_not_include.length > 0 && (
+                    <>
+                      <span className="text-gray-200 font-semibold">No incluye:</span>
+                      <Tags elementos={producto.attributes.amenity_feature_does_not_include} className="border-2 border-gray-200" />
+                    </>
+                  )}
+                </div>
+
+                {/* Columna derecha: inputs de reserva */}
+                <div className="flex flex-col gap-4 overflow-y-auto ">
+                  <h3 className="text-md font-semibold mb-2 text-gray-200">
+                    {isAlojamiento
+                      ? isReadOnly ? "Rango de Fechas" : "Seleccioná el rango de fechas"
+                      : isReadOnly ? "Fecha seleccionada" : "Seleccioná la fecha"}
+                  </h3>
+
                   <div className="mb-4">
-
-
                     {isAlojamiento ? (
                       <DateRange
                         editableDateInputs={!isReadOnly}
                         onChange={(item) => {
-                          const selectedStart = item.selection.startDate;
-                          const selectedEnd = item.selection.endDate;
                           setDateRange([item.selection]);
                         }}
                         moveRangeOnFirstSelection={false}
@@ -121,7 +114,6 @@ const ProductoTuristicoModal = ({
                         minDate={fechaDesde || inicio || new Date()}
                         maxDate={fechaHasta || final}
                         className="rounded border shadow"
-
                       />
                     )}
                   </div>
@@ -189,13 +181,15 @@ const ProductoTuristicoModal = ({
                       />
                     </div>
                   )}
+
+                  <FormularioAcompaniantes
+                    cantidadPersonas={cantidadPersonas}
+                    acompaniantes={acompaniantes}
+                    setAcompaniantes={setAcompaniantes}
+                  />
                 </div>
-                <FormularioAcompaniantes
-                  cantidadPersonas={cantidadPersonas}
-                  acompaniantes={acompaniantes}
-                  setAcompaniantes={setAcompaniantes}
-                />
-              </div></>)}
+              </div>
+            </>)}
           </Modal.Body>
           <Modal.Footer>
             <div className="flex justify-center w-full">

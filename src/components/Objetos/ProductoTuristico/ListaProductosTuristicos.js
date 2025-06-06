@@ -18,6 +18,8 @@ const ListaProductosTuristicos = (props) => {
     inicio,
     final
   } = props;
+
+  // Estados y funciones para manejar el modal y la reserva
   const [modalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
   const [isLoadingReserva, setIsLoadingReserva] = useState(false);
