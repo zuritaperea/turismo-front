@@ -40,7 +40,7 @@ const ProductoTuristicoModal = ({
   handleReservar,
 }) => {
   return (
-
+    <div className="my-7">
     <Modal show={show} onHide={onClose}>
       <div className="mx-auto max-w-5xl max-h-screen overflow-auto px-4">
         <div className="flex flex-col h-full">
@@ -221,7 +221,7 @@ const ProductoTuristicoModal = ({
           </Modal.Footer>
         </div>
       </div>
-    </Modal>
+    </Modal></div>
   );
 };
 
