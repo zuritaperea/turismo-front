@@ -2,26 +2,23 @@ import React, { useEffect, useState, useContext } from "react";
 import Spinner from "../components/Spinner";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import atractivoService from '../axios/services/atractivo';
 import eventoService from '../axios/services/evento';
 import SearchComponent from "../components/SearchComponent";
 import SeccionesSlider from "../components/SectionSlider";
 import Carousel from "../components/Carousel";
 import Splash from "../components/Splash";
-import marketPlaceLogo from "../assets/img/banners-aplicativo-01.jpg"
-import pasaporteLogo from "../assets/img/banners-aplicativo-02.jpg"
-import planificadorLogo from "../assets/img/planificador.png"
 import { ConfigContext } from '../extras/ConfigContext';
 import { Ticket, MapPinned, Hotel, Bus, ShoppingBag, Utensils } from 'lucide-react';
 import ItemSection from "../components/ItemSection";
 import medallaAtractivos from "../assets/img/medalla.png";
 import medallaEventos from "../assets/img/calendario.png";
 import DirectAccessList from "../components/DirectAccessList";
-import bannerHome from "../assets/img/banner-home.png";
-import { key } from "localforage";
+import { useTranslation } from 'react-i18next';
 
 export default function Inicio() {
+
   const [loading, setLoading] = useState(false);
 
   const [eventos, setEventos] = useState([]);
@@ -39,6 +36,7 @@ export default function Inicio() {
   const config = useContext(ConfigContext);
 
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (config) {
@@ -107,12 +105,12 @@ export default function Inicio() {
     navigate(`/busqueda/${query}`);
   };
   const secciones = [
-    { icono: <Ticket size={30} />, titulo: 'Eventos', link: '/eventos' },
-    { icono: <MapPinned size={30} />, titulo: 'Atractivos', link: '/atractivos' },
-    { icono: <Hotel size={30} />, titulo: 'Alojamientos', link: '/alojamientos' },
-    { icono: <Bus size={30} />, titulo: 'Circuitos', link: '/circuitos' },
-    { icono: <ShoppingBag size={30} />, titulo: 'Comercios', link: '/comercios' },
-    { icono: <Utensils size={30} />, titulo: 'Gastronomía', link: '/gastronomia' },
+    { icono: <Ticket size={30} />, titulo: t('common.eventos'), link: '/eventos' },
+    { icono: <MapPinned size={30} />, titulo: t('common.atractivos'), link: '/atractivos' },
+    { icono: <Hotel size={30} />, titulo: t('common.alojamientos'), link: '/alojamientos' },
+    { icono: <Bus size={30} />, titulo: t('common.circuitos'), link: '/circuitos' },
+    { icono: <ShoppingBag size={30} />, titulo: t('common.comercios'), link: '/comercios' },
+    { icono: <Utensils size={30} />, titulo: t('common.gastronomia'), link: '/gastronomia' },
   ];
   return (
     <>
@@ -139,8 +137,8 @@ export default function Inicio() {
         ) : (
             <ItemSection
                 data={naturalAttractions.sort(() => Math.random() - Math.random())}
-                title="Atractivos más cercanos"
-                subtitle="Conocé los puntos más cercanos a tu ubicación."
+                title={t('common.atractivos_cercanos')}
+                subtitle={t('common.atractivos_cercanos_subtitulo')}
                 target="atractivo"
                 imgSrc={medallaAtractivos}
             />)
@@ -154,8 +152,8 @@ export default function Inicio() {
         ) : (
           <ItemSection
             data={eventos.sort(() => Math.random() - Math.random())}
-            title="Próximos eventos"
-            subtitle="Conocé los próximos eventos."
+            title={t('common.proximos_eventos')}
+            subtitle={t('common.proximos_eventos_subtitulo')}
             target="evento"
             imgSrc={medallaEventos}
             marketplace={false}

@@ -1,0 +1,40 @@
+{
+    "common": {
+        "eventos": "Events",
+        "atractivos": "Attractions",
+        "alojamientos": "Accommodations",
+        "circuitos": "Circuits",
+        "comercios": "Shops",
+        "gastronomia": "Gastronomy",
+        "atractivos_cercanos": "Nearest attractions",
+        "atractivos_cercanos_subtitulo": "Discover the attractions closest to your location.",
+        "proximos_eventos": "Upcoming events",
+        "proximos_eventos_subtitulo": "Check out the upcoming events.",
+        "sin_resultados": "No results found for your search. Try adjusting your search or clearing filters to see more options.",
+        "cargando": "Loading..."
+    },
+    "search": {
+        "titulo": "Are you looking for something in particular?",
+        "placeholder": "Search...",
+        "sin_resultados": "No results found for your search. Try changing the words or check for typos.",
+        "intro": "Here are the",
+        "resultados_titulo": "Search Results"
+    },
+    "filtros": {
+        "buscar_nombre": "Search by name",
+        "tipo_atractivo": "Type of attraction",
+        "filtros_seleccionados": "{{count}} filter selected",
+        "filtros_seleccionados_plural": "{{count}} filters selected",
+        "avanzados": "Advanced filters",
+        "aplicar": "Apply",
+        "limpiar": "Clear filters",
+        "listo": "Done",
+        "tipo_turista": "Tourist type",
+        "subtipo_atractivo": "Attraction subtype",
+        "servicios": "Services",
+        "actividades": "Activities",
+        "acceso_gratuito": "Free access",
+        "acepta_reservas": "Accepts reservations",
+        "tipo_restaurante": "Restaurant type"
+    }
+}

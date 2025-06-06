@@ -1,7 +1,10 @@
 import React from "react";
+import { useTranslation } from 'react-i18next';
 
 
 const Buscar = ({ onPress, onChangeText }) => {
+  const { t } = useTranslation();
+
   const handleChange = (event) => {
     const textoBuscar = event.target.value;
     onChangeText(textoBuscar);
@@ -19,7 +22,7 @@ const Buscar = ({ onPress, onChangeText }) => {
       <input
         type="text"
         className="w-full p-3 rounded-md text-gray-900 indent-8 border border-gray-200"
-        placeholder="Buscar"
+        placeholder={t('search.placeholder')}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
       />

@@ -7,6 +7,7 @@ import L from "leaflet";
 import Mapa from "./Mapa";
 import Filtros from "./Filtros";
 import { ConfigContext } from '../../extras/ConfigContext';
+import { useTranslation } from 'react-i18next';
 
 const mapStyles = `
   .leaflet-control-zoom {
@@ -22,6 +23,7 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
   const [loading, setLoading] = useState(true);
   const [backgroundImage, setBackgroundImage] = useState("");
   const config = useContext(ConfigContext);
+  const { t } = useTranslation();
 
 
   useEffect(() => {
@@ -88,9 +90,11 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
   };
 
   useEffect(() => {
-    document.title = `${process.env.REACT_APP_DOCUMENT_TITLE} - ${title}`;
+    const translatedTitle = t(`common.${title.toLowerCase()}`, title);
+    document.title = `${process.env.REACT_APP_DOCUMENT_TITLE} - ${translatedTitle}`;
     obtenerTodos();
   }, []);
+
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -118,7 +122,7 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
         <div className="z-10 w-full px-4 flex flex-col justify-center h-full">
           <div className="flex justify-center items-center">
             <h1 className="header-title text-white text-4xl md:text-5xl lg:text-6xl font-black text-center">
-              {title}
+              {t(`common.${title.toLowerCase()}`, title)}
             </h1>
           </div>
 
@@ -143,7 +147,7 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
             title={title}
           />) : (
           <div className="text-center mt-5 text-gray-500">
-            No se encontraron resultados para tu búsqueda. Probá ajustar tu búsqueda o limpiar los filtros para ver más opciones.
+            {t('common.sin_resultados')}
           </div>
         )}
 

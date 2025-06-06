@@ -1,0 +1,40 @@
+{
+    "common": {
+        "eventos": "Eventos",
+        "atractivos": "Atrações",
+        "alojamientos": "Hospedagens",
+        "circuitos": "Circuitos",
+        "comercios": "Comércios",
+        "gastronomia": "Gastronomia",
+        "atractivos_cercanos": "Atrações mais próximas",
+        "atractivos_cercanos_subtitulo": "Conheça os pontos mais próximos da sua localização.",
+        "proximos_eventos": "Próximos eventos",
+        "proximos_eventos_subtitulo": "Confira os próximos eventos.",
+        "sin_resultados": "Nenhum resultado encontrado para sua busca. Tente ajustar a busca ou limpar os filtros para ver mais opções.",
+        "cargando": "Carregando..."
+    },
+    "search": {
+        "titulo": "Está procurando algo em específico?",
+        "placeholder": "Buscar...",
+        "sin_resultados": "Nenhum resultado encontrado para sua busca. Tente mudar as palavras ou verifique se há erros de digitação.",
+        "intro": "Estes são os",
+        "resultados_titulo": "Resultados da Busca"
+    },
+    "filtros": {
+        "buscar_nombre": "Buscar por nome",
+        "tipo_atractivo": "Tipo de atração",
+        "filtros_seleccionados": "{{count}} filtro selecionado",
+        "filtros_seleccionados_plural": "{{count}} filtros selecionados",
+        "avanzados": "Filtros avançados",
+        "aplicar": "Aplicar",
+        "limpiar": "Limpar filtros",
+        "listo": "Pronto",
+        "tipo_turista": "Tipo de turista",
+        "subtipo_atractivo": "Subtipo de Atração",
+        "servicios": "Serviços",
+        "actividades": "Atividades",
+        "acceso_gratuito": "Acesso gratuito",
+        "acepta_reservas": "Aceita reservas",
+        "tipo_restaurante": "Tipo de restaurante"
+    }
+}

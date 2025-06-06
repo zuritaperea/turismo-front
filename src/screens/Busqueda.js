@@ -9,6 +9,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useParams, useNavigate } from "react-router-dom";
 import objetoService from "../axios/services/objeto";
+import { useTranslation } from 'react-i18next';
 
 const BusquedaScreen = ({ target }) => {
   let title = 'Resultados de la busqúeda';
@@ -19,6 +20,7 @@ const BusquedaScreen = ({ target }) => {
   const { nombre } = useParams();
   const navigate = useNavigate();
   const [textoBusqueda, setTextoBusqueda] = useState("");
+  const { t } = useTranslation();
 
   const handleSearch = (query) => {
     setTextoBuscar(query);
@@ -78,15 +80,16 @@ const BusquedaScreen = ({ target }) => {
       <Header />
       <div className="p-5">
         <div>
-          <h2 className="text-sm font-semibold mt-2 color-principal">Estos son los</h2>
+          <h2 className="text-sm font-semibold mt-2 color-principal">{t('search.intro')}  </h2>
           <h1 className="py-2 text-4xl font-semibold text-slate-900 tracking-tight dark:text-slate-200">
-            Resultados de Búsqueda
+              {t('search.resultados_titulo')}
+
           </h1>
           <p className="mt-2 texto-tarjeta"></p>
         </div>
-  
+
         {loading ? (
-          <div className="loading">Cargando...</div>
+          <div className="loading">{t('common.cargando')}</div>
         ) : (
           <>
             <Row>
@@ -100,8 +103,7 @@ const BusquedaScreen = ({ target }) => {
                   <Listado objetosFiltrados={objetosFiltrados} navigation={navigate} />
                 ) : (
                   <div className="text-center mt-5 text-gray-500">
-                    No se encontraron resultados para tu búsqueda. Probá cambiando las palabras o revisá si hay algún error de tipeo.
-                  </div>
+                    {t('search.sin_resultados')}</div>
                 )}
               </Col>
             </Row>
