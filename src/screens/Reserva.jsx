@@ -87,7 +87,7 @@ const Reserva = () => {
         ) : (
           <>
             <div className="flex items-center gap-2">{renderEstado(reserva.attributes.estado)}</div>
-            <div className="text-gray-600 text-sm mb-4">Número de Reserva: {reserva.id}</div>
+            <div className="text-gray-600 text-sm mb-4 "><span className="font-bold">Número de Reserva: </span>{reserva.id}</div>
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <h3 className="text-sm font-semibold text-gray-700">Fecha de Entrada</h3>
@@ -115,6 +115,8 @@ const Reserva = () => {
 
             <div>
               <h2 className="text-xl font-semibold text-gray-800 mb-2">Objeto</h2>
+              <p className="text-gray-700 font-medium">{safeText(reserva.attributes.producto_turistico.objeto.attributes.name)}</p>
+
               {reserva.attributes.producto_turistico.objeto.attributes.image_url && (
                 <img
                   src={process.env.REACT_APP_API_URL + reserva.attributes.producto_turistico.objeto.attributes.image_url}
@@ -122,12 +124,23 @@ const Reserva = () => {
                   className="w-full max-w-md rounded shadow-md mb-3"
                 />
               )}
-              <p className="text-gray-700 font-medium">{safeText(reserva.attributes.producto_turistico.objeto.attributes.name)}</p>
               <p className="text-gray-500">{safeText(reserva.attributes.producto_turistico.objeto.attributes.description)}</p>
-              <p className="text-sm text-gray-600">Ubicación: {safeText(reserva.attributes.producto_turistico.objeto.attributes.location)}</p>
-              <p className="text-sm text-gray-600">
-                Fecha del evento: {formatearFecha(reserva.attributes.producto_turistico.objeto.attributes.start_date)} - {formatearFecha(reserva.attributes.producto_turistico.objeto.attributes.end_date)}
+              <p className="text-sm text-gray-500 mt-2">
+                <span className="font-bold">Ubicación: </span>
+                <a
+                  href={`https://www.google.com/maps?q=${reserva.attributes.producto_turistico.objeto.attributes.point.latitude},${reserva.attributes.producto_turistico.objeto.attributes.point.longitude}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:underline"
+                >
+                  Ver en Google Maps
+                </a>
               </p>
+              {reserva.attributes.producto_turistico.objeto.attributes.start_date && (
+                <p className="text-sm text-gray-600">
+                  Fecha del evento: {formatearFecha(reserva.attributes.producto_turistico.objeto.attributes.start_date)} - {formatearFecha(reserva.attributes.producto_turistico.objeto.attributes.end_date)}
+                </p>
+              )}
             </div>
 
             <div>
