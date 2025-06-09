@@ -11,7 +11,9 @@
         "proximos_eventos": "Upcoming events",
         "proximos_eventos_subtitulo": "Check out the upcoming events.",
         "sin_resultados": "No results found for your search. Try adjusting your search or clearing filters to see more options.",
-        "cargando": "Loading..."
+        "cargando": "Loading...",
+        "cerrar": "Close",
+        "seleccionar": "Select..."
     },
     "search": {
         "titulo": "Are you looking for something in particular?",
@@ -36,5 +38,42 @@
         "acceso_gratuito": "Free access",
         "acepta_reservas": "Accepts reservations",
         "tipo_restaurante": "Restaurant type"
+    },
+    "perfil_ambiental": {
+        "mi_perfil_ambiental": "My Environmental Profile",
+        "descripcion_1": "The <1>environmental profile</1> is an initiative that rewards commitment to caring for the environment, allowing you to earn points that you can then redeem for exclusive benefits. It is aimed at tourists and the local community, with the goal of promoting sustainability, responsible tourism, and conservation.",
+        "descripcion_2": "To participate, you just need to register your sustainable action on the platform and follow the indicated steps. Join the change and enjoy its benefits!",
+        "nivel_actual": "Current level",
+        "puntos_acumulados": "Accumulated points",
+        "proximo_nivel": "Next level",
+        "puntos_necesarios": "Required points",
+        "puntos_faltan": "Points missing",
+        "completado": "completed",
+        "nivel_maximo": "You've already reached the highest level!",
+        "beneficios_disponibles": "Available benefits",
+        "sin_beneficios": "You currently have no benefits.",
+        "sin_nivel": "You don't have a level assigned yet. Submit a sustainable action to begin your environmental journey!",
+        "historial_acciones": "Action history",
+        "total_acciones_aprobadas": "Total approved actions",
+        "ver_evidencias": "View all my submissions",
+        "cargar_accion": "Submit Sustainable Action",
+        "carga_evidencia": "Submit Evidence",
+        "instrucciones": "To access the program's benefits, follow these steps:",
+        "paso_1": "Select the sustainable action you performed.",
+        "paso_2": "Attach an image that demonstrates your participation.",
+        "paso_3": "If you'd like, you can add more details in the comment section.",
+        "paso_4": "(Optional) Indicate on the map where you performed the action.",
+        "paso_final": "Once all steps are completed, click on \"Submit evidence\".",
+        "accion_sustentable": "Sustainable Action",
+        "comentario_opcional": "Comment (optional)",
+        "seleccionar_ubicacion": "Select Location (optional)",
+        "imagen": "Image",
+        "enviar": "Submit evidence",
+        "enviando": "Submitting...",
+        "modal_mensaje": "Evidence successfully submitted. Your commitment counts. You will soon see your points reflected in your environmental profile.",
+        "ver_en_maps": "View on Google Maps",
+        "ubicacion_seleccionada": "Selected location",
+        "error_envio_evidencia": "There was an error submitting the evidence."
+
     }
 }

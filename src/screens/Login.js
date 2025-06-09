@@ -127,7 +127,6 @@ const Login = () => {
                   <div className="flex justify-center">
                     <Turnstile
                       sitekey={process.env.REACT_APP_TURNSTILE_SITE_KEY} // Para Create React App
-                      // sitekey={import.meta.env.VITE_TURNSTILE_SITE_KEY} // Para Vite
                       onVerify={(token) => setToken(token)}
                     /></div>
                   <Button variant="primary" className="w-full bg-principal mt-3">

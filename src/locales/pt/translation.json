@@ -11,7 +11,10 @@
         "proximos_eventos": "Próximos eventos",
         "proximos_eventos_subtitulo": "Confira os próximos eventos.",
         "sin_resultados": "Nenhum resultado encontrado para sua busca. Tente ajustar a busca ou limpar os filtros para ver mais opções.",
-        "cargando": "Carregando..."
+        "cargando": "Carregando...",
+        "cerrar": "Fechar",
+        "seleccionar": "Selecionar..."
+
     },
     "search": {
         "titulo": "Está procurando algo em específico?",
@@ -36,5 +39,41 @@
         "acceso_gratuito": "Acesso gratuito",
         "acepta_reservas": "Aceita reservas",
         "tipo_restaurante": "Tipo de restaurante"
+    },
+    "perfil_ambiental": {
+        "mi_perfil_ambiental": "Meu Perfil Ambiental",
+        "descripcion_1": "O <1>perfil ambiental</1> é uma iniciativa que recompensa o compromisso com o cuidado do meio ambiente, permitindo que você acumule pontos que podem ser trocados por benefícios exclusivos. É voltado para turistas e a comunidade local, com o objetivo de promover a sustentabilidade, o turismo responsável e a conservação.",
+        "descripcion_2": "Para participar, basta registrar sua ação sustentável na plataforma e seguir as instruções. Junte-se à mudança e aproveite os benefícios!",
+        "nivel_actual": "Nível atual",
+        "puntos_acumulados": "Pontos acumulados",
+        "proximo_nivel": "Próximo nível",
+        "puntos_necesarios": "Pontos necessários",
+        "puntos_faltan": "Pontos restantes",
+        "completado": "completado",
+        "nivel_maximo": "Você já alcançou o nível mais alto!",
+        "beneficios_disponibles": "Benefícios disponíveis",
+        "sin_beneficios": "Você não possui benefícios no momento.",
+        "sin_nivel": "Você ainda não tem um nível atribuído. Registre uma ação sustentável para começar sua jornada ambiental!",
+        "historial_acciones": "Histórico de ações",
+        "total_acciones_aprobadas": "Total de ações aprovadas",
+        "ver_evidencias": "Ver todas as minhas evidências",
+        "cargar_accion": "Registrar Ação Sustentável",
+        "carga_evidencia": "Envio de Evidência",
+        "instrucciones": "Para acessar os benefícios do programa, siga os seguintes passos:",
+        "paso_1": "Selecione a ação sustentável que você realizou.",
+        "paso_2": "Anexe uma imagem que comprove sua participação.",
+        "paso_3": "Se quiser, adicione mais detalhes na seção de comentários.",
+        "paso_4": "(Opcional) Indique no mapa o local onde realizou a ação.",
+        "paso_final": "Depois de concluir todos os passos, clique em \"Enviar evidência\".",
+        "accion_sustentable": "Ação Sustentável",
+        "comentario_opcional": "Comentário (opcional)",
+        "seleccionar_ubicacion": "Selecionar Localização (opcional)",
+        "imagen": "Imagem",
+        "enviar": "Enviar evidência",
+        "enviando": "Enviando...",
+        "modal_mensaje": "Evidência enviada com sucesso. Seu compromisso conta. Em breve, seus pontos aparecerão no seu perfil ambiental.",
+        "ver_en_maps": "Ver no Google Maps",
+        "ubicacion_seleccionada": "Localização selecionada",
+        "error_envio_evidencia": "Ocorreu um erro ao enviar a evidência."
     }
 }

@@ -10,6 +10,7 @@ import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from "react-leaf
 import { Icon, latLngBounds } from "leaflet";
 import markerIconShadowPng from "leaflet/dist/images/marker-shadow.png";
 import markerIconPng from "leaflet/dist/images/marker-icon.png";
+import { useTranslation } from "react-i18next";
 
 const defaultIcon = new Icon({
     iconUrl: markerIconPng,
@@ -33,6 +34,7 @@ const CargaEvidencia = () => {
     });
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
+    const { t } = useTranslation();
 
     const ClickHandler = ({ setFormData }) => {
         useMapEvents({
@@ -96,7 +98,7 @@ const CargaEvidencia = () => {
             });
         } catch (error) {
             console.error("Error al enviar evidencia:", error);
-            alert("Hubo un error al enviar la evidencia.");
+            alert(t("perfil_ambiental.error_envio_evidencia"));
         } finally {
             setSubmitting(false);
         }
@@ -108,21 +110,20 @@ const CargaEvidencia = () => {
         <div className="bg-gray-100 min-h-screen">
             <Header />
             <div className="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-lg mt-6">
-                <h2 className="text-xl font-bold mb-4">Carga de Evidencia</h2>
+                <h2 className="text-xl font-bold mb-4">{t("perfil_ambiental.carga_evidencia")}</h2>
 
                 <p className="mb-4 text-gray-700 bg-blue-100 p-4 rounded-md border-l-4 border-blue-500">
-                    Para acceder a los beneficios del programa, seguí los siguientes pasos:
+                    {t("perfil_ambiental.instrucciones")}
                     <ul className="list-disc list-inside">
-                        <li>Seleccioná la acción sustentable que realizaste.</li>
-                        <li>Adjuntá una imagen que demuestre tu participación.</li>
-                        <li>Si querés, podés agregar más detalles en la sección de comentarios.</li>
-                        <li>(Opcional) Indicá en el mapa el lugar donde realizaste la acción.</li>
+                        <li>{t("perfil_ambiental.paso_1")}</li>
+                        <li>{t("perfil_ambiental.paso_2")}</li>
+                        <li>{t("perfil_ambiental.paso_3")}</li>
+                        <li>{t("perfil_ambiental.paso_4")}</li>
                     </ul>
-                    Cuando completes todos los pasos, hacé clic en "Enviar evidencia".
-                </p>
+                    {t("perfil_ambiental.paso_final")}                </p>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
-                        <label className="block font-medium">Acción sustentable</label>
+                        <label className="block font-medium">{t("perfil_ambiental.accion_sustentable")}</label>
                         <select
                             name="sustainable_action_id"
                             value={formData.sustainable_action_id}
@@ -130,7 +131,8 @@ const CargaEvidencia = () => {
                             required
                             className="w-full border rounded p-2"
                         >
-                            <option value="">Seleccionar...</option>
+                            <option value="">{t("common.seleccionar")}
+                            </option>
                             {acciones.map((accion) => (
                                 <option key={accion.id} value={accion.id}>
                                     {accion.attributes.name}
@@ -140,7 +142,7 @@ const CargaEvidencia = () => {
                     </div>
 
                     <div>
-                        <label className="block font-medium">Comentario (opcional)</label>
+                        <label className="block font-medium">{t("perfil_ambiental.comentario_opcional")}</label>
                         <textarea
                             name="comment"
                             value={formData.comment}
@@ -151,7 +153,7 @@ const CargaEvidencia = () => {
                     </div>
 
                     <div>
-                        <h2 className="text-xl font-bold mb-4">Seleccionar Ubicación (opcional)</h2>
+                        <h2 className="text-xl font-bold mb-4">{t("perfil_ambiental.seleccionar_ubicacion")}</h2>
                         <div className="mb-4">
                             <MapContainer
                                 center={[
@@ -184,14 +186,14 @@ const CargaEvidencia = () => {
                                     >
                                         <Popup>
                                             <div>
-                                                <b>Ubicación seleccionada</b>
+                                                <b>{t("perfil_ambiental.ubicacion_seleccionada")}</b>
                                                 <br />
                                                 <a
                                                     href={`http://maps.google.com/maps?q=${formData.locationLat},${formData.locationLng}`}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                 >
-                                                    Ver en Google Maps
+                                                    {t("perfil_ambiental.ver_en_maps")}
                                                 </a>
                                             </div>
                                         </Popup>
@@ -202,7 +204,7 @@ const CargaEvidencia = () => {
                     </div>
 
                     <div>
-                        <label className="block font-medium">Imagen</label>
+                        <label className="block font-medium">{t("perfil_ambiental.imagen")}</label>
                         <input
                             type="file"
                             accept="image/*"
@@ -215,17 +217,16 @@ const CargaEvidencia = () => {
                     <button
                         type="submit"
                         disabled={submitting}
-                        className="bg-principal text-white px-4 py-2 rounded hover:border-black"
+                        className="bg-principal text-white px-4 py-2 rounded hover:border-black w-full"
                     >
-                        {submitting ? "Enviando..." : "Enviar evidencia"}
+                        {submitting ? t("perfil_ambiental.enviando") : t("perfil_ambiental.enviar")}
                     </button>
                 </form>
             </div>
             <Footer />
             <Modal show={showModal} onHide={() => setShowModal(false)} centered>
                 <Modal.Body>
-                    <p className="text-gray-200">Evidencia enviada con éxito. Tu compromiso suma.  <br />
-                        Pronto verás tus puntos reflejados en tu perfil ambiental.
+                    <p className="text-gray-200">{t("perfil_ambiental.modal_mensaje")}
                     </p>
                 </Modal.Body>
                 <Modal.Footer>
@@ -236,7 +237,7 @@ const CargaEvidencia = () => {
                             navigate("/mis-evidencias");
                         }}
                     >
-                        Cerrar
+                        {t("common.cerrar")}
                     </button>
                 </Modal.Footer>
             </Modal>

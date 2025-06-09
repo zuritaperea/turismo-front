@@ -5,6 +5,7 @@ import Splash from "../components/Splash";
 import { AuthContext } from "../components/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 import recompensaService from "../axios/services/recompensa";
+import { Trans, useTranslation } from 'react-i18next';
 
 const PerfilAmbiental = () => {
     const { user } = useContext(AuthContext);
@@ -14,6 +15,7 @@ const PerfilAmbiental = () => {
     const [evidencias, setEvidencias] = useState([]);
     const [beneficios, setBeneficios] = useState([]);
     const [niveles, setNiveles] = useState([]);
+    const { t } = useTranslation();
 
     useEffect(() => {
         if (!user) {
@@ -69,21 +71,14 @@ const PerfilAmbiental = () => {
         <div className="min-h-screen">
             <Header />
             <div className="max-w-3xl mx-auto p-6 bg-white shadow-md rounded-lg mt-6 space-y-6">
-                <h2 className="text-2xl font-bold text-center mb-4">Mi Perfil Ambiental</h2>
+                <h2 className="text-2xl font-bold text-center mb-4">{t('perfil_ambiental.mi_perfil_ambiental')}</h2>
 
                 <div className="bg-blue-100 p-4 rounded-md border-l-4 border-blue-500">
                     <p className="text-blue-700 font-medium">
-                        El <strong className="font-bold">perfil ambiental</strong> es una iniciativa pensada para reconocer y premiar tu compromiso con el cuidado del medio ambiente.
+                    <Trans i18nKey="perfil_ambiental.descripcion_1" components={{ 1: <strong className="font-bold" /> }} />
                     </p>
                     <p className="text-blue-700 font-medium">
-                        Te invitamos a participar cargando tus acciones sustentables. Cada acción te permitirá sumar puntos que luego podrás canjear por beneficios exclusivos.
-                    </p>
-                    <p className="text-blue-700 font-medium mt-3">
-                        <strong className="font-bold">¿Cómo participar?</strong>
-                    </p>
-                    <p className="text-blue-700 font-medium">
-                        Solo tenés que cargar tu acción sustentable en la plataforma y seguir las instrucciones.
-                        ¡Sumate al cambio y disfrutá de sus beneficios!
+                        {t('perfil_ambiental.descripcion_2')}
                     </p>
                 </div>
                 {beneficios?.attributes?.level?.name ? (
@@ -91,34 +86,34 @@ const PerfilAmbiental = () => {
 
                         {/* Nivel actual */}
                         <div>
-                            <h3 className="text-lg font-semibold">Nivel actual</h3>
+                            <h3 className="text-lg font-semibold">{t('perfil_ambiental.nivel_actual')}</h3>
                             <p className="text-gray-700">{beneficios?.attributes?.level?.name}</p>
-                            <p className="text-gray-600">Puntos acumulados: {puntosActuales}</p>
+                            <p className="text-gray-600">{t('perfil_ambiental.puntos_acumulados')}: {puntosActuales}</p>
 
                             {siguienteNivel ? (
                                 <>
-                                    <h3 className="text-lg font-semibold">Próximo nivel</h3>
+                                    <h3 className="text-lg font-semibold">{t('perfil_ambiental.proximo_nivel')}</h3>
                                     <p className="text-gray-600">{siguienteNivel.attributes.name}</p>
-                                    <p className="text-gray-600">Puntos necesarios: {siguienteNivel.attributes.required_points}</p>
-                                    <p className="text-gray-600">Puntos que faltan: {puntosFaltantes}</p>
+                                    <p className="text-gray-600">{t('perfil_ambiental.puntos_necesarios')}: {siguienteNivel.attributes.required_points}</p>
+                                    <p className="text-gray-600">{t('perfil_ambiental.puntos_faltan')}: {puntosFaltantes}</p>
                                     <div className="w-full bg-gray-200 rounded-full h-4 mt-2">
                                         <div
                                             className="bg-green-500 h-4 rounded-full transition-all"
                                             style={{ width: `${progreso}%` }}
                                         ></div>
                                     </div>
-                                    <p className="text-sm text-gray-500 mt-1">{progreso}% completado</p>
+                                    <p className="text-sm text-gray-500 mt-1">{progreso}% {t('perfil_ambiental.completado')}</p>
                                 </>
                             ) : (
-                                <p className="text-gray-600">¡Ya alcanzaste el nivel más alto!</p>
+                                <p className="text-gray-600">{t('perfil_ambiental.nivel_maximo')}</p>
                             )}
                         </div>
 
                         {/* Beneficios disponibles */}
                         <div>
-                            <h3 className="text-lg font-semibold">Beneficios disponibles</h3>
+                            <h3 className="text-lg font-semibold">{t('perfil_ambiental.beneficios_disponibles')}</h3>
                             {beneficios && beneficios.length === 0 ? (
-                                <p className="text-gray-500">No tienes beneficios actualmente.</p>
+                                <p className="text-gray-500">{t('perfil_ambiental.sin_beneficios')}</p>
                             ) : (
                                 <ul className="list-disc pl-5 text-gray-700">
                                     {beneficios?.attributes?.available_benefits.map((b) => (
@@ -130,29 +125,29 @@ const PerfilAmbiental = () => {
                     </>
                 ) : (
                     <p className="text-gray-600">
-                        Todavía no tenés un nivel asignado. ¡Cargá una acción sustentable para comenzar tu camino ambiental!
+                        {t('perfil_ambiental.sin_nivel')}
                     </p>
                 )}
 
                 {/* Historial de acciones */}
                 <div>
-                    <h3 className="text-lg font-semibold">Historial de acciones</h3>
+                    <h3 className="text-lg font-semibold">{t('perfil_ambiental.historial_acciones')}</h3>
                     <p className="text-gray-600">
-                        Total de acciones aprobadas:
+                        {t('perfil_ambiental.total_acciones_aprobadas')}:
                         {evidencias.filter((e) => e.attributes.status === "approved").length}
                     </p>
                     <Link
                         to="/mis-evidencias"
                         className="text-blue-600 underline hover:text-blue-800"
                     >
-                        Ver todas mis evidencias
+                        {t('perfil_ambiental.ver_evidencias')}
                     </Link>
                 </div>
                 <button
-                    className="bg-principal text-white px-4 py-2 rounded-md hover:bg-blue-700"
+                    className="bg-principal text-white px-4 py-2 rounded-md hover:bg-blue-700 w-full"
                     onClick={() => navigate('/cargar-evidencia')}
                 >
-                    Cargar Acción Sustentable
+                    {t('perfil_ambiental.cargar_accion')}
                 </button>
             </div>
             <Footer />

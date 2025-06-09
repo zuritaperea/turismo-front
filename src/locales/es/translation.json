@@ -11,7 +11,9 @@
         "proximos_eventos": "Próximos eventos",
         "proximos_eventos_subtitulo": "Conocé los próximos eventos.",
         "sin_resultados": "No se encontraron resultados para tu búsqueda. Probá ajustar tu búsqueda o limpiar los filtros para ver más opciones.",
-        "cargando": "Cargando..."
+        "cargando": "Cargando...",
+        "seleccionar": "Seleccionar...",
+        "cerrar": "Cerrar"
     },
     "search": {
         "titulo": "¿Estás buscando algo en particular?",
@@ -36,5 +38,41 @@
         "acceso_gratuito": "Acceso Gratuito",
         "acepta_reservas": "Acepta reservas",
         "tipo_restaurante": "Tipo de restaurante"
+    },
+    "perfil_ambiental": {
+        "mi_perfil_ambiental": "Mi Perfil Ambiental",
+        "descripcion_1": "El <1>perfil ambiental</1> es una iniciativa que premia el compromiso con el cuidado del medio ambiente, permitiéndote sumar puntos que luego podés canjear por beneficios exclusivos. Está dirigida a turistas y a la comunidad local, con el objetivo de promover la sostenibilidad, el turismo responsable y la conservación.",
+        "descripcion_2": "Para participar, solo tenés que registrar tu acción sustentable en la plataforma y seguir los pasos indicados. ¡Sumate al cambio y disfrutá de sus beneficios!",
+        "nivel_actual": "Nivel actual",
+        "puntos_acumulados": "Puntos acumulados",
+        "proximo_nivel": "Próximo nivel",
+        "puntos_necesarios": "Puntos necesarios",
+        "puntos_faltan": "Puntos que faltan",
+        "completado": "completado",
+        "nivel_maximo": "¡Ya alcanzaste el nivel más alto!",
+        "beneficios_disponibles": "Beneficios disponibles",
+        "sin_beneficios": "No tienes beneficios actualmente.",
+        "sin_nivel": "Todavía no tenés un nivel asignado. ¡Cargá una acción sustentable para comenzar tu camino ambiental!",
+        "historial_acciones": "Historial de acciones",
+        "total_acciones_aprobadas": "Total de acciones aprobadas",
+        "ver_evidencias": "Ver todas mis evidencias",
+        "cargar_accion": "Cargar Acción Sustentable",
+        "carga_evidencia": "Carga de Evidencia",
+        "instrucciones": "Para acceder a los beneficios del programa, seguí los siguientes pasos:",
+        "paso_1": "Seleccioná la acción sustentable que realizaste.",
+        "paso_2": "Adjuntá una imagen que demuestre tu participación.",
+        "paso_3": "Si querés, podés agregar más detalles en la sección de comentarios.",
+        "paso_4": "(Opcional) Indicá en el mapa el lugar donde realizaste la acción.",
+        "paso_final": "Cuando completes todos los pasos, hacé clic en \"Enviar evidencia\".",
+        "accion_sustentable": "Acción sustentable",
+        "comentario_opcional": "Comentario (opcional)",
+        "seleccionar_ubicacion": "Seleccionar Ubicación (opcional)",
+        "imagen": "Imagen",
+        "enviar": "Enviar evidencia",
+        "enviando": "Enviando...",
+        "modal_mensaje": "Evidencia enviada con éxito. Tu compromiso suma. Pronto verás tus puntos reflejados en tu perfil ambiental.",
+        "ver_en_maps": "Ver en Google Maps",
+        "ubicacion_seleccionada": "Ubicación seleccionada",
+        "error_envio_evidencia": "Hubo un error al enviar la evidencia."
     }
 }
