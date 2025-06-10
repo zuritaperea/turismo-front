@@ -13,7 +13,8 @@
         "sin_resultados": "No se encontraron resultados para tu búsqueda. Probá ajustar tu búsqueda o limpiar los filtros para ver más opciones.",
         "cargando": "Cargando...",
         "seleccionar": "Seleccionar...",
-        "cerrar": "Cerrar"
+        "cerrar": "Cerrar",
+        "ver_en_el_mapa": "Ver en el mapa"
     },
     "search": {
         "titulo": "¿Estás buscando algo en particular?",
@@ -74,5 +75,72 @@
         "ver_en_maps": "Ver en Google Maps",
         "ubicacion_seleccionada": "Ubicación seleccionada",
         "error_envio_evidencia": "Hubo un error al enviar la evidencia."
+    },
+    "login": {
+        "titulo": "Ingresá a tu cuenta",
+        "subtitulo": "¡Hola de nuevo! Completá tus datos para ingresar",
+        "email_label": "Email",
+        "email_placeholder": "Colocá aquí tu email",
+        "email_required": "Ingresá tu email",
+        "password_label": "Contraseña",
+        "password_placeholder": "Colocá aquí tu contraseña",
+        "password_required": "Ingresá tu contraseña",
+        "olvide_clave": "Olvidé contraseña",
+        "ingresar": "Ingresar",
+        "no_tienes_cuenta": "¿Aún no tienes una cuenta?",
+        "creala_ahora": "¡Créala ahora!",
+        "captcha_alerta": "Por favor, completa el captcha.",
+        "errores_titulo": "Se han producido los siguientes errores:"
+    },
+    "perfil": {
+        "titulo": "Mi perfil",
+        "datos_personales": "Datos personales",
+        "nombre": "Nombre",
+        "apellido": "Apellido",
+        "tipo_documento": "Tipo Documento",
+        "numero_documento": "Número de Documento",
+        "telefono": "Teléfono",
+        "nacionalidad": "Nacionalidad",
+        "empresa": "Empresa u Organización",
+        "cargo": "Cargo / Posición",
+        "datos_acceso": "Datos de Acceso",
+        "email": "Email",
+        "nueva_contrasena": "Nueva Contraseña",
+        "placeholder_contrasena": "Solo si deseas cambiarla",
+        "confirmar_contrasena": "Confirmar nueva contraseña",
+        "captcha_alerta": "Por favor, completa el captcha.",
+        "guardar_cambios": "Guardar cambios",
+        "mensaje_exito": "Datos actualizados correctamente.",
+        "error_general": "No se pudo actualizar el perfil. Por favor, intenta nuevamente.",
+        "error_unico": "El tipo de documento y el número de documento ya están registrados. Por favor, verifica los datos ingresados.",
+        "error_datos": "Error al cargar tus datos.",
+        "error_password_vacia": "Debes completar ambos campos de contraseña para cambiarla.",
+        "error_password_distinta": "Las contraseñas no son iguales",
+        "mis_reservas": "Mis reservas",
+        "mis_viajes": "Mis viajes",
+        "mi_pasaporte": "Mi pasaporte",
+        "mi_perfil_ambiental": "Mi perfil ambiental",
+        "seleccionar": "Seleccione..."
+    },
+    "reservas": {
+        "titulo": "Mis Reservas",
+        "sin_reservas": "No tienes reservas registradas.",
+        "objeto": "Objeto",
+        "producto": "Producto",
+        "entrada": "Entrada",
+        "salida": "Salida",
+        "estado": "Estado",
+        "acciones": "Acciones",
+        "ver": "Ver reserva",
+        "cancelar": "Cancelar reserva",
+        "confirmar_cancelacion": "¿Estás seguro de que querés cancelar esta reserva?",
+        "error_cancelar": "Hubo un problema al cancelar la reserva.",
+        "estados": {
+            "APROBADA": "Aprobada",
+            "PAGADA": "Pagada",
+            "DEPOSITO": "Depósito",
+            "CANCELADA": "Cancelada",
+            "PENDIENTE": "Pendiente"
+        }
     }
 }

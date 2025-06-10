@@ -153,15 +153,21 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
 
       </div>
 
-      <div className="flex flex-col md:flex-row flex-grow justify-center items-center align-middle mt-20">
-        {hasCoordinates && (
-          <div className="w-full flex justify-center px-4 mt-20">
-            <div className="w-full max-w-[1600px]">
-              <Mapa objetosFiltrados={objetosFiltrados} />
-            </div>
+      {hasCoordinates && (
+        <>
+          <p class="text-2xl font-bold text-slate-900 tracking-tight dark:text-slate-200 my-4 text-center">
+            {t('common.ver_en_el_mapa')}
+          </p>
+          <div className="flex flex-col md:flex-row flex-grow justify-center items-center align-middle mt-5">
+
+            <div className="w-full flex justify-center px-4 mt-5">
+              <div className="w-full max-w-[1600px]">
+                <Mapa objetosFiltrados={objetosFiltrados} />
+              </div>
+            </div>   
           </div>
-        )}
-      </div>
+        </>
+      )}
       <Footer />
     </div>
   );

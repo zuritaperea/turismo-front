@@ -17,7 +17,7 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import ErrorAlerts from '../components/ErrorAlerts/ErrorAlerts';
 import functions from '../extras/functions';
-
+import { useTranslation } from 'react-i18next';
 const MiPerfil = () => {
   const [logoLogin, setLogoLogin] = useState(logo);
   const [loading, setLoading] = useState(true);
@@ -25,7 +25,7 @@ const MiPerfil = () => {
   const [error, setError] = useState([]);
   const [paises, setPaises] = useState([]);
   const [token, setToken] = useState("");
-
+  const { t } = useTranslation();
   const [constantes, setConstantes] = useState({
     tipo_documento: [],
     genero: [],
@@ -49,7 +49,7 @@ const MiPerfil = () => {
   const config = useContext(ConfigContext);
   const navigate = useNavigate();
 
-  const agregarOpcionVacia = (items, label = "Seleccione...") => [
+  const agregarOpcionVacia = (items, label = t("perfil.seleccionar")) => [
     { value: "", label },
     ...(Array.isArray(items) ? items : []),
   ];
@@ -75,7 +75,7 @@ const MiPerfil = () => {
     e.preventDefault();
 
     if (!token) {
-      alert("Por favor, completa el captcha.");
+      alert(t("perfil.captcha_alerta"));
       return;
     }
     // Validaciones para contraseña
@@ -83,17 +83,17 @@ const MiPerfil = () => {
 
     if (quiereCambiarPassword) {
       if (!datosUsuario.password || !datosUsuario.password_2) {
-        setError(['Debes completar ambos campos de contraseña para cambiarla.']);
+        setError([t("perfil.error_password_vacia")]);
         return;
       }
       if (datosUsuario.password !== datosUsuario.password_2) {
-        setError(['Las contraseñas no son iguales']);
+        setError([t("perfil.error_password_vacia")]);
         return;
       }
     }
     try {
       const response = await profileService.updateProfile(datosUsuario); // PUT/PATCH según el backend
-      setMensaje("Datos actualizados correctamente.");
+      setMensaje(t("perfil.mensaje_exito"));
       setError([]);
     } catch (error) {
       setMensaje(null);
@@ -104,9 +104,9 @@ const MiPerfil = () => {
         err.detail === "Los campos tipo_documento, documento_identidad deben formar un conjunto único."
       );
       if (uniqueError) {
-        setError([{ "description": "El tipo de documento y el número de documento ya están registrados. Por favor, verifica los datos ingresados." }]);
+        setError([{ "description": t("perfil.error_unico") }]);
       } else {
-        setError(functions.errorMaker(error || error.response.data || [{ "description": "No se pudo actualizar el perfil. Por favor, intenta nuevamente." }]));
+        setError(functions.errorMaker(error || error.response.data || [{ "description": t("perfil.error_general") }]));
       }
     }
   };
@@ -159,7 +159,7 @@ const MiPerfil = () => {
 
       } catch (error) {
         console.error("Error cargando datos de perfil", error);
-        setError(["Error al cargar tus datos."]);
+        setError([t("perfil.error_datos")]);
       }
       setLoading(false);
     };
@@ -180,7 +180,7 @@ const MiPerfil = () => {
 
         <Row className="">
           <Col>
-            <h1 className="text-2xl font-bold">Mi perfil</h1>
+            <h1 className="text-2xl font-bold">{t("perfil.titulo")}</h1>
           </Col>
         </Row>
 
@@ -191,72 +191,72 @@ const MiPerfil = () => {
             {mensaje && <Alert variant="success">{mensaje}</Alert>}
 
             <Form onSubmit={handleSubmit}>
-              <h1 className='text-xl font-bold my-4'>Datos personales</h1>
+              <h1 className='text-xl font-bold my-4'>{t("perfil.datos_personales")}</h1>
 
               <Form.Group controlId="nombre">
-                <Form.Label>Nombre *</Form.Label>
+                <Form.Label>{t("perfil.nombre")} *</Form.Label>
                 <Form.Control type="text" name="nombre" value={datosUsuario.nombre} onChange={handleInputChange} required />
               </Form.Group>
 
               <Form.Group controlId="apellido">
-                <Form.Label>Apellido *</Form.Label>
+                <Form.Label>{t("perfil.apellido")} *</Form.Label>
                 <Form.Control type="text" name="apellido" value={datosUsuario.apellido} onChange={handleInputChange} required />
               </Form.Group>
 
               <Form.Group controlId="tipo_documento">
-                <Form.Label>Tipo Documento *</Form.Label>
+                <Form.Label>{t("perfil.tipo_documento")} *</Form.Label>
                 <Form.Select name="tipo_documento" value={datosUsuario.tipo_documento} onChange={handleInputChange} required options={constantes.tipo_documento} />
               </Form.Group>
 
               <Form.Group controlId="documento_identidad">
-                <Form.Label>Número de Documento *</Form.Label>
+                <Form.Label>{t("perfil.numero_documento")} *</Form.Label>
                 <Form.Control type="number" name="documento_identidad" value={datosUsuario.documento_identidad} onChange={handleInputChange} required />
               </Form.Group>
 
               <Form.Group controlId="telefono">
-                <Form.Label>Teléfono</Form.Label>
+                <Form.Label>{t("perfil.telefono")}</Form.Label>
                 <Form.Control type="tel" name="telefono" value={datosUsuario.telefono} onChange={handleInputChange} />
               </Form.Group>
 
               <Form.Group controlId="nacionalidad">
-                <Form.Label>Nacionalidad *</Form.Label>
+                <Form.Label>{t("perfil.nacionalidad")} *</Form.Label>
                 <Form.Select name="nacionalidad" value={datosUsuario.nacionalidad} onChange={handleInputChange} required options={paises} />
               </Form.Group>
 
               <Form.Group controlId="company">
-                <Form.Label>Empresa u Organización</Form.Label>
+                <Form.Label>{t("perfil.empresa")}</Form.Label>
                 <Form.Control type="text" name="company" value={datosUsuario.company} onChange={handleInputChange} />
               </Form.Group>
 
               <Form.Group controlId="position">
-                <Form.Label>Cargo / Posición</Form.Label>
+                <Form.Label>{t("perfil.cargo")}</Form.Label>
                 <Form.Control type="text" name="position" value={datosUsuario.position} onChange={handleInputChange} />
               </Form.Group>
 
-              <h1 className='text-xl font-bold my-4'>Datos de Acceso</h1>
+              <h1 className='text-xl font-bold my-4'>{t("perfil.datos_acceso")}</h1>
               <Form.Group controlId="email">
-                <Form.Label>Email *</Form.Label>
+                <Form.Label>{t("perfil.email")} *</Form.Label>
                 <Form.Control type="email" name="email" value={datosUsuario.email} onChange={handleInputChange} required />
               </Form.Group>
               <Form.Group controlId="password">
-                <Form.Label>Nueva Contraseña</Form.Label>
+                <Form.Label>{t("perfil.nueva_contrasena")}</Form.Label>
                 <Form.Control
                   type='password'
                   name="password"
                   value={datosUsuario.password}
                   onChange={handleInputChange}
-                  placeholder="Solo si deseas cambiarla"
+                  placeholder={t("perfil.placeholder_contrasena")}
                 />
               </Form.Group>
 
               <Form.Group controlId="password_2">
-                <Form.Label>Confirmar nueva contraseña</Form.Label>
+                <Form.Label>{t("perfil.confirmar_contrasena")}</Form.Label>
                 <Form.Control
                   type='password'
                   name="password_2"
                   value={datosUsuario.password_2}
                   onChange={handleInputChange}
-                  placeholder="Confirmar nueva contraseña"
+                  placeholder={t("perfil.confirmar_contrasena")}
 
                 />
               </Form.Group>
@@ -264,10 +264,9 @@ const MiPerfil = () => {
               <div className="flex justify-center">
                 <Turnstile
                   sitekey={process.env.REACT_APP_TURNSTILE_SITE_KEY} // Para Create React App
-                  // sitekey={import.meta.env.VITE_TURNSTILE_SITE_KEY} // Para Vite
                   onVerify={(token) => setToken(token)}
                 /></div>
-              <Button variant="primary" className="w-full bg-principal mt-4">Guardar cambios</Button>
+              <Button variant="primary" className="w-full bg-principal mt-4">{t("perfil.guardar_cambios")}</Button>
             </Form>
             <Row><Col className='mt-3'>{error.length > 0 && (
               <ErrorAlerts alerts={error} />
@@ -280,16 +279,16 @@ const MiPerfil = () => {
         <Row>
           <Col>
             <p className="text-xl font-bold mt-4">
-              <Link className="color-principal ml-2" to="/mis-reservas">Mis reservas</Link>
+              <Link className="color-principal ml-2" to="/mis-reservas">{t("perfil.mis_reservas")}</Link>
             </p>
             <p className="text-xl font-bold mt-4">
-              <Link className="color-principal ml-2" to="/viajes">Mis viajes</Link>
+              <Link className="color-principal ml-2" to="/viajes">{t("perfil.mis_viajes")}</Link>
             </p>
             <p className="text-xl font-bold mt-4">
-              <Link className="color-principal ml-2" to="/pasaporte">Mi pasaporte</Link>
+              <Link className="color-principal ml-2" to="/pasaporte">{t("perfil.mi_pasaporte")}</Link>
             </p>
             <p className="text-xl font-bold my-4">
-              <Link className="color-principal ml-2" to="/perfil-ambiental">Mi perfil ambiental</Link>
+              <Link className="color-principal ml-2" to="/perfil-ambiental">{t("perfil.mi_perfil_ambiental")}</Link>
             </p>
           </Col>
         </Row></div>

@@ -13,8 +13,8 @@
         "sin_resultados": "Nenhum resultado encontrado para sua busca. Tente ajustar a busca ou limpar os filtros para ver mais opções.",
         "cargando": "Carregando...",
         "cerrar": "Fechar",
-        "seleccionar": "Selecionar..."
-
+        "seleccionar": "Selecionar...",
+        "ver_en_el_mapa": "Ver no mapa"
     },
     "search": {
         "titulo": "Está procurando algo em específico?",
@@ -75,5 +75,72 @@
         "ver_en_maps": "Ver no Google Maps",
         "ubicacion_seleccionada": "Localização selecionada",
         "error_envio_evidencia": "Ocorreu um erro ao enviar a evidência."
+    },
+    "login": {
+        "titulo": "Acesse sua conta",
+        "subtitulo": "Bem-vindo de volta! Preencha seus dados para entrar",
+        "email_label": "Email",
+        "email_placeholder": "Digite seu email aqui",
+        "email_required": "Digite seu email",
+        "password_label": "Senha",
+        "password_placeholder": "Digite sua senha aqui",
+        "password_required": "Digite sua senha",
+        "olvide_clave": "Esqueci minha senha",
+        "ingresar": "Entrar",
+        "no_tienes_cuenta": "Ainda não tem uma conta?",
+        "creala_ahora": "Crie uma agora!",
+        "captcha_alerta": "Por favor, complete o captcha.",
+        "errores_titulo": "Ocorreram os seguintes erros:"
+    },
+    "perfil": {
+        "titulo": "Meu perfil",
+        "datos_personales": "Dados pessoais",
+        "nombre": "Nome",
+        "apellido": "Sobrenome",
+        "tipo_documento": "Tipo de documento",
+        "numero_documento": "Número do documento",
+        "telefono": "Telefone",
+        "nacionalidad": "Nacionalidade",
+        "empresa": "Empresa ou organização",
+        "cargo": "Cargo / Posição",
+        "datos_acceso": "Dados de Acesso",
+        "email": "Email",
+        "nueva_contrasena": "Nova Senha",
+        "placeholder_contrasena": "Somente se desejar alterá-la",
+        "confirmar_contrasena": "Confirmar nova senha",
+        "captcha_alerta": "Por favor, complete o captcha.",
+        "guardar_cambios": "Salvar alterações",
+        "mensaje_exito": "Dados atualizados com sucesso.",
+        "error_general": "Não foi possível atualizar o perfil. Por favor, tente novamente.",
+        "error_unico": "Esse tipo e número de documento já estão cadastrados. Verifique os dados.",
+        "error_datos": "Erro ao carregar seus dados.",
+        "error_password_vacia": "Você deve preencher os dois campos de senha para alterá-la.",
+        "error_password_distinta": "As senhas não coincidem.",
+        "mis_reservas": "Minhas reservas",
+        "mis_viajes": "Minhas viagens",
+        "mi_pasaporte": "Meu passaporte",
+        "mi_perfil_ambiental": "Meu perfil ambiental",
+        "seleccionar": "Selecionar..."
+    },
+    "reservas": {
+        "titulo": "Minhas Reservas",
+        "sin_reservas": "Você não tem reservas registradas.",
+        "objeto": "Objeto",
+        "producto": "Produto",
+        "entrada": "Entrada",
+        "salida": "Saída",
+        "estado": "Status",
+        "acciones": "Ações",
+        "ver": "Ver reserva",
+        "cancelar": "Cancelar reserva",
+        "confirmar_cancelacion": "Tem certeza de que deseja cancelar esta reserva?",
+        "error_cancelar": "Ocorreu um problema ao cancelar a reserva.",
+        "estados": {
+            "APROBADA": "Aprovada",
+            "PAGADA": "Paga",
+            "DEPOSITO": "Depósito",
+            "CANCELADA": "Cancelada",
+            "PENDIENTE": "Pendente"
+        }
     }
 }

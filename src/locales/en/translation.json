@@ -13,7 +13,8 @@
         "sin_resultados": "No results found for your search. Try adjusting your search or clearing filters to see more options.",
         "cargando": "Loading...",
         "cerrar": "Close",
-        "seleccionar": "Select..."
+        "seleccionar": "Select...",
+        "ver_en_el_mapa": "View on map"
     },
     "search": {
         "titulo": "Are you looking for something in particular?",
@@ -74,6 +75,72 @@
         "ver_en_maps": "View on Google Maps",
         "ubicacion_seleccionada": "Selected location",
         "error_envio_evidencia": "There was an error submitting the evidence."
-
+    },
+    "login": {
+        "titulo": "Log in to your account",
+        "subtitulo": "Welcome back! Enter your information to sign in",
+        "email_label": "Email",
+        "email_placeholder": "Enter your email here",
+        "email_required": "Please enter your email",
+        "password_label": "Password",
+        "password_placeholder": "Enter your password here",
+        "password_required": "Please enter your password",
+        "olvide_clave": "Forgot password",
+        "ingresar": "Sign in",
+        "no_tienes_cuenta": "Don’t have an account yet?",
+        "creala_ahora": "Create one now!",
+        "captcha_alerta": "Please complete the captcha.",
+        "errores_titulo": "The following errors occurred:"
+    },
+    "perfil": {
+        "titulo": "My profile",
+        "datos_personales": "Personal information",
+        "nombre": "First name",
+        "apellido": "Last name",
+        "tipo_documento": "Document type",
+        "numero_documento": "Document number",
+        "telefono": "Phone",
+        "nacionalidad": "Nationality",
+        "empresa": "Company or organization",
+        "cargo": "Position / Role",
+        "datos_acceso": "Access Data",
+        "email": "Email",
+        "nueva_contrasena": "New Password",
+        "placeholder_contrasena": "Only if you want to change it",
+        "confirmar_contrasena": "Confirm new password",
+        "captcha_alerta": "Please complete the captcha.",
+        "guardar_cambios": "Save changes",
+        "mensaje_exito": "Data updated successfully.",
+        "error_general": "Could not update profile. Please try again.",
+        "error_unico": "This document type and number are already registered. Please check your data.",
+        "error_datos": "Error loading your data.",
+        "error_password_vacia": "You must complete both password fields to change it.",
+        "error_password_distinta": "Passwords do not match.",
+        "mis_reservas": "My bookings",
+        "mis_viajes": "My trips",
+        "mi_pasaporte": "My passport",
+        "mi_perfil_ambiental": "My environmental profile",
+        "seleccionar": "Select..."
+    },
+    "reservas": {
+        "titulo": "My Bookings",
+        "sin_reservas": "You have no bookings registered.",
+        "objeto": "Object",
+        "producto": "Product",
+        "entrada": "Check-in",
+        "salida": "Check-out",
+        "estado": "Status",
+        "acciones": "Actions",
+        "ver": "View booking",
+        "cancelar": "Cancel booking",
+        "confirmar_cancelacion": "Are you sure you want to cancel this booking?",
+        "error_cancelar": "There was a problem canceling the booking.",
+        "estados": {
+            "APROBADA": "Approved",
+            "PAGADA": "Paid",
+            "DEPOSITO": "Deposit",
+            "CANCELADA": "Canceled",
+            "PENDIENTE": "Pending"
+        }
     }
 }

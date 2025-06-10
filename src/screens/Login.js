@@ -15,7 +15,7 @@ import { ConfigContext } from '../extras/ConfigContext'; // Importa el contexto
 import Separador from '../components/Separador';
 import { AuthContext } from '../components/AuthContext';
 import Turnstile from "react-turnstile";
-
+import { useTranslation } from 'react-i18next';
 const Login = () => {
   const { login } = useContext(AuthContext);
   const [token, setToken] = useState("");
@@ -27,10 +27,10 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const config = useContext(ConfigContext); // Usa el contexto para acceder a la configuración
-
+  const { t } = useTranslation();
   const onSubmit = data => {
     if (!token) {
-      alert("Por favor, completa el captcha.");
+      alert(t("login.captcha_alerta"));
       return;
     }
     handleLogin(data.username, data.password);
@@ -71,8 +71,8 @@ const Login = () => {
             <div>
               <Link to="/"><img className="logo m-auto" src={logoLogin} alt="Logo" /></Link>
             </div>
-            <h1 className="text-2xl font-bold">Ingresá a tu cuenta</h1>
-            <h4 className="text-sm">¡Hola de nuevo! Completá tus datos para ingresar</h4>
+            <h1 className="text-2xl font-bold">{t("login.titulo")}</h1>
+            <h4 className="text-sm">{t("login.subtitulo")}</h4>
           </Col>
         </Row>
 
@@ -80,7 +80,7 @@ const Login = () => {
           <Col>
             {alerts && alerts.message && (
               <Alert variant="danger">
-                <Alert.Heading>Se han producido los siguientes errores:</Alert.Heading>
+                <Alert.Heading>{t("login.errores_titulo")}</Alert.Heading>
                 <p>{alerts.message}</p>
               </Alert>
             )}
@@ -88,38 +88,38 @@ const Login = () => {
             <Form ref={formRef} onSubmit={handleSubmit(onSubmit)} className="mt-6">
               <Row>
                 <Col md={10} className="form-group item-form">
-                  <Form.Label htmlFor="username">Email</Form.Label>
+                  <Form.Label htmlFor="username">{t("login.email_label")}</Form.Label>
                   <Form.Control
                     type="text"
                     id="username"
-                    placeholder="Colocá aquí tu email"
+                    placeholder={t("login.email_placeholder")}
                     required
-                    {...register("username", { required: 'Ingrese su email' })} // Aquí NO se usa inputRef directamente
+                    {...register("username", { required: t("login.email_required") })} 
                   />
                   {errors.username && (
-                    <Form.Text className="error">Ingresá tu email</Form.Text>
+                    <Form.Text className="error">{t("login.email_required")}</Form.Text>
                   )}
                 </Col>
               </Row>
               <Row>
                 <Col md={10} className="form-group item-form">
-                  <Form.Label htmlFor="password">Contraseña</Form.Label>
+                  <Form.Label htmlFor="password">{t("login.password_label")}</Form.Label>
                   <Form.Control
                     type="password"
                     id="password"
-                    placeholder="Colocá aquí tu contraseña"
+                    placeholder={t("login.password_placeholder")}
                     required
-                    {...register("password", { required: 'Ingrese su contraseña' })} // Aquí NO se usa inputRef directamente
+                    {...register("password", { required: t("login.password_required") })} 
                   />
                   {errors.password && (
-                    <Form.Text className="error">Ingresá tu contraseña</Form.Text>
+                    <Form.Text className="error">{t("login.password_required")}</Form.Text>
                   )}
                 </Col>
               </Row>
               <Row>
                 <Col xs={12}>
                   <p>
-                    <Link className="color-principal text-sm" to="/recuperar-clave">Olvidé contraseña</Link>
+                    <Link className="color-principal text-sm" to="/recuperar-clave">{t("login.olvide_clave")}</Link>
                   </p>
                 </Col>
                 <Col>
@@ -130,7 +130,7 @@ const Login = () => {
                       onVerify={(token) => setToken(token)}
                     /></div>
                   <Button variant="primary" className="w-full bg-principal mt-3">
-                    Ingresar
+                  {t("login.ingresar")}
                   </Button>
                 </Col>
               </Row>
@@ -141,7 +141,7 @@ const Login = () => {
                 <Separador />
 
                 <p className="text-sm text-center mt-5">
-                  ¿Aún no tienes una cuenta?  <Link to="/registro" className="color-principal text-sm">¡Créala ahora!</Link>
+                {t("login.no_tienes_cuenta")}  <Link to="/registro" className="color-principal text-sm">{t("login.creala_ahora")}</Link>
                 </p>
               </Col>
             </Row>

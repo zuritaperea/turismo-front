@@ -6,55 +6,50 @@ import Splash from "../components/Splash";
 import { AuthContext } from "../components/AuthContext";
 import { useNavigate } from 'react-router-dom';
 import { BadgeCheck, Hourglass, XCircle, DollarSign, CreditCard } from "lucide-react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
-import { Eye, Trash2 } from "lucide-react"; // ya que usás lucide-react
+import { Eye, Trash2 } from "lucide-react";
 import Table from "../components/Table";
-const renderEstado = (estado) => {
-  switch (estado) {
-    case "APROBADA":
-      return (
-        <span className="inline-flex items-center px-2 py-1 rounded-md border border-green-600 bg-green-100 text-green-700 text-sm font-medium">
-          <BadgeCheck className="w-4 h-4 mr-1" />
-          Aprobada
-        </span>
-      );
-    case "PAGADA":
-      return (
-        <span className="inline-flex items-center px-2 py-1 rounded-md border border-green-900 bg-green-200 text-green-800 text-sm font-medium">
-          <DollarSign className="w-4 h-4 mr-1" />
-          Pagada
-        </span>
-      );
-    case "DEPOSITO":
-      return (
-        <span className="inline-flex items-center px-2 py-1 rounded-md border border-blue-600 bg-blue-100 text-blue-700 text-sm font-medium">
-          <CreditCard className="w-4 h-4 mr-1" />
-          Depósito
-        </span>
-      );
-    case "CANCELADA":
-      return (
-        <span className="inline-flex items-center px-2 py-1 rounded-md border border-red-600 bg-red-100 text-red-700 text-sm font-medium">
-          <XCircle className="w-4 h-4 mr-1" />
-          Cancelada
-        </span>
-      );
-    case "PENDIENTE":
-    default:
-      return (
-        <span className="inline-flex items-center px-2 py-1 rounded-md border border-yellow-600 bg-yellow-100 text-yellow-700 text-sm font-medium">
-          <Hourglass className="w-4 h-4 mr-1" />
-          Pendiente
-        </span>
-      );
-  }
-};
+import { useTranslation } from "react-i18next";
+
+const RenderEstado = ({estado}) => {
+  const { t } = useTranslation();
+  const estados = {
+    APROBADA: {
+      icon: <BadgeCheck className="w-4 h-4 mr-1" />,
+      className: "border-green-600 bg-green-100 text-green-700"
+    },
+    PAGADA: {
+      icon: <DollarSign className="w-4 h-4 mr-1" />,
+      className: "border-green-900 bg-green-200 text-green-800"
+    },
+    DEPOSITO: {
+      icon: <CreditCard className="w-4 h-4 mr-1" />,
+      className: "border-blue-600 bg-blue-100 text-blue-700"
+    },
+    CANCELADA: {
+      icon: <XCircle className="w-4 h-4 mr-1" />,
+      className: "border-red-600 bg-red-100 text-red-700"
+    },
+    PENDIENTE: {
+      icon: <Hourglass className="w-4 h-4 mr-1" />,
+      className: "border-yellow-600 bg-yellow-100 text-yellow-700"
+    }
+  };
+  const estadoInfo = estados[estado] || estados.PENDIENTE;
+
+  return (
+    <span className={`inline-flex items-center px-2 py-1 rounded-md border text-sm font-medium ${estadoInfo.className}`}>
+      {estadoInfo.icon}
+      {t(`reservas.estados.${estado}`)}
+    </span>
+  );
+}
 
 const MisReservas = () => {
   const [reservas, setReservas] = useState([]);
   const [loading, setLoading] = useState(true);
   const { user } = useContext(AuthContext);  // Se obtiene el contexto del usuario autenticado
+  const { t } = useTranslation();  // Para la traducción de textos
+  // Se usa useNavigate para redirigir al usuario a la página de detalles de la reserva
   const navigate = useNavigate();  // Para la redirección
   const handleVer = (reserva) => {
     // Redirigir o mostrar modal
@@ -63,7 +58,7 @@ const MisReservas = () => {
   };
 
   const handleEliminar = async (reserva) => {
-    if (window.confirm("¿Estás seguro de que querés cancelar esta reserva?")) {
+    if (window.confirm(t("reservas.confirmar_cancelacion"))) {
       if (reserva.id) {
         try {
           await service.cancelarReserva(reserva.id);
@@ -84,7 +79,7 @@ const MisReservas = () => {
           );
         } catch (error) {
           console.error("Error al cancelar la reserva:", error);
-          alert("Hubo un problema al cancelar la reserva.");
+          alert(t("reservas.error_cancelar"));
         }
       }
     }
@@ -104,7 +99,7 @@ const MisReservas = () => {
         setReservas(response?.data?.data || []);  // Actualizar el estado con las reservas
         setLoading(false);
       } catch (error) {
-        console.log("Hubo un error al cargar las reservas");
+        console.log("Hubo un error al cargar las reservas", error);
         setLoading(false);
       }
     };
@@ -145,66 +140,66 @@ const MisReservas = () => {
   }
 
   return (
-    <>     
-     <Header />
+    <>
+      <Header />
 
-        <div className="max-w-5xl mx-auto p-6 bg-white shadow-md rounded-lg mt-6">
-          <h2 className="text-2xl font-bold mb-4">Mis Reservas</h2>
-          {reservas.length === 0 ? (
-            <p className="text-gray-600">No tienes reservas registradas.</p>
-          ) : (
-            <div className="overflow-x-auto">
-              <Table responsive className="w-full border border-gray-300 rounded-lg overflow-hidden shadow-md">
-                <thead className="bg-gray-200">
-                  <tr>
-                    <th className="p-3 text-left">Objeto</th>
-                    <th className="p-3 text-left">Producto</th>
-                    <th className="p-3 text-left">Entrada</th>
-                    <th className="p-3 text-left">Salida</th>
-                    <th className="p-3 text-left">Estado</th>
-                    <th className="p-3 text-left">Acciones</th>
+      <div className="max-w-5xl mx-auto p-6 bg-white shadow-md rounded-lg mt-6">
+        <h2 className="text-2xl font-bold mb-4">{t("reservas.titulo")}</h2>
+        {reservas.length === 0 ? (
+          <p className="text-gray-600">{t("reservas.sin_reservas")}</p>
+        ) : (
+          <div className="overflow-x-auto">
+            <Table responsive className="w-full border border-gray-300 rounded-lg overflow-hidden shadow-md">
+              <thead className="bg-gray-200">
+                <tr>
+                  <th>{t("reservas.objeto")}</th>
+                  <th>{t("reservas.producto")}</th>
+                  <th>{t("reservas.entrada")}</th>
+                  <th>{t("reservas.salida")}</th>
+                  <th>{t("reservas.estado")}</th>
+                  <th>{t("reservas.acciones")}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {reservas.map((reserva) => (
+                  <tr key={reserva.id} className="border-t border-gray-300">
+                    <td className="p-3">
+                      {reserva.attributes.producto_turistico?.objeto?.attributes?.name || "-"}
+                    </td>
+                    <td className="p-3">
+                      {reserva.attributes.producto_turistico?.name || "-"}
+                    </td>
+                    <td className="p-3">{formatearFecha(reserva.attributes.start_date)}</td>
+                    <td className="p-3">{formatearFecha(reserva.attributes.end_date)}</td>
+                    <td className="p-3">  <RenderEstado estado={reserva.attributes.estado} />
+                    </td>
+                    <td className="p-3">
+                      {reserva.attributes.estado !== "CANCELADA" && (
+                        <div className="flex items-center justify-center h-full gap-2">
+                          <button
+                            className="text-blue-600 hover:text-blue-800"
+                            onClick={() => handleVer(reserva)}
+                            title={t("reservas.ver")}
+                          >
+                            <Eye className="w-5 h-5" />
+                          </button>
+                          <button
+                            className="text-red-600 hover:text-red-800"
+                            onClick={() => handleEliminar(reserva)}
+                            title={t("reservas.cancelar")}
+                          >
+                            <Trash2 className="w-5 h-5" />
+                          </button>
+                        </div>
+                      )}
+                    </td>
+
                   </tr>
-                </thead>
-                <tbody>
-                  {reservas.map((reserva) => (
-                    <tr key={reserva.id} className="border-t border-gray-300">
-                      <td className="p-3">
-                        {reserva.attributes.producto_turistico?.objeto?.attributes?.name || "-"}
-                      </td>
-                      <td className="p-3">
-                        {reserva.attributes.producto_turistico?.name || "-"}
-                      </td>
-                      <td className="p-3">{formatearFecha(reserva.attributes.start_date)}</td>
-                      <td className="p-3">{formatearFecha(reserva.attributes.end_date)}</td>
-                      <td className="p-3">  {renderEstado(reserva.attributes.estado)}
-                      </td>
-                      <td className="p-3">
-                        {reserva.attributes.estado !== "CANCELADA" && (
-                          <div className="flex items-center justify-center h-full gap-2">
-                            <button
-                              className="text-blue-600 hover:text-blue-800"
-                              onClick={() => handleVer(reserva)}
-                              title="Ver reserva"
-                            >
-                              <Eye className="w-5 h-5" />
-                            </button>
-                            <button
-                              className="text-red-600 hover:text-red-800"
-                              onClick={() => handleEliminar(reserva)}
-                              title="Cancelar reserva"
-                            >
-                              <Trash2 className="w-5 h-5" />
-                            </button>
-                          </div>
-                        )}
-                      </td>
-
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
-            </div>
-          )}
+                ))}
+              </tbody>
+            </Table>
+          </div>
+        )}
       </div>      <Footer />
     </>
   );
