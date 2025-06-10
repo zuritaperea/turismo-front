@@ -34,7 +34,7 @@ function Carousel({ images, detail = false, imagePrincipalUrl = null }) {
 
   return (
     <div
-      className={`relative w-full mx-0 sm:mx-auto mt-0 sm:mt-5 ${detail ? 'max-w-[1600px] px-0 sm:px-4 md:px-0' : 'max-w-[1376px] px-0 sm:px-10 md:px-0'}`}
+      className={`relative w-full mx-0 sm:mx-auto mt-0 sm:mt-5 ${detail ? 'max-w-[1600px] px-0 sm:px-4 md:px-10' : 'max-w-[1376px] px-0 sm:px-10 md:px-10'}`}
       style={{ height: 'auto', minHeight: '280px', maxHeight: '436px', marginBottom: '1rem' }}
     >
       <Swiper
@@ -59,7 +59,7 @@ function Carousel({ images, detail = false, imagePrincipalUrl = null }) {
                   muted
                   playsInline
                   className="w-full max-h-[436px] object-cover mx-auto rounded-lg"
-                  style={{height: '280px', marginBottom: '1rem', borderRadius: '1rem' }}
+                  style={{height: '436px', marginBottom: '1rem', borderRadius: '1rem' }}
                 >
                   <source src={media.file} type={`video/${media.file.split('.').pop()}`} />
                   Tu navegador no soporta el video.
@@ -67,7 +67,7 @@ function Carousel({ images, detail = false, imagePrincipalUrl = null }) {
               ) : (
                 <img
                   className="w-full max-h-[436px] object-cover mx-auto rounded-lg"
-                  style={{height: '280px', marginBottom: '1rem', borderRadius: '1rem' }}
+                  style={{height: '436px', marginBottom: '1rem', borderRadius: '1rem' }}
                   src={media.file}
                   alt={media.title}
                 />
