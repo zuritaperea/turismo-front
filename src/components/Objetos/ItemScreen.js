@@ -28,7 +28,7 @@ const toLocalMidnight = (isoString) => {
   const localDate = new Date(
     utcDate.getUTCFullYear(),
     utcDate.getUTCMonth(),
-    utcDate.getUTCDate(), // <-- mantiene la "fecha" original
+    utcDate.getUTCDate(),
     0, 0, 0
   );
   return localDate;
@@ -148,35 +148,57 @@ function ItemScreen({ tipoObjeto }) {
   return (
     <>
       <Header />
-      <EncabezadoAtractivo item={item} redesSociales={item.attributes.redes_sociales} onClickRed={manejarInteraccionRed} 
-      inicio={item.attributes.start_date} final={item.attributes.end_date}/>
+      <EncabezadoAtractivo item={item} redesSociales={item.attributes.redes_sociales} onClickRed={manejarInteraccionRed}
+        inicio={item.attributes.start_date} final={item.attributes.end_date} />
       <div className="container mt-20 mx-auto p-4 pt-28">
         <div className="pb-4 mt-40 lg:mt-1">
-          <SeccionDescripcionMultilingue
-            titulo="Descripción"
-            descripcion={item.attributes.description}
-          />
+          <div className="animate__animated animate__fadeInUp">
+            <SeccionDescripcionMultilingue
+              titulo="Descripción"
+              descripcion={item.attributes.description}
+            />
+          </div>
           {item.attributes.contenidos && item.attributes.contenidos.length > 1 && (
-            <div className="w-full max-w-[1376px] mx-auto my-10 mb-20">
-              <Carousel images={item.attributes?.contenidos} detail={true} imagePrincipalUrl={item.attributes.image_url
-                ? process.env.REACT_APP_API_URL + item.attributes.image_url
-                : process.env.REACT_APP_IMAGE_DEFAULT} />
+            <div className="w-full max-w-[1376px] mx-auto my-10 mb-20 animate__animated animate__zoomIn animate__delay-1s">
+              <Carousel
+                images={item.attributes?.contenidos}
+                detail={true}
+                imagePrincipalUrl={
+                  item.attributes.image_url
+                    ? process.env.REACT_APP_API_URL + item.attributes.image_url
+                    : process.env.REACT_APP_IMAGE_DEFAULT
+                }
+              />
             </div>
           )}
           {item.attributes.productos_turisticos?.length > 0 && (
-            <ListaProductosTuristicos listData={item.attributes.productos_turisticos}
-              fechaDesde={fechaDesde} fechaHasta={fechaHasta} cantidadPersonas={cantidad} esPasaporte={esPasaporte}
-              tipoObjeto={tipoObjeto} 
-              inicio={item.attributes.start_date} final={item.attributes.end_date}
+            <div className="animate__animated animate__fadeInUp animate__delay-2s">
+              <ListaProductosTuristicos
+                listData={item.attributes.productos_turisticos}
+                fechaDesde={fechaDesde}
+                fechaHasta={fechaHasta}
+                cantidadPersonas={cantidad}
+                esPasaporte={esPasaporte}
+                tipoObjeto={tipoObjeto}
+                inicio={item.attributes.start_date}
+                final={item.attributes.end_date}
               />
+            </div>
           )}
+
           {item.attributes.puntos && Object.keys(item.attributes.puntos).length > 0 && (
-            <TablaPuntosCircuito puntos={item.attributes.puntos} />
+            <div className="animate__animated animate__fadeInLeft animate__delay-2s">
+              <TablaPuntosCircuito puntos={item.attributes.puntos} />
+            </div>
           )}
 
-          {item.attributes.amenity_feature && Object.keys(item.attributes.amenity_feature).length > 0 && <Servicios services={item.attributes.amenity_feature} />}
+          {item.attributes.amenity_feature && Object.keys(item.attributes.amenity_feature).length > 0 && (
+            <div className="animate__animated animate__fadeIn animate__delay-3s">
+              <Servicios services={item.attributes.amenity_feature} />
+            </div>
+          )}
 
-          <div className="mb-20">
+          <div className="mb-20 animate__animated animate__fadeInUp animate__delay-3s">
             {item.attributes.opening_hours && Object.keys(item.attributes.opening_hours).length > 0 && (
               <FechasHorarios item={item} tipoObjeto={tipoObjeto} />
             )}
@@ -192,13 +214,23 @@ function ItemScreen({ tipoObjeto }) {
                 />
               )}
           </div>
-          <RangoPrecios item={item} />
 
-          {item.attributes.certificaciones && item.attributes.certificaciones.length > 0 && (
-            <Certificaciones item={item} />
+          <RangoPrecios item={item} />
+          {item.attributes.certificaciones?.length > 0 && (
+            <div className="animate__animated animate__fadeIn animate__delay-4s">
+              <Certificaciones item={item} />
+            </div>
           )}
 
-          {item.attributes.street_address && <SeccionConTitulo titulo="Dirección" contenido={item.attributes.street_address} />}
+          {item.attributes.street_address && (
+            <div className="animate__animated animate__fadeIn animate__delay-4s">
+              <SeccionConTitulo
+                titulo="Dirección"
+                contenido={item.attributes.street_address}
+              />
+            </div>
+          )}
+
           {item.attributes.puntos && Object.keys(item.attributes.puntos).length > 0 && (
             <Mapa
               objetosFiltrados={item.attributes.puntos.map((punto) => ({
@@ -220,12 +252,19 @@ function ItemScreen({ tipoObjeto }) {
               ]}
             />
           )}
-          <ObjetoOpinion objeto={{
-            puntuacion: item.attributes.evaluation,
-            evaluaciones: item.attributes.evaluaciones,
-          }} />
+          <div className="animate__animated animate__fadeIn animate__delay-6s">
+            <ObjetoOpinion
+              objeto={{
+                puntuacion: item.attributes.evaluation,
+                evaluaciones: item.attributes.evaluaciones,
+              }}
+            />
+          </div>
 
-          <Recomendaciones items={items} tipoObjeto={tipoObjeto} objectId={item.id} />
+          <div className="animate__animated animate__fadeInUp animate__delay-6s">
+            <Recomendaciones items={items} tipoObjeto={tipoObjeto} objectId={item.id} />
+          </div>
+
         </div>
       </div>
 

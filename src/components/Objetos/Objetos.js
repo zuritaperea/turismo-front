@@ -121,12 +121,12 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
         <div className="absolute inset-0 bg-black bg-opacity-50 z-0" />
         <div className="z-10 w-full px-4 flex flex-col justify-center h-full">
           <div className="flex justify-center items-center">
-            <h1 className="header-title text-white text-4xl md:text-5xl lg:text-6xl font-black text-center">
+            <h1 className="header-title text-white text-4xl md:text-5xl lg:text-6xl font-black text-center animate__animated animate__fadeInDown">
               {t(`common.${title.toLowerCase()}`, title)}
             </h1>
           </div>
 
-          <div className="filtros-container lg:absolute w-full flex justify-center px-4 z-20 mt-4 lg:mt-0">
+          <div className="filtros-container lg:absolute w-full flex justify-center px-4 z-20 mt-4 lg:mt-0 animate__animated animate__fadeInUp animate__delay-1s">
             <div className="w-full max-w-6xl px-4 sm:px-6 lg:px-8 mx-auto">
               <Filtros
                 objetoService={objetoService}
@@ -140,31 +140,32 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
 
       <div className="mt-20 flex justify-center align-middle items-center">
         {objetosFiltrados.length > 0 ? (
-          <Listado
-            objetosFiltrados={objetosFiltrados}
-            navigation={navigation}
-            target={target}
-            title={title}
-          />) : (
-          <div className="text-center mt-5 text-gray-500">
+          <div className="animate__animated animate__fadeIn animate__faster w-full">
+            <Listado
+              objetosFiltrados={objetosFiltrados}
+              navigation={navigation}
+              target={target}
+              title={title}
+            />
+          </div>
+        ) : (
+          <div className="text-center mt-5 text-gray-500 animate__animated animate__fadeIn animate__delay-1s">
             {t('common.sin_resultados')}
           </div>
         )}
-
       </div>
 
       {hasCoordinates && (
         <>
-          <p class="text-2xl font-bold text-slate-900 tracking-tight dark:text-slate-200 my-4 text-center">
+          <p className="text-2xl font-bold text-slate-900 tracking-tight dark:text-slate-200 my-4 text-center animate__animated animate__fadeIn">
             {t('common.ver_en_el_mapa')}
           </p>
-          <div className="flex flex-col md:flex-row flex-grow justify-center items-center align-middle mt-5">
-
+          <div className="flex flex-col md:flex-row flex-grow justify-center items-center align-middle mt-5 animate__animated animate__fadeInUp animate__delay-1s">
             <div className="w-full flex justify-center px-4 mt-5">
               <div className="w-full max-w-[1600px]">
                 <Mapa objetosFiltrados={objetosFiltrados} />
               </div>
-            </div>   
+            </div>
           </div>
         </>
       )}

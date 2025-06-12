@@ -13,8 +13,7 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { es } from "date-fns/locale";
 import funciones from "../extras/functions";
-
-
+import 'animate.css';
 
 export default function Marketplace() {
   const [loading, setLoading] = useState(false);
@@ -145,8 +144,8 @@ export default function Marketplace() {
     <>
       <Header />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 px-4 max-w-6xl mx-auto items-start">
-        <div className="flex flex-col items-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 px-4 max-w-6xl mx-auto items-start animate__animated animate__fadeIn">
+        <div className="flex flex-col items-center animate__animated animate__fadeInLeft animate__slow">
           <SeccionesSlider
             secciones={secciones}
             onSectionClick={handleSectionClick}
@@ -155,10 +154,11 @@ export default function Marketplace() {
           />
         </div>
 
-        <div className="flex flex-col my-5 items-center w-full">
+        <div className="flex flex-col my-5 items-center w-full animate__animated animate__fadeInRight animate__slow">
           <h2 className="text-center text-lg font-semibold mb-4">
-          {isAlojamiento ? "Fechas de entrada y salida" : "¿Cuándo te interesa?"}
+            {isAlojamiento ? "Fechas de entrada y salida" : "¿Cuándo te interesa?"}
           </h2>
+
           {isAlojamiento ? (
             <DateRange
               editableDateInputs={true}
@@ -177,7 +177,7 @@ export default function Marketplace() {
               direction="horizontal"
               showDateDisplay={true}
               showSelectionPreview={true}
-              minDate={new Date()} // Prevent selecting past dates
+              minDate={new Date()}
             />
           ) : (
             <Calendar
@@ -192,12 +192,12 @@ export default function Marketplace() {
               }}
               locale={es}
               color="#111827"
-              minDate={new Date()} // Prevent selecting past dates
+              minDate={new Date()}
             />
           )}
 
           <div className="mt-6 flex flex-col sm:flex-row items-center gap-4 w-full sm:justify-center">
-            <div className="bg-white rounded-full px-4 py-3 flex items-center gap-2 shadow w-[200px]">
+            <div className="bg-white rounded-full px-4 py-3 flex items-center gap-2 shadow w-[200px] animate__animated animate__fadeInUp animate__delay-1s">
               <span className="text-gray-500 text-sm">👥</span>
               <input
                 type="number"
@@ -217,7 +217,7 @@ export default function Marketplace() {
                   cantidad: filtroCantidad,
                 })
               }
-              className="bg-black text-white font-semibold rounded-full px-6 py-3 text-sm hover:bg-gray-900 transition"
+              className="bg-black text-white font-semibold rounded-full px-6 py-3 text-sm hover:bg-gray-900 transition animate__animated animate__pulse animate__delay-2s"
             >
               Buscar
             </button>
@@ -226,20 +226,23 @@ export default function Marketplace() {
       </div>
 
       {/* Resultados */}
-      <Listado
-        objetosFiltrados={objetosFiltrados}
-        navigation={navigate}
-        desde={filtroDesde}
-        hasta={filtroHasta}
-        cantidad={filtroCantidad}
-        pasaporte={false}
-      />
+      <div className="animate__animated animate__fadeInUp animate__faster">
+        <Listado
+          objetosFiltrados={objetosFiltrados}
+          navigation={navigate}
+          desde={filtroDesde}
+          hasta={filtroHasta}
+          cantidad={filtroCantidad}
+          pasaporte={false}
+        />
+      </div>
 
       {loading ? <Spinner size={10} className="mx-auto" /> : null}
 
       {busquedaRealizada && objetosFiltrados.length === 0 && !loading ? (
-        <div className="flex justify-center items-center mt-4 text-gray-500">
-          No se encontraron resultados para tu búsqueda. Probá ajustar tus filtros para ver más opciones        </div>
+        <div className="flex justify-center items-center mt-4 text-gray-500 animate__animated animate__fadeIn animate__delay-1s">
+          No se encontraron resultados para tu búsqueda. Probá ajustar tus filtros para ver más opciones
+        </div>
       ) : null}
 
       <Footer />
