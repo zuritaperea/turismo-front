@@ -127,7 +127,7 @@ const ItemSection = ({ data, title, subtitle, target, imgSrc, marketplace }) => 
 
             <div className="relative max-w-screen-xl mx-auto flex flex-col md:flex-row gap-6">
                 {!marketplace && target === 'evento' && (
-                    <div className="w-full md:w-72 flex-shrink-0">
+                    <div className="w-full md:w-72 flex-shrink-0 flex justify-center">
                         <Calendar
                             date={selectedDate}
                             locale={es}
