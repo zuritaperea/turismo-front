@@ -122,7 +122,7 @@ const ItemSection = ({ data, title, subtitle, target, imgSrc, marketplace }) => 
     const justifyCenter = itemsToRender.length > 3 ? 'md:justify-start' : 'md:justify-center';
 
     return (
-        <div className="relative py-4 px-4 sm:px-6 md:px-0">
+        <div className={`relative py-4 px-4 sm:px-6 md:px-0  ${!marketplace && target === 'evento' ? 'bg-gray-200 rounded-xl shadow-md mx-auto max-w-eventos' : ''}`}>
             {!marketplace && <SectionTitle title={title} subtitle={subtitle} imgSrc={imgSrc} />}
 
             <div className="relative max-w-screen-xl mx-auto flex flex-col md:flex-row gap-6">

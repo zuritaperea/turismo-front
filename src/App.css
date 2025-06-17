@@ -442,3 +442,41 @@ footer .titulo {
     max-width: calc(100% - 19.2rem); 
   }
 }
+@media (min-width: 1801px) {
+  .max-w-eventos {
+    max-width: calc(100% - 25rem); 
+  }
+}
+
+@media (min-width: 1536px) and (max-width: 1800px) {
+  .max-w-eventos {
+    max-width: calc(100% - 14rem); 
+  }
+}
+@media (min-width: 1440px) and (max-width: 1535px) {
+  .max-w-eventos {
+    max-width: calc(100% - 6rem); 
+  }
+}
+
+/* Para pantallas grandes */
+@media (min-width: 1350px) and (max-width: 1439px) {
+  .max-w-eventos {
+    max-width: calc(100% - 3rem); 
+  }
+}
+
+/* Para pantallas medianas */
+@media (min-width: 1025px) and (max-width: 1349px) {
+  .max-w-eventos {
+    max-width: calc(100% - 1rem); 
+  }
+}
+
+/* En pantallas pequeñas, ancho completo */
+@media (max-width: 1024px) {
+  .max-w-eventos {
+    max-width: 100%;
+    padding-left: 20px;
+  }
+}
