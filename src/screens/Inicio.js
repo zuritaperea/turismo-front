@@ -5,6 +5,7 @@ import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
 import atractivoService from '../axios/services/atractivo';
 import eventoService from '../axios/services/evento';
+import circuitoService from '../axios/services/circuito';
 import SearchComponent from "../components/SearchComponent";
 import SeccionesSlider from "../components/SectionSlider";
 import Carousel from "../components/Carousel";
@@ -14,6 +15,7 @@ import { Ticket, MapPinned, Hotel, Bus, ShoppingBag, Utensils } from 'lucide-rea
 import ItemSection from "../components/ItemSection";
 import medallaAtractivos from "../assets/img/medalla.png";
 import medallaEventos from "../assets/img/calendario.png";
+import circuitoImg from "../assets/img/circuito.png";
 import DirectAccessList from "../components/DirectAccessList";
 import { useTranslation } from 'react-i18next';
 
@@ -22,6 +24,7 @@ export default function Inicio() {
   const [loading, setLoading] = useState(false);
 
   const [eventos, setEventos] = useState([]);
+  const [circuitos, setCircuitos] = useState([]);
 
   const [images, setImages] = useState([]);
   const [banners, setBanners] = useState([]);
@@ -33,6 +36,8 @@ export default function Inicio() {
   const [loadingAtractivos, setLoadingAtractivos] = useState(true);
 
   const [loadingEventos, setLoadingEventos] = useState(true);
+  const [loadingCircuitos, setLoadingCircuitos] = useState(true);
+
   const config = useContext(ConfigContext);
 
   const navigate = useNavigate();
@@ -46,10 +51,38 @@ export default function Inicio() {
     }
   }, [config]);
 
+
   useEffect(() => {
+
     const obtenerEventos = async () => {
       try {
         const response = await eventoService.obtenerTodos();
+        const destinos = response.data.data.map((obj) => {
+          return {
+            id: obj.id,
+            title: obj.attributes.name,
+            image: obj.attributes.image_url
+              ? process.env.REACT_APP_API_URL + obj.attributes.image_url
+              : process.env.REACT_APP_IMAGE_DEFAULT,
+            puntuacion: obj.attributes.evaluation,
+            favorito: obj.attributes.favorite,
+            coordinates: obj.attributes.point,
+            tourist_type: obj.attributes.tourist_type,
+            start_date: obj.attributes.start_date,
+            end_date: obj.attributes.end_date,
+            type: obj.type
+          };
+        });
+        setEventos(destinos);
+        setLoadingEventos(false);
+      } catch (error) {
+        setLoadingEventos(false);
+      }
+    };
+
+    const obtenerCircuitos = async () => {
+      try {
+        const response = await circuitoService.obtenerTodos();
         const destinos = response.data.data.map((obj) => {
           return {
             id: obj.id,
@@ -65,13 +98,12 @@ export default function Inicio() {
             type: obj.type
           };
         });
-        setEventos(destinos);
-        setLoadingEventos(false);
+        setCircuitos(destinos);
+        setLoadingCircuitos(false);
       } catch (error) {
-        setLoadingEventos(false);
+        setLoadingCircuitos(false);
       }
     };
-
     const obtenerAtractivos = async () => {
       try {
         const response = await atractivoService.obtenerTodos();
@@ -99,6 +131,7 @@ export default function Inicio() {
     obtenerEventos();
 
     obtenerAtractivos();
+    obtenerCircuitos();
   }, []);
 
   const handleSearch = (query) => {
@@ -156,15 +189,30 @@ export default function Inicio() {
       ) : (
         <div className="animate__animated animate__fadeInUp animate__delay-4s">
           <ItemSection
-            data={eventos.sort(() => Math.random() - Math.random())}
-            title={t('common.proximos_eventos')}
-            subtitle={t('common.proximos_eventos_subtitulo')}
+            data={eventos}
+            title={t('common.eventos_titulo')}
+            subtitle={t('common.eventos_subtitulo')}
             target="evento"
             imgSrc={medallaEventos}
             marketplace={false}
           />
         </div>
       )}
+      {loadingCircuitos ? (
+        <Spinner animation="border" role="status" />
+      ) : (
+        <div className="animate__animated animate__fadeInUp animate__delay-4s">
+          <ItemSection
+            data={circuitos.sort(() => Math.random() - Math.random())}
+            title={t('common.circuitos_titulo')}
+            subtitle={t('common.circuitos_subtitulo')}
+            target="circuito"
+            imgSrc={circuitoImg}
+            marketplace={false}
+          />
+        </div>
+      )}
+
 
       {banners.map((banner, index) => (
         <a

@@ -6,6 +6,7 @@ import { AuthContext } from "./AuthContext";
 import { Menu, X, LogIn, LogOut, User, Leaf } from 'lucide-react';
 import MenuLink from "./MenuLink";
 import BotonTraductor from "./BotonTraductor";
+import SocialLinks from "./SocialLinks";
 
 export default function Header() {
   const [personaDenominacion, setPersonaDenominacion] = useState(null);
@@ -131,6 +132,7 @@ export default function Header() {
               </Link>
             )}
             <BotonTraductor />
+            <SocialLinks header={true} redes={config?.redes_sociales || []} />
 
           </nav>
 
@@ -191,6 +193,9 @@ export default function Header() {
                 </Link>
               )}
               <div className="flex items-center"> <BotonTraductor />Traducir</div>
+              <div className="flex justify-center mt-4">
+                <SocialLinks header={true} redes={config?.redes_sociales || []} />
+              </div>
             </nav>
           </div>
         )}

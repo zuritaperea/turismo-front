@@ -437,3 +437,8 @@ footer .titulo {
     text-overflow: ellipsis;
   }
 }
+@media (min-width: 768px) {
+  .md-max-w-with-calendar {
+    max-width: calc(100% - 19.2rem); 
+  }
+}

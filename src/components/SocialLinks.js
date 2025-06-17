@@ -12,7 +12,7 @@ const socialIconsFA = {
   Pinterest: faPinterest,
   Instagram: faInstagram
 };
-const SocialLinks = ({ redes, onClickRed }) => {
+const SocialLinks = ({ redes, onClickRed, header=false }) => {
   const handleClick = (e, red) => {
     if (onClickRed) {
       e.preventDefault();
@@ -30,7 +30,7 @@ const SocialLinks = ({ redes, onClickRed }) => {
                 href={red.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-full shadow-md w-10 h-10 flex items-center justify-center bg-white hover:scale-105 transition"
+                className={`${header ? 'w-5 h-5' : 'rounded-full shadow-md w-10 h-10'}  flex items-center justify-center bg-white hover:scale-105 transition`}
                 onClick={(e) => handleClick(e, red)}
             >
               <FontAwesomeIcon icon={socialIconsFA[red.red_social]} className="text-xl text-black" />
