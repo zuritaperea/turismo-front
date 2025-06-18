@@ -1,13 +1,13 @@
 // ConfigContext.js
 import React, { createContext, useState, useEffect } from 'react';
 import fetchConfig from "./config";
+import Splash from '../components/Splash';
 
 const ConfigContext = createContext(null);
 
 const ConfigProvider = ({ children }) => {
   const [config, setConfig] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const loadConfig = async () => {
@@ -35,7 +35,7 @@ const ConfigProvider = ({ children }) => {
   }, []);
 
   if (loading) {
-    return <div>Cargando..</div>; // Muestra el Splash mientras se carga
+    return <Splash />; // Muestra el Splash mientras se carga
   }
 
   return <ConfigContext.Provider value={config}>{children}</ConfigContext.Provider>;

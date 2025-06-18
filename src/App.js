@@ -51,6 +51,12 @@ import 'animate.css';
 
 function App() {
 
+  useEffect(() => {
+    // Si no hay idioma guardado en localStorage, forzar español
+    if (!localStorage.getItem('i18nextLng')) {
+      i18n.changeLanguage('es');
+    }
+  }, []);
 
   // Verificar si ya existe un UUID en el localStorage
   let userIdentifier = localStorage.getItem('userIdentifier');
