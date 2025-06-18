@@ -125,7 +125,7 @@ const ItemSection = ({ data, title, subtitle, target, imgSrc, marketplace }) => 
         <div className={`relative py-4 px-4 sm:px-6 md:px-0  ${!marketplace && target === 'evento' ? 'bg-gray-200 rounded-xl shadow-md mx-auto max-w-eventos' : ''}`}>
             {!marketplace && <SectionTitle title={title} subtitle={subtitle} imgSrc={imgSrc} />}
 
-            <div className="w-full md:w-72 flex-shrink-0 flex items-center justify-center">
+  <div className="relative max-w-screen-xl mx-auto flex flex-col md:flex-row gap-6">
                 {!marketplace && target === 'evento' && (
                     <div className="w-full md:w-72 flex-shrink-0 flex justify-center">
                         <Calendar
