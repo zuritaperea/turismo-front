@@ -23,11 +23,9 @@ const ConfigProvider = ({ children }) => {
           document.title = fetchedConfig.title;
         } else {
           console.error("La configuración obtenida está vacía o es nula.");
-          setError("Error: Configuración no disponible.");
         }
       } catch (err) {
         console.error("Error al cargar la configuración:", err);
-        setError("Error: No se pudo cargar la configuración.");
       } finally {
         setLoading(false);
       }
@@ -38,10 +36,6 @@ const ConfigProvider = ({ children }) => {
 
   if (loading) {
     return <div>Cargando..</div>; // Muestra el Splash mientras se carga
-  }
-
-  if (error) {
-    return <div>{error}</div>; // Muestra un mensaje de error si falla la carga
   }
 
   return <ConfigContext.Provider value={config}>{children}</ConfigContext.Provider>;
