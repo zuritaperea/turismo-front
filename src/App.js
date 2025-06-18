@@ -45,8 +45,8 @@ import MisEvidencias from "./screens/MisEvidencias";
 import PerfilAmbiental from "./screens/PerfilAmbiental";
 import FaviconSetter from "./components/FaviconSetter";
 import CambiarClaveConToken from "./screens/CambiarClaveConToken";
-import './i18n';
 import 'animate.css';
+import i18n from "./i18n";
 
 
 function App() {
