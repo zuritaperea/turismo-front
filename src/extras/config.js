@@ -6,7 +6,7 @@ const fetchConfig = async () => {
   const cachedTimestamp = localStorage.getItem('configTimestamp');
 
   const currentTime = new Date().getTime();
-  const cacheExpirationTime = 10 * 1000; // 10 segundos
+  const cacheExpirationTime = 30 * 1000; // 30 segundos
 
   if (cachedConfig && cachedTimestamp && currentTime - cachedTimestamp < cacheExpirationTime) {
     try {

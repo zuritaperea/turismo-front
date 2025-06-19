@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useMemo } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import logo from '../assets/img/logomark.png';
 import { ConfigContext } from '../extras/ConfigContext';
@@ -19,10 +19,13 @@ export default function Header() {
   const [headerTitle, setHeaderTitle] = useState('Sistema de Turismo');
   const config = useContext(ConfigContext);
   const [menuItems, setMenuItems] = useState([])
-
   const isHomePage = location.pathname === "/" || location.pathname === "/inicio";
   const [scrolled, setScrolled] = useState(false);
-
+  const permisos = useMemo(() => ({
+    pasaporte: config?.pasaporte || false,
+    marketplace: config?.marketplace || false,
+    modulo_sostenibilidad: config?.modulo_sostenibilidad || false
+  }), [config]);
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 10);
@@ -33,12 +36,14 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-    if (config) {
+    if (config && Object.keys(config).length > 0) {
       setHeaderLogo(config.logo || logo);
       setHeaderTitle(config.title || 'Sistema de Turismo');
       setMenuItems(config?.menus?.[0]?.attributes?.items || []);
     }
   }, [config]);
+
+
 
   useEffect(() => {
     if (user?.profile?.length > 0) {
@@ -102,20 +107,20 @@ export default function Header() {
                     >
                       Mi Perfil
                     </Link>
-                    <Link
+                    {permisos.marketplace && (<Link
                       to="/mis-reservas"
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-200 font-medium"
                       onClick={() => setUserMenuOpen(false)}
                     >
                       Mis Reservas
-                    </Link>
-                    <Link
+                    </Link>)}
+                    {permisos.modulo_sostenibilidad && (<Link
                       to="/perfil-ambiental"
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-200 font-medium"
                       onClick={() => setUserMenuOpen(false)}
                     >
                       Mi Perfil Ambiental
-                    </Link>
+                    </Link>)}
                     <button
                       onClick={handleLogout}
                       className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-200 flex items-center gap-2"
@@ -170,14 +175,14 @@ export default function Header() {
                     <User size={24} className="text-gray-700" />
                     <span>Mi Perfil</span>
                   </Link>
-                  <Link
+                  {permisos.modulo_sostenibilidad && (<Link
                     to="/perfil-ambiental"
                     className="flex items-center gap-2"
                     onClick={() => setMenuOpen(false)}
                   >
                     <Leaf size={24} className="text-green-600" />
                     <span>Mi Perfil Ambiental</span>
-                  </Link>
+                  </Link>)}
                   <button
                     onClick={() => { setMenuOpen(false); handleLogout(); }}
                     title="Cerrar sesión"

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useMemo } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Form from '../components/Form';
 import Container from "../components/Container";
@@ -8,7 +8,6 @@ import Col from "../components/Col";
 import Alert from "../components/Alert";
 import objetoService from "../axios/services/objeto";
 import profileService from "../axios/services/profile"; // servicio para cargar/guardar perfil
-import logo from '../assets/img/logomark.png';
 import { ConfigContext } from '../extras/ConfigContext';
 import Separador from '../components/Separador';
 import Splash from '../components/Splash';
@@ -19,13 +18,19 @@ import ErrorAlerts from '../components/ErrorAlerts/ErrorAlerts';
 import functions from '../extras/functions';
 import { useTranslation } from 'react-i18next';
 const MiPerfil = () => {
-  const [logoLogin, setLogoLogin] = useState(logo);
+  const config = useContext(ConfigContext);
   const [loading, setLoading] = useState(true);
   const [mensaje, setMensaje] = useState(null);
   const [error, setError] = useState([]);
   const [paises, setPaises] = useState([]);
   const [token, setToken] = useState("");
   const { t } = useTranslation();
+  const permisos = useMemo(() => ({
+    pasaporte: config?.pasaporte || false,
+    marketplace: config?.marketplace || false,
+    modulo_sostenibilidad: config?.modulo_sostenibilidad || false
+  }), [config]);
+
   const [constantes, setConstantes] = useState({
     tipo_documento: [],
     genero: [],
@@ -46,7 +51,6 @@ const MiPerfil = () => {
     password_2: ''
   });
 
-  const config = useContext(ConfigContext);
   const navigate = useNavigate();
 
   const agregarOpcionVacia = (items, label = t("perfil.seleccionar")) => [
@@ -167,9 +171,6 @@ const MiPerfil = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    if (config) setLogoLogin(config.logo || logo);
-  }, [config]);
 
   if (loading) return <Splash />;
 
@@ -278,18 +279,18 @@ const MiPerfil = () => {
         <Separador />
         <Row>
           <Col>
-            <p className="text-xl font-bold mt-4">
+            {permisos.marketplace && <p className="text-xl font-bold mt-4">
               <Link className="color-principal ml-2" to="/mis-reservas">{t("perfil.mis_reservas")}</Link>
-            </p>
-            <p className="text-xl font-bold mt-4">
+            </p>}
+            {permisos.pasaporte && <p className="text-xl font-bold mt-4">
               <Link className="color-principal ml-2" to="/viajes">{t("perfil.mis_viajes")}</Link>
-            </p>
-            <p className="text-xl font-bold mt-4">
+            </p>}
+            {permisos.pasaporte && <p className="text-xl font-bold mt-4">
               <Link className="color-principal ml-2" to="/pasaporte">{t("perfil.mi_pasaporte")}</Link>
-            </p>
-            <p className="text-xl font-bold my-4">
+            </p>}
+            {permisos.modulo_sostenibilidad && <p className="text-xl font-bold my-4">
               <Link className="color-principal ml-2" to="/perfil-ambiental">{t("perfil.mi_perfil_ambiental")}</Link>
-            </p>
+            </p>}
           </Col>
         </Row></div>
       <Footer />
