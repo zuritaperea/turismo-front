@@ -145,5 +145,33 @@
             "CANCELADA": "Canceled",
             "PENDIENTE": "Pending"
         }
-    }
+    },
+    "reserva": {
+        "titulo": "Reservation",
+        "estado_aprobada": "Approved",
+        "estado_pagada": "Paid",
+        "estado_deposito": "Deposit",
+        "estado_cancelada": "Cancelled",
+        "estado_pendiente": "Pending",
+        "confirmar_cancelacion": "Are you sure you want to cancel this reservation?",
+        "error_cancelar": "There was a problem cancelling the reservation.",
+        "error_mostrar": "Error displaying reservation",
+        "numero_reserva": "Reservation Number",
+        "fecha_entrada": "Check-in Date",
+        "fecha_salida": "Check-out Date",
+        "cantidad": "Quantity",
+        "titular": "Holder",
+        "nombre": "Name",
+        "dni": "ID",
+        "email": "Email",
+        "telefono": "Phone",
+        "objeto": "Object",
+        "ubicacion": "Location",
+        "ver_en_maps": "View on Google Maps",
+        "fecha_evento": "Event Date",
+        "producto_reservado": "Reserved Product",
+        "acompanantes": "Companions",
+        "codigo_qr": "QR Code to validate",
+        "cancelar_reserva": "Cancel Reservation"
+      }
 }

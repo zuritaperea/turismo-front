@@ -145,5 +145,33 @@
             "CANCELADA": "Cancelada",
             "PENDIENTE": "Pendente"
         }
+    },
+    "reserva": {
+        "titulo": "Reserva",
+        "estado_aprobada": "Aprovada",
+        "estado_pagada": "Paga",
+        "estado_deposito": "Depósito",
+        "estado_cancelada": "Cancelada",
+        "estado_pendiente": "Pendente",
+        "confirmar_cancelacion": "Você tem certeza de que deseja cancelar esta reserva?",
+        "error_cancelar": "Houve um problema ao cancelar a reserva.",
+        "error_mostrar": "Erro ao exibir reserva",
+        "numero_reserva": "Número da Reserva",
+        "fecha_entrada": "Data de Entrada",
+        "fecha_salida": "Data de Saída",
+        "cantidad": "Quantidade",
+        "titular": "Titular",
+        "nombre": "Nome",
+        "dni": "Documento",
+        "email": "E-mail",
+        "telefono": "Telefone",
+        "objeto": "Objeto",
+        "ubicacion": "Localização",
+        "ver_en_maps": "Ver no Google Maps",
+        "fecha_evento": "Data do evento",
+        "producto_reservado": "Produto Reservado",
+        "acompanantes": "Acompanhantes",
+        "codigo_qr": "Código QR para validar",
+        "cancelar_reserva": "Cancelar Reserva"
     }
 }
