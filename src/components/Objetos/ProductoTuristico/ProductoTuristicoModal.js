@@ -7,6 +7,7 @@ import { ArrowUpRight } from "lucide-react";
 import Tags from "../Tags";
 import FormularioAcompaniantes from "./FormularioAcompaniantes";
 import Carousel from "../../Carousel";
+import { useTranslation } from "react-i18next";
 
 const ProductoTuristicoModal = ({
   producto,
@@ -39,6 +40,7 @@ const ProductoTuristicoModal = ({
   isLoadingReserva,
   handleReservar,
 }) => {
+  const { t } = useTranslation();
 
   const botonHabilitado = selectedStartDate &&
     selectedEndDate &&
@@ -53,7 +55,9 @@ const ProductoTuristicoModal = ({
         <div className="mx-auto max-w-5xl max-h-screen overflow-auto px-4">
           <div className="flex flex-col h-full">
             <Modal.Header onHide={onClose}>
-              <span className="text-gray-200">Realizá tu reserva</span>
+              <span className="text-gray-200">
+                {t('reservas.titulo_nueva')}
+              </span>
             </Modal.Header>
             <Modal.Body className="flex-grow overflow-y-auto scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-300 ">
 
@@ -72,14 +76,14 @@ const ProductoTuristicoModal = ({
 
                     {producto.attributes.amenity_feature_includes.length > 0 && (
                       <>
-                        <span className="text-gray-200 font-semibold">Servicios incluidos:</span>
+                        <span className="text-gray-200 font-semibold">{t("reservas.servicios_incluidos")}</span>
                         <Tags elementos={producto.attributes.amenity_feature_includes} className="border-2 border-gray-200" />
                       </>
                     )}
 
                     {producto.attributes.amenity_feature_does_not_include.length > 0 && (
                       <>
-                        <span className="text-gray-200 font-semibold">No incluye:</span>
+                        <span className="text-gray-200 font-semibold">{t("reservas.no_incluye")}</span>
                         <Tags elementos={producto.attributes.amenity_feature_does_not_include} className="border-2 border-gray-200" />
                       </>
                     )}
@@ -89,8 +93,8 @@ const ProductoTuristicoModal = ({
                   <div className="flex flex-col gap-4 overflow-y-auto ">
                     <h3 className="text-md font-semibold mb-2 text-gray-200">
                       {isAlojamiento
-                        ? isReadOnly ? "Rango de Fechas" : "Seleccioná el rango de fechas"
-                        : isReadOnly ? "Fecha seleccionada" : "Seleccioná la fecha"}
+                        ? isReadOnly ? t("reservas.rango_fechas") : t("reservas.seleccionar_rango")
+                        : isReadOnly ? t("reservas.fecha_seleccionada") : t("reservas.seleccionar_fecha")}
                     </h3>
 
                     <div className="mb-4">
@@ -129,7 +133,7 @@ const ProductoTuristicoModal = ({
                     {tieneHorariosConfigurados && hayHorariosParaElDia && horariosDisponibles && (
                       <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-200 mb-1">
-                          Horario disponible:
+                          {t("reservas.horario_disponible")}
                         </label>
                         <select
                           className="w-full border rounded p-2"
@@ -147,7 +151,7 @@ const ProductoTuristicoModal = ({
                             }
                           }}
                         >
-                          <option value="">Seleccionar horario</option>
+                          <option value="">{t("reservas.seleccionar_horario")}</option>
                           {Object.entries(horariosDisponibles).map(([hora, disponible]) =>
                             disponible > 0 ? (
                               <option key={hora} value={hora}>
@@ -160,12 +164,13 @@ const ProductoTuristicoModal = ({
                     )}
 
                     {tieneHorariosConfigurados && !hayHorariosParaElDia && (
-                      <p className="text-sm text-yellow-300 mt-2">No hay horarios para este día.</p>
-                    )}
+                      <p className="text-sm text-yellow-300 mt-2">
+                        {t("reservas.no_hay_horarios")}
+                      </p>)}
 
                     <div className="mb-4">
                       <label className="block text-sm font-medium text-gray-200 mb-1">
-                        Cantidad a reservar:
+                        {t("reservas.cantidad_reservar")}
                       </label>
                       <input
                         type="number"
@@ -178,7 +183,7 @@ const ProductoTuristicoModal = ({
                     {!cantidadPersonasFuePasada && (
                       <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-200 mb-1">
-                          Cantidad de personas:
+                          {t("reservas.cantidad_personas")}
                         </label>
                         <input
                           type="number"
@@ -206,7 +211,7 @@ const ProductoTuristicoModal = ({
                     }`}
                   style={{
                     cursor: botonHabilitado ? "pointer" : "not-allowed",
-                    pointerEvents:  "auto" 
+                    pointerEvents: "auto"
                   }}
                   onClick={botonHabilitado ? handleReservar : undefined}
                 >
@@ -216,12 +221,12 @@ const ProductoTuristicoModal = ({
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
                       </svg>
-                      Reservando...
+                      {t("reservas.reservando")}
                     </>
                   ) : (
                     <>
                       <ArrowUpRight className="w-5 h-5 mr-1" />
-                      ¡Reservar!
+                      {t("reservas.reservar")}
                     </>
                   )}
                 </div>

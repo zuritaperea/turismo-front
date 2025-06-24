@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import OpinionDialog from './OpinionDialog';
 import evaluacionService from '../../axios/services/evaluacion';
+import { useTranslation } from 'react-i18next';
 
 const BotonesAccion = ({ contentType, objectId, className }) => {
   const [showModal, setShowModal] = useState(false);
-
+  const { t } = useTranslation();
   const handleSubmitOpinion = async (data) => {
     const obj = {
       evaluation: data.puntuacion,
@@ -31,7 +32,7 @@ const BotonesAccion = ({ contentType, objectId, className }) => {
           onClick={() => setShowModal(true)}
         >
           <i className="fa-regular fa-star mr-2" style={{ color: "#F08400" }}></i>
-          <span style={{ color: "#F08400" }}>Calificar</span>
+          <span style={{ color: "#F08400" }}>{t('common.calificar')}</span>
         </button>
 
         <button
@@ -51,7 +52,7 @@ const BotonesAccion = ({ contentType, objectId, className }) => {
           }}
         >
           <i className="fa-solid fa-arrow-up-right-from-square mr-2" style={{ color: "#F08400" }}></i>
-          <span style={{ color: "#F08400" }}>Compartir</span>
+          <span style={{ color: "#F08400" }}>{t('common.compartir')}</span>
         </button>
       </div>
 

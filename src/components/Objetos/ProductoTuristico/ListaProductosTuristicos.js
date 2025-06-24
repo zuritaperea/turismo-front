@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import funciones from "../../../extras/functions.js";
 import ProductoTuristicoCard from "./ProductoTuristicoCard";
 import ProductoTuristicoModal from "./ProductoTuristicoModal.js";
+import { useTranslation } from "react-i18next";
 
 const ListaProductosTuristicos = (props) => {
   const {
@@ -18,7 +19,7 @@ const ListaProductosTuristicos = (props) => {
     inicio,
     final
   } = props;
-
+  const {t} = useTranslation();
   // Estados y funciones para manejar el modal y la reserva
   const [modalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
@@ -93,7 +94,6 @@ const ListaProductosTuristicos = (props) => {
       //ajustamos el dia de la semana para que coincida con el formato de la API siendo 0 el Lunes y 6 el Domingo
       const diaSemana = new Date(dateRange[0].startDate).getDay();
       const adjustedDiaSemana = (diaSemana + 6) % 7; // Ajuste para que 0 sea Lunes y 6 sea Domingo
-      console.log("Día de la semana:", diaSemana);
       if (horariosConfig && horariosConfig.length > 0) {
         setTieneHorariosConfigurados(true);
 
@@ -134,7 +134,7 @@ const ListaProductosTuristicos = (props) => {
 
   const handleReservar = async () => {
     if (!user) {
-      alert("¡Por favor, inicia sesión para realizar una reserva!");
+      alert(t("reservas.error_no_autenticado"));
       //agregar la url actual para poder volver despues de iniciar sesión
       localStorage.setItem("redirectAfterLogin", window.location.href);
       navigate("/login");
@@ -143,7 +143,7 @@ const ListaProductosTuristicos = (props) => {
 
     const persona = user.profile.find((p) => p.type === "Persona");
     if (!selectedStartDate || !selectedEndDate) {
-      alert("Seleccioná una fecha de inicio y una de fin");
+      alert(t("reservas.error_fechas_obligatorias"));
       return;
     }
 
@@ -194,11 +194,11 @@ const ListaProductosTuristicos = (props) => {
         setReservaId(response.data.data.id);
         setConfirmDialogOpen(true);
       } else {
-        alert("Hubo un problema al generar la reserva.");
+        alert(t("reservas.error_creacion_reserva"));
       }
     } catch (error) {
       console.error("Error al crear reserva:", error);
-      alert("Error al procesar la reserva.");
+      alert(t("reservas.error_creacion_reserva"));
     } finally {
       setIsLoadingReserva(false); // ⬅️ Desactivar loading al finalizar
       setModalOpen(false);
@@ -224,7 +224,7 @@ const ListaProductosTuristicos = (props) => {
   return (
     <div className="mb-20">
       <h2 className="text-2xl font-bold text-slate-900 tracking-tight dark:text-slate-200 my-4">
-        Realizá tu reserva
+        {t('reservas.titulo_nueva')}
       </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -277,9 +277,9 @@ const ListaProductosTuristicos = (props) => {
       {confirmDialogOpen && reservaId && (
         <Modal show={confirmDialogOpen} onHide={() => setConfirmDialogOpen(false)}>
           <div className="p-6 text-center">
-            <h2 className="text-2xl font-semibold mb-4 text-gray-200">¡Reserva Realizada!</h2>
+            <h2 className="text-2xl font-semibold mb-4 text-gray-200">{t('reservas.realizada')}</h2>
             <p className="text-lg text-gray-200">
-              Tu número de reserva es: <span className="font-bold">{reservaId}</span>
+              {t('reservas.numero')}: <span className="font-bold">{reservaId}</span>
             </p>
             <button
               className="mt-6 bg-[#f08400] text-white px-6 py-2 rounded-lg text-lg"
@@ -288,7 +288,7 @@ const ListaProductosTuristicos = (props) => {
                 navigate(`/reserva/${reservaId}`); // Redirigir a la página de detalles de la reserva 
               }}
             >
-              Aceptar
+              {t('reservas.aceptar')}
             </button>
           </div>
         </Modal>

@@ -2,23 +2,24 @@ import React from "react";
 import Form from "../Form";
 import Select, { components } from "react-select";
 import { MapIcon, DollarSign, Utensils, Users } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const FiltroSelect = ({
-                          label,
-                          name,
-                          options = [],
-                          selected,
-                          onChange,
-                          isMulti = false,
-                          isBoolean = false,
-                          forceSelect = false,
-                          includeEmpty = true,
-                          className = '',
-                          classLabel = '',
-                          placeholder = 'Seleccionar',
-                          emptyOption = 'Seleccionar'
-                      }) => {
-
+    label,
+    name,
+    options = [],
+    selected,
+    onChange,
+    isMulti = false,
+    isBoolean = false,
+    forceSelect = false,
+    includeEmpty = true,
+    className = '',
+    classLabel = '',
+    placeholder = 'Seleccione',
+    emptyOption = 'Seleccione'
+}) => {
+    const { t } = useTranslation();
     const iconByName = {
         type_attractive: <MapIcon size={18} className="text-black mr-2" />,
         price_range: <DollarSign size={18} className="text-black mr-2" />,
@@ -41,9 +42,9 @@ const FiltroSelect = ({
 
     if (isBoolean) {
         actualOptions = [
-            { value: "", label: emptyOption },
-            { value: "true", label: "Sí" },
-            { value: "false", label: "No" },
+            { value: "", label: t(`common.${emptyOption.toLowerCase()}`, emptyOption) },
+            { value: "true", label: t('common.si') },
+            { value: "false", label: t('common.no') },
         ];
     } else {
         if (options.length === 0) return null;
@@ -51,7 +52,7 @@ const FiltroSelect = ({
         actualOptions = options;
 
         if (includeEmpty && !isMulti && options.length > 0) {
-            actualOptions = [{ value: "", label: emptyOption }, ...options];
+            actualOptions = [{ value: "", label: t(`common.${emptyOption.toLowerCase()}`, emptyOption) }, ...options];
         }
     }
 
@@ -81,7 +82,7 @@ const FiltroSelect = ({
                     isSearchable
                     name={name}
                     options={actualOptions}
-                    placeholder={placeholder}
+                    placeholder={t(`common.${placeholder.toLowerCase()}`, placeholder)}
                     value={
                         isMulti
                             ? actualOptions.filter((o) => selected?.includes(o.value))

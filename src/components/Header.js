@@ -3,10 +3,11 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import logo from '../assets/img/logomark.png';
 import { ConfigContext } from '../extras/ConfigContext';
 import { AuthContext } from "./AuthContext";
-import { Menu, X, LogIn, LogOut, User, Leaf } from 'lucide-react';
+import { Menu, X, LogIn, LogOut, User, Leaf, Calendar } from 'lucide-react';
 import MenuLink from "./MenuLink";
 import BotonTraductor from "./BotonTraductor";
 import SocialLinks from "./SocialLinks";
+import { useTranslation } from 'react-i18next';
 
 export default function Header() {
   const [personaDenominacion, setPersonaDenominacion] = useState(null);
@@ -21,6 +22,7 @@ export default function Header() {
   const [menuItems, setMenuItems] = useState([])
   const isHomePage = location.pathname === "/" || location.pathname === "/inicio";
   const [scrolled, setScrolled] = useState(false);
+  const { t } = useTranslation();
   const permisos = useMemo(() => ({
     pasaporte: config?.pasaporte || false,
     marketplace: config?.marketplace || false,
@@ -105,28 +107,28 @@ export default function Header() {
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-200 font-medium"
                       onClick={() => setUserMenuOpen(false)}
                     >
-                      Mi Perfil
+                      {t("perfil.titulo")}
                     </Link>
                     {permisos.marketplace && (<Link
                       to="/mis-reservas"
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-200 font-medium"
                       onClick={() => setUserMenuOpen(false)}
                     >
-                      Mis Reservas
+                      {t("perfil.mis_reservas")}
                     </Link>)}
                     {permisos.modulo_sostenibilidad && (<Link
                       to="/perfil-ambiental"
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-200 font-medium"
                       onClick={() => setUserMenuOpen(false)}
                     >
-                      Mi Perfil Ambiental
+                      {t("perfil.mi_perfil_ambiental")}
                     </Link>)}
                     <button
                       onClick={handleLogout}
                       className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-200 flex items-center gap-2"
                     >
                       <LogOut size={18} className="text-gray-700" />
-                      Cerrar sesión
+                      {t("perfil.cerrar_sesion")}
                     </button>
                   </div>
                 )}
@@ -173,31 +175,41 @@ export default function Header() {
                     onClick={() => setMenuOpen(false)}
                   >
                     <User size={24} className="text-gray-700" />
-                    <span>Mi Perfil</span>
+                    <span>{t("perfil.titulo")}</span>
                   </Link>
+                  {permisos.marketplace && (<Link
+                    to="/mis-reservas"
+                    className="flex items-center gap-2"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    <Calendar size={24} className="text-gray-700" />
+                    <span>{t("perfil.mis_reservas")}</span>
+                  </Link>)}
                   {permisos.modulo_sostenibilidad && (<Link
                     to="/perfil-ambiental"
                     className="flex items-center gap-2"
                     onClick={() => setMenuOpen(false)}
                   >
                     <Leaf size={24} className="text-green-600" />
-                    <span>Mi Perfil Ambiental</span>
+                    <span>{t("perfil.mi_perfil_ambiental")}</span>
                   </Link>)}
                   <button
                     onClick={() => { setMenuOpen(false); handleLogout(); }}
-                    title="Cerrar sesión"
+                    title={t("perfil.cerrar_sesion")}
                     className="flex items-center gap-2"
                   >
                     <LogOut size={24} className="text-gray-700" />
-                    <span>Cerrar sesión</span>
+                    <span>
+                      {t("perfil.cerrar_sesion")}
+                    </span>
                   </button>  </>
 
               ) : (
-                <Link to="/login" title="Iniciar sesión" className="flex items-center gap-2" onClick={() => setMenuOpen(false)}>
-                  <span>Iniciar sesión</span>
+                <Link to="/login" title={t("perfil.iniciar_sesion")} className="flex items-center gap-2" onClick={() => setMenuOpen(false)}>
+                  <span> {t("perfil.iniciar_sesion")}</span>
                 </Link>
               )}
-              <div className="flex items-center"> <BotonTraductor />Traducir</div>
+              <div className="flex items-center"> <BotonTraductor />{t("perfil.traducir")}</div>
               <div className="flex justify-center mt-4">
                 <SocialLinks header={true} redes={config?.redes_sociales || []} />
               </div>

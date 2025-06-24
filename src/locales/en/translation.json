@@ -6,6 +6,12 @@
         "circuitos": "Circuits",
         "comercios": "Shops",
         "gastronomia": "Gastronomy",
+        "evento": "Event",
+        "atractivo": "Attraction",
+        "atractivoturistico": "Tourist Attraction",
+        "alojamiento": "Accommodation",
+        "circuito": "Circuit",
+        "comercio": "Shop",
         "atractivos_cercanos": "Nearest attractions",
         "atractivos_cercanos_subtitulo": "Discover the attractions closest to your location.",
         "eventos_titulo": "Upcoming events",
@@ -17,7 +23,40 @@
         "cargando": "Loading...",
         "cerrar": "Close",
         "seleccionar": "Select...",
-        "ver_en_el_mapa": "View on map"
+        "seleccione": "Select...",
+        "ver_en_el_mapa": "View on map",
+        "respuestas": "responses",
+        "calificar": "Rate",
+        "compartir": "Share",
+        "descripcion": "Description",
+        "fechas": "Dates",
+        "horarios": "Timings",
+        "fecha_inicio": "Start date",
+        "fecha_fin": "End date",
+        "check_in": "Check-in",
+        "check_out": "Check-out",
+        "lunes": "Monday",
+        "martes": "Tuesday",
+        "miercoles": "Wednesday",
+        "jueves": "Thursday",
+        "viernes": "Friday",
+        "sabado": "Saturday",
+        "domingo": "Sunday",
+        "orden": "Order",
+        "nombre": "Name",
+        "distancia": "Distance",
+        "tiempo": "Time",
+        "servicios": "Services",
+        "contacto": "Contact",
+        "rango_precios": "Price range",
+        "certificaciones_premios": "Certifications and awards",
+        "direccion": "Address",
+        "ver_en_maps": "View on Google Maps",
+        "opiniones": "Opinions",
+        "comentarios": "Comments",
+        "tambien_puede_interesarte": "You might also be interested in",
+        "si": "Yes",
+        "no": "No"
     },
     "search": {
         "titulo": "Are you looking for something in particular?",
@@ -123,7 +162,10 @@
         "mis_viajes": "My trips",
         "mi_pasaporte": "My passport",
         "mi_perfil_ambiental": "My environmental profile",
-        "seleccionar": "Select..."
+        "seleccionar": "Select...",
+        "cerrar_sesion": "Log out",
+        "iniciar_sesion": "Sign in",
+        "traducir": "Translate"
     },
     "reservas": {
         "titulo": "My Bookings",
@@ -144,7 +186,27 @@
             "DEPOSITO": "Deposit",
             "CANCELADA": "Canceled",
             "PENDIENTE": "Pending"
-        }
+        },
+        "error_no_autenticado": "You must be logged in to view your bookings.",
+        "error_fechas_obligatorias": "Check-in and check-out dates are required.",
+        "error_creacion_reserva": "There was an error creating the booking. Please try again later.",
+        "titulo_nueva": "Make your booking",
+        "realizada": "Your booking has been successfully made.",
+        "numero": "Your booking number is",
+        "aceptar": "Accept",
+        "seleccionar_fecha": "Select a date",
+        "seleccionar_rango": "Select date range",
+        "fecha_seleccionada": "Selected date",
+        "rango_fechas": "Date Range",
+        "servicios_incluidos": "Included services:",
+        "no_incluye": "Not included:",
+        "horario_disponible": "Available time:",
+        "seleccionar_horario": "Select time",
+        "no_hay_horarios": "No available times for this day.",
+        "cantidad_reservar": "Quantity to reserve:",
+        "cantidad_personas": "Number of people:",
+        "reservar": "Reserve!",
+        "reservando": "Reserving..."
     },
     "reserva": {
         "titulo": "Reservation",
@@ -173,5 +235,11 @@
         "acompanantes": "Companions",
         "codigo_qr": "QR Code to validate",
         "cancelar_reserva": "Cancel Reservation"
-      }
+    },
+    "acompaniante": {
+        "titulo": "Companion {{numero}}",
+        "nombre": "First Name",
+        "apellido": "Last Name",
+        "documento": "ID Number"
+    }
 }

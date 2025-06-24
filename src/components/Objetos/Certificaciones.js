@@ -1,6 +1,9 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
-const Certificaciones = ({ item }) => (
+const Certificaciones = ({ item }) => {
+  const { t } = useTranslation();
+  return (
   <div className="bg-white border border-white rounded-xl pl-4 pb-4 mt-10">
     <div
       className="my-4"
@@ -10,7 +13,7 @@ const Certificaciones = ({ item }) => (
         fontWeight: "600",
       }}
     >
-      Certificaciones y premios
+      {t("common.certificaciones_premios")}
     </div>
     <div
       className="descripcion"
@@ -23,6 +26,6 @@ const Certificaciones = ({ item }) => (
       {item?.attributes?.certifications}
     </div>
   </div>
-);
+)};
 
 export default Certificaciones;

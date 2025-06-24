@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import Card from "../Card";
+import { useTranslation } from "react-i18next";
 
 const Recomendaciones = ({ items, tipoObjeto, objectId }) => {
+  const { t } = useTranslation();
+
   if (!items || items.length === 0) {
     return null;
   }
-
   const recomendaciones = items
     .filter(item => item.id !== objectId)
     .slice(0, 4);
@@ -20,7 +22,7 @@ const Recomendaciones = ({ items, tipoObjeto, objectId }) => {
           fontWeight: "700",
         }}
       >
-        También puede interesarte...
+        {t('common.tambien_puede_interesarte')}...
       </div>
       <div
         className="grid gap-6 px-2"

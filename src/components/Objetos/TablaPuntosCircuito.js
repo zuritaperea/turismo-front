@@ -1,20 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Table from "../../components/Table";
+import { useTranslation } from "react-i18next";
 
 export default function TablaPuntosCircuito({ puntos }) {
-    if (!puntos || puntos.length === 0) return null;
+    const { t } = useTranslation();
 
+    if (!puntos || puntos.length === 0) return null;
     const puntosOrdenados = [...puntos].sort((a, b) => a.orden - b.orden);
 
     return (
         <Table className="table-auto w-full border-collapse border border-gray-300 rounded-lg shadow-md">
             <thead className="bg-gray-200">
                 <tr>
-                    <th className="border border-gray-300 px-4 py-2">Orden</th>
-                    <th className="border border-gray-300 px-4 py-2">Nombre</th>
-                    <th className="border border-gray-300 px-4 py-2">Distancia</th>
-                    <th className="border border-gray-300 px-4 py-2">Tiempo</th>
+                    <th className="border border-gray-300 px-4 py-2">{t('common.orden')}</th>
+                    <th className="border border-gray-300 px-4 py-2">{t('common.nombre')}</th>
+                    <th className="border border-gray-300 px-4 py-2">{t('common.distancia')}</th>
+                    <th className="border border-gray-300 px-4 py-2">{t('common.tiempo')}</th>
                 </tr>
             </thead>
             <tbody>

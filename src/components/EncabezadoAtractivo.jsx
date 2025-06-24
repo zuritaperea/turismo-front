@@ -4,6 +4,7 @@ import Estrellas from './Items/Estrellas';
 import BotonesAccion from './Objetos/BotonesAccion';
 import SocialLinks from "./SocialLinks";
 import Fecha from './Objetos/Fecha';
+import { useTranslation } from 'react-i18next';
 
 const EncabezadoAtractivo = ({ item, redesSociales, onClickRed, inicio, final }) => {
     const imagen = item.attributes.image_url
@@ -15,7 +16,7 @@ const EncabezadoAtractivo = ({ item, redesSociales, onClickRed, inicio, final })
     const tags = item.attributes.tourist_type || [];
     const puntaje = item.attributes.evaluation || 0;
     const cantidadRespuestas = item.attributes.evaluaciones?.length || 0;
-
+    const { t } = useTranslation();
     return (
         <div className="relative w-full mt-4 px-4 max-w-[1376px] mx-auto">
             <img
@@ -29,7 +30,9 @@ const EncabezadoAtractivo = ({ item, redesSociales, onClickRed, inicio, final })
                 {/* Parte superior: texto + botones */}
                 <div className="flex flex-col xl:flex-row justify-between items-start gap-4 w-full">
                     <div className='flex-1'>
-                        <p className="text-xs text-orange-500 font-semibold mb-1">{categoria}</p>
+                        <p className="text-xs text-orange-500 font-semibold mb-1">
+                            {t(`common.${categoria.toLowerCase()}`, categoria)}
+                        </p>
                         <h1 className="text-3xl font-bold text-gray-900">{nombre}</h1>
                         <Fecha inicio={inicio} final={final} />
                         <div className="flex flex-wrap gap-2 mt-2 mb-3">
@@ -39,7 +42,7 @@ const EncabezadoAtractivo = ({ item, redesSociales, onClickRed, inicio, final })
                         <div className="flex items-center">
                             <Estrellas puntuacion={puntaje} size="sm" />
                             <span className="ml-2 font-semibold text-gray-800">{puntaje}</span>
-                            <span className="ml-2 text-sm text-gray-500">{cantidadRespuestas} respuestas</span>
+                            <span className="ml-2 text-sm text-gray-500">{cantidadRespuestas} {t('common.respuestas')}</span>
                         </div>
                     </div>
 

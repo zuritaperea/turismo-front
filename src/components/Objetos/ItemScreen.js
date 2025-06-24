@@ -23,6 +23,7 @@ import serviceInteraccion from '../../axios/services/interacciones.js';
 
 import { SeccionDescripcionMultilingue } from '../DescripcionBilingue.jsx';
 import TablaPuntosCircuito from './TablaPuntosCircuito.js';
+import { useTranslation } from 'react-i18next';
 const toLocalMidnight = (isoString) => {
   const utcDate = new Date(isoString);
   const localDate = new Date(
@@ -46,7 +47,7 @@ function ItemScreen({ tipoObjeto }) {
   const [fechaHasta, setFechaHasta] = useState(null);
   const [cantidad, setCantidad] = useState(null);
   const [esPasaporte, setPasaporte] = useState(null);
-
+  const { t } = useTranslation();
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const source = queryParams.get("source");
@@ -154,7 +155,7 @@ function ItemScreen({ tipoObjeto }) {
         <div className="pb-4 mt-40 lg:mt-1">
           <div className="animate__animated animate__fadeInUp">
             <SeccionDescripcionMultilingue
-              titulo="Descripción"
+              titulo={t("common.descripcion")}
               descripcion={item.attributes.description}
             />
           </div>
@@ -225,7 +226,7 @@ function ItemScreen({ tipoObjeto }) {
           {item.attributes.street_address && (
             <div className="animate__animated animate__fadeIn animate__delay-4s">
               <SeccionConTitulo
-                titulo="Dirección"
+                titulo={t("common.direccion")}
                 contenido={item.attributes.street_address}
               />
             </div>

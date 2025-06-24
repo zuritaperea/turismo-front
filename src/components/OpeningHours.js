@@ -1,20 +1,20 @@
-import React from 'react';
+import { useTranslation } from 'react-i18next';
 
-// Traducir los días de la semana a su formato en español
-const DAYS_OF_WEEK = {
-  Mo: 'Lunes',
-  Tu: 'Martes',
-  We: 'Miércoles',
-  Th: 'Jueves',
-  Fr: 'Viernes',
-  Sa: 'Sábado',
-  Su: 'Domingo'
-};
+
 
 // Función para convertir el string de horarios a un formato legible
-const formatOpeningHours = (openingHoursText) => {
-  console.log('openingHoursText: ', openingHoursText);
-  
+const formatOpeningHours = (openingHoursText, t) => {
+
+  const DAYS_OF_WEEK = {
+    Mo: t('common.lunes'),
+    Tu: t('common.martes'),
+    We: t('common.miercoles'),
+    Th: t('common.jueves'),
+    Fr: t('common.viernes'),
+    Sa: t('common.sabado'),
+    Su: t('common.domingo')
+  };
+
   if (!openingHoursText) {
     return []; // Si el texto de horarios es nulo o vacío, devolver un array vacío
   }
@@ -54,11 +54,13 @@ const formatOpeningHours = (openingHoursText) => {
 };
 
 const OpeningHours = ({ openingHoursText }) => {
+    const { t } = useTranslation();
+
   if (!openingHoursText) {
     return null;
   }
 
-  const formattedOpeningHours = formatOpeningHours(openingHoursText);
+  const formattedOpeningHours = formatOpeningHours(openingHoursText, t);
 
   return (
     <div>

@@ -2,14 +2,16 @@ import React from 'react';
 import phoneIcon from '../../assets/img/phone.png';
 import mailIcon from '../../assets/img/mail-03.png';
 import linkIcon from '../../assets/img/link-01.png';
+import { useTranslation } from 'react-i18next';
 
 const Contacto = ({ contactoData }) => {
+  const { t } = useTranslation();
   if (!contactoData) return null;
 
   return (
     <div id="contacto" className="mb-5">
       <div className="text-2xl font-bold text-slate-900 tracking-tight dark:text-slate-200 my-4">
-        Contacto
+        {t('common.contacto')}
       </div>
       {/* Mostrar los teléfonos */}
       {contactoData.telefonos && contactoData.telefonos.length > 0 && (
@@ -20,7 +22,7 @@ const Contacto = ({ contactoData }) => {
           </div>
         ))
       )}
-      
+
       {/* Mostrar los correos electrónicos */}
       {contactoData.correos_electronicos && contactoData.correos_electronicos.length > 0 && (
         contactoData.correos_electronicos.map((correo, index) => (

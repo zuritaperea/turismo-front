@@ -1,3 +1,4 @@
+import { t } from 'i18next';
 import React from 'react';
 
 const RangoPrecios = ({ item }) => {
@@ -6,7 +7,7 @@ const RangoPrecios = ({ item }) => {
   return (
     <div className="mb-20">
       <div className="text-2xl font-bold text-slate-900 tracking-tight dark:text-slate-200 my-4">
-        Rango de Precios
+        {t("common.rango_precios")}
       </div>
       <div className="descripcion">{item?.attributes?.price_range}</div>
     </div>

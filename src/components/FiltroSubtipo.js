@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 function FiltroSubtipo({ interes, constantes, setFiltroSubtipo, filtroSubtipo }) {
     const tipoConstantesMap = {
@@ -9,7 +10,7 @@ function FiltroSubtipo({ interes, constantes, setFiltroSubtipo, filtroSubtipo })
         comercio: "tipo_comercio",
         gastronomia: "tipo_restaurante",
     };
-
+    const { t } = useTranslation();
     useEffect(() => {
         if (interes) {
             setFiltroSubtipo('');
@@ -29,7 +30,7 @@ function FiltroSubtipo({ interes, constantes, setFiltroSubtipo, filtroSubtipo })
                 onChange={(e) => setFiltroSubtipo(e.target.value)}
                 className="w-[90%] sm:w-[220px] md:w-[280px] lg:w-[340px] border rounded-md p-2 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             >
-                <option value="">Seleccione</option>
+                <option value="">{t('common.seleccione')}</option>
                 {opciones.map((opcion, index) => (
                     <option key={index} value={opcion.label}>
                         {opcion.label}

@@ -3,6 +3,7 @@ import { MapContainer, Marker, TileLayer, Popup, useMap } from "react-leaflet";
 import { Icon, latLngBounds } from "leaflet";
 import markerIconShadowPng from "leaflet/dist/images/marker-shadow.png";
 import markerIconPng from "leaflet/dist/images/marker-icon.png";
+import { useTranslation } from "react-i18next";
 
 const defaultIcon = new Icon({
   iconUrl: markerIconPng,
@@ -32,6 +33,7 @@ const FitBounds = ({ objetosFiltrados }) => {
 };
 
 const Mapa = ({ objetosFiltrados }) => {
+  const {t} = useTranslation();
   const position = [
     parseFloat(process.env.REACT_APP_DEFAULT_LAT) || -25.441105,
     parseFloat(process.env.REACT_APP_DEFAULT_LNG) || -49.276855
@@ -58,7 +60,7 @@ const Mapa = ({ objetosFiltrados }) => {
                       rel="noopener noreferrer"
                       className="text-blue-500 underline"
                     >
-                      Ver en Google Maps
+                      {t("common.ver_en_maps")}
                     </a>
                   </div>
                 </Popup>
