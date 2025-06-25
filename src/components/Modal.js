@@ -1,19 +1,18 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 
-// Modal Component using Tailwind CSS
 const Modal = ({ show, onHide, children, className = '', classNameOverlay = '' }) => {
-  if (!show) return null; // No renderizar si `show` es false
+  if (!show) return null;
 
-  return (
+  return ReactDOM.createPortal(
     <>
       <div
-        className={`fixed inset-0 bg-gray-600 bg-opacity-50 z-50 ${classNameOverlay}`}
+        className={`fixed inset-0 w-screen h-screen bg-gray-600 bg-opacity-50 z-50 ${classNameOverlay}`}
         style={{ zIndex: 401 }}
         onClick={onHide}
       />
-
-      {/* Modal */}
-      <div className={`fixed inset-0 flex items-center justify-center z-50 ${className}`}
+      <div
+        className={`fixed inset-0 flex items-center justify-center z-50 ${className}`}
         style={{ zIndex: 401 }}
       >
         <div
@@ -24,11 +23,12 @@ const Modal = ({ show, onHide, children, className = '', classNameOverlay = '' }
           {children}
         </div>
       </div>
-    </>
+    </>,
+    document.getElementById('modal-root')
   );
 };
 
-// Modal.Header
+// Subcomponentes se mantienen igual 👇
 Modal.Header = ({ children, onHide }) => (
   <div className="flex justify-between items-center border-b pb-4">
     <h2 className="text-xl font-semibold">{children}</h2>
@@ -41,10 +41,12 @@ Modal.Header = ({ children, onHide }) => (
   </div>
 );
 
-// Modal.Body
-Modal.Body = ({ children }) => <div className="mt-4">{children}</div>;
+Modal.Body = ({ children }) => (
+  <div className="mt-4">{children}</div>
+);
 
-// Modal.Footer
-Modal.Footer = ({ children }) => <div className="flex justify-end space-x-4 mt-6">{children}</div>;
+Modal.Footer = ({ children }) => (
+  <div className="flex justify-end space-x-4 mt-6">{children}</div>
+);
 
 export default Modal;

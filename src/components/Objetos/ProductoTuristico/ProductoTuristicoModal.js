@@ -48,7 +48,6 @@ const ProductoTuristicoModal = ({
     (!tieneHorariosConfigurados ||
       (hayHorariosParaElDia && selectedStartDate instanceof Date));
 
-
   return (
     <div className="">
       <Modal show={show} onHide={onClose}>
@@ -107,8 +106,8 @@ const ProductoTuristicoModal = ({
                           moveRangeOnFirstSelection={false}
                           ranges={dateRange}
                           locale={es}
-                          minDate={fechaDesde || new Date()}
-                          maxDate={fechaHasta}
+                          minDate={fechaDesde || (inicio ? new Date(inicio) : new Date())}
+                          maxDate={fechaHasta || (final ? new Date(final) : undefined)}
                           className="rounded border shadow"
                         />
                       ) : (
@@ -123,8 +122,8 @@ const ProductoTuristicoModal = ({
                           locale={es}
                           disabled={isReadOnly}
                           color="#111827"
-                          minDate={fechaDesde || inicio || new Date()}
-                          maxDate={fechaHasta || final}
+                          minDate={fechaDesde || (inicio ? new Date(inicio) : new Date())}
+                          maxDate={fechaHasta || (final ? new Date(final) : undefined)}
                           className="rounded border shadow"
                         />
                       )}
