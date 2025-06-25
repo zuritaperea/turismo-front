@@ -113,7 +113,7 @@ const ProductoTuristicoModal = ({
                         />
                       ) : (
                         <Calendar
-                          date={dateRange[0].startDate}
+                          date={dateRange?.[0]?.startDate || new Date()}
                           onChange={(date) => {
                             const start = new Date(date);
                             const end = new Date(date);
