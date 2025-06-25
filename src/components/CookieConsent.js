@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import Modal from './Modal';
 import Button from './Button';
+import { useTranslation } from 'react-i18next';
 function CookieConsent({ onConsent }) {
+  const { t } = useTranslation();
   const [consentAccepted, setConsentAccepted] = useState(localStorage.getItem('consentAccepted'));
   const [showModal, setShowModal] = useState(true);
 
@@ -24,13 +26,12 @@ function CookieConsent({ onConsent }) {
       <Modal show={showModal} onHide={handleModalClose}>
         <Modal.Body>
           <p className="text-gray-200">
-            Este sitio web utiliza cookies para mejorar la experiencia del usuario. <br />
-            Acepta para dar el consentimiento al uso de cookies o rechaza si no estás de acuerdo.
+            {t("cookie.mensaje")}
           </p>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={handleAccept}>Aceptar</Button>
-          <Button variant="secondary" onClick={handleReject}>Rechazar</Button>
+          <Button variant="primary" onClick={handleAccept}>{t("cookie.aceptar")}</Button>
+          <Button variant="secondary" onClick={handleReject}>{t("cookie.rechazar")}</Button>
         </Modal.Footer>
       </Modal>
 

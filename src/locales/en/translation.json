@@ -241,5 +241,10 @@
         "nombre": "First Name",
         "apellido": "Last Name",
         "documento": "ID Number"
+    },
+    "cookie": {
+        "mensaje": "This website uses cookies to enhance the user experience. \nAccept to consent to the use of cookies or reject if you do not agree.",
+        "aceptar": "Accept",
+        "rechazar": "Reject"
     }
 }

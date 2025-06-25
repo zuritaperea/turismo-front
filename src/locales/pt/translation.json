@@ -241,5 +241,10 @@
         "nombre": "Nome",
         "apellido": "Sobrenome",
         "documento": "Número do Documento"
+    },
+    "cookie": {
+        "mensaje": "Este site utiliza cookies para melhorar a experiência do usuário. \nAceite para consentir com o uso de cookies ou rejeite se não concordar.",
+        "aceptar": "Aceitar",
+        "rechazar": "Rejeitar"
     }
 }
