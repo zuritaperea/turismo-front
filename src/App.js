@@ -47,6 +47,7 @@ import FaviconSetter from "./components/FaviconSetter";
 import CambiarClaveConToken from "./screens/CambiarClaveConToken";
 import 'animate.css';
 import i18n from "./i18n";
+import NotFound from "./screens/NotFound";
 
 
 function App() {
@@ -74,7 +75,8 @@ function App() {
     }
   };
   return (
-    <ConfigProvider>       <FaviconSetter />
+    <ConfigProvider>
+      <FaviconSetter />
       <AuthProvider>
         <>
           <CookieConsent onConsent={handleConsent} />
@@ -128,11 +130,13 @@ function App() {
               <Route path="/cargar-evidencia" element={<CargaEvidencia />} />
               <Route path="/perfil-ambiental" element={<PerfilAmbiental />} />
               <Route path="/recuperar-cuenta/:uid/:token" element={<CambiarClaveConToken />} />
-
+              <Route path="*" element={<NotFound />} />
 
             </Routes>
-          </BrowserRouter>      <ScrollToTopButton />
-        </></AuthProvider></ConfigProvider>
+          </BrowserRouter>
+          <ScrollToTopButton />
+        </></AuthProvider>
+    </ConfigProvider>
   );
 }
 

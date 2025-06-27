@@ -246,5 +246,10 @@
         "mensaje": "Este sitio web utiliza cookies para mejorar la experiencia del usuario. \nAcepta para dar el consentimiento al uso de cookies o rechaza si no estás de acuerdo.",
         "aceptar": "Aceptar",
         "rechazar": "Rechazar"
+    },
+    "not_found": {
+        "titulo": "Página no encontrada",
+        "mensaje": "Lo sentimos, la página que estás buscando no existe o ha sido movida.",
+        "volver": "Volver al inicio"
     }
 }

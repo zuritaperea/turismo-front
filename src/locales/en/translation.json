@@ -246,5 +246,10 @@
         "mensaje": "This website uses cookies to enhance the user experience. \nAccept to consent to the use of cookies or reject if you do not agree.",
         "aceptar": "Accept",
         "rechazar": "Reject"
+    },
+    "not_found": {
+        "titulo": "Page not found",
+        "mensaje": "Sorry, the page you are looking for does not exist or has been moved.",
+        "volver": "Back to home"
     }
 }
