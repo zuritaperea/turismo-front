@@ -1,8 +1,8 @@
 import { useTranslation } from "react-i18next";
 import Estrellas from "../Items/Estrellas";
 import { User } from 'lucide-react';
-import { ConfigContext } from "antd/lib/config-provider";
-import { useEffect } from "react";
+import { ConfigContext } from '../../extras/ConfigContext';
+import { useContext, useEffect, useState } from "react";
 
 const Comentario = ({ item }) => (
     <div key={item.id} className="border-b py-4">
