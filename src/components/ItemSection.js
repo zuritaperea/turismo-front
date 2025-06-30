@@ -122,10 +122,10 @@ const ItemSection = ({ data, title, subtitle, target, imgSrc, marketplace }) => 
     const justifyCenter = itemsToRender.length > 3 ? 'md:justify-start' : 'md:justify-center';
 
     return (
-        <div className={`relative py-4 px-4 sm:px-6 md:px-0  ${!marketplace && target === 'evento' ? 'bg-gray-200 rounded-xl shadow-md mx-auto max-w-eventos' : ''}`}>
+        <div className={`relative py-4 mt-14 px-4 sm:px-6 md:px-0  ${!marketplace && target === 'evento' ? 'bg-gray-200 rounded-xl shadow-md mx-auto max-w-eventos' : ''}`}>
             {!marketplace && <SectionTitle title={title} subtitle={subtitle} imgSrc={imgSrc} />}
 
-  <div className="relative max-w-screen-xl mx-auto flex flex-col md:flex-row gap-6">
+            <div className="relative max-w-screen-xl mx-auto flex flex-col md:flex-row gap-6">
                 {!marketplace && target === 'evento' && (
                     <div className="w-full md:w-72 flex-shrink-0 flex justify-center">
                         <Calendar
@@ -138,9 +138,9 @@ const ItemSection = ({ data, title, subtitle, target, imgSrc, marketplace }) => 
                     </div>
                 )}
 
-                <div className={`relative w-full  ${!marketplace && target === 'evento' ? 'md-max-w-with-calendar' : ''}`}>
+                <div className={`relative w-full ${!marketplace && target === 'evento' ? 'md-max-w-with-calendar' : ''} px-4 sm:px-6 md:px-10`}>
                     {!marketplace && target === 'evento' && objetosFiltrados.length === 0 && (
-                        <div className="text-center text-gray-600 mb-4">
+                        <div className="max-w-screen-xl mx-auto bg-white border border-gray-300 rounded-lg p-4 text-center shadow-sm text-gray-700 font-medium mb-6">
                             No hay eventos para el día seleccionado. Te mostramos los próximos disponibles.
                         </div>
                     )}

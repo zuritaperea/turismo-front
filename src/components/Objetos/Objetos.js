@@ -25,7 +25,6 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
   const config = useContext(ConfigContext);
   const { t } = useTranslation();
 
-
   useEffect(() => {
     if (config && target) {
       const fieldMap = {
@@ -43,7 +42,6 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
       }
     }
   }, [config, target]);
-
 
   const customIcon = new L.Icon({
     iconUrl:
@@ -95,7 +93,6 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
     obtenerTodos();
   }, []);
 
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [navigation]);
@@ -121,7 +118,7 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
         <div className="absolute inset-0 bg-black bg-opacity-50 z-0" />
         <div className="z-10 w-full px-4 flex flex-col justify-center h-full">
           <div className="flex justify-center items-center">
-            <h1 className="header-title text-white text-4xl md:text-5xl lg:text-6xl font-black text-center animate__animated animate__fadeInDown">
+            <h1 className="header-title text-white text-4xl md:text-5xl lg:text-6xl font-black text-center">
               {t(`common.${title.toLowerCase()}`, title)}
             </h1>
           </div>
@@ -140,7 +137,7 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
 
       <div className="mt-20 flex justify-center align-middle items-center">
         {objetosFiltrados.length > 0 ? (
-          <div className="animate__animated animate__fadeIn animate__faster w-full">
+          <div className="w-full">
             <Listado
               objetosFiltrados={objetosFiltrados}
               navigation={navigation}
@@ -149,7 +146,7 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
             />
           </div>
         ) : (
-          <div className="text-center mt-5 text-gray-500 animate__animated animate__fadeIn animate__delay-1s">
+          <div className="text-center mt-5 text-gray-500">
             {t('common.sin_resultados')}
           </div>
         )}
@@ -157,10 +154,10 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
 
       {hasCoordinates && (
         <>
-          <p className="text-2xl font-bold text-slate-900 tracking-tight dark:text-slate-200 my-4 text-center animate__animated animate__fadeIn">
+          <p className="text-2xl font-bold text-slate-900 tracking-tight dark:text-slate-200 my-4 text-center">
             {t('common.ver_en_el_mapa')}
           </p>
-          <div className="flex flex-col md:flex-row flex-grow justify-center items-center align-middle mt-5 animate__animated animate__fadeInUp animate__delay-1s">
+          <div className="flex flex-col md:flex-row flex-grow justify-center items-center align-middle mt-5">
             <div className="w-full flex justify-center px-4 mt-5">
               <div className="w-full max-w-[1600px]">
                 <Mapa objetosFiltrados={objetosFiltrados} />

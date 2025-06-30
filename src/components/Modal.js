@@ -16,7 +16,7 @@ const Modal = ({ show, onHide, children, className = '', classNameOverlay = '' }
         style={{ zIndex: 401 }}
       >
         <div
-          className="p-6 rounded-lg shadow-lg min-w-96 max-w-4xl"
+          className="p-6 rounded-lg shadow-lg w-full max-w-md sm:max-w-lg md:max-w-xl"
           style={{ backgroundColor: 'rgba(46, 45, 44, 0.95)' }}
           onClick={(e) => e.stopPropagation()}
         >
@@ -28,7 +28,6 @@ const Modal = ({ show, onHide, children, className = '', classNameOverlay = '' }
   );
 };
 
-// Subcomponentes se mantienen igual 👇
 Modal.Header = ({ children, onHide }) => (
   <div className="flex justify-between items-center border-b pb-4">
     <h2 className="text-xl font-semibold">{children}</h2>
