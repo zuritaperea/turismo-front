@@ -25,10 +25,12 @@ const Recomendaciones = ({ items, tipoObjeto, objectId }) => {
         {t('common.tambien_puede_interesarte')}...
       </div>
       <div
-        className="grid gap-6 px-2"
-        style={{
-          gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-        }}
+        className={`px-2 gap-6 ${recomendaciones.length < 4 ? 'flex flex-wrap justify-center' : 'grid'}`}
+        style={
+          recomendaciones.length >= 4
+            ? { gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))" }
+            : {}
+        }
       >
         {recomendaciones.map((item) => (
           <Link key={item.id} to={`/${tipoObjeto}/${item.id}`}>
