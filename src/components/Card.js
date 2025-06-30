@@ -33,7 +33,7 @@ function Card({ imgSrc, category, title, description, tags, puntuacion, location
       <div className="p-4 flex flex-col flex-grow">
         <div className="flex items-center justify-between text-sm font-semibold my-2 text-orange-500">
           <span>
-            {t(`common.${category.toLowerCase()}`, category)}
+            {category ? t(`common.${category.toLowerCase()}`, category) : ''}
           </span>
           {location && (
             <span className="text-gray-600 text-xs flex items-center">
