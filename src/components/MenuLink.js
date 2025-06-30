@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 
-export default function MenuLink({ item, onClick, className = "" }) {
+export default function MenuLink({ item, onClick, className = "", isActive = false }) {
   if (!item?.url) return null;
 
   const isExternal = item.url.startsWith("http://") || item.url.startsWith("https://");
+
+  const commonClasses = `${isActive ? 'font-bold underline underline-offset-4' : 'font-light'} text-base ${className}`;
 
   return isExternal ? (
     <a
@@ -11,7 +13,7 @@ export default function MenuLink({ item, onClick, className = "" }) {
       target="_blank"
       rel="noopener noreferrer"
       onClick={onClick}
-      className={className}
+      className={commonClasses}
     >
       {item.name}
     </a>
@@ -19,7 +21,7 @@ export default function MenuLink({ item, onClick, className = "" }) {
     <Link
       to={item.url}
       onClick={onClick}
-      className={className}
+      className={commonClasses}
     >
       {item.name}
     </Link>

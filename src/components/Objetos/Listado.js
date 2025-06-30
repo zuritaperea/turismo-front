@@ -47,7 +47,7 @@ const Listado = ({ objetosFiltrados, target, desde, hasta, cantidad, pasaporte }
 
                 return (
                   <Link key={item.id} to={fullPath}>
-                    <div className={`w-64 h-80 animate__animated animate__flipInY ${delayClass}`}>
+                    <div className={`w-64 h-80`}>
                       <Card
                         imgSrc={item.image}
                         title={item.title}

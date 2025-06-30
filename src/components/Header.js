@@ -81,19 +81,18 @@ export default function Header() {
           <nav className="hidden md:flex gap-6 items-center">
             {menuItems.filter(item => {
               if (item.requires_authentication) {
-                return user !== null; // solo si hay usuario
+                return user !== null;
               }
-              return true; // siempre muestra si no requiere auth
+              return true; 
             }).map(item => (
               <MenuLink
                 key={item.id}
                 item={item}
                 onClick={() => setMenuOpen(false)}
-                className="font-light text-base"
+                isActive={location.pathname === item.url}
               />
             ))}
             {user ? (
-              // Icono de usuario con menú desplegable
               <div className="relative">
                 <button onClick={() => setUserMenuOpen(!userMenuOpen)} className="flex items-center">
                   <User size={24} className="text-gray-700" />
@@ -164,7 +163,7 @@ export default function Header() {
                   key={item.id}
                   item={item}
                   onClick={() => setMenuOpen(false)}
-                  className="font-light text-base"
+                  isActive={location.pathname === item.url}
                 />
               ))}
               {user ? (

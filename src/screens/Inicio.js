@@ -20,26 +20,18 @@ import DirectAccessList from "../components/DirectAccessList";
 import { useTranslation } from 'react-i18next';
 
 export default function Inicio() {
-
   const [loading, setLoading] = useState(false);
-
   const [eventos, setEventos] = useState([]);
   const [circuitos, setCircuitos] = useState([]);
-
   const [images, setImages] = useState([]);
   const [banners, setBanners] = useState([]);
-
   const [directAccessItems, setDirectAccessItems] = useState([]);
-
   const [naturalAttractions, setNaturalAttractions] = useState([]);
-
   const [loadingAtractivos, setLoadingAtractivos] = useState(true);
-
   const [loadingEventos, setLoadingEventos] = useState(true);
   const [loadingCircuitos, setLoadingCircuitos] = useState(true);
 
   const config = useContext(ConfigContext);
-
   const navigate = useNavigate();
   const { t } = useTranslation();
 
@@ -51,28 +43,24 @@ export default function Inicio() {
     }
   }, [config]);
 
-
   useEffect(() => {
-
     const obtenerEventos = async () => {
       try {
         const response = await eventoService.obtenerTodos();
-        const destinos = response.data.data.map((obj) => {
-          return {
-            id: obj.id,
-            title: obj.attributes.name,
-            image: obj.attributes.image_url
-              ? process.env.REACT_APP_API_URL + obj.attributes.image_url
-              : process.env.REACT_APP_IMAGE_DEFAULT,
-            puntuacion: obj.attributes.evaluation,
-            favorito: obj.attributes.favorite,
-            coordinates: obj.attributes.point,
-            tourist_type: obj.attributes.tourist_type,
-            start_date: obj.attributes.start_date,
-            end_date: obj.attributes.end_date,
-            type: obj.type
-          };
-        });
+        const destinos = response.data.data.map((obj) => ({
+          id: obj.id,
+          title: obj.attributes.name,
+          image: obj.attributes.image_url
+            ? process.env.REACT_APP_API_URL + obj.attributes.image_url
+            : process.env.REACT_APP_IMAGE_DEFAULT,
+          puntuacion: obj.attributes.evaluation,
+          favorito: obj.attributes.favorite,
+          coordinates: obj.attributes.point,
+          tourist_type: obj.attributes.tourist_type,
+          start_date: obj.attributes.start_date,
+          end_date: obj.attributes.end_date,
+          type: obj.type
+        }));
         setEventos(destinos);
         setLoadingEventos(false);
       } catch (error) {
@@ -83,53 +71,48 @@ export default function Inicio() {
     const obtenerCircuitos = async () => {
       try {
         const response = await circuitoService.obtenerTodos();
-        const destinos = response.data.data.map((obj) => {
-          return {
-            id: obj.id,
-            title: obj.attributes.name,
-            image: obj.attributes.image_url
-              ? process.env.REACT_APP_API_URL + obj.attributes.image_url
-              : process.env.REACT_APP_IMAGE_DEFAULT,
-            puntuacion: obj.attributes.evaluation,
-            favorito: obj.attributes.favorite,
-            coordinates: obj.attributes.point,
-            tourist_type: obj.attributes.tourist_type,
-
-            type: obj.type
-          };
-        });
+        const destinos = response.data.data.map((obj) => ({
+          id: obj.id,
+          title: obj.attributes.name,
+          image: obj.attributes.image_url
+            ? process.env.REACT_APP_API_URL + obj.attributes.image_url
+            : process.env.REACT_APP_IMAGE_DEFAULT,
+          puntuacion: obj.attributes.evaluation,
+          favorito: obj.attributes.favorite,
+          coordinates: obj.attributes.point,
+          tourist_type: obj.attributes.tourist_type,
+          type: obj.type
+        }));
         setCircuitos(destinos);
         setLoadingCircuitos(false);
       } catch (error) {
         setLoadingCircuitos(false);
       }
     };
+
     const obtenerAtractivos = async () => {
       try {
         const response = await atractivoService.obtenerTodos();
-        const atracciones = response.data.data.map((obj) => {
-          return {
-            id: obj.id,
-            title: obj.attributes.name,
-            image: obj.attributes.image_url
-              ? process.env.REACT_APP_API_URL + obj.attributes.image_url
-              : process.env.REACT_APP_IMAGE_DEFAULT,
-            puntuacion: obj.attributes.evaluation,
-            favorito: obj.attributes.favorite,
-            coordinates: obj.attributes.point,
-            tourist_type: obj.attributes.tourist_type,
-
-            type: obj.type
-          };
-        });
+        const atracciones = response.data.data.map((obj) => ({
+          id: obj.id,
+          title: obj.attributes.name,
+          image: obj.attributes.image_url
+            ? process.env.REACT_APP_API_URL + obj.attributes.image_url
+            : process.env.REACT_APP_IMAGE_DEFAULT,
+          puntuacion: obj.attributes.evaluation,
+          favorito: obj.attributes.favorite,
+          coordinates: obj.attributes.point,
+          tourist_type: obj.attributes.tourist_type,
+          type: obj.type
+        }));
         setNaturalAttractions(atracciones);
         setLoadingAtractivos(false);
       } catch (error) {
         setLoadingAtractivos(false);
       }
     };
-    obtenerEventos();
 
+    obtenerEventos();
     obtenerAtractivos();
     obtenerCircuitos();
   }, []);
@@ -137,6 +120,7 @@ export default function Inicio() {
   const handleSearch = (query) => {
     navigate(`/busqueda/${query}`);
   };
+
   const secciones = [
     { icono: <Ticket size={30} />, titulo: t('common.eventos'), link: '/eventos' },
     { icono: <MapPinned size={30} />, titulo: t('common.atractivos'), link: '/atractivos' },
@@ -145,12 +129,13 @@ export default function Inicio() {
     { icono: <ShoppingBag size={30} />, titulo: t('common.comercios'), link: '/comercios' },
     { icono: <Utensils size={30} />, titulo: t('common.gastronomia'), link: '/gastronomia' },
   ];
+
   return (
     <>
       {loading ? <Splash /> : null}
       <Header config={config} />
 
-      <div className="relative animate__animated animate__fadeIn animate__fast">
+      <div className="relative">
         <Carousel images={images} />
 
         <div className="flex justify-center -mt-28 z-10 relative px-4">
@@ -160,18 +145,18 @@ export default function Inicio() {
         </div>
       </div>
 
-      <div className="flex justify-center flex-col mt-3 items-center px-8 animate__animated animate__fadeInUp animate__delay-2s">
+      <div className="flex justify-center flex-col mt-3 items-center px-8">
         <SeccionesSlider secciones={secciones} />
       </div>
 
-      <div className="animate__animated animate__fadeIn animate__delay-2s">
+      <div>
         <DirectAccessList items={directAccessItems} />
       </div>
 
       {loadingAtractivos ? (
         <Spinner animation="border" role="status" />
       ) : (
-        <div className="animate__animated animate__fadeInUp animate__delay-3s">
+        <div >
           <ItemSection
             data={naturalAttractions.sort(() => Math.random() - Math.random())}
             title={t('common.atractivos_cercanos')}
@@ -187,7 +172,7 @@ export default function Inicio() {
       {loadingEventos ? (
         <Spinner animation="border" role="status" />
       ) : (
-        <div className="animate__animated animate__fadeInUp animate__delay-4s">
+        <div>
           <ItemSection
             data={eventos}
             title={t('common.eventos_titulo')}
@@ -198,10 +183,11 @@ export default function Inicio() {
           />
         </div>
       )}
+
       {loadingCircuitos ? (
         <Spinner animation="border" role="status" />
       ) : (
-        <div className="animate__animated animate__fadeInUp animate__delay-4s">
+        <div>
           <ItemSection
             data={circuitos.sort(() => Math.random() - Math.random())}
             title={t('common.circuitos_titulo')}
@@ -213,27 +199,25 @@ export default function Inicio() {
         </div>
       )}
 
-
-      {banners.map((banner, index) => (
+      {banners.map((banner) => (
         <a
           href={banner.attributes.url}
           key={banner.id}
           target="_blank"
           rel="noopener noreferrer"
-          className={`block w-full mx-auto mt-8 text-center animate__animated animate__zoomIn animate__delay-${index + 1}s`}
+          className="block w-full mx-auto mt-8 text-center"
         >
           <img
             src={banner.attributes.image}
             alt={banner.attributes.name}
             className="w-full rounded-xl 
-          max-h-[320px] sm:max-h-[280px] md:max-h-[300px] lg:max-h-[320px]
-          max-w-[95%] sm:max-w-[90%] md:max-w-4xl lg:max-w-5xl mx-auto"
+              max-h-[320px] sm:max-h-[280px] md:max-h-[300px] lg:max-h-[320px]
+              max-w-[95%] sm:max-w-[90%] md:max-w-4xl lg:max-w-5xl mx-auto"
           />
         </a>
       ))}
 
       <Footer />
     </>
-
   );
 }
