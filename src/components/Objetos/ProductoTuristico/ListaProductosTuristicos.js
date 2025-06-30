@@ -220,6 +220,9 @@ const ListaProductosTuristicos = (props) => {
   .filter((p) => isDentroDeRango(p, fechaDesde, fechaHasta))
   .filter((p) => p.integrates_discount_passport === esPasaporte)
   .filter((p) => p.maximum_number_persons <= cantidadPersonas);
+  //Si no existen productos filtrados, no devolver nada
+  
+  if (!Array.isArray(productosFiltrados) || productosFiltrados.length === 0) return null;
 
   return (
     <div className="mb-20">
