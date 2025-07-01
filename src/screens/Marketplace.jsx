@@ -144,8 +144,8 @@ export default function Marketplace() {
     <>
       <Header />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 px-4 max-w-6xl mx-auto items-start animate__animated animate__fadeIn">
-        <div className="flex flex-col items-center animate__animated animate__fadeInLeft animate__slow">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 px-4 max-w-6xl mx-auto items-start  animate__fadeIn">
+        <div className="flex flex-col items-center  animate__fadeInLeft animate__slow">
           <SeccionesSlider
             secciones={secciones}
             onSectionClick={handleSectionClick}
@@ -154,50 +154,54 @@ export default function Marketplace() {
           />
         </div>
 
-        <div className="flex flex-col my-5 items-center w-full animate__animated animate__fadeInRight animate__slow">
+        <div className="flex flex-col my-5 items-center w-full  animate__fadeInRight animate__slow">
           <h2 className="text-center text-lg font-semibold mb-4">
             {isAlojamiento ? "Fechas de entrada y salida" : "¿Cuándo te interesa?"}
           </h2>
 
           {isAlojamiento ? (
-            <DateRange
-              editableDateInputs={true}
-              onChange={(item) => {
-                const selectedStart = item.selection.startDate;
-                const selectedEnd = item.selection.endDate;
-                setDateRange([item.selection]);
-                setFiltroDesde(selectedStart);
-                setFiltroHasta(selectedEnd);
-              }}
-              moveRangeOnFirstSelection={false}
-              ranges={dateRange}
-              rangeColors={["#111827"]}
-              locale={es}
-              months={1}
-              direction="horizontal"
-              showDateDisplay={true}
-              showSelectionPreview={true}
-              minDate={new Date()}
-            />
+            <div className="bg-white p-4 rounded-xl shadow-md border border-gray-200">
+              <DateRange
+                editableDateInputs={true}
+                onChange={(item) => {
+                  const selectedStart = item.selection.startDate;
+                  const selectedEnd = item.selection.endDate;
+                  setDateRange([item.selection]);
+                  setFiltroDesde(selectedStart);
+                  setFiltroHasta(selectedEnd);
+                }}
+                moveRangeOnFirstSelection={false}
+                ranges={dateRange}
+                rangeColors={["#111827"]}
+                locale={es}
+                months={1}
+                direction="horizontal"
+                showDateDisplay={true}
+                showSelectionPreview={true}
+                minDate={new Date()}
+              />
+            </div>
           ) : (
-            <Calendar
-              date={dateRange[0].startDate}
-              onChange={(date) => {
-                const start = new Date(date);
-                const end = new Date(date);
-                end.setHours(23, 59, 59, 999);
-                setDateRange([{ startDate: start, endDate: end, key: "selection" }]);
-                setFiltroDesde(start);
-                setFiltroHasta(end);
-              }}
-              locale={es}
-              color="#111827"
-              minDate={new Date()}
-            />
+            <div className="bg-white p-4 rounded-xl shadow-md border border-gray-200">
+              <Calendar
+                date={dateRange[0].startDate}
+                onChange={(date) => {
+                  const start = new Date(date);
+                  const end = new Date(date);
+                  end.setHours(23, 59, 59, 999);
+                  setDateRange([{ startDate: start, endDate: end, key: "selection" }]);
+                  setFiltroDesde(start);
+                  setFiltroHasta(end);
+                }}
+                locale={es}
+                color="#111827"
+                minDate={new Date()}
+              />
+            </div>
           )}
 
           <div className="mt-6 flex flex-col sm:flex-row items-center gap-4 w-full sm:justify-center">
-            <div className="bg-white rounded-full px-4 py-3 flex items-center gap-2 shadow w-[200px] animate__animated animate__fadeInUp animate__delay-1s">
+            <div className="bg-white rounded-full px-4 py-3 flex items-center gap-2 shadow w-[200px]  animate__fadeInUp animate__delay-1s">
               <span className="text-gray-500 text-sm">👥</span>
               <input
                 type="number"
@@ -217,7 +221,7 @@ export default function Marketplace() {
                   cantidad: filtroCantidad,
                 })
               }
-              className="bg-black text-white font-semibold rounded-full px-6 py-3 text-sm hover:bg-gray-900 transition animate__animated animate__pulse animate__delay-2s"
+              className="bg-black text-white font-semibold rounded-full px-6 py-3 text-sm hover:bg-gray-900 transition  animate__pulse animate__delay-2s"
             >
               Buscar
             </button>
@@ -226,7 +230,7 @@ export default function Marketplace() {
       </div>
 
       {/* Resultados */}
-      <div className="animate__animated animate__fadeInUp animate__faster">
+      <div className=" animate__fadeInUp animate__faster">
         <Listado
           objetosFiltrados={objetosFiltrados}
           navigation={navigate}
@@ -240,7 +244,7 @@ export default function Marketplace() {
       {loading ? <Spinner size={10} className="mx-auto" /> : null}
 
       {busquedaRealizada && objetosFiltrados.length === 0 && !loading ? (
-        <div className="flex justify-center items-center mt-4 text-gray-500 animate__animated animate__fadeIn animate__delay-1s">
+        <div className="flex justify-center items-center mt-4 text-gray-500  animate__fadeIn animate__delay-1s">
           No se encontraron resultados para tu búsqueda. Probá ajustar tus filtros para ver más opciones
         </div>
       ) : null}
