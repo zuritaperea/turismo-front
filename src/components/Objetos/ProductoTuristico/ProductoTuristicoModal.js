@@ -8,7 +8,7 @@ import Tags from "../Tags";
 import FormularioAcompaniantes from "./FormularioAcompaniantes";
 import Carousel from "../../Carousel";
 import { useTranslation } from "react-i18next";
-
+import { calcularRangoReservable } from "./FechasReservables";
 const ProductoTuristicoModal = ({
   producto,
   show,
@@ -41,12 +41,19 @@ const ProductoTuristicoModal = ({
   handleReservar,
 }) => {
   const { t } = useTranslation();
-
-  const botonHabilitado = selectedStartDate &&
+  const { minDate, maxDate, warnings } = calcularRangoReservable({
+    fechaDesde,
+    fechaHasta,
+    producto,
+    inicio,
+    final
+  });
+  const botonHabilitado =
+    selectedStartDate &&
     selectedEndDate &&
     !isLoadingReserva &&
-    (!tieneHorariosConfigurados ||
-      (hayHorariosParaElDia && selectedStartDate instanceof Date));
+    (!tieneHorariosConfigurados || (hayHorariosParaElDia && selectedStartDate instanceof Date)) &&
+    warnings.length === 0;
 
   return (
     <div className="">
@@ -100,19 +107,18 @@ const ProductoTuristicoModal = ({
                       {isAlojamiento ? (
                         <DateRange
                           editableDateInputs={!isReadOnly}
-                          onChange={(item) => {
-                            setDateRange([item.selection]);
-                          }}
+                          onChange={(item) => setDateRange([item.selection])}
                           moveRangeOnFirstSelection={false}
                           ranges={dateRange}
                           locale={es}
-                          minDate={fechaDesde || (inicio ? new Date(inicio) : new Date())}
-                          maxDate={fechaHasta || (final ? new Date(final) : undefined)}
+                          minDate={minDate}
+                          maxDate={maxDate}
+                          initialFocusedDate={minDate} // 👈 esta es la clave
                           className="rounded border shadow"
                         />
                       ) : (
                         <Calendar
-                          date={dateRange?.[0]?.startDate || new Date()}
+                          date={dateRange?.[0]?.startDate || minDate || new Date()}
                           onChange={(date) => {
                             const start = new Date(date);
                             const end = new Date(date);
@@ -122,13 +128,20 @@ const ProductoTuristicoModal = ({
                           locale={es}
                           disabled={isReadOnly}
                           color="#111827"
-                          minDate={fechaDesde || (inicio ? new Date(inicio) : new Date())}
-                          maxDate={fechaHasta || (final ? new Date(final) : undefined)}
+                          minDate={minDate}
+                          maxDate={maxDate}
+                          initialFocusedDate={minDate} // 👈 también importante acá
                           className="rounded border shadow"
                         />
                       )}
                     </div>
-
+                    {warnings.length > 0 && (
+                      <div className="bg-yellow-100 text-yellow-800 p-2 rounded border border-yellow-300 my-4">
+                        {warnings.map((msg, i) => (
+                          <p key={i} className="text-sm">{msg}</p>
+                        ))}
+                      </div>
+                    )}
                     {tieneHorariosConfigurados && hayHorariosParaElDia && horariosDisponibles && (
                       <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-200 mb-1">

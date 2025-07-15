@@ -19,7 +19,7 @@ const ListaProductosTuristicos = (props) => {
     inicio,
     final
   } = props;
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   // Estados y funciones para manejar el modal y la reserva
   const [modalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
@@ -204,7 +204,13 @@ const ListaProductosTuristicos = (props) => {
       setModalOpen(false);
     }
   };
+  const isDentroDeDisponibilidad = (producto) => {
+    const ahora = new Date();
+    const availableFrom = producto.available_from ? new Date(producto.available_from) : null;
+    const availableTo = producto.available_to ? new Date(producto.available_to) : null;
 
+    return (!availableFrom || ahora >= availableFrom) && (!availableTo || ahora <= availableTo);
+  };
   const isDentroDeRango = (producto, fechaDesde, fechaHasta) => {
     const start = producto.validity_from ? new Date(producto.validity_from) : null;
     const end = producto.validity_to ? new Date(producto.validity_to) : null;
@@ -216,12 +222,13 @@ const ListaProductosTuristicos = (props) => {
   };
 
   const productosFiltrados = listData
-  .filter((p) => p.active)
-  .filter((p) => isDentroDeRango(p, fechaDesde, fechaHasta))
-  .filter((p) => p.integrates_discount_passport === esPasaporte)
-  .filter((p) => p.maximum_number_persons <= cantidadPersonas);
+    .filter((p) => p.active)
+    .filter((p) => isDentroDeRango(p, fechaDesde, fechaHasta)) // Validity: se puede usar en esas fechas
+    .filter((p) => isDentroDeDisponibilidad(p))               // Availability: está visible en frontend
+    .filter((p) => p.integrates_discount_passport === esPasaporte)
+    .filter((p) => p.maximum_number_persons <= cantidadPersonas);
   //Si no existen productos filtrados, no devolver nada
-  
+
   if (!Array.isArray(productosFiltrados) || productosFiltrados.length === 0) return null;
 
   return (
@@ -232,15 +239,15 @@ const ListaProductosTuristicos = (props) => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {productosFiltrados.map((producto_turistico, index) => (
-            <ProductoTuristicoCard
-              key={producto_turistico.id || index}
-              producto={producto_turistico}
-              onClick={() => {
-                setSelectedProductoTuristico(producto_turistico);
-                setModalOpen(true);
-              }}
-            />
-          ))}
+          <ProductoTuristicoCard
+            key={producto_turistico.id || index}
+            producto={producto_turistico}
+            onClick={() => {
+              setSelectedProductoTuristico(producto_turistico);
+              setModalOpen(true);
+            }}
+          />
+        ))}
       </div>
 
       {modalOpen && selectedProductoTuristico && (
