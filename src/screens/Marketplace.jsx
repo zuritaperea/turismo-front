@@ -61,17 +61,42 @@ export default function Marketplace() {
             const tipo = objeto.type.toLowerCase();
             const atributos = objeto.attributes;
 
-            if (tipo !== "evento") return true;
+            const now = new Date();
 
-            const startDate = atributos?.start_date ? new Date(atributos.start_date) : null;
-            const endDate = atributos?.end_date ? new Date(atributos.end_date) : null;
+            // Validaciones generales para todos los tipos
+            const availableFrom = atributos.available_from ? new Date(atributos.available_from) : null;
+            const availableTo = atributos.available_to ? new Date(atributos.available_to) : null;
+            const validityFrom = atributos.validity_from ? new Date(atributos.validity_from) : null;
+            const validityTo = atributos.validity_to ? new Date(atributos.validity_to) : null;
 
-            if (endDate && endDate < now) return false;
-            if (desde && startDate && startDate < new Date(desde)) return false;
-            if (hasta && endDate && endDate > new Date(hasta)) return false;
+            // Si el producto ya no está disponible
+            if (availableTo && availableTo < now) return false;
+
+            // Validar disponibilidad dentro del rango buscado
+            if (availableFrom && hasta && new Date(hasta) < availableFrom) return false;
+            if (availableTo && desde && new Date(desde) > availableTo) return false;
+
+            // Validar validez dentro del rango buscado
+            if (validityFrom && hasta && new Date(hasta) < validityFrom) return false;
+            if (validityTo && desde && new Date(desde) > validityTo) return false;
+
+            // Casos especiales para eventos
+            if (tipo === "evento") {
+              const start = atributos.start_date ? new Date(atributos.start_date) : null;
+              const end = atributos.end_date ? new Date(atributos.end_date) : null;
+
+              if (end && end < now) return false;
+
+              const overlap =
+                (!desde || !start || start <= new Date(hasta)) &&
+                (!hasta || !end || end >= new Date(desde));
+
+              return overlap;
+            }
 
             return true;
           })
+
           .map((obj) => {
             const objeto = obj.attributes.objeto;
             const atributos = objeto.attributes;
