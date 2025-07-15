@@ -56,46 +56,42 @@ export default function Marketplace() {
         const now = new Date();
 
         const objetosData = data
-          .filter((obj) => {
-            const objeto = obj.attributes.objeto;
-            const tipo = objeto.type.toLowerCase();
-            const atributos = objeto.attributes;
-
-            const now = new Date();
-
-            // Validaciones generales para todos los tipos
-            const availableFrom = atributos.available_from ? new Date(atributos.available_from) : null;
-            const availableTo = atributos.available_to ? new Date(atributos.available_to) : null;
-            const validityFrom = atributos.validity_from ? new Date(atributos.validity_from) : null;
-            const validityTo = atributos.validity_to ? new Date(atributos.validity_to) : null;
-
-            // Si el producto ya no está disponible
-            if (availableTo && availableTo < now) return false;
-
-            // Validar disponibilidad dentro del rango buscado
-            if (availableFrom && hasta && new Date(hasta) < availableFrom) return false;
-            if (availableTo && desde && new Date(desde) > availableTo) return false;
-
-            // Validar validez dentro del rango buscado
-            if (validityFrom && hasta && new Date(hasta) < validityFrom) return false;
-            if (validityTo && desde && new Date(desde) > validityTo) return false;
-
-            // Casos especiales para eventos
-            if (tipo === "evento") {
-              const start = atributos.start_date ? new Date(atributos.start_date) : null;
-              const end = atributos.end_date ? new Date(atributos.end_date) : null;
-
-              if (end && end < now) return false;
-
-              const overlap =
-                (!desde || !start || start <= new Date(hasta)) &&
-                (!hasta || !end || end >= new Date(desde));
-
-              return overlap;
-            }
-
-            return true;
-          })
+        .filter((obj) => {
+          const atributos = obj.attributes;
+          const objeto = atributos.objeto;
+          const tipo = objeto.type.toLowerCase();
+          const evento = objeto.attributes;
+        
+          const now = new Date();
+        
+          // 🟡 Reglas de disponibilidad (cuando se puede ver/reservar)
+          const availableFrom = atributos.available_from ? new Date(atributos.available_from) : null;
+          const availableTo = atributos.available_to ? new Date(atributos.available_to) : null;
+        
+          if (availableFrom && now < availableFrom) return false;
+          if (availableTo && now > availableTo) return false;
+        
+          // 🔵 Reglas de validez (cuando es válido el producto)
+          const validityFrom = atributos.validity_from ? new Date(atributos.validity_from) : null;
+          const validityTo = atributos.validity_to ? new Date(atributos.validity_to) : null;
+        
+          if (validityFrom && hasta && new Date(hasta) < validityFrom) return false;
+          if (validityTo && desde && new Date(desde) > validityTo) return false;
+        
+          // 🟢 Si es evento, chequeamos superposición con fechas del evento
+          if (tipo === "evento") {
+            const eventoStart = evento.start_date ? new Date(evento.start_date) : null;
+            const eventoEnd = evento.end_date ? new Date(evento.end_date) : null;
+        
+            const hayInterseccion =
+              (!eventoStart || !hasta || new Date(hasta) >= eventoStart) &&
+              (!eventoEnd || !desde || new Date(desde) <= eventoEnd);
+        
+            return hayInterseccion;
+          }
+        
+          return true; // para no-eventos, ya validamos lo necesario
+        })
 
           .map((obj) => {
             const objeto = obj.attributes.objeto;
