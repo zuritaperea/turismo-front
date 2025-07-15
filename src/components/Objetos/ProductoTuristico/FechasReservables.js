@@ -26,8 +26,19 @@ export const calcularRangoReservable = ({
   console.log("inicioDate (evento):", inicioDate);
   console.log("finalDate (evento):", finalDate);
 
-  const fechasDesde = [fechaDesdeDate, validityFrom, availableFrom, inicioDate].filter(Boolean);
-  const fechasHasta = [fechaHastaDate, validityTo, availableTo, finalDate].filter(Boolean);
+  const normalize = (date) => {
+    const d = new Date(date);
+    d.setHours(0, 0, 0, 0);
+    return d;
+  };
+
+  const fechasDesde = [fechaDesdeDate, validityFrom, availableFrom, inicioDate]
+    .filter(Boolean)
+    .map(normalize);
+
+  const fechasHasta = [fechaHastaDate, validityTo, availableTo, finalDate]
+    .filter(Boolean)
+    .map(normalize);
 
   const minDate = fechasDesde.length ? new Date(Math.max(...fechasDesde.map(f => f.getTime()))) : new Date();
   const maxDate = fechasHasta.length ? new Date(Math.min(...fechasHasta.map(f => f.getTime()))) : undefined;
