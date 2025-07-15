@@ -14,6 +14,7 @@ import "react-date-range/dist/theme/default.css";
 import { es } from "date-fns/locale";
 import funciones from "../extras/functions";
 import 'animate.css';
+import { esProductoVisible } from "../components/Objetos/ProductoTuristico/VisibilidadProducto";
 
 export default function Marketplace() {
   const [loading, setLoading] = useState(false);
@@ -56,41 +57,13 @@ export default function Marketplace() {
         const now = new Date();
 
         const objetosData = data
-        .filter((obj) => {
-          const atributos = obj.attributes;
-          const objeto = atributos.objeto;
-          const tipo = objeto.type.toLowerCase();
-          const evento = objeto.attributes;
-        
-          const now = new Date();
-        
-          // 🟡 Reglas de disponibilidad (cuando se puede ver/reservar)
-          const availableFrom = atributos.available_from ? new Date(atributos.available_from) : null;
-          const availableTo = atributos.available_to ? new Date(atributos.available_to) : null;
-        
-          if (availableFrom && now < availableFrom) return false;
-          if (availableTo && now > availableTo) return false;
-        
-          // 🔵 Reglas de validez (cuando es válido el producto)
-          const validityFrom = atributos.validity_from ? new Date(atributos.validity_from) : null;
-          const validityTo = atributos.validity_to ? new Date(atributos.validity_to) : null;
-        
-          if (validityFrom && hasta && new Date(hasta) < validityFrom) return false;
-          if (validityTo && desde && new Date(desde) > validityTo) return false;
-        
-          // 🟢 Si es evento, chequeamos superposición con fechas del evento
-          if (tipo === "evento") {
-            const eventoStart = evento.start_date ? new Date(evento.start_date) : null;
-            const eventoEnd = evento.end_date ? new Date(evento.end_date) : null;
-        
-            const hayInterseccion =
-              (!eventoStart || !hasta || new Date(hasta) >= eventoStart) &&
-              (!eventoEnd || !desde || new Date(desde) <= eventoEnd);
-        
-            return hayInterseccion;
-          }
-        
-          return true; // para no-eventos, ya validamos lo necesario
+        .filter(obj => {
+          const { visible, logs } = esProductoVisible(obj, desde, hasta);
+          console.group(`Producto ${obj.id} - ${obj.attributes.name}`);
+          logs.forEach(msg => console.log(msg));
+          console.log("→ Visible:", visible);
+          console.groupEnd();
+          return visible;
         })
 
           .map((obj) => {
