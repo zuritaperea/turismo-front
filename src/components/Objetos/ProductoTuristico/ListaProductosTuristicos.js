@@ -34,14 +34,10 @@ const ListaProductosTuristicos = (props) => {
   const { user } = useContext(AuthContext);
   const [selectedStartDate, setSelectedStartDate] = useState(null);
   const [selectedEndDate, setSelectedEndDate] = useState(null);
-  const getSafeDate = (date, fallback) => {
-    return date && date >= minDate && date <= maxDate ? date : fallback;
-  };
-  
   const [dateRange, setDateRange] = useState([
     {
-      startDate: getSafeDate(selectedStartDate || fechaDesde, minDate),
-      endDate: getSafeDate(selectedEndDate || fechaHasta, minDate),
+      startDate: selectedStartDate || fechaDesde || new Date(),
+      endDate: selectedEndDate || fechaHasta || new Date(),
       key: "selection",
     },
   ]);
