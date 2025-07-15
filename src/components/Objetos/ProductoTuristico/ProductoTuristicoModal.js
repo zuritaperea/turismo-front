@@ -107,18 +107,30 @@ const ProductoTuristicoModal = ({
                       {isAlojamiento ? (
                         <DateRange
                           editableDateInputs={!isReadOnly}
-                          onChange={(item) => setDateRange([item.selection])}
+                          onChange={(item) => {
+                            setDateRange([item.selection]);
+                          }}
                           moveRangeOnFirstSelection={false}
-                          ranges={dateRange}
+                          ranges={
+                            dateRange?.length
+                              ? dateRange
+                              : [
+                                {
+                                  startDate: minDate,
+                                  endDate: minDate,
+                                  key: 'selection',
+                                },
+                              ]
+                          }
                           locale={es}
                           minDate={minDate}
                           maxDate={maxDate}
-                          initialFocusedDate={minDate} // 👈 esta es la clave
                           className="rounded border shadow"
                         />
+
                       ) : (
                         <Calendar
-                          date={dateRange?.[0]?.startDate || null}
+                          date={dateRange[0]?.startDate || minDate}
                           onChange={(date) => {
                             const start = new Date(date);
                             const end = new Date(date);
@@ -130,7 +142,6 @@ const ProductoTuristicoModal = ({
                           color="#111827"
                           minDate={minDate}
                           maxDate={maxDate}
-                          initialFocusedDate={minDate} // 👈 también importante acá
                           className="rounded border shadow"
                         />
                       )}

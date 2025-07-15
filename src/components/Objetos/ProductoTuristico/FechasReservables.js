@@ -26,47 +26,31 @@ export const calcularRangoReservable = ({
   console.log("inicioDate (evento):", inicioDate);
   console.log("finalDate (evento):", finalDate);
 
-  const normalize = (date) => {
-    const d = new Date(date);
-    d.setHours(0, 0, 0, 0);
-    return d;
-  };
-
-  const fechasDesde = [fechaDesdeDate, validityFrom, availableFrom, inicioDate]
-    .filter(Boolean)
-    .map(normalize);
-
-  const fechasHasta = [fechaHastaDate, validityTo, availableTo, finalDate]
-    .filter(Boolean)
-    .map(normalize);
-
-  const minDate = fechasDesde.length ? new Date(Math.max(...fechasDesde.map(f => f.getTime()))) : new Date();
-  const maxDate = fechasHasta.length ? new Date(Math.min(...fechasHasta.map(f => f.getTime()))) : undefined;
-
-  console.log("🧮 Resultado final del rango:");
-  console.log("minDate:", minDate);
-  console.log("maxDate:", maxDate);
+  // Prioridades
+  let minDate = fechaDesdeDate || validityFrom || availableFrom || inicioDate || new Date();
+  let maxDate = fechaHastaDate || validityTo || availableTo || finalDate;
 
   // Validaciones
   if (validityFrom && validityTo && validityFrom > validityTo) {
     warnings.push("El rango de 'validity_from' y 'validity_to' es inválido.");
   }
-
   if (availableFrom && availableTo && availableFrom > availableTo) {
     warnings.push("El rango de 'available_from' y 'available_to' es inválido.");
   }
-
   if (inicioDate && finalDate && inicioDate > finalDate) {
     warnings.push("El rango de 'inicio' y 'final' del evento es inválido.");
   }
-
   if (fechaDesdeDate && fechaHastaDate && fechaDesdeDate > fechaHastaDate) {
     warnings.push("El rango de fechas seleccionadas en la búsqueda previa es inválido.");
   }
 
   if (maxDate && minDate > maxDate) {
-    warnings.push("El rango resultante no permite seleccionar ninguna fecha. Verifique 'validity', 'available' o fechas del evento.");
+    warnings.push("El rango resultante no permite seleccionar ninguna fecha.");
   }
+
+  console.log("🧮 Resultado final del rango:");
+  console.log("minDate:", minDate);
+  console.log("maxDate:", maxDate);
 
   return { minDate, maxDate, warnings };
 };
