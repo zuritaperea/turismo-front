@@ -204,7 +204,6 @@ body {
   border-radius: 100%;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   /* Sombra */
-
 }
 
 .swiper-button-prev,
@@ -264,8 +263,15 @@ footer .titulo {
 
 .slider-horizontal {
   padding-bottom: 10px;
-  overflow-x: hidden;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
   /* width: fit-content; */
+}
+
+.slider-horizontal .snap-start {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
 
 /*scrollbar*/
@@ -612,3 +618,250 @@ footer .titulo {
   overflow: visible !important;
   position: relative !important;
 }
+
+/* Estilos específicos para el calendario de eventos */
+.calendario-eventos {
+  overflow: visible !important;
+  position: relative;
+  z-index: 10;
+}
+
+.calendario-eventos .rdrCalendarWrapper {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 12px !important;
+  overflow: visible !important;
+  position: relative !important;
+}
+
+.calendario-eventos .rdrMonth {
+  background: transparent !important;
+  border-radius: 12px !important;
+  overflow: visible !important;
+}
+
+.calendario-eventos .rdrMonthAndYearWrapper {
+  background: linear-gradient(135deg, #3B82F6, #1D4ED8) !important;
+  color: white !important;
+  border-radius: 12px 12px 0 0 !important;
+  padding: 16px !important;
+  margin: 0 !important;
+  position: relative !important;
+  z-index: 11 !important;
+}
+
+.calendario-eventos .rdrMonthAndYearPickers {
+  color: white !important;
+  position: relative !important;
+  z-index: 12 !important;
+}
+
+.calendario-eventos .rdrMonthPicker select,
+.calendario-eventos .rdrYearPicker select {
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  border-radius: 6px !important;
+  padding: 4px 8px !important;
+}
+
+.calendario-eventos .rdrPprevButton,
+.calendario-eventos .rdrNextButton {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border: none !important;
+  border-radius: 50% !important;
+  color: white !important;
+  width: 32px !important;
+  height: 32px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.calendario-eventos .rdrPprevButton:hover,
+.calendario-eventos .rdrNextButton:hover {
+  transform: scale(1.1) !important;
+  transition: all 0.2s ease !important;
+}
+
+.calendario-eventos .rdrWeekDays {
+  background: #F8FAFC !important;
+  padding: 8px 12px !important;
+}
+
+.calendario-eventos .rdrWeekDay {
+  font-weight: 600 !important;
+  font-size: 12px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  padding: 4px !important;
+}
+
+.calendario-eventos .rdrDays {
+  padding: 4px 12px 16px 12px !important;
+  min-height: 200px !important;
+}
+
+.calendario-eventos .rdrDay {
+  border-radius: 0 !important;
+  margin: 2px !important;
+  transition: none !important;
+  min-height: 34px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: transparent !important;
+}
+
+/* Hover completamente deshabilitado - sin círculos ni efectos */
+.calendario-eventos .rdrDay:hover,
+.calendario-eventos .rdrDay:hover .rdrDayNumber,
+.calendario-eventos .rdrDay:hover .rdrDayNumber span,
+.calendario-eventos .rdrDay:not(.rdrDayPassive):hover,
+.calendario-eventos .rdrDay:not(.rdrDayPassive):hover .rdrDayNumber,
+.calendario-eventos .rdrDay:not(.rdrDayPassive):hover .rdrDayNumber span,
+.calendario-eventos .rdrDay:hover::before,
+.calendario-eventos .rdrDay:hover::after,
+.calendario-eventos .rdrDayNumber:hover,
+.calendario-eventos .rdrDayNumber:hover::before,
+.calendario-eventos .rdrDayNumber:hover::after {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  transform: none !important;
+  outline: none !important;
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+/* Regla adicional para eliminar cualquier efecto por defecto de la librería */
+.calendario-eventos .rdrCalendarWrapper .rdrDay:hover {
+  background: none !important;
+  background-color: transparent !important;
+}
+
+.calendario-eventos .rdrCalendarWrapper .rdrDay:hover .rdrDayNumber span {
+  background: inherit !important;
+  background-color: inherit !important;
+}
+
+.calendario-eventos .rdrDayToday .rdrDayNumber span,
+.calendario-eventos .rdrDayToday:hover .rdrDayNumber span {
+  font-weight: 700 !important;
+  border: 2px solid #F59E0B !important;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3) !important;
+}
+
+.calendario-eventos .rdrDayActive .rdrDayNumber span,
+.calendario-eventos .rdrDayActive:hover .rdrDayNumber span {
+  color: white !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4) !important;
+}
+
+.calendario-eventos .rdrDayNumber {
+  font-weight: 500 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.calendario-eventos .rdrDayNumber span {
+  border-radius: 8px !important;
+  transition: all 0.2s ease !important;
+  width: 32px !important;
+  height: 32px !important;
+  line-height: 32px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.calendario-eventos .rdrDayPassive .rdrDayNumber span {
+  color: #CBD5E1 !important;
+}
+
+/* Animación suave para el calendario */
+.calendario-eventos {
+  animation: fadeInCalendar 0.3s ease-out;
+}
+
+@keyframes fadeInCalendar {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Asegurar que el contenedor principal permita overflow visible */
+.max-w-eventos {
+  overflow: visible !important;
+}
+
+/* Estilos específicos para dropdowns del calendario */
+.calendario-eventos .rdrMonthPicker,
+.calendario-eventos .rdrYearPicker {
+  position: relative !important;
+  z-index: 13 !important;
+}
+
+.calendario-eventos .rdrMonthPicker select,
+.calendario-eventos .rdrYearPicker select {
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  border-radius: 6px !important;
+  padding: 4px 8px !important;
+  position: relative !important;
+  z-index: 14 !important;
+}
+
+.calendario-eventos .rdrMonthPicker select:focus,
+.calendario-eventos .rdrYearPicker select:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.5) !important;
+  outline-offset: 2px !important;
+}
+
+/* Controlar el tamaño del dropdown de años - reglas más específicas */
+.calendario-eventos .rdrCalendarWrapper .rdrYearPicker select {
+  max-height: 150px !important;
+  overflow-y: auto !important;
+  height: auto !important;
+  size: 6 !important;
+}
+
+.calendario-eventos .rdrCalendarWrapper .rdrMonthPicker select,
+.calendario-eventos .rdrCalendarWrapper .rdrYearPicker select {
+  font-size: 13px !important;
+  min-width: 70px !important;
+  max-width: 100px !important;
+  height: 30px !important;
+}
+
+/* Forzar tamaño específico del dropdown cuando está abierto */
+.calendario-eventos select[size] {
+  max-height: 150px !important;
+  overflow-y: auto !important;
+}
+
+.calendario-eventos select option {
+  font-size: 13px !important;
+  padding: 2px 4px !important;
+}
+
+/* Asegurar altura mínima del contenedor principal */
+.bg-gray-200.rounded-xl.shadow-md.max-w-eventos {
+  min-height: 500px !important;
+  overflow: visible !important;
+}
+
+/* Estilos específicos para react-date-range en modales */

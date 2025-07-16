@@ -96,8 +96,15 @@ const ItemSection = ({ data, title, subtitle, target, imgSrc, marketplace }) => 
         const container = scrollContainerRef.current;
         const card = cardRef.current;
         if (container && card) {
-            const cardWidth = card.offsetWidth + 16;
-            container.scrollBy({ left: direction * cardWidth, behavior: 'smooth' });
+            const cardWidth = card.offsetWidth + 16; // ancho de tarjeta + gap (space-x-4 = 16px)
+            const currentScroll = container.scrollLeft;
+            
+            // Calcular exactamente cuántas tarjetas avanzar (1 tarjeta a la vez)
+            const targetScroll = Math.max(0, currentScroll + (direction * cardWidth));
+            
+            // Scroll directo sin behavior smooth (deja que CSS handle el smooth)
+            container.scrollLeft = targetScroll;
+            
             setTimeout(checkScroll, 300);
         }
     };
@@ -122,23 +129,38 @@ const ItemSection = ({ data, title, subtitle, target, imgSrc, marketplace }) => 
     const justifyCenter = itemsToRender.length > 3 ? 'md:justify-start' : 'md:justify-center';
 
     return (
-        <div className={`relative py-4 mt-14 px-4 sm:px-6 md:px-0  ${!marketplace && target === 'evento' ? 'bg-gray-200 rounded-xl shadow-md mx-auto max-w-eventos' : ''}`}>
+        <div className={`relative py-4 mt-14 px-4 sm:px-6 md:px-0 overflow-visible ${!marketplace && target === 'evento' ? 'bg-gray-200 rounded-xl shadow-md mx-auto max-w-eventos' : ''}`}>
             {!marketplace && <SectionTitle title={title} subtitle={subtitle} imgSrc={imgSrc} />}
 
-            <div className="relative max-w-screen-xl mx-auto flex flex-col md:flex-row gap-6">
+            <div className="relative max-w-screen-xl mx-auto flex flex-col md:flex-row gap-6 overflow-visible">
                 {!marketplace && target === 'evento' && (
-                    <div className="w-full md:w-72 flex-shrink-0 flex justify-center">
-                        <Calendar
-                            date={selectedDate}
-                            locale={es}
-                            onChange={(date) => setSelectedDate(startOfDay(date))}
-                            color="#111827"
-                            className="rounded border shadow"
-                        />
+                    <div className="w-full md:w-96 flex-shrink-0">
+                        <div className="bg-white rounded-xl shadow-lg p-4 border-l-4 border-blue-500 min-h-fit">
+                            <div className="flex items-center mb-4">
+                                <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center mr-3">
+                                    <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 className="text-lg font-semibold text-gray-800">Seleccionar Fecha</h3>
+                                    <p className="text-sm text-gray-600">Elige el día de tu evento</p>
+                                </div>
+                            </div>
+                            <div className="calendario-eventos overflow-visible">
+                                <Calendar
+                                    date={selectedDate}
+                                    locale={locale}
+                                    onChange={(date) => setSelectedDate(startOfDay(date))}
+                                    color="#3B82F6"
+                                    className="w-full"
+                                />
+                            </div>
+                        </div>
                     </div>
                 )}
 
-                <div className={`relative w-full ${!marketplace && target === 'evento' ? 'md-max-w-with-calendar' : ''} px-4 sm:px-6 md:px-10`}>
+                <div className={`relative w-full ${!marketplace && target === 'evento' ? 'md-max-w-with-calendar' : ''} px-4 sm:px-6 md:px-10 overflow-visible`}>
                     {!marketplace && target === 'evento' && objetosFiltrados.length === 0 && (
                         <div className="max-w-screen-xl mx-auto bg-white border border-gray-300 rounded-lg p-4 text-center shadow-sm text-gray-700 font-medium mb-6">
                             No hay eventos para el día seleccionado. Te mostramos los próximos disponibles.
@@ -158,7 +180,7 @@ const ItemSection = ({ data, title, subtitle, target, imgSrc, marketplace }) => 
 
                             <div
                                 ref={scrollContainerRef}
-                                className={`slider-horizontal flex ${justifyCenter} space-x-4 overflow-x-auto scroll-smooth px-4 sm:px-6 md:px-10 cursor-grab active:cursor-grabbing select-none`}
+                                className={`slider-horizontal flex ${justifyCenter} space-x-4 px-4 sm:px-6 md:px-10 cursor-grab active:cursor-grabbing select-none`}
                             >
                                 {itemsToRender.map((item, index) => (
                                     <Link

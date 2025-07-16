@@ -236,7 +236,7 @@ const Filtros = ({ objetoService, setObjetosFiltrados, target }) => {
             </div>
 
             <Modal show={showModal} onHide={() => setShowModal(false)}>
-                <Modal.Body className="bg-[#2e2d2c]/95 text-white p-4 rounded-xl max-h-[80vh] overflow-y-auto">
+                <Modal.Body className="bg-[#2e2d2c]/95 text-white p-4 rounded-xl max-h-[90vh] overflow-y-auto">
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 px-2 sm:px-4">
                         {target === "Circuito" && (
                             <FiltroSelect label={t('filtros.tipo_turista')} name="tourist_type" options={constantes.tipo_turismo}
