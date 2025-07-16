@@ -481,3 +481,134 @@ footer .titulo {
     padding-left: 20px;
   }
 }
+
+/* Estilos específicos para react-date-range en modales */
+.rdrDateRangePickerWrapper,
+.rdrCalendarWrapper {
+  overflow: visible !important;
+  position: relative !important;
+  z-index: 50 !important;
+}
+
+.rdrMonthAndYearWrapper,
+.rdrMonths,
+.rdrMonth {
+  overflow: visible !important;
+}
+
+.rdrDateDisplayWrapper {
+  background-color: transparent !important;
+}
+
+/* Contenedor de los selectores de mes y año */
+.rdrMonthAndYearPickers {
+  position: relative !important;
+  z-index: 51 !important;
+  display: flex !important;
+  gap: 8px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 4px 8px !important;
+}
+
+/* Evitar superposición de los dropdowns */
+.rdrMonthPicker {
+  position: relative !important;
+  display: inline-block !important;
+  margin-right: 8px !important;
+  z-index: 52 !important;
+}
+
+.rdrYearPicker {
+  position: relative !important;
+  display: inline-block !important;
+  margin-left: 8px !important;
+  z-index: 52 !important;
+}
+
+/* Estilos del dropdown del año/mes más limpios */
+.rdrYearPicker select,
+.rdrMonthPicker select {
+  background: #1f2937 !important;
+  color: #e5e7eb !important;
+  border: 1px solid #374151 !important;
+  border-radius: 4px !important;
+  padding: 6px 10px !important;
+  outline: none !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  min-width: 80px !important;
+  text-align: center !important;
+  cursor: pointer !important;
+}
+
+.rdrYearPicker select:hover,
+.rdrMonthPicker select:hover {
+  background: #374151 !important;
+  border-color: #4b5563 !important;
+}
+
+.rdrYearPicker select:focus,
+.rdrMonthPicker select:focus {
+  background: #374151 !important;
+  border-color: #6b7280 !important;
+  box-shadow: 0 0 0 2px rgba(107, 114, 128, 0.2) !important;
+}
+
+.rdrYearPicker option,
+.rdrMonthPicker option {
+  background: #1f2937 !important;
+  color: #e5e7eb !important;
+  padding: 6px 10px !important;
+  border: none !important;
+}
+
+.rdrYearPicker option:hover,
+.rdrMonthPicker option:hover,
+.rdrYearPicker option:checked,
+.rdrMonthPicker option:checked {
+  background: #374151 !important;
+  color: #ffffff !important;
+}
+
+/* Estilos para los botones de navegación del calendario */
+.rdrPprevButton,
+.rdrNextButton {
+  background: transparent !important;
+  border: none !important;
+  color: #9ca3af !important;
+  border-radius: 4px !important;
+  padding: 4px 8px !important;
+  margin: 0 4px !important;
+}
+
+.rdrPprevButton:hover,
+.rdrNextButton:hover {
+  background: #374151 !important;
+  color: #f3f4f6 !important;
+}
+
+/* Header del calendario */
+.rdrMonthAndYearWrapper {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 8px 12px !important;
+  background: transparent !important;
+}
+
+/* Asegurar que el modal permita overflow visible para el calendario */
+.modal-calendar-container {
+  overflow: visible !important;
+}
+
+.modal-calendar-container .rdrCalendarWrapper {
+  overflow: visible !important;
+  position: relative !important;
+}
+
+.modal-calendar-container .rdrDateRangePickerWrapper {
+  overflow: visible !important;
+  position: relative !important;
+}
