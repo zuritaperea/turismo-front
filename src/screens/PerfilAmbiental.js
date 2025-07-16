@@ -49,7 +49,6 @@ const PerfilAmbiental = () => {
 
     if (loading) return <Splash />;
 
-    // Antes del return, dentro del componente
     const puntosActuales = beneficios?.attributes?.points || 0;
 
     const siguienteNivel = niveles
@@ -72,7 +71,6 @@ const PerfilAmbiental = () => {
         <div className="min-h-screen bg-gray-50">
             <Header />
             
-            {/* Hero Section con imagen */}
             <div className="relative bg-gradient-to-r from-green-600 to-blue-600 text-white">
                 <div className="absolute inset-0 bg-black opacity-20"></div>
                 <div className="relative max-w-6xl mx-auto px-6 py-16">
@@ -104,7 +102,6 @@ const PerfilAmbiental = () => {
             <div className="max-w-6xl mx-auto px-6 py-8">
                 {beneficios?.attributes?.level?.name ? (
                     <>
-                        {/* Nivel Actual - Card Principal */}
                         <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
                             <div className="text-center mb-6">
                                 <h2 className="text-2xl font-bold text-gray-800 mb-2">
@@ -115,7 +112,6 @@ const PerfilAmbiental = () => {
                                 </div>
                             </div>
 
-                            {/* Puntos y Progreso */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
                                 <div className="text-center">
                                     <div className="text-4xl font-bold text-green-600 mb-2">
@@ -138,7 +134,6 @@ const PerfilAmbiental = () => {
                                 )}
                             </div>
 
-                            {/* Progreso al siguiente nivel */}
                             {siguienteNivel ? (
                                 <div className="bg-gray-50 rounded-lg p-6">
                                     <h3 className="text-lg font-semibold text-gray-800 mb-4 text-center">
@@ -175,7 +170,6 @@ const PerfilAmbiental = () => {
                             )}
                         </div>
 
-                        {/* Beneficios Disponibles */}
                         <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
                             <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">
                                 🎁 {t('perfil_ambiental.beneficios_disponibles')}
@@ -217,9 +211,7 @@ const PerfilAmbiental = () => {
                     </div>
                 )}
 
-                {/* Historial y Acciones */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    {/* Historial de Acciones */}
                     <div className="bg-white rounded-xl shadow-lg p-8">
                         <h3 className="text-xl font-bold text-gray-800 mb-6 text-center">
                             📊 {t('perfil_ambiental.historial_acciones')}
@@ -242,7 +234,6 @@ const PerfilAmbiental = () => {
                         </div>
                     </div>
 
-                    {/* Cargar Nueva Acción */}
                     <div className="bg-white rounded-xl shadow-lg p-8">
                         <h3 className="text-xl font-bold text-gray-800 mb-6 text-center">
                             ➕ {t('perfil_ambiental.cargar_accion')}
