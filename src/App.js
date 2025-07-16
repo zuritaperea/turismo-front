@@ -80,7 +80,7 @@ function App() {
       <AuthProvider>
         <>
           <CookieConsent onConsent={handleConsent} />
-          <BrowserRouter basename="/sitio">
+          <BrowserRouter basename="/web">
             <Routes>
               <Route path="/" element={<Inicio />} />
               <Route path="/login" element={<Login />} />
