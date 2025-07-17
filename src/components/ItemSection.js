@@ -129,15 +129,15 @@ const ItemSection = ({ data, title, subtitle, target, imgSrc, marketplace }) => 
     const justifyCenter = itemsToRender.length > 3 ? 'md:justify-start' : 'md:justify-center';
 
     return (
-        <div className={`relative py-4 mt-14 px-4 sm:px-6 md:px-0 overflow-visible ${!marketplace && target === 'evento' ? 'bg-gray-200 rounded-xl shadow-md mx-auto max-w-eventos' : ''}`}>
+        <div className={`relative py-4 mt-14 px-4 sm:px-6 md:px-0 overflow-hidden ${!marketplace && target === 'evento' ? 'bg-gray-200 rounded-xl shadow-md mx-auto max-w-eventos' : ''}`}>
             {!marketplace && <SectionTitle title={title} subtitle={subtitle} imgSrc={imgSrc} />}
 
-            <div className="relative max-w-screen-xl mx-auto flex flex-col md:flex-row gap-6 overflow-visible">
+            <div className="relative max-w-screen-xl mx-auto flex flex-col md:flex-row gap-6 overflow-hidden">
                 {!marketplace && target === 'evento' && (
                     <div className="w-full md:w-96 flex-shrink-0">
-                        <div className="bg-white rounded-xl shadow-lg p-4 border-l-4 border-blue-500 min-h-fit">
+                        <div className="bg-white rounded-xl shadow-lg p-4 border-l-4 border-gray-500 min-h-fit">
                             <div className="flex items-center mb-4">
-                                <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center mr-3">
+                                <div className="w-10 h-10 bg-gray-500 rounded-full flex items-center justify-center mr-3">
                                     <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
                                         <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
                                     </svg>
@@ -160,7 +160,7 @@ const ItemSection = ({ data, title, subtitle, target, imgSrc, marketplace }) => 
                     </div>
                 )}
 
-                <div className={`relative w-full ${!marketplace && target === 'evento' ? 'md-max-w-with-calendar' : ''} px-4 sm:px-6 md:px-10 overflow-visible`}>
+                <div className={`relative w-full ${!marketplace && target === 'evento' ? 'md-max-w-with-calendar' : ''} px-4 sm:px-6 md:px-10 overflow-hidden md:px-24`}>
                     {!marketplace && target === 'evento' && objetosFiltrados.length === 0 && (
                         <div className="max-w-screen-xl mx-auto bg-white border border-gray-300 rounded-lg p-4 text-center shadow-sm text-gray-700 font-medium mb-6">
                             No hay eventos para el día seleccionado. Te mostramos los próximos disponibles.
@@ -171,8 +171,9 @@ const ItemSection = ({ data, title, subtitle, target, imgSrc, marketplace }) => 
                         <>
                             {canScrollLeft && (
                                 <button
-                                    className="hidden md:flex absolute -left-5 top-1/2 -translate-y-1/2 z-10 bg-white p-2 rounded-full shadow-md"
+                                    className="hidden md:flex absolute left-8 top-1/2 -translate-y-1/2 z-30 bg-white p-3 rounded-full shadow-lg border-2 border-gray-200 hover:bg-gray-50 hover:border-blue-400 hover:shadow-xl transition-all duration-200 hover:scale-105"
                                     onClick={() => scroll(-1)}
+                                    aria-label="Scroll left"
                                 >
                                     <ChevronLeft size={24} />
                                 </button>
@@ -180,7 +181,7 @@ const ItemSection = ({ data, title, subtitle, target, imgSrc, marketplace }) => 
 
                             <div
                                 ref={scrollContainerRef}
-                                className={`slider-horizontal flex ${justifyCenter} space-x-4 px-4 sm:px-6 md:px-10 cursor-grab active:cursor-grabbing select-none`}
+                                className={`slider-horizontal flex ${justifyCenter} space-x-4 px-4 sm:px-6 md:px-10 cursor-grab active:cursor-grabbing select-none max-w-full`}
                             >
                                 {itemsToRender.map((item, index) => (
                                     <Link
@@ -204,8 +205,9 @@ const ItemSection = ({ data, title, subtitle, target, imgSrc, marketplace }) => 
 
                             {canScrollRight && (
                                 <button
-                                    className="hidden md:flex absolute -right-5 top-1/2 -translate-y-1/2 z-10 bg-white p-2 rounded-full shadow-md"
+                                    className="hidden md:flex absolute right-8 top-1/2 -translate-y-1/2 z-30 bg-white p-3 rounded-full shadow-lg border-2 border-gray-200 hover:bg-gray-50 hover:border-blue-400 hover:shadow-xl transition-all duration-200 hover:scale-105"
                                     onClick={() => scroll(1)}
+                                    aria-label="Scroll right"
                                 >
                                     <ChevronRight size={24} />
                                 </button>
