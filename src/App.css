@@ -303,6 +303,16 @@ footer .titulo {
   background-color: #e4e4e4;
 }
 
+/* Hide scrollbar for events specifically */
+.slider-horizontal.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.slider-horizontal.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 .sidebar-cerrar {
   background-color: #52565e;
 }

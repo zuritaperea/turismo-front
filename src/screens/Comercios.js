@@ -6,7 +6,7 @@ export default function ComerciosScreen() {
   const navigate = useNavigate();
 
   const target = "Comercio";
-  const title = "Comercios";
+  const title = "Balnearios";
 
   return (
     <ObjetosScreen target={target} navigation={navigate} objetoService={objetoService} title={title} />
