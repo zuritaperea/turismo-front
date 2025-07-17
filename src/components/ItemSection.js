@@ -181,8 +181,8 @@ const ItemSection = ({ data, title, subtitle, target, imgSrc, marketplace }) => 
 
                             <div
                                 ref={scrollContainerRef}
-                                className={`slider-horizontal flex ${justifyCenter} space-x-4 px-4 sm:px-6 md:px-10 cursor-grab active:cursor-grabbing select-none max-w-full ${!marketplace && target === 'evento' ? 'scrollbar-hide' : ''}`}
-                                style={!marketplace && target === 'evento' ? {
+                                className={`slider-horizontal flex ${justifyCenter} space-x-4 px-4 sm:px-6 md:px-10 cursor-grab active:cursor-grabbing select-none max-w-full ${!marketplace && (target === 'evento' || target === 'atractivo') ? 'scrollbar-hide' : ''}`}
+                                style={!marketplace && (target === 'evento' || target === 'atractivo') ? {
                                     msOverflowStyle: 'none',
                                     scrollbarWidth: 'none',
                                     WebkitScrollbar: { display: 'none' }
