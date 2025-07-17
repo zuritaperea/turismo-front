@@ -90,6 +90,8 @@ const FiltroSelect = ({
                     }
                     onChange={(selected) => onChange(selected, name)}
                     className="mt-1"
+                    menuPortalTarget={document.body}
+                    menuPosition="fixed"
                     styles={{
                         control: (base, state) => ({
                             ...base,
@@ -127,8 +129,13 @@ const FiltroSelect = ({
                             ...base,
                             backgroundColor: "white",
                             borderRadius: 12,
-                            boxShadow: "0 0 0 1px #d1d5db",
-                            zIndex: 50,
+                            boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+                            zIndex: 9999,
+                            border: "1px solid #d1d5db",
+                        }),
+                        menuPortal: (base) => ({
+                            ...base,
+                            zIndex: 9999,
                         }),
                         option: (base, state) => ({
                             ...base,
