@@ -48,6 +48,8 @@ import CambiarClaveConToken from "./screens/CambiarClaveConToken";
 import 'animate.css';
 import i18n from "./i18n";
 import NotFound from "./screens/NotFound";
+import OficinaScreen from "./screens/Oficina";
+import OficinasScreen from "./screens/Oficinas";
 
 
 function App() {
@@ -99,6 +101,8 @@ function App() {
               <Route path="/gastronomia/:id" element={<GastronomiaScreen />} />
               <Route path="/comercios" element={<ComerciosScreen />} />
               <Route path="/comercio/:id" element={<ComercioScreen />} />
+              <Route path="/oficinas" element={<OficinasScreen />} />
+              <Route path="/oficina/:id" element={<OficinaScreen />} />
               <Route path="/atractivo/:id" element={<AtractivoScreen />} />
               <Route path="/alojamiento/:id" element={<AlojamientoScreen />} />
               <Route path="/alojamientos" element={<AlojamientosScreen />} />
