@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Inicio from "./screens/Inicio";
 import Logout from "./screens/Logout";
@@ -55,9 +55,9 @@ import OficinasScreen from "./screens/Oficinas";
 function App() {
 
   useEffect(() => {
-    // Si no hay idioma guardado en localStorage, forzar español
+    // Si no hay idioma guardado en localStorage, forzar el idioma predeterminado
     if (!localStorage.getItem('i18nextLng')) {
-      i18n.changeLanguage('es');
+      i18n.changeLanguage('es'); /* TODO poner por defecto el idioma en el .env */
     }
   }, []);
 

@@ -62,6 +62,14 @@ checkBrowsers(paths.appPath, isInteractive)
     // Remove all content but keep the directory so that
     // if you're in it, you don't end up in Trash
     fs.emptyDirSync(paths.appBuild);
+    // Generamos sitemap
+    try {
+  console.log(chalk.cyan('🔄 Generando sitemap.xml...'));
+  require('child_process').execSync('node scripts/generar-sitemap.js', { stdio: 'inherit' });
+} catch (err) {
+  console.error(chalk.red('❌ Error al generar sitemap.xml:'), err);
+}
+
     // Merge with the public folder
     copyPublicFolder();
     // Start the webpack build
