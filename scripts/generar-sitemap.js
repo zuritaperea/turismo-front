@@ -229,12 +229,11 @@ async function generarHtml() {
         console.error('❌ Error al generar index.html:', error);
     }
 }
+generarHtml();
 
 generarRobotsTxt();
-
 
 generarSitemap();
 
 generarFavicons();
 
-generarHtml();
