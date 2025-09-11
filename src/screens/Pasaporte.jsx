@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
 import { Calendar, Users, Ticket, MapPinned, Hotel, Bus, ShoppingBag, Utensils } from "lucide-react";
 import { ConfigContext } from "../extras/ConfigContext";
-import BannerImagenFija from "../components/BannerImagenFija";
+import BannerImagenFija from "../components/BannerImagenFija"; //TODO cambiar a imagen dinámica
 import SeccionesSlider from "../components/SectionSlider";
 import Listado from "../components/Objetos/Listado";
 import Spinner from "../components/Spinner";

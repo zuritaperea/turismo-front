@@ -94,7 +94,7 @@ const Recupero = () => {
         <Row className="m-b-2 text-center sm:mt-10 mt-6">
           <Col>
             <div>
-              <Link to="/"><img className="logo m-auto" src={logoLogin} alt="Logo" /></Link>
+              <Link to="/"><img className="logo m-auto" src={logoLogin} alt="Logo" loading="lazy" /></Link>
             </div>
             <h1 className="text-2xl font-bold">¿Olvidaste tu contraseña?</h1>
             <h4 className="text-sm">No te preocupes enviaremos un correo electrónico para que la recuperes</h4>

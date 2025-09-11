@@ -27,7 +27,7 @@ const DirectAccessList = ({ items }) => {
               key={index}
               className="flex flex-col items-center text-center p-6"
             >
-              <img src={imageUrl} alt={item.title_text} className="w-20 h-20 mb-4" />
+              <img src={imageUrl} alt={item.title_text} className="w-20 h-20 mb-4" loading="lazy"/>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">{item.title_text}</h3>
               <p
                 className="text-gray-600 text-base mb-4"

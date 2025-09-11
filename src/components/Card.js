@@ -25,6 +25,7 @@ function Card({ imgSrc, category, title, description, tags, puntuacion, location
         <img
           src={imgSrc}
           alt={title}
+          loading="lazy"
           className="w-full h-[200px] min-h-[198px] object-cover"
           style={{ minHeight: '198px', maxHeight: '200px' }}
         />

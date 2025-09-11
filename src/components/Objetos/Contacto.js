@@ -17,7 +17,7 @@ const Contacto = ({ contactoData }) => {
       {contactoData.telefonos && contactoData.telefonos.length > 0 && (
         contactoData.telefonos.map((telefono, index) => (
           <div key={index} className="flex descripcion">
-            <img src={phoneIcon} className="mr-3 object-contain" alt="Teléfono" />
+            <img src={phoneIcon} className="mr-3 object-contain" alt="Teléfono" loading="lazy" />
             {telefono.type}: {telefono.contact_point}
           </div>
         ))
@@ -27,7 +27,7 @@ const Contacto = ({ contactoData }) => {
       {contactoData.correos_electronicos && contactoData.correos_electronicos.length > 0 && (
         contactoData.correos_electronicos.map((correo, index) => (
           <div key={index} className="flex descripcion">
-            <img src={mailIcon} className="mr-3 object-contain" alt="Correo" />
+            <img src={mailIcon} className="mr-3 object-contain" alt="Correo" loading="lazy" />
             {correo.type}: {correo.contact_point}
           </div>
         ))
@@ -36,7 +36,7 @@ const Contacto = ({ contactoData }) => {
       {/* Mostrar el sitio web */}
       {contactoData.url && (
         <div className="flex descripcion">
-          <img src={linkIcon} className="mr-3 object-contain" alt="Sitio web" />
+          <img src={linkIcon} className="mr-3 object-contain" alt="Sitio web" loading="lazy" />
           <a href={contactoData.url} target="_blank" rel="noopener noreferrer">
             {contactoData.url}
           </a>

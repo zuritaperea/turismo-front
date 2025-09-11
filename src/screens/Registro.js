@@ -172,7 +172,7 @@ const Registro = () => {
         <Row className="m-b-2 text-center sm:mt-10 mt-6">
           <Col>
             <div>
-              <img className="logo m-auto" src={logoLogin} alt="Logo" />
+              <img className="logo m-auto" src={logoLogin} alt="Logo" loading="lazy" />
             </div>
             <h1 className="text-2xl font-bold">Creá a tu cuenta</h1>
             <h4 className="text-sm">Por favor completá estos datos para continuar.</h4>

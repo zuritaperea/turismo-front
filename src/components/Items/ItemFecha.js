@@ -30,7 +30,7 @@ const Item = ({ item, onPress }) => {
     <div className={styles.item} onClick={onPress}>
       <div className={styles.listado}>
       <div>
-          <img src={item.image} alt={item.title} className={styles.image} />
+          <img src={item.image} alt={item.title} className={styles.image} loading="lazy"/>
         </div>
         <div className={styles.fecha}>
           <div className={styles.dia}>{dd}</div>

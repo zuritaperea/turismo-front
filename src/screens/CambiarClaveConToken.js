@@ -59,7 +59,7 @@ const CambiarClaveConToken = () => {
             <Row className="m-b-2 text-center sm:mt-10 mt-6">
                 <Col>
                     <div>
-                        <img className="logo m-auto" src={logoLogin} alt="Logo" />
+                        <img className="logo m-auto" src={logoLogin} alt="Logo" loading="lazy"/>
                     </div>
                     <h1 className="text-2xl font-bold mt-5">Cambiar contraseña</h1>
                 </Col>
