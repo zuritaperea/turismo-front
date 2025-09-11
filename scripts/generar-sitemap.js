@@ -2,7 +2,7 @@
 const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
-const sharp = require('sharp');
+const { Jimp } = require('jimp');
 require('dotenv').config();
 
 const API_BASE = process.env.REACT_APP_API_URL + process.env.REACT_APP_API_VERSION;
@@ -17,7 +17,24 @@ async function obtenerDatos(endpoint) {
         console.error(`Error obteniendo ${endpoint}`, err.message);
         return [];
     }
+} async function createCenteredImage(image, width, height) {
+    await image.contain({
+        w: width,
+        h: height,
+        align: Jimp.HORIZONTAL_ALIGN_CENTER,
+        valign: Jimp.VERTICAL_ALIGN_MIDDLE,
+    });
+
+    const canvas = await new Jimp({ width, height, color: 0x00000000 });
+
+    const x = Math.floor((width - image.bitmap.width) / 2);
+    const y = Math.floor((height - image.bitmap.height) / 2);
+
+    canvas.composite(image, x, y);
+
+    return canvas;
 }
+
 
 
 async function generarFavicons() {
@@ -41,31 +58,35 @@ async function generarFavicons() {
         const response = await axios.get(fullLogoUrl, { responseType: 'arraybuffer' });
         const buffer = Buffer.from(response.data);
 
-        // Crear carpetas si no existen
+        console.log('Logo descargado, generando favicons...');
+
+        // Crear la imagen desde buffer
+        const image = await Jimp.fromBuffer(buffer);
+        console.log('Imagen cargada en Jimp');
+
         if (!fs.existsSync('public')) fs.mkdirSync('public');
 
 
-        await sharp(buffer)
-            .resize(32, 32, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
-            .toFile('public/favicon-32x32.png');
+        const img32 = await createCenteredImage(image.clone(), 32, 32);
+        await img32.write('public/favicon-32x32.png');
 
-        await sharp(buffer)
-            .resize(16, 16, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
-            .toFile('public/favicon-16x16.png');
+        const img16 = await createCenteredImage(image.clone(), 16, 16);
+        await img16.write('public/favicon-16x16.png');
 
-        await sharp(buffer)
-            .resize(180, 180, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
-            .toFile('public/apple-touch-icon.png');
+        const img180 = await createCenteredImage(image.clone(), 180, 180);
+        await img180.write('public/apple-touch-icon.png');
 
-        // Generar favicon.ico usando png-to-ico a partir de 32x32 y 16x16
-        const png32Path = path.join('public', 'favicon-32x32.png');
-        const png16Path = path.join('public', 'favicon-16x16.png');
+        // Generar favicon.ico a partir de los png generados
+        const icoBuffer = await pngToIco([
+            path.join('public', 'favicon-16x16.png'),
+            path.join('public', 'favicon-32x32.png')
+        ]);
 
-        const icoBuffer = await pngToIco([png16Path, png32Path]);
         fs.writeFileSync(path.join('public', 'favicon.ico'), icoBuffer);
+
         console.log('✅ Favicons generados en /public');
     } catch (err) {
-        console.error('❌ Error al generar favicons:', err.message);
+        console.error('❌ Error al generar favicons:', err);
     }
 }
 
