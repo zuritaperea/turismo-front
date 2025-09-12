@@ -23,3 +23,9 @@ yarn-debug.log*
 yarn-error.log*
 .env
 deploy.sh
+
+/public/apple-touch-icon.png
+/public/favicon-16x16.png
+/public/favicon-32x32.png
+/public/favicon.ico
+/public/sitemap.xml

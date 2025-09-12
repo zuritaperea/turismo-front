@@ -165,8 +165,20 @@ async function generarHtml() {
         const config = configData?.attributes || {};
 
         const title = config.title || process.env.REACT_APP_DOCUMENT_TITLE || 'Sistema de información Túristica';
-        const description = config.description || 'Sistema de información turística';
+        const description = config.footer_description || 'Sistema de información turística';
+        const truncatedDescription = description.length > 160 ? description.slice(0, 160).trim() + '…' : description;
+        const fullUrl = process.env.PUBLIC_URL || 'http://localhost:3000';
+        const logo = typeof config?.logo === 'string' ? config.logo : '';
+        const image = logo || process.env.REACT_APP_IMAGE_DEFAULT;
         const metatags = process.env.REACT_APP_DEFAULT_KEYWORDS || '';
+        const jsonLd = {
+            "@context": "https://schema.org",
+            "@type": "TouristDestination",
+            "name": title,
+            "url": fullUrl,
+            "description": description,
+            "image": image
+        };
         const html = `<!DOCTYPE html>
 <html lang="en">
 
@@ -217,6 +229,20 @@ async function generarHtml() {
   <link rel="icon" type="image/png" sizes="16x16" href="%PUBLIC_URL%/favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="%PUBLIC_URL%/apple-touch-icon.png">
   <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+  <meta name="description" content=${truncatedDescription} />
+  <meta property="og:title" content=${title} />
+  <meta property="og:description" content=${truncatedDescription} />
+  <meta property="og:image" content=${image} />
+  <meta property="og:url" content=${fullUrl} />
+  <meta property="og:type" content="website" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="${fullUrl}" />
+  <meta property="twitter:title" content=${title} />
+  <meta property="twitter:description" content=${truncatedDescription} />
+  <meta property="twitter:image" content=${image} />
+  <script type="application/ld+json">
+    ${JSON.stringify(jsonLd)}
+  </script>
 </head>
 
 <body class="fondo-gris">
