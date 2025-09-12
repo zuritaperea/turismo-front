@@ -29,3 +29,7 @@ deploy.sh
 /public/favicon-32x32.png
 /public/favicon.ico
 /public/sitemap.xml
+
+index.html
+robots.txt
+sitemap.xml
