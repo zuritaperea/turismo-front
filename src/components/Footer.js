@@ -25,7 +25,7 @@ export default function Footer() {
   }, [config]);
 
   return (
-    <footer className="hidden md:block">
+    <footer>
       {/* Sección superior del footer */}
       <div id="menu-footer" className="bg-white mt-10 py-5 px-10 mx-auto">
         <p className="descripcion text-center sm:mx-10 my-7 text-sm text-gray-600 mb-10">
