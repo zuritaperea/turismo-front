@@ -229,17 +229,17 @@ async function generarHtml() {
   <link rel="icon" type="image/png" sizes="16x16" href="%PUBLIC_URL%/favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="%PUBLIC_URL%/apple-touch-icon.png">
   <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
-  <meta name="description" content=${truncatedDescription} />
-  <meta property="og:title" content=${title} />
-  <meta property="og:description" content=${truncatedDescription} />
-  <meta property="og:image" content=${image} />
-  <meta property="og:url" content=${fullUrl} />
+  <meta name="description" content="${truncatedDescription}" />
+  <meta property="og:title" content="${title}" />
+  <meta property="og:description" content="${truncatedDescription}" />
+  <meta property="og:image" content="${image}" />
+  <meta property="og:url" content="${fullUrl}" />
   <meta property="og:type" content="website" />
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="${fullUrl}" />
-  <meta property="twitter:title" content=${title} />
-  <meta property="twitter:description" content=${truncatedDescription} />
-  <meta property="twitter:image" content=${image} />
+  <meta property="twitter:title" content="${title}" />
+  <meta property="twitter:description" content="${truncatedDescription}" />
+  <meta property="twitter:image" content="${image}" />
   <script type="application/ld+json">
     ${JSON.stringify(jsonLd)}
   </script>
