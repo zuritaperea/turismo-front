@@ -40,9 +40,9 @@ export default function Footer() {
           <div className="flex flex-wrap justify-center gap-8">
             {config.footer_has_menu && footerItems.filter(item => {
               if (item.requires_authentication) {
-                return user !== null; 
+                return user !== null;
               }
-              return true; 
+              return true;
             }).map(item => (
               <div key={item.id}>
                 <h3 className="titulo text-center">
@@ -59,6 +59,17 @@ export default function Footer() {
           <SocialLinks redes={config.redes_sociales} />
         </div>
       </div>
+      {config?.telefonos?.find(t => t.type === "Whatsapp") && (
+        <a
+          href={`https://wa.me/${config.telefonos.find(t => t.type === "Whatsapp").contact_point}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          title="Chateá con nosotros por WhatsApp"
+          className="fixed bottom-20 right-5 w-12 h-12 bg-green-500 text-white rounded-full flex items-center justify-center z-50 shadow-md transform hover:scale-110 transition duration-300"
+        >
+          <i className="fa-brands fa-whatsapp" />
+        </a>
+      )}
     </footer>
   );
 }
