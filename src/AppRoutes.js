@@ -41,7 +41,8 @@ import CambiarClaveConToken from "./screens/CambiarClaveConToken";
 import NotFound from "./screens/NotFound";
 import OficinaScreen from "./screens/Oficina";
 import OficinasScreen from "./screens/Oficinas";
-
+import ExperienciaScreen from "./screens/Experiencia";
+import ExperenciasScreen from "./screens/Experiencias";
 const IS_PROD = process.env.REACT_APP_STATUS === 'production';
 
 const AppRoutes = () => {
@@ -100,6 +101,8 @@ const AppRoutes = () => {
             <Route path="/comprobante-reserva" element={<ComprobanteReserva />} />
             <Route path="/mis-reservas" element={<MisReservas />} />
             <Route path="/mis-evidencias" element={<MisEvidencias />} />
+            <Route path="/experiencia/:id" element={<ExperienciaScreen />} />
+            <Route path="/experiencias" element={<ExperenciasScreen />} />
 
             <Route path="/paginas" element={<Paginas />} />
             <Route path="/page/:slug" element={<Pagina />} />
