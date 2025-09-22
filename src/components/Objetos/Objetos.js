@@ -41,8 +41,10 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
         circuito: 'image_bg_circuito',
         comercio: 'image_bg_comercio',
         oficina: 'image_bg_oficina',
-                //TODO experiencias: 'image_bg_oficina',
-
+        emprendedor: 'image_bg_emprendedor',
+        balenario: 'image_bg_balenario',
+        experiencia: 'image_bg_experiencia',
+        fiestapopular: 'image_bg_fiestapopular',
       };
 
       const fieldKey = fieldMap[target.toLowerCase()];
