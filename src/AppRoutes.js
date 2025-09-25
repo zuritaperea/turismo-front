@@ -43,6 +43,12 @@ import OficinaScreen from "./screens/Oficina";
 import OficinasScreen from "./screens/Oficinas";
 import ExperienciaScreen from "./screens/Experiencia";
 import ExperenciasScreen from "./screens/Experiencias";
+import BalenariosScreen from "./screens/Balnearios";
+import BalnearioScreen from "./screens/Balneario";
+import EmprendedorScreen from "./screens/Emprendedor";
+import EmprendedoresScreen from "./screens/Emprendedores";
+import FiestaPopularScreen from "./screens/FiestaPopular";
+import FiestasPopularesScreen from "./screens/FiestasPopulares";
 const IS_PROD = process.env.REACT_APP_STATUS === 'production';
 
 const AppRoutes = () => {
@@ -103,7 +109,12 @@ const AppRoutes = () => {
             <Route path="/mis-evidencias" element={<MisEvidencias />} />
             <Route path="/experiencia/:id" element={<ExperienciaScreen />} />
             <Route path="/experiencias" element={<ExperenciasScreen />} />
-
+            <Route path="/balneario/:id" element={<BalnearioScreen />} />
+            <Route path="/balnearios" element={<BalenariosScreen />} />
+            <Route path="/emprendedor/:id" element={<EmprendedorScreen />} />
+            <Route path="/emprendedores" element={<EmprendedoresScreen />} />
+            <Route path="/fiestapopular/:id" element={<FiestaPopularScreen />} />
+            <Route path="/fiestaspopulares" element={<FiestasPopularesScreen />} />
             <Route path="/paginas" element={<Paginas />} />
             <Route path="/page/:slug" element={<Pagina />} />
             <Route path="/reserva/:id" element={<Reserva />} />
