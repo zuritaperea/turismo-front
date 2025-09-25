@@ -43,7 +43,7 @@ import OficinaScreen from "./screens/Oficina";
 import OficinasScreen from "./screens/Oficinas";
 import ExperienciaScreen from "./screens/Experiencia";
 import ExperenciasScreen from "./screens/Experiencias";
-import BalenariosScreen from "./screens/Balnearios";
+import BalneariosScreen from "./screens/Balnearios";
 import BalnearioScreen from "./screens/Balneario";
 import EmprendedorScreen from "./screens/Emprendedor";
 import EmprendedoresScreen from "./screens/Emprendedores";
@@ -108,7 +108,7 @@ const AppRoutes = () => {
             <Route path="/experiencia/:id" element={<ExperienciaScreen />} />
             <Route path="/experiencias" element={<ExperenciasScreen />} />
             <Route path="/balneario/:id" element={<BalnearioScreen />} />
-            <Route path="/balnearios" element={<BalenariosScreen />} />
+            <Route path="/balnearios" element={<BalneariosScreen />} />
             <Route path="/emprendedor/:id" element={<EmprendedorScreen />} />
             <Route path="/emprendedores" element={<EmprendedoresScreen />} />
             <Route path="/fiestapopular/:id" element={<FiestaPopularScreen />} />
