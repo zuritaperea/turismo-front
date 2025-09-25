@@ -1,6 +1,6 @@
 import React from "react";
 
-const Tags = ({ elementos, className= '' }) => {
+const Tags = ({ elementos, className = '' }) => {
   return (
     <div className="descripcion flex flex-wrap gap-2">
       {elementos?.map((item, i) => (
@@ -8,7 +8,7 @@ const Tags = ({ elementos, className= '' }) => {
           key={i}
           className={`bg-principal text-white text-sm font-medium px-3 py-1 rounded-full ${className}`}
         >
-          {item.name}
+          {typeof item === 'string' ? item : item.name}
         </span>
       ))}
     </div>

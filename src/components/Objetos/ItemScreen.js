@@ -174,6 +174,15 @@ function ItemScreen({ tipoObjeto }) {
               descripcion={item.attributes.description}
             />
           </div>
+          {item.attributes.location && (
+            <div className="animate__fadeIn animate__delay-4s">
+              <SeccionConTitulo
+                titulo={t("common.location")}
+                contenido={item.attributes.location}
+              />
+            </div>
+          )}
+
           {item.attributes.contenidos && item.attributes.contenidos.length > 1 && (
             <div className="w-full max-w-[1376px] mx-auto my-10 mb-20  animate__zoomIn animate__delay-1s">
               <Carousel
@@ -239,10 +248,91 @@ function ItemScreen({ tipoObjeto }) {
           )}
 
           {item.attributes.street_address && (
-            <div className=" animate__fadeIn animate__delay-4s">
+            <div className="animate__fadeIn animate__delay-4s">
               <SeccionConTitulo
                 titulo={t("common.direccion")}
                 contenido={item.attributes.street_address}
+              />
+            </div>
+          )}
+
+          {item.attributes.distance_beach && (
+            <div className="animate__fadeIn animate__delay-4s">
+              <SeccionConTitulo
+                titulo={t("common.distance_beach")}
+                contenido={item.attributes.distance_beach}
+              />
+            </div>
+          )}
+
+          {item.attributes.duration && (
+            <div className="animate__fadeIn animate__delay-4s">
+              <SeccionConTitulo
+                titulo={t("common.duration")}
+                contenido={item.attributes.duration}
+              />
+            </div>
+          )}
+
+          {item.attributes.departures && (
+            <div className="animate__fadeIn animate__delay-4s">
+              <SeccionConTitulo
+                titulo={t("common.departures")}
+                contenido={item.attributes.departures}
+              />
+            </div>
+          )}
+
+          {item.attributes.guided && (
+            <div className="animate__fadeIn animate__delay-4s">
+              <SeccionConTitulo
+                titulo={t("common.guided")}
+                contenido={t("common.yes")}
+              />
+            </div>
+          )}
+
+          {item.attributes.accessible && (
+            <div className="animate__fadeIn animate__delay-4s">
+              <SeccionConTitulo
+                titulo={t("common.accessible")}
+                contenido={t("common.yes")}
+              />
+            </div>
+          )}
+
+          {item.attributes.allows_pets && (
+            <div className="animate__fadeIn animate__delay-4s">
+              <SeccionConTitulo
+                titulo={t("common.allows_pets")}
+                contenido={t("common.yes")}
+              />
+            </div>
+          )}
+
+          {item.attributes.includes && (
+            <div className="animate__fadeIn animate__delay-4s">
+              <SeccionConTitulo
+                titulo={t("common.includes")}
+                contenido={item.attributes.includes}
+              />
+            </div>
+          )}
+
+          {item.attributes.does_not_include && (
+            <div className="animate__fadeIn animate__delay-4s">
+              <SeccionConTitulo
+                titulo={t("common.does_not_include")}
+                contenido={item.attributes.does_not_include}
+              />
+            </div>
+          )}
+
+          {item.attributes.recommendations && (
+            <div className="animate__fadeIn animate__delay-4s">
+              <SeccionConTitulo
+                titulo={t("common.recommendations")}
+                contenido={item.attributes.recommendations}
               />
             </div>
           )}
