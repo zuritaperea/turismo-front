@@ -6,8 +6,8 @@ export default function GastronomiasScreen() {
   const navigate = useNavigate();
 
   const target = "Gastronomia";
-  const title = "Gastronomía";
-
+  const { t } = useTranslation();
+  const title = t("common.gastronomias");
   return (
     <ObjetosScreen target={target} navigation={navigate} objetoService={objetoService} title={title} />
   );

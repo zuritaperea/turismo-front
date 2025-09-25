@@ -8,7 +8,7 @@ export default function ComerciosScreen() {
   const { t } = useTranslation();
 
   const target = "Comercio";
-  const title = t(common.comercios);
+  const title = t("common.comercios");
 
   return (
     <ObjetosScreen target={target} navigation={navigate} objetoService={objetoService} title={title} />
