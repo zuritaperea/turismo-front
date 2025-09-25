@@ -70,9 +70,7 @@ const AppRoutes = () => {
             <Route path="/perfil" element={<Perfil />} />
             <Route path="/logout" element={<Logout />} />
             <Route path="/destino/:id" element={<DestinoScreen />} />
-            <Route path="/destino/:id/:filtros" element={<DestinoScreen />} />
             <Route path="/destinos" element={<DestinosScreen />} />
-            <Route path="/destinos/:id" element={<DestinosScreen />} />
             <Route path="/busqueda/:nombre" element={<BusquedaScreen />} />
             <Route path="/busqueda" element={<BusquedaScreen />} />
             <Route path="/atractivo" element={<AtractivoScreen />} />

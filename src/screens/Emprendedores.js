@@ -1,4 +1,4 @@
-import objetoService from "../axios/services/atractivo";
+import objetoService from "../axios/services/emprendedor";
 import ObjetosScreen from "../components/Objetos/Objetos";
 import { useNavigate } from 'react-router-dom';
 
