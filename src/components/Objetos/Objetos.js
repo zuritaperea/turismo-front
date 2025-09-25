@@ -46,6 +46,7 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
         experiencia: 'image_bg_experiencia',
         fiestapopular: 'image_bg_fiestapopular',
         puntointeres: 'image_bg_puntointeres',
+        destino: 'image_bg_destino',
       };
 
       const fieldKey = fieldMap[target.toLowerCase()];
