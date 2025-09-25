@@ -66,10 +66,13 @@ export default function Header() {
   };
 
   const toggleSubMenu = (id) => {
-    setSubMenuOpen((prev) => ({
-      ...prev,
-      [id]: !prev[id]
-    }));
+    setUserMenuOpen(false); // cerrar menu usuario al abrir submenu
+    setSubMenuOpen((currentId) => (currentId === id ? null : id));
+  };
+
+  const toggleUserMenu = () => {
+    setSubMenuOpen(null); // cerrar todos los submenus
+    setUserMenuOpen((prev) => !prev);
   };
 
   return (
@@ -98,10 +101,10 @@ export default function Header() {
                       className="flex items-center gap-1 font-light cursor-pointer"
                     >
                       {item.name}
-                      <ChevronDown size={16} className={`text-gray-500 mt-0.5 transition-transform ${subMenuOpen[item.id] ? 'rotate-180' : ''}`} />
+                      <ChevronDown size={16} className={`text-gray-500 mt-0.5 transition-transform ${subMenuOpen === item.id ? 'rotate-180' : ''}`} />
                     </a>
 
-                    {subMenuOpen[item.id] && (
+                    {subMenuOpen === item.id && (
                       <div className="absolute left-0 top-full mt-1 w-48 bg-white shadow-lg rounded-lg py-2 z-50">
                         {item.children.map(child => (
                           <MenuLink
@@ -109,7 +112,7 @@ export default function Header() {
                             item={child}
                             onClick={() => {
                               setMenuOpen(false);
-                              setSubMenuOpen({});
+                              setSubMenuOpen(null);
                             }}
                             isActive={location.pathname === child.url}
                             className="block px-4 py-2 text-gray-700 hover:bg-gray-200 font-medium"
@@ -133,7 +136,7 @@ export default function Header() {
             ))}
             {user ? (
               <div className="relative">
-                <button onClick={() => setUserMenuOpen(!userMenuOpen)} className="flex items-center">
+                <button onClick={toggleUserMenu} className="flex items-center">
                   <User size={24} className="text-gray-700" />
                 </button>
 
@@ -209,7 +212,7 @@ export default function Header() {
                         <button onClick={() => toggleSubMenu(item.id)} className="p-2">
                           <ChevronDown
                             size={20}
-                            className={`text-gray-700 transition-transform ${subMenuOpen[item.id] ? 'rotate-180' : ''
+                            className={`text-gray-700 transition-transform ${subMenuOpen === item.id ? 'rotate-180' : ''
                               }`}
                           />
                         </button>
@@ -222,7 +225,7 @@ export default function Header() {
                       />
                     )}
                   </div>
-                  {item.children && item.children.length > 0 && subMenuOpen[item.id] && (
+                  {item.children && item.children.length > 0 && subMenuOpen === item.id && (
                     <div className="ml-4 flex flex-col gap-2 mt-2">
                       {item.children.map(child => (
                         <MenuLink
@@ -241,7 +244,7 @@ export default function Header() {
                 <>
                   <Link
                     to="/perfil"
-                    className="flex items-center gap-2"
+                    className="flex w-full gap-2"
                     onClick={() => setMenuOpen(false)}
                   >
                     <User size={24} className="text-gray-700" />
@@ -250,7 +253,7 @@ export default function Header() {
                   {permisos.marketplace && (
                     <Link
                       to="/mis-reservas"
-                      className="flex items-center gap-2"
+                      className="flex w-full gap-2"
                       onClick={() => setMenuOpen(false)}
                     >
                       <Calendar size={24} className="text-gray-700" />
@@ -260,7 +263,7 @@ export default function Header() {
                   {permisos.modulo_sostenibilidad && (
                     <Link
                       to="/perfil-ambiental"
-                      className="flex items-center gap-2"
+                      className="flex w-full gap-2"
                       onClick={() => setMenuOpen(false)}
                     >
                       <Leaf size={24} className="text-green-600" />
@@ -270,18 +273,20 @@ export default function Header() {
                   <button
                     onClick={() => { setMenuOpen(false); handleLogout(); }}
                     title={t("perfil.cerrar_sesion")}
-                    className="flex items-center gap-2"
+                    className="flex w-full gap-2"
                   >
                     <LogOut size={24} className="text-gray-700" />
                     <span>{t("perfil.cerrar_sesion")}</span>
                   </button>
                 </>
               ) : (
-                <Link to="/login" title={t("perfil.iniciar_sesion")} className="flex items-center gap-2" onClick={() => setMenuOpen(false)}>
+                <Link to="/login" title={t("perfil.iniciar_sesion")}
+                className="flex w-full gap-2"
+                onClick={() => setMenuOpen(false)}>
                   <span>{t("perfil.iniciar_sesion")}</span>
                 </Link>
               )}
-              <div className="flex items-center">
+              <div className="flex ">
                 <BotonTraductor />{t("perfil.traducir")}
               </div>
               <div className="flex justify-center mt-4">
