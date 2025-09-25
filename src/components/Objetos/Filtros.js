@@ -158,6 +158,23 @@ const Filtros = ({ objetoService, setObjetosFiltrados, target }) => {
         }
     };
 
+    const hayFiltrosAvanzados = () => {
+        if (target === "Circuito") {
+            return constantes.tipo_turismo?.length > 0;
+        }
+    
+        if (target === "Atractivo") {
+            return subtipoAtractivos?.length > 0 || servicios?.length > 0 || actividades?.length > 0;
+        }
+    
+        if (target === "Gastronomia") {
+            return constantes.tipo_restaurante?.length > 0;
+        }
+    
+        return false;
+    };
+
+    
     return (
         <div className="w-full px-4">
             <div
@@ -208,7 +225,7 @@ const Filtros = ({ objetoService, setObjetosFiltrados, target }) => {
                     <FiltroSelect className="w-full lg:w-auto" name="type_commerce" options={constantes.tipo_comercio}
                         selected={filters.type_commerce} onChange={handleFilterChange} />
                 )}
-                {target !== "Evento" && target !== "Comercio" && target !== "Alojamiento" && (
+                {target !== "Evento" && target !== "Comercio" && target !== "Alojamiento" && hayFiltrosAvanzados() && (
                     <button
                         onClick={() => setShowModal(true)}
                         className="flex items-center bg-white rounded-full px-4 py-2 text-gray-700 hover:bg-gray-100 transition w-full lg:w-auto"
