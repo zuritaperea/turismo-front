@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import objetoService from "../axios/services/gastronomia";
 import ObjetosScreen from "../components/Objetos/Objetos";
 import { useNavigate } from 'react-router-dom';
