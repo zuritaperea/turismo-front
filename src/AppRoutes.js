@@ -87,7 +87,7 @@ const AppRoutes = () => {
             <Route path="/alojamientos" element={<AlojamientosScreen />} />
             <Route path="/puntointeres/:id" element={<PuntoInteresScreen />} />
             <Route path="/puntointeres" element={<PuntoInteresScreen />} />
-            <Route path="/puntosinteres/:id" element={<PuntosInteres />} />
+            <Route path="/punto-interes/:id" element={<PuntosInteres />} />
             <Route path="/puntosinteres" element={<PuntosInteres />} />
             <Route path="/circuito/:id" element={<CircuitoScreen />} />
             <Route path="/circuitos" element={<CircuitosScreen />} />
