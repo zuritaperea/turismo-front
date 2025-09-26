@@ -16,10 +16,13 @@ const obtenerDatos = async (tipo, id) => {
     throw new Error('Hubo un error al cargar los datos');
   }
 };
-
-const obtenerTodos = async (tipo) => {
+const obtenerTodos = async (tipo, destino) => {
   try {
-    const response = await api.get(`${process.env.REACT_APP_API_URL}${process.env.REACT_APP_API_VERSION}/${tipo}/?ordering=name`);
+    let url = `${process.env.REACT_APP_API_URL}${process.env.REACT_APP_API_VERSION}/${tipo}/?ordering=name`;
+    if (destino !== undefined && destino !== null) {
+      url += `&destino=${destino}`;
+    }
+    const response = await api.get(url);
     return response.data.data.map((obj) => ({
       id: obj.id,
       title: obj.attributes.name,

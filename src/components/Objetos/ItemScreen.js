@@ -26,6 +26,7 @@ import TablaPuntosCircuito from './TablaPuntosCircuito.js';
 import { useTranslation } from 'react-i18next';
 import { useSeoConfig } from '../../extras/useSeoConfig.js';
 import SEOHelmet from '../SEOHelmet.js';
+import RecomendacionesPorDestino from './RecomendacionesPorDestino.js';
 
 const toLocalMidnight = (isoString) => {
   const utcDate = new Date(isoString);
@@ -358,6 +359,13 @@ function ItemScreen({ tipoObjeto }) {
               ]}
             />
           )}
+
+          {tipoObjeto === "destino" && (
+            <div className="animate__fadeInUp animate__delay-6s">
+              <RecomendacionesPorDestino destinoId={item.id} />
+            </div>
+          )}
+
           <div className=" animate__fadeIn animate__delay-6s">
             <ObjetoOpinion
               objeto={{
