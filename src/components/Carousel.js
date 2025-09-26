@@ -32,6 +32,33 @@ function Carousel({ images, detail = false, imagePrincipalUrl = null }) {
     }
   };
 
+  const renderMedia = (media, index, isVideo) => {
+    if (isVideo) {
+      return (
+        <video
+          ref={(el) => videoRefs.current[index] = el}
+          muted
+          playsInline
+          className="w-full max-h-[436px] object-cover mx-auto rounded-lg"
+          style={{ height: '436px', marginBottom: '1rem', borderRadius: '1rem' }}
+        >
+          <source src={media.file} type={`video/${media.file.split('.').pop()}`} />
+          Tu navegador no soporta el video.
+        </video>
+      );
+    } else {
+      return (
+        <img
+          className="w-full max-h-[436px] object-cover mx-auto rounded-lg"
+          style={{ height: '436px', marginBottom: '1rem', borderRadius: '1rem' }}
+          src={media.file}
+          alt={media.title}
+        />
+      )
+    }
+  };
+
+
   return (
     <div
       className={`relative w-full mx-0 sm:mx-auto mt-0 sm:mt-5 ${detail ? 'max-w-[1600px] px-0 sm:px-4 md:px-10' : 'max-w-[1376px] px-0 sm:px-10 md:px-10'}`}
@@ -53,26 +80,13 @@ function Carousel({ images, detail = false, imagePrincipalUrl = null }) {
           const isVideo = media.file.match(/\.(mp4|webm|ogg)$/);
           return (
             <SwiperSlide key={index} className="rounded-lg overflow-hidden">
-              {isVideo ? (
-                <video
-                  ref={(el) => videoRefs.current[index] = el}
-                  muted
-                  playsInline
-                  className="w-full max-h-[436px] object-cover mx-auto rounded-lg"
-                  style={{height: '436px', marginBottom: '1rem', borderRadius: '1rem' }}
-                >
-                  <source src={media.file} type={`video/${media.file.split('.').pop()}`} />
-                  Tu navegador no soporta el video.
-                </video>
+              {media.url ? (
+                <a href={media.url} target="_blank" rel="noopener noreferrer">
+                  {renderMedia(media, index, isVideo)}
+                </a>
               ) : (
-                <img
-                  className="w-full max-h-[436px] object-cover mx-auto rounded-lg"
-                  style={{height: '436px', marginBottom: '1rem', borderRadius: '1rem' }}
-                  src={media.file}
-                  alt={media.title}
-                />
-              )}
-            </SwiperSlide>
+                renderMedia(media, index, isVideo)
+              )}            </SwiperSlide>
           );
         })}
       </Swiper>
