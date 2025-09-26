@@ -73,7 +73,7 @@ function Carousel({ images, detail = false, imagePrincipalUrl = null }) {
         breakpoints={{
           0: { slidesPerView: 1 },
           640: { slidesPerView: detail && filteredImages.length > 1 ? 2 : 1 },
-          800: { slidesPerView: detail && filteredImages.length > 2 ? 3 : 1 }
+          800: { slidesPerView: detail && filteredImages.length > 1 ? Math.min(filteredImages.length, 3) : 1 },
         }}
       >
         {filteredImages.map((media, index) => {

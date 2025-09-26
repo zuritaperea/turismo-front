@@ -1,4 +1,5 @@
-import objetoService from "../axios/services/evento";
+import { useTranslation } from "react-i18next";
+import objetoService from "../axios/services/destino";
 import ObjetosScreen from "../components/Objetos/Objetos";
 import { useNavigate } from 'react-router-dom';
 
@@ -6,8 +7,8 @@ export default function DestinosScreen() {
   const navigate = useNavigate();
 
   const target = "Destino";
-  const title = "Destinos";
-
+  const { t } = useTranslation();
+  const title = t("common.destinos");
   return (
     <ObjetosScreen target={target} navigation={navigate} objetoService={objetoService} title={title} />
   );

@@ -43,6 +43,12 @@ import OficinaScreen from "./screens/Oficina";
 import OficinasScreen from "./screens/Oficinas";
 import ExperienciaScreen from "./screens/Experiencia";
 import ExperenciasScreen from "./screens/Experiencias";
+import BalneariosScreen from "./screens/Balnearios";
+import BalnearioScreen from "./screens/Balneario";
+import EmprendedorScreen from "./screens/Emprendedor";
+import EmprendedoresScreen from "./screens/Emprendedores";
+import FiestaPopularScreen from "./screens/FiestaPopular";
+import FiestasPopularesScreen from "./screens/FiestasPopulares";
 const IS_PROD = process.env.REACT_APP_STATUS === 'production';
 
 const AppRoutes = () => {
@@ -64,9 +70,7 @@ const AppRoutes = () => {
             <Route path="/perfil" element={<Perfil />} />
             <Route path="/logout" element={<Logout />} />
             <Route path="/destino/:id" element={<DestinoScreen />} />
-            <Route path="/destino/:id/:filtros" element={<DestinoScreen />} />
             <Route path="/destinos" element={<DestinosScreen />} />
-            <Route path="/destinos/:id" element={<DestinosScreen />} />
             <Route path="/busqueda/:nombre" element={<BusquedaScreen />} />
             <Route path="/busqueda" element={<BusquedaScreen />} />
             <Route path="/atractivo" element={<AtractivoScreen />} />
@@ -83,7 +87,7 @@ const AppRoutes = () => {
             <Route path="/alojamientos" element={<AlojamientosScreen />} />
             <Route path="/puntointeres/:id" element={<PuntoInteresScreen />} />
             <Route path="/puntointeres" element={<PuntoInteresScreen />} />
-            <Route path="/puntosinteres/:id" element={<PuntosInteres />} />
+            <Route path="/punto-interes/:id" element={<PuntosInteres />} />
             <Route path="/puntosinteres" element={<PuntosInteres />} />
             <Route path="/circuito/:id" element={<CircuitoScreen />} />
             <Route path="/circuitos" element={<CircuitosScreen />} />
@@ -103,7 +107,12 @@ const AppRoutes = () => {
             <Route path="/mis-evidencias" element={<MisEvidencias />} />
             <Route path="/experiencia/:id" element={<ExperienciaScreen />} />
             <Route path="/experiencias" element={<ExperenciasScreen />} />
-
+            <Route path="/balneario/:id" element={<BalnearioScreen />} />
+            <Route path="/balnearios" element={<BalneariosScreen />} />
+            <Route path="/emprendedor/:id" element={<EmprendedorScreen />} />
+            <Route path="/emprendedores" element={<EmprendedoresScreen />} />
+            <Route path="/fiestapopular/:id" element={<FiestaPopularScreen />} />
+            <Route path="/fiestaspopulares" element={<FiestasPopularesScreen />} />
             <Route path="/paginas" element={<Paginas />} />
             <Route path="/page/:slug" element={<Pagina />} />
             <Route path="/reserva/:id" element={<Reserva />} />

@@ -3,7 +3,7 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import logo from '../assets/img/logomark.png';
 import { ConfigContext } from '../extras/ConfigContext';
 import { AuthContext } from "./AuthContext";
-import { Menu, X, LogIn, LogOut, User, Leaf, Calendar } from 'lucide-react';
+import { Menu, X, LogIn, LogOut, User, Leaf, Calendar, ChevronDown } from 'lucide-react';
 import MenuLink from "./MenuLink";
 import BotonTraductor from "./BotonTraductor";
 import SocialLinks from "./SocialLinks";
@@ -13,13 +13,14 @@ export default function Header() {
   const [personaDenominacion, setPersonaDenominacion] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [subMenuOpen, setSubMenuOpen] = useState({});
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const [headerLogo, setHeaderLogo] = useState(logo);
   const [headerTitle, setHeaderTitle] = useState('Sistema de Turismo');
   const config = useContext(ConfigContext);
-  const [menuItems, setMenuItems] = useState([])
+  const [menuItems, setMenuItems] = useState([]);
   const isHomePage = location.pathname === "/" || location.pathname === "/inicio";
   const [scrolled, setScrolled] = useState(false);
   const { t } = useTranslation();
@@ -28,6 +29,7 @@ export default function Header() {
     marketplace: config?.marketplace || false,
     modulo_sostenibilidad: config?.modulo_sostenibilidad || false
   }), [config]);
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 10);
@@ -45,8 +47,6 @@ export default function Header() {
     }
   }, [config]);
 
-
-
   useEffect(() => {
     if (user?.profile?.length > 0) {
       const persona = user.profile.find(p => p.type === "Persona");
@@ -62,7 +62,17 @@ export default function Header() {
 
   const handleLogout = () => {
     logout();
-    navigate("/"); // Redirige al inicio después del logout
+    navigate("/");
+  };
+
+  const toggleSubMenu = (id) => {
+    setUserMenuOpen(false); // cerrar menu usuario al abrir submenu
+    setSubMenuOpen((currentId) => (currentId === id ? null : id));
+  };
+
+  const toggleUserMenu = () => {
+    setSubMenuOpen(null); // cerrar todos los submenus
+    setUserMenuOpen((prev) => !prev);
   };
 
   return (
@@ -80,21 +90,53 @@ export default function Header() {
 
           <nav className="hidden md:flex gap-6 items-center">
             {menuItems.filter(item => {
-              if (item.requires_authentication) {
-                return user !== null;
-              }
-              return true; 
+              if (item.requires_authentication) return user !== null;
+              return true;
             }).map(item => (
-              <MenuLink
-                key={item.id}
-                item={item}
-                onClick={() => setMenuOpen(false)}
-                isActive={location.pathname === item.url}
-              />
+              <div key={item.id} className="relative">
+                {item.children && item.children.length > 0 ? (
+                  <>
+                    <a
+                      onClick={() => toggleSubMenu(item.id)}
+                      className="flex items-center gap-1 font-light cursor-pointer"
+                    >
+                      {item.name}
+                      <ChevronDown size={16} className={`text-gray-500 mt-0.5 transition-transform ${subMenuOpen === item.id ? 'rotate-180' : ''}`} />
+                    </a>
+
+                    {subMenuOpen === item.id && (
+                      <div className="absolute left-0 top-full mt-1 w-48 bg-white shadow-lg rounded-lg py-2 z-50">
+                        {item.children.map(child => (
+                          <MenuLink
+                            key={child.id}
+                            item={child}
+                            onClick={() => {
+                              setMenuOpen(false);
+                              setSubMenuOpen(null);
+                            }}
+                            isActive={location.pathname === child.url}
+                            className="block px-4 py-2 text-gray-700 hover:bg-gray-200 font-medium"
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <MenuLink
+                    item={item}
+                    onClick={() => setMenuOpen(false)}
+                    isActive={location.pathname === item.url}
+                  />
+                )}
+              </div>
+
+
+
+
             ))}
             {user ? (
               <div className="relative">
-                <button onClick={() => setUserMenuOpen(!userMenuOpen)} className="flex items-center">
+                <button onClick={toggleUserMenu} className="flex items-center">
                   <User size={24} className="text-gray-700" />
                 </button>
 
@@ -139,7 +181,6 @@ export default function Header() {
             )}
             <BotonTraductor />
             <SocialLinks header={true} redes={config?.redes_sociales || []} />
-
           </nav>
 
           <div className="md:hidden flex items-center gap-4">
@@ -149,66 +190,105 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Menú desplegable móvil */}
         {menuOpen && (
           <div className="md:hidden absolute top-16 left-0 w-full bg-white shadow-md p-4 transition-all duration-300 z-50">
             <nav className="flex flex-col gap-4 items-center">
               {menuItems.filter(item => {
                 if (item.requires_authentication) {
-                  return user !== null; // solo si hay usuario
+                  return user !== null;
                 }
-                return true; // siempre muestra si no requiere auth
+                return true;
               }).map(item => (
-                <MenuLink
-                  key={item.id}
-                  item={item}
-                  onClick={() => setMenuOpen(false)}
-                  isActive={location.pathname === item.url}
-                />
+                <div key={item.id} className="w-full">
+                  <div className="flex items-center justify-between">
+                    {item.children && item.children.length > 0 ? (
+                      <div className="flex items-center justify-between w-full">
+                        <a
+                          onClick={() => toggleSubMenu(item.id)}
+                          className="flex-1 text-left font-light  cursor-pointer"
+                        >
+                          {item.name}
+                        </a>
+                        <button onClick={() => toggleSubMenu(item.id)} className="p-2">
+                          <ChevronDown
+                            size={20}
+                            className={`text-gray-700 transition-transform ${subMenuOpen === item.id ? 'rotate-180' : ''
+                              }`}
+                          />
+                        </button>
+                      </div>
+                    ) : (
+                      <MenuLink
+                        item={item}
+                        onClick={() => setMenuOpen(false)}
+                        isActive={location.pathname === item.url}
+                      />
+                    )}
+                  </div>
+                  {item.children && item.children.length > 0 && subMenuOpen === item.id && (
+                    <div className="ml-4 flex flex-col gap-2 mt-2">
+                      {item.children.map(child => (
+                        <MenuLink
+                          key={child.id}
+                          item={child}
+                          onClick={() => setMenuOpen(false)}
+                          isActive={location.pathname === child.url}
+                          className="text-gray-600 hover:text-gray-900"
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
               ))}
               {user ? (
                 <>
                   <Link
                     to="/perfil"
-                    className="flex items-center gap-2"
+                    className="flex w-full gap-2"
                     onClick={() => setMenuOpen(false)}
                   >
                     <User size={24} className="text-gray-700" />
                     <span>{t("perfil.titulo")}</span>
                   </Link>
-                  {permisos.marketplace && (<Link
-                    to="/mis-reservas"
-                    className="flex items-center gap-2"
-                    onClick={() => setMenuOpen(false)}
-                  >
-                    <Calendar size={24} className="text-gray-700" />
-                    <span>{t("perfil.mis_reservas")}</span>
-                  </Link>)}
-                  {permisos.modulo_sostenibilidad && (<Link
-                    to="/perfil-ambiental"
-                    className="flex items-center gap-2"
-                    onClick={() => setMenuOpen(false)}
-                  >
-                    <Leaf size={24} className="text-green-600" />
-                    <span>{t("perfil.mi_perfil_ambiental")}</span>
-                  </Link>)}
+                  {permisos.marketplace && (
+                    <Link
+                      to="/mis-reservas"
+                      className="flex w-full gap-2"
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      <Calendar size={24} className="text-gray-700" />
+                      <span>{t("perfil.mis_reservas")}</span>
+                    </Link>
+                  )}
+                  {permisos.modulo_sostenibilidad && (
+                    <Link
+                      to="/perfil-ambiental"
+                      className="flex w-full gap-2"
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      <Leaf size={24} className="text-green-600" />
+                      <span>{t("perfil.mi_perfil_ambiental")}</span>
+                    </Link>
+                  )}
                   <button
                     onClick={() => { setMenuOpen(false); handleLogout(); }}
                     title={t("perfil.cerrar_sesion")}
-                    className="flex items-center gap-2"
+                    className="flex w-full gap-2"
                   >
                     <LogOut size={24} className="text-gray-700" />
-                    <span>
-                      {t("perfil.cerrar_sesion")}
-                    </span>
-                  </button>  </>
-
+                    <span>{t("perfil.cerrar_sesion")}</span>
+                  </button>
+                </>
               ) : (
-                <Link to="/login" title={t("perfil.iniciar_sesion")} className="flex items-center gap-2" onClick={() => setMenuOpen(false)}>
-                  <span> {t("perfil.iniciar_sesion")}</span>
+                <Link to="/login" title={t("perfil.iniciar_sesion")}
+                className="flex w-full gap-2"
+                onClick={() => setMenuOpen(false)}>
+                  <span>{t("perfil.iniciar_sesion")}</span>
                 </Link>
               )}
-              <div className="flex items-center"> <BotonTraductor />{t("perfil.traducir")}</div>
+              <div className="flex ">
+                <BotonTraductor />{t("perfil.traducir")}
+              </div>
               <div className="flex justify-center mt-4">
                 <SocialLinks header={true} redes={config?.redes_sociales || []} />
               </div>

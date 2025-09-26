@@ -9,7 +9,7 @@ function PuntoInteresScreen() {
 
   return (
     <ItemScreen 
-      tipoObjeto="puntointeres" 
+      tipoObjeto="punto-interes" 
       id={id} 
     />
   );

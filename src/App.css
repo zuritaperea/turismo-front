@@ -926,3 +926,8 @@ footer .titulo {
 }
 
 /* Estilos específicos para react-date-range en modales */
+
+/* fix tailwindcss */
+.group:hover .group-hover\:block {
+  display: block;
+}

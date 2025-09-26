@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import objetoService from "../axios/services/gastronomia";
 import ObjetosScreen from "../components/Objetos/Objetos";
 import { useNavigate } from 'react-router-dom';
@@ -6,8 +7,8 @@ export default function GastronomiasScreen() {
   const navigate = useNavigate();
 
   const target = "Gastronomia";
-  const title = "Gastronomía";
-
+  const { t } = useTranslation();
+  const title = t("common.gastronomias");
   return (
     <ObjetosScreen target={target} navigation={navigate} objetoService={objetoService} title={title} />
   );
