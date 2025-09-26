@@ -97,7 +97,13 @@ async function generarSitemap() {
         atractivos,
         alojamientos,
         comercios,
-        gastronomias
+        gastronomias,
+        experiencias,
+        puntosinteres,
+        emprendedores,
+        balnearios,
+        destinos,
+        fiestaspopulares
     ] = await Promise.all([
         obtenerDatos('evento'),
         obtenerDatos('circuito'),
@@ -105,6 +111,12 @@ async function generarSitemap() {
         obtenerDatos('alojamiento'),
         obtenerDatos('comercio'),
         obtenerDatos('gastronomia'),
+        obtenerDatos('experiencia'),
+        obtenerDatos('punto-interes'),
+        obtenerDatos('emprendedor'),
+        obtenerDatos('balneario'),
+        obtenerDatos('destino'),
+        obtenerDatos('fiestapopular')   
     ]);
 
     const secciones = [
@@ -115,6 +127,12 @@ async function generarSitemap() {
         '/circuitos',
         '/comercios',
         '/gastronomia',
+        '/experiencias',
+        '/puntosinteres',
+        '/emprendedores',
+        '/balnearios',
+        '/destinos',
+        '/fiestaspopulares'
     ];
 
     const urls = [
@@ -125,6 +143,12 @@ async function generarSitemap() {
         ...alojamientos.map(a => `${BASE_URL}/alojamiento/${a.id}`),
         ...comercios.map(c => `${BASE_URL}/comercio/${c.id}`),
         ...gastronomias.map(g => `${BASE_URL}/gastronomia/${g.id}`),
+        ...experiencias.map(e => `${BASE_URL}/experiencia/${e.id}`),
+        ...puntosinteres.map(p => `${BASE_URL}/puntointeres/${p.id}`),
+        ...emprendedores.map(e => `${BASE_URL}/emprendedor/${e.id}`),
+        ...balnearios.map(b => `${BASE_URL}/balneario/${b.id}`),
+        ...destinos.map(d => `${BASE_URL}/destino/${d.id}`),
+        ...fiestaspopulares.map(f => `${BASE_URL}/fiestapopular/${f.id}`)
     ];
 
     const xml = `<?xml version="1.0" encoding="UTF-8"?>

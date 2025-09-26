@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: http://localhost:3000/web/sitemap.xml
+Sitemap: https://marchiquita.tur.ar/web/sitemap.xml
