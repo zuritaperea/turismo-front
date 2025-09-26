@@ -131,7 +131,7 @@ function RecomendacionesPorDestino({ destinoId }) {
             {loading.alojamiento ? (
                 <Spinner animation="border" role="status" />
             ) : (
-                circuitos.length > 0 && (
+                alojamientos.length > 0 && (
                     <ItemSection
                         data={alojamientos}
                         title={t('common.alojamientos')}
