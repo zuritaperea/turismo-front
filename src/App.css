@@ -931,3 +931,7 @@ footer .titulo {
 .group:hover .group-hover\:block {
   display: block;
 }
+
+header.w-full {
+    z-index: 410;
+}

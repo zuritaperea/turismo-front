@@ -338,6 +338,12 @@ function ItemScreen({ tipoObjeto }) {
             </div>
           )}
 
+          {tipoObjeto === "destino" && (
+            <div className="animate__fadeInUp animate__delay-6s">
+              <RecomendacionesPorDestino destinoId={item.id} />
+            </div>
+          )}
+
           {item.attributes.puntos && Object.keys(item.attributes.puntos).length > 0 && (
             <Mapa
               objetosFiltrados={item.attributes.puntos.map((punto) => ({
@@ -360,11 +366,7 @@ function ItemScreen({ tipoObjeto }) {
             />
           )}
 
-          {tipoObjeto === "destino" && (
-            <div className="animate__fadeInUp animate__delay-6s">
-              <RecomendacionesPorDestino destinoId={item.id} />
-            </div>
-          )}
+
 
           <div className=" animate__fadeIn animate__delay-6s">
             <ObjetoOpinion
