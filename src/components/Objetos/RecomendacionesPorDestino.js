@@ -145,7 +145,7 @@ function RecomendacionesPorDestino({ destinoId }) {
                 fiestaspopulares.length > 0 && (
                     <ItemSection
                         data={fiestaspopulares}
-                        title={t('common.fiestas_populares')}
+                        title={t('common.fiestaspopulares')}
                         target="fiestapopular"
                     />
                 )
