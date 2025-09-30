@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom";
 
 export default function MenuLink({ item, onClick, className = "", isActive = false }) {
-  if (!item?.url) return null;
+  if (!item) return null;
+
+  if (item.url === null || item.url === undefined) {
+    item.url = "#"
+  }
 
   const isExternal = item.url.startsWith("http://") || item.url.startsWith("https://");
 

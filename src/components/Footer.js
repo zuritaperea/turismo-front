@@ -45,9 +45,16 @@ export default function Footer() {
               return true;
             }).map(item => (
               <div key={item.id}>
-                <h3 className="titulo text-center">
+                <h3 className="titulo">
                   <MenuLink item={item} className="font-bold text-base" />
                 </h3>
+                {item.children.map(child => (
+                  <MenuLink
+                    key={child.id}
+                    item={child}
+                    className="block py-1 text-gray-700 font-medium"
+                  />
+                ))}
               </div>
             ))}
           </div>

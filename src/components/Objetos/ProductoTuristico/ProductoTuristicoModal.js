@@ -74,7 +74,7 @@ const ProductoTuristicoModal = ({
                     
                     {producto.attributes.contenidos?.length > 0 && (
                       <div className="mb-4">
-                        <Carousel images={producto.attributes.contenidos} detail={true} />
+                        <Carousel images={producto.attributes.contenidos}/>
                       </div>
                     )}
                     
