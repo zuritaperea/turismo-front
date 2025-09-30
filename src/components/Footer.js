@@ -37,7 +37,7 @@ export default function Footer() {
           <div className="flex justify-center">
             <img className="logo" src={footerLogo} alt="Logo Footer" />
           </div>
-          <div className="flex flex-wrap justify-center gap-8">
+          <div className="flex-wrap justify-center gap-8 hidden sm:flex">
             {config.footer_has_menu && footerItems.filter(item => {
               if (item.requires_authentication) {
                 return user !== null;
