@@ -199,24 +199,21 @@ export default function Inicio() {
         </div>
       )}
 
-      {banners.map((banner) => (
-        <a
-          href={banner.attributes.url}
-          key={banner.id}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block w-full mx-auto mt-8 text-center"
-        >
-          <img
-            src={banner.attributes.image}
-            alt={banner.attributes.name}
-            className="w-full rounded-xl 
-              max-h-[320px] sm:max-h-[280px] md:max-h-[300px] lg:max-h-[320px]
-              max-w-[95%] sm:max-w-[90%] md:max-w-4xl lg:max-w-5xl mx-auto"
+      {/* Slider de banners */}
+      {banners.length > 0 && (
+        <div className="w-full mt-8 text-center 
+         max-h-[320px] sm:max-h-[280px] md:max-h-[300px] 
+         lg:max-h-[320px] max-w-[95%] sm:max-w-[90%] md:max-w-4xl 
+         lg:max-w-5xl mx-auto">
+          <Carousel
+            images={banners.map(banner => ({
+              file: banner.attributes.image,
+              title: banner.attributes.name,
+              url: banner.attributes.url
+            }))}
           />
-        </a>
-      ))}
-
+        </div>
+      )}
       <Footer />
     </>
   );

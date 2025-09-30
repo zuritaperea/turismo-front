@@ -910,9 +910,28 @@ footer .titulo {
   overflow: visible !important;
 }
 
+.revert-tailwind,
+.revert-tailwind p,
+.revert-tailwind ul,
+.revert-tailwind li,
+.revert-tailwind h1,
+.revert-tailwind h2,
+.revert-tailwind h3,
+.revert-tailwind h4,
+.revert-tailwind h5,
+.revert-tailwind h6,
+.revert-tailwind span,
+.revert-tailwind div {
+  all: revert;
+}
+
 /* Estilos específicos para react-date-range en modales */
 
 /* fix tailwindcss */
 .group:hover .group-hover\:block {
   display: block;
+}
+
+header.w-full {
+    z-index: 410;
 }
