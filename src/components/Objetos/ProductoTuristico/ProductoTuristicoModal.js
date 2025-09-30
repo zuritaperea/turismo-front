@@ -56,123 +56,123 @@ const ProductoTuristicoModal = ({
     warnings.length === 0;
 
   return (
-    <div className="">
+    <div className="" style={{ zIndex: 1000 }}>
       <Modal show={show} onHide={onClose}>
-          <div className="flex flex-col h-full">
-            <Modal.Header onHide={onClose}>
-              <span className="text-gray-200">
-                {t('reservas.titulo_nueva')}
-              </span>
-            </Modal.Header>
-            <Modal.Body className="flex-grow">
+        <div className="flex flex-col h-full max-h-screen overflow-y-auto" style={{ paddingTop: '60px', paddingBottom: '60px' }}>
+          <Modal.Header onHide={onClose}>
+            <span className="text-gray-200">
+              {t('reservas.titulo_nueva')}
+            </span>
+          </Modal.Header>
+          <Modal.Body className="flex-grow" style={{ maxHeight: 'calc(100vh - 120px)', overflowY: 'auto' }}>
 
-              {!producto || isLoadingProducto ? <Spinner /> : (<>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-                  {/* Columna izquierda: info del producto */}
-                  <div className="">
-                    <h1 className="text-gray-200 font-bold text-xl mb-4">{producto.attributes.name}</h1>
-                    
-                    {producto.attributes.contenidos?.length > 0 && (
-                      <div className="mb-4">
-                        <Carousel images={producto.attributes.contenidos}/>
-                      </div>
-                    )}
-                    
-                    <div className="bg-gray-800 bg-opacity-50 rounded-lg p-4 mb-4">
-                      <p className="text-gray-300 leading-relaxed text-sm">{producto.attributes.description}</p>
+            {!producto || isLoadingProducto ? <Spinner /> : (<>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                {/* Columna izquierda: info del producto */}
+                <div className="">
+                  <h1 className="text-gray-200 font-bold text-xl mb-4">{producto.attributes.name}</h1>
+                  
+                  {producto.attributes.contenidos?.length > 0 && (
+                    <div className="mb-4">
+                      <Carousel images={producto.attributes.contenidos}/>
                     </div>
-
-                    <div className="space-y-4">
-                      {producto.attributes.amenity_feature_includes.length > 0 && (
-                        <div className="bg-green-900 bg-opacity-30 rounded-lg p-3">
-                          <span className="text-green-300 font-semibold block mb-2">{t("reservas.servicios_incluidos")}</span>
-                          <Tags elementos={producto.attributes.amenity_feature_includes} className="border-2 border-green-400" />
-                        </div>
-                      )}
-
-                      {producto.attributes.amenity_feature_does_not_include.length > 0 && (
-                        <div className="bg-red-900 bg-opacity-30 rounded-lg p-3">
-                          <span className="text-red-300 font-semibold block mb-2">{t("reservas.no_incluye")}</span>
-                          <Tags elementos={producto.attributes.amenity_feature_does_not_include} className="border-2 border-red-400" />
-                        </div>
-                      )}
-                    </div>
+                  )}
+                  
+                  <div className="bg-gray-800 bg-opacity-50 rounded-lg p-4 mb-4">
+                    <p className="text-gray-300 leading-relaxed text-sm">{producto.attributes.description}</p>
                   </div>
 
-                  {/* Columna derecha: inputs de reserva */}
-                  <div className="overflow-visible">
-                    <div className="bg-gray-700 bg-opacity-50 rounded-lg p-4 overflow-visible">
-                      <h3 className="text-lg font-semibold mb-4 text-gray-200">
-                        {isAlojamiento
-                          ? isReadOnly ? t("reservas.rango_fechas") : t("reservas.seleccionar_rango")
-                          : isReadOnly ? t("reservas.fecha_seleccionada") : t("reservas.seleccionar_fecha")}
-                      </h3>
-
-                      <div className="mb-4 overflow-visible modal-calendar-container">
-                        {isAlojamiento ? (
-                          <div className="overflow-visible relative z-10">
-                            <DateRange
-                              editableDateInputs={!isReadOnly}
-                              onChange={(item) => setDateRange([item.selection])}
-                              moveRangeOnFirstSelection={false}
-                              ranges={
-                                dateRange?.length
-                                  ? dateRange
-                                  : [{
-                                    startDate: minDate,
-                                    endDate: minDate,
-                                    key: "selection"
-                                  }]
-                              }
-                              locale={es}
-                              minDate={minDate}
-                              maxDate={maxDate}
-                              scroll={{ enabled: false }}
-                              months={1}
-                              className="rounded border shadow w-full"
-                              style={{ 
-                                position: 'relative',
-                                zIndex: 10,
-                                overflow: 'visible'
-                              }}
-                            />
-                          </div>
-                        ) : (
-                          <div className="overflow-visible relative z-10">
-                            <Calendar
-                              date={dateRange?.[0]?.startDate || minDate}
-                              onChange={(date) => {
-                                const start = new Date(date);
-                                const end = new Date(date);
-                                end.setHours(23, 59, 59, 999);
-                                setDateRange([{ startDate: start, endDate: end, key: "selection" }]);
-                              }}
-                              locale={es}
-                              disabled={isReadOnly}
-                              color="#111827"
-                              minDate={minDate}
-                              maxDate={maxDate}
-                              className="rounded border shadow w-full"
-                              style={{ 
-                                position: 'relative',
-                                zIndex: 10,
-                                overflow: 'visible'
-                              }}
-                            />
-                          </div>
-                        )}
+                  <div className="space-y-4">
+                    {producto.attributes.amenity_feature_includes.length > 0 && (
+                      <div className="bg-green-900 bg-opacity-30 rounded-lg p-3">
+                        <span className="text-green-300 font-semibold block mb-2">{t("reservas.servicios_incluidos")}</span>
+                        <Tags elementos={producto.attributes.amenity_feature_includes} className="border-2 border-green-400" />
                       </div>
-                      {warnings.length > 0 && (
-                        <div className="bg-yellow-100 text-yellow-800 p-2 rounded border border-yellow-300 my-4">
-                          {warnings.map((msg, i) => (
-                            <p key={i} className="text-sm">{msg}</p>
-                          ))}
+                    )}
+
+                    {producto.attributes.amenity_feature_does_not_include.length > 0 && (
+                      <div className="bg-red-900 bg-opacity-30 rounded-lg p-3">
+                        <span className="text-red-300 font-semibold block mb-2">{t("reservas.no_incluye")}</span>
+                        <Tags elementos={producto.attributes.amenity_feature_does_not_include} className="border-2 border-red-400" />
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Columna derecha: inputs de reserva */}
+                <div className="overflow-visible">
+                  <div className="bg-gray-700 bg-opacity-50 rounded-lg p-4 overflow-visible">
+                    <h3 className="text-lg font-semibold mb-4 text-gray-200">
+                      {isAlojamiento
+                        ? isReadOnly ? t("reservas.rango_fechas") : t("reservas.seleccionar_rango")
+                        : isReadOnly ? t("reservas.fecha_seleccionada") : t("reservas.seleccionar_fecha")}
+                    </h3>
+
+                    <div className="mb-4 overflow-visible modal-calendar-container">
+                      {isAlojamiento ? (
+                        <div className="overflow-visible relative z-10">
+                          <DateRange
+                            editableDateInputs={!isReadOnly}
+                            onChange={(item) => setDateRange([item.selection])}
+                            moveRangeOnFirstSelection={false}
+                            ranges={
+                              dateRange?.length
+                                ? dateRange
+                                : [{
+                                  startDate: minDate,
+                                  endDate: minDate,
+                                  key: "selection"
+                                }]
+                            }
+                            locale={es}
+                            minDate={minDate}
+                            maxDate={maxDate}
+                            scroll={{ enabled: false }}
+                            months={1}
+                            className="rounded border shadow w-full"
+                            style={{ 
+                              position: 'relative',
+                              zIndex: 10,
+                              overflow: 'visible'
+                            }}
+                          />
+                        </div>
+                      ) : (
+                        <div className="overflow-visible relative z-10">
+                          <Calendar
+                            date={dateRange?.[0]?.startDate || minDate}
+                            onChange={(date) => {
+                              const start = new Date(date);
+                              const end = new Date(date);
+                              end.setHours(23, 59, 59, 999);
+                              setDateRange([{ startDate: start, endDate: end, key: "selection" }]);
+                            }}
+                            locale={es}
+                            disabled={isReadOnly}
+                            color="#111827"
+                            minDate={minDate}
+                            maxDate={maxDate}
+                            className="rounded border shadow w-full"
+                            style={{ 
+                              position: 'relative',
+                              zIndex: 10,
+                              overflow: 'visible'
+                            }}
+                          />
                         </div>
                       )}
-                      {tieneHorariosConfigurados && hayHorariosParaElDia && horariosDisponibles && (
-                        <div className="mb-4">
-                          <label className="block text-sm font-medium text-gray-200 mb-1">
-                            {t("reservas.horario_disponible")}
+                    </div>
+                    {warnings.length > 0 && (
+                      <div className="bg-yellow-100 text-yellow-800 p-2 rounded border border-yellow-300 my-4">
+                        {warnings.map((msg, i) => (
+                          <p key={i} className="text-sm">{msg}</p>
+                        ))}
+                      </div>
+                    )}
+                    {tieneHorariosConfigurados && hayHorariosParaElDia && horariosDisponibles && (
+                      <div className="mb-4">
+                        <label className="block text-sm font-medium text-gray-200 mb-1">
+                          {t("reservas.horario_disponible")}
                           </label>
                           <select
                             className="w-full border rounded p-2"
