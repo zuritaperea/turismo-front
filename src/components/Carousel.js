@@ -26,13 +26,13 @@ function Carousel({ images, detail = false, imagePrincipalUrl = null }) {
         closeImageModal();
       }
     };
-  
+
     if (isModalOpen) {
       document.addEventListener('keydown', handleKeyDown);
     } else {
       document.removeEventListener('keydown', handleKeyDown);
     }
-  
+
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
@@ -125,17 +125,17 @@ function Carousel({ images, detail = false, imagePrincipalUrl = null }) {
       </Swiper>
       {isModalOpen && (
         <div
-          className="fixed inset-0 z-60 bg-black bg-opacity-80 flex items-center justify-center"
-          style={{ zIndex: '9999' }}
+          className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50"
+          style={{ zIndex: 9999 }}
           onClick={closeImageModal}
         >
-          <div className="relative max-w-full max-h-full p-4">
+          <div className="relative p-4" style={{ maxWidth: '100%', maxHeight: '100%' }}>
             <img
               src={selectedImage}
               alt="Vista ampliada"
-              className="max-w-[90vw] max-h-[90vh] rounded-lg"
+              className="rounded-lg"
               style={{ maxWidth: '90vw', maxHeight: '90vh' }}
-              onClick={(e) => e.stopPropagation()} // Evita que el click en la imagen cierre el modal
+              onClick={(e) => e.stopPropagation()}
             />
             <button
               className="absolute top-2 right-2 text-white bg-black bg-opacity-60 rounded-full px-3 py-1 text-xl"
