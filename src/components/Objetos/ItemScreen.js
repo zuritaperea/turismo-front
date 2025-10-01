@@ -261,7 +261,7 @@ function ItemScreen({ tipoObjeto }) {
             <div className="animate__fadeIn animate__delay-4s">
               <SeccionConTitulo
                 titulo={t("common.distance_beach")}
-                contenido={item.attributes.distance_beach}
+                contenido={`${item.attributes.distance_beach} ${t("common.metros")}`}
               />
             </div>
           )}

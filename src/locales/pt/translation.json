@@ -65,6 +65,8 @@
         "si": "Sim",
         "no": "Não",
         "distance_beach": "Distância até a praia",
+        "metros": "metros",
+        "kilometros": "quilômetros",
         "location": "Localização",
         "duracao": "Duração",
         "saidas": "Saídas",
