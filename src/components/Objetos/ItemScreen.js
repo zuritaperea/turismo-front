@@ -27,6 +27,7 @@ import { useTranslation } from 'react-i18next';
 import { useSeoConfig } from '../../extras/useSeoConfig.js';
 import SEOHelmet from '../SEOHelmet.js';
 import RecomendacionesPorDestino from './RecomendacionesPorDestino.js';
+import StructuredData from './StructuredData.js';
 
 const toLocalMidnight = (isoString) => {
   const utcDate = new Date(isoString);
@@ -164,6 +165,8 @@ function ItemScreen({ tipoObjeto }) {
             : process.env.REACT_APP_IMAGE_DEFAULT
         }
       />
+      <StructuredData item={item} />
+
       <Header />
       <EncabezadoAtractivo item={item} redesSociales={item.attributes.redes_sociales} onClickRed={manejarInteraccionRed}
         inicio={item.attributes.start_date} final={item.attributes.end_date} />
