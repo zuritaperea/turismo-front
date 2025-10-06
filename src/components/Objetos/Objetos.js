@@ -124,8 +124,22 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
       <SEOHelmet
         customTitle={`${translatedTitle} | ${process.env.REACT_APP_DOCUMENT_TITLE}`}
         customDescription={`${translatedTitle} | ${globalDescription}`}
-        customImage={backgroundImage}
+        customImage={backgroundImage}  customJsonLd={objetosFiltrados.length > 0 && (
+          {
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            itemListElement: objetosFiltrados.map((obj, index) => ({
+              "@type": "ListItem",
+              position: index + 1,
+              url: `${process.env.REACT_APP_FRONT_URL}/${target ? target.toLowerCase() : obj.tipo.toLowerCase()}/${obj.id}`,
+              name: obj.title,
+              image: obj.image,
+            })),
+          }
+      )}
       />
+ 
+
       <div className="flex flex-col min-h-screen justify-center">
         <style>{mapStyles}</style>
         <Header />
@@ -185,7 +199,8 @@ const ObjetosScreen = ({ navigation, target, title, objetoService }) => {
           </>
         )}
         <Footer />
-      </div></>
+      </div>
+    </>
   );
 };
 

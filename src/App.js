@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import CookieConsent from "./components/CookieConsent";
 import { ConfigProvider } from './extras/ConfigContext';
 import { AuthProvider } from "./components/AuthContext";
-import FaviconSetter from "./components/FaviconSetter";
+import GlobalSEOHelmet from "./components/GlobalSEOHelmet";
 import { v4 as uuidv4 } from 'uuid';
 import AppRoutes from './AppRoutes';
 import i18n from './i18n';
@@ -59,7 +59,7 @@ function App() {
       <AuthProvider>
         <CookieConsent onConsent={handleConsent} />
         <BrowserRouter basename="/web">
-          <FaviconSetter />
+          <GlobalSEOHelmet />
           <AppRoutes />
         </BrowserRouter>
       </AuthProvider>

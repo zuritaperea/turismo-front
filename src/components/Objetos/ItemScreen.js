@@ -27,7 +27,7 @@ import { useTranslation } from 'react-i18next';
 import { useSeoConfig } from '../../extras/useSeoConfig.js';
 import SEOHelmet from '../SEOHelmet.js';
 import RecomendacionesPorDestino from './RecomendacionesPorDestino.js';
-import StructuredData from './StructuredData.js';
+import { generateJsonLdFromItem } from '../../extras/seoHelpers.js';
 
 const toLocalMidnight = (isoString) => {
   const utcDate = new Date(isoString);
@@ -153,19 +153,23 @@ function ItemScreen({ tipoObjeto }) {
   if (!item) {
     return null;
   }
+    const image =
+    item?.attributes?.image_url
+      ? process.env.REACT_APP_API_URL + item.attributes.image_url
+      : process.env.REACT_APP_IMAGE_DEFAULT;
+
+  const jsonLd = generateJsonLdFromItem(item);
+
 
   return (
     <>
       <SEOHelmet
         customTitle={`${item.attributes.name} | ${process.env.REACT_APP_DOCUMENT_TITLE}`}
         customDescription={item.attributes.description}
-        customImage={
-          item.attributes.image_url
-            ? process.env.REACT_APP_API_URL + item.attributes.image_url
-            : process.env.REACT_APP_IMAGE_DEFAULT
-        }
+        customImage={image}
+        customJsonLd={jsonLd}
       />
-      <StructuredData item={item} />
+
 
       <Header />
       <EncabezadoAtractivo item={item} redesSociales={item.attributes.redes_sociales} onClickRed={manejarInteraccionRed}
