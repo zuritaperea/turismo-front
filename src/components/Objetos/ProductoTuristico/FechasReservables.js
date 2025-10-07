@@ -16,7 +16,7 @@ export const calcularRangoReservable = ({
   const inicioDate = parse(inicio);
   const finalDate = parse(final);
 
-  console.log("🔍 Fechas de entrada:");
+  console.group("🔍 Fechas de entrada:");
   console.log("fechaDesdeDate:", fechaDesdeDate);
   console.log("fechaHastaDate:", fechaHastaDate);
   console.log("validityFrom:", validityFrom);
@@ -25,6 +25,7 @@ export const calcularRangoReservable = ({
   console.log("availableTo:", availableTo);
   console.log("inicioDate (evento):", inicioDate);
   console.log("finalDate (evento):", finalDate);
+  console.groupEnd();
 
   // Prioridades
   let minDate = fechaDesdeDate || validityFrom || availableFrom || inicioDate || new Date();

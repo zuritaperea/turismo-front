@@ -40,7 +40,6 @@ const CargaEvidencia = () => {
         useMapEvents({
             click(e) {
                 const { lat, lng } = e.latlng;
-                console.log("Ubicación seleccionada:", lat, lng);
                 setFormData((prev) => ({
                     ...prev,
                     locationLat: lat,

@@ -35,7 +35,6 @@ const CambiarClaveConToken = () => {
 
         try {
             const response = await registroService.cambiarClaveConToken(uid, token, password1);
-            console.log("Respuesta del servidor:", response);
             if (response.data) {
                 setMensaje("La contraseña fue cambiada con éxito");
                 setReseteoExitoso(true);

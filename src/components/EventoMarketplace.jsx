@@ -26,7 +26,7 @@ const EventoMarketplace = () => {
         });
         setEventos(destinos);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
     obtenerEventos();

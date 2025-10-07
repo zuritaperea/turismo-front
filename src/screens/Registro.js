@@ -146,7 +146,6 @@ const Registro = () => {
 
   useEffect(() => {
     if (registroExitoso) {
-      console.log(registroExitoso)
       // Si el registro fue exitoso, redirige a la siguiente pantalla
       setTimeout(function () {
         navigate("/login");

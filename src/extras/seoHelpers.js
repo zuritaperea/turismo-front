@@ -94,10 +94,10 @@ export const generateJsonLdFromItem = (item) => {
                     })) || []),
                 ],
             }),
-            ...(relationships.destino?.data && {
+            ...(attributes.destino && {
                 containedInPlace: {
                     "@type": "Place",
-                    name: relationships.destino.data?.attributes?.name || "Destino",
+                    name: attributes.destino || "Destino",
                 },
             }),
             ...(attributes.start_date && { startDate: attributes.start_date }),

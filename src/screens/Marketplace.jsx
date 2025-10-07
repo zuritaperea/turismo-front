@@ -61,7 +61,6 @@ export default function Marketplace() {
           const { visible, logs } = esProductoVisible(obj, desde, hasta);
           console.group(`Producto ${obj.id} - ${obj.attributes.name}`);
           logs.forEach(msg => console.log(msg));
-          console.log("→ Visible:", visible);
           console.groupEnd();
           return visible;
         })

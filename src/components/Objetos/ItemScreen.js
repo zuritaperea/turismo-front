@@ -77,8 +77,8 @@ function ItemScreen({ tipoObjeto }) {
       };
 
       serviceInteraccion.generarInteraccionQR(data)
-        .then((response) => {
-          console.log("Interacción QR generada:", response);
+        .then(() => {
+          // No hacer nada con la respuesta
         })
         .catch((error) => {
           console.error("Error generando interacción QR:", error);
@@ -132,7 +132,6 @@ function ItemScreen({ tipoObjeto }) {
 
     try {
       const response = await serviceInteraccion.generarInteraccionRedes(data);
-      console.log("Interacción Redes generada:", response);
     } catch (error) {
       console.error("Error generando interacción Redes:", error);
     }

@@ -61,7 +61,7 @@ const Reserva = () => {
         setReserva(response?.data?.data || []);
         setLoading(false);
       } catch (error) {
-        console.log("Hubo un error al cargar las reservas");
+        console.error("Hubo un error al cargar las reservas");
         setLoading(false);
       }
     };

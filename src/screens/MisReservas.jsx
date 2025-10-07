@@ -53,7 +53,6 @@ const MisReservas = () => {
   const navigate = useNavigate();  // Para la redirección
   const handleVer = (reserva) => {
     // Redirigir o mostrar modal
-    console.log("Ver reserva:", reserva.id);
     navigate(`/reserva/${reserva.id}`); // Redirigir a la página de detalles de la reserva 
   };
 
@@ -99,7 +98,7 @@ const MisReservas = () => {
         setReservas(response?.data?.data || []);  // Actualizar el estado con las reservas
         setLoading(false);
       } catch (error) {
-        console.log("Hubo un error al cargar las reservas", error);
+        console.error("Hubo un error al cargar las reservas", error);
         setLoading(false);
       }
     };

@@ -105,7 +105,7 @@ export default function Pasaporte() {
         }));
         guardarPaises(items);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
       setLoading(false);
     };
@@ -126,7 +126,7 @@ export default function Pasaporte() {
           }));
           guardarProvincias(items);
         } catch (error) {
-          console.log(error);
+          console.error(error);
         }
         setLoading(false);
       };

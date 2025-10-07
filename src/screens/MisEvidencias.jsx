@@ -63,7 +63,7 @@ const MisEvidencias = () => {
         setReservas(response?.data?.data || []);  // Actualizar el estado con las reservas
         setLoading(false);
       } catch (error) {
-        console.log("Hubo un error al cargar las evidencias");
+        console.error("Hubo un error al cargar las evidencias");
         setLoading(false);
       }
     };

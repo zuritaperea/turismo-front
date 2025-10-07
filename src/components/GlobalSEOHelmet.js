@@ -35,7 +35,6 @@ const GlobalSEOHelmet = ({ override = {} }) => {
     // Si existe y tenemos un JSON-LD dinámico, lo eliminamos
     if (defaultJsonLd && jsonLd) {
       defaultJsonLd.remove();
-      console.log("🧹 JSON-LD por defecto eliminado porque hay uno dinámico");
     }
   }, [jsonLd]);
 
