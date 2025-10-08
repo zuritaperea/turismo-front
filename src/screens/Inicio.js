@@ -18,7 +18,8 @@ import medallaEventos from "../assets/img/calendario.png";
 import circuitoImg from "../assets/img/circuito.png";
 import DirectAccessList from "../components/DirectAccessList";
 import { useTranslation } from 'react-i18next';
-
+import { jsonLdInicio } from "../extras/seoHelpers";
+import SEOHelmet from "../components/SEOHelmet";
 export default function Inicio() {
   const [loading, setLoading] = useState(false);
   const [eventos, setEventos] = useState([]);
@@ -34,6 +35,8 @@ export default function Inicio() {
   const config = useContext(ConfigContext);
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const [seoJson, setSeoJson] = useState(null);
+
 
   useEffect(() => {
     if (config) {
@@ -130,9 +133,18 @@ export default function Inicio() {
     { icono: <Utensils size={30} />, titulo: t('common.gastronomia'), link: '/gastronomia' },
   ];
 
+    useEffect(() => {
+    if (config && naturalAttractions.length && eventos.length && circuitos.length) {
+      setSeoJson(jsonLdInicio(window.location, config, naturalAttractions, eventos, circuitos, secciones));
+      //TODO revisar que se cargue bien el json
+    }
+  }, [config, naturalAttractions, eventos, circuitos]);
+
+
   return (
     <>
       {loading ? <Splash /> : null}
+      {seoJson && <SEOHelmet customJsonLd={seoJson} />}
       <Header config={config} />
 
       <div className="relative">
