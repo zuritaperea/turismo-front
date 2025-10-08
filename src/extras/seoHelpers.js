@@ -4,7 +4,7 @@ const typeMapping = {
     AtractivoTuristico: "TouristAttraction",
     Circuito: "Route",
     Experiencia: "Trip",
-    FiestaPopular: "Festival",
+    FiestaPopular: "TouristAttraction",
     Comercio: "LocalBusiness",
     Emprendedor: "LocalBusiness",
     Balneario: "TouristAttraction",
@@ -187,7 +187,8 @@ const jsonLdInicio = (location, config, naturalAttractions = [], eventos = [], c
                     "@type": "ListItem",
                     "position": index + 1,
                     "name": item.titulo,
-                    "url": `${baseUrl}${item.link || "#"}`
+                    "url": `${baseUrl}${item.link || "#"}`,
+                    "image": item.icono?.props?.src || process.env.REACT_APP_IMAGE_DEFAULT
                 }))
             },
             // Atractivos Naturales
@@ -197,8 +198,9 @@ const jsonLdInicio = (location, config, naturalAttractions = [], eventos = [], c
                 "itemListElement": (naturalAttractions || []).map((a, i) => ({
                     "@type": "ListItem",
                     "position": i + 1,
-                    "name": a.attributes?.name,
-                    "url": `${baseUrl}/atractivos/${a.id}`
+                    "name": a.title,
+                    "url": `${baseUrl}/atractivos/${a.id}`,
+                    "image": a.image
                 }))
             },
             // Eventos
@@ -208,8 +210,9 @@ const jsonLdInicio = (location, config, naturalAttractions = [], eventos = [], c
                 "itemListElement": (eventos || []).map((e, i) => ({
                     "@type": "ListItem",
                     "position": i + 1,
-                    "name": e.attributes?.name,
-                    "url": `${baseUrl}/eventos/${e.id}`
+                    "name": e.title,
+                    "url": `${baseUrl}/eventos/${e.id}`,
+                    "image": e.image
                 }))
             },
             // Circuitos
@@ -219,8 +222,9 @@ const jsonLdInicio = (location, config, naturalAttractions = [], eventos = [], c
                 "itemListElement": (circuitos || []).map((c, i) => ({
                     "@type": "ListItem",
                     "position": i + 1,
-                    "name": c.attributes?.name,
-                    "url": `${baseUrl}/circuitos/${c.id}`
+                    "name": c.title,
+                    "url": `${baseUrl}/circuitos/${c.id}`,
+                    "image": c.image
                 }))
             }
         ]
