@@ -221,30 +221,19 @@ const ListaProductosTuristicos = (props) => {
     return (!end || end >= fechaDesde) && (!start || start <= fechaHasta);
   };
 
-const productosFiltrados = listData
-  .filter((p) => p.active)
-  .filter((p) => {
-    // Filtrar según tipo de disponibilidad
-    switch (p.availability_type) {
-      case "FECHAS":
-        return isDentroDeRango(p, fechaDesde, fechaHasta);
-      case "STOCK":
-        return isDentroDeDisponibilidad(p);
-      case "STOCK_Y_FECHA":
-        return (
-          isDentroDeRango(p, fechaDesde, fechaHasta) &&
-          isDentroDeDisponibilidad(p)
-        );
-      default:
-        return true; // por si aparece un tipo nuevo o nulo
-    }
-  })
-  .filter((p) => p.integrates_discount_passport === esPasaporte)
-  .filter((p) => {
-    // Solo aplicar el filtro de cantidad si está definido
-    if (cantidadPersonas == null || cantidadPersonas === "") return true;
-    return p.maximum_number_persons <= cantidadPersonas;
-  });
+  const productosFiltrados = listData
+    .filter((p) => p.active)
+    .filter((p) => isDentroDeRango(p, fechaDesde, fechaHasta)) // Validity: se puede usar en esas fechas 
+    .filter((p) => isDentroDeDisponibilidad(p)) // Availability: está visible en frontend
+    .filter((p) => p.integrates_discount_passport === esPasaporte)
+    .filter((p) => {
+      if (cantidadNum == null) return true; // si no se especificó, no filtra
+      // validar solo si el producto tiene definido un máximo
+      return (
+        !p.maximum_number_persons ||
+        p.maximum_number_persons <= cantidadNum
+      );
+    })
   //Si no existen productos filtrados, no devolver nada
 
   if (!Array.isArray(productosFiltrados) || productosFiltrados.length === 0) return null;
