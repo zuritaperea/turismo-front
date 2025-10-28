@@ -231,7 +231,7 @@ const ListaProductosTuristicos = (props) => {
       // validar solo si el producto tiene definido un máximo
       return (
         !p.maximum_number_persons ||
-        p.maximum_number_persons <= cantidadPersonas
+        p.maximum_number_persons >= cantidadPersonas
       );
     })
   //Si no existen productos filtrados, no devolver nada
