@@ -227,11 +227,11 @@ const ListaProductosTuristicos = (props) => {
     .filter((p) => isDentroDeDisponibilidad(p)) // Availability: está visible en frontend
     .filter((p) => p.integrates_discount_passport === esPasaporte)
     .filter((p) => {
-      if (cantidadNum == null) return true; // si no se especificó, no filtra
+      if (cantidadPersonas == null) return true; // si no se especificó, no filtra
       // validar solo si el producto tiene definido un máximo
       return (
         !p.maximum_number_persons ||
-        p.maximum_number_persons <= cantidadNum
+        p.maximum_number_persons <= cantidadPersonas
       );
     })
   //Si no existen productos filtrados, no devolver nada
