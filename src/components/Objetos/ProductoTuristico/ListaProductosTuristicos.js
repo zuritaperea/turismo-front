@@ -243,7 +243,7 @@ const productosFiltrados = listData
   .filter((p) => {
     // Solo aplicar el filtro de cantidad si está definido
     if (cantidadPersonas == null || cantidadPersonas === "") return true;
-    return p.maximum_number_persons >= cantidadPersonas;
+    return p.maximum_number_persons <= cantidadPersonas;
   });
   //Si no existen productos filtrados, no devolver nada
 
