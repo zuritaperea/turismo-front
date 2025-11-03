@@ -227,6 +227,7 @@ const ProductoTuristicoModal = ({
                         <input
                           type="number"
                           min={1}
+                          max={producto?.attributes?.maximum_number_persons}
                           value={cantidadPersonas}
                           onChange={(e) => setCantidadPersonas(Number(e.target.value))}
                           className="w-full border rounded p-2"
