@@ -141,7 +141,7 @@ export default function Pasaporte() {
         const response = await reservaService.obtenerTodosProductoTuristicoFiltro({
           start_date: funciones.keepLocalAsUTC(filtroDesde)?.toISOString(),
           end_date: funciones.keepLocalAsUTC(filtroHasta)?.toISOString(),
-          maximum_number_persons_max: filtroCantidad,
+          maximum_number_persons_min: filtroCantidad,
           content_type__model: model,
           integrates_discount_passport: true,
         });

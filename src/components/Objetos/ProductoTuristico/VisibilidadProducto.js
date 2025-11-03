@@ -59,6 +59,6 @@ export function esProductoVisible(obj, desde, hasta) {
     }
   
     // Si pasó todas las condiciones, es visible
-    return { visible: true, logs };
+    return { visible: true, logs: [] };
   }
   

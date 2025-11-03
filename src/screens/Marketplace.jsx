@@ -48,7 +48,7 @@ export default function Marketplace() {
         const response = await reservaService.obtenerTodosProductoTuristicoFiltro({
           start_date: funciones.keepLocalAsUTC(desde)?.toISOString(),
           end_date: funciones.keepLocalAsUTC(hasta)?.toISOString(),
-          maximum_number_persons_max: cantidad,
+          maximum_number_persons_min: cantidad,
           content_type__model: model,
           integrates_discount_passport: false,
         });
