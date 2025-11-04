@@ -9,7 +9,7 @@
         "emprendedores": "Entrepreneurs",
         "fiestaspopulares": "Popular Festivals",
         "experiencias": "Experiences",
-        "destinos": "Destinations",        
+        "destinos": "Destinations",
         "gastronomias": "Gastronomic Venues",
         "oficinasturismo": "Tourism Offices",
         "gastronomia": "Gastronomy",
@@ -75,7 +75,10 @@
         "allows_pets": "Allows pets?",
         "includes": "Includes",
         "does_not_include": "Does not include",
-        "recommendations": "Recommendations"
+        "recommendations": "Recommendations",
+        "from": "from",
+        "to": "to",
+        "and": "and"
     },
     "search": {
         "titulo": "Are you looking for something in particular?",

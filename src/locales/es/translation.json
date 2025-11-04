@@ -75,7 +75,10 @@
         "allows_pets": "¿Permite mascotas?",
         "includes": "Incluye",
         "does_not_include": "No incluye",
-        "recommendations": "Recomendaciones"
+        "recommendations": "Recomendaciones",
+        "from": "de",
+        "to": "a",
+        "and": "y"
     },
     "search": {
         "titulo": "¿Estás buscando algo en particular?",

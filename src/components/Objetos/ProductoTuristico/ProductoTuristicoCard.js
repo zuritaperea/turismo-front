@@ -1,9 +1,11 @@
 import { BanknoteIcon, Ticket } from "lucide-react";
 import funciones from "../../../extras/functions";
+import { useTranslation } from "react-i18next";
+import { formatHorarios } from "../../../extras/formatHorarios";
 
 const ProductoTuristicoCard = ({ producto, onClick }) => {
 
-
+  const { t } = useTranslation();
   return (
     <div
       key={producto.id}
@@ -16,10 +18,8 @@ const ProductoTuristicoCard = ({ producto, onClick }) => {
             <Ticket size={24} className="text-[#f08400]" />
             <h2 className="text-xl font-semibold text-[#101828]">{producto.name}</h2>
           </div>
-          <p className="text-[#475467] mt-4 text-lg">
-            {producto.validity_from ? funciones.formatearFecha(producto.validity_from) : "" /* Validity: se puede usar en esas fechas */ }
-            {producto.validity_from && producto.validity_to ? " - " : ""}
-            {producto.validity_to ? funciones.formatearFecha(producto.validity_to) : ""}
+          <p className="text-[#475467] mt-4 text-lg">           
+              <p>{formatHorarios(producto.horarios_disponibles, t)}</p>
           </p>
           <p className="text-[#475467] mt-2 text-lg">
             {producto.value_type === "IMPORTE" && producto.value ? (
