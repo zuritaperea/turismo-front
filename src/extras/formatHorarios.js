@@ -2,10 +2,11 @@
 export function formatHorarios(horarios = [], t) {
   if (!Array.isArray(horarios) || horarios.length === 0) return "";
 
+  // Tu backend: 0 = lunes, 6 = domingo
   const dias = ["lunes", "martes", "miercoles", "jueves", "viernes", "sabado", "domingo"];
 
   const agrupado = horarios.reduce((acc, h) => {
-    const dia = dias[h.dia_semana - 1];
+    const dia = dias[h.dia_semana]; 
     if (!acc[dia]) acc[dia] = [];
     acc[dia].push({
       inicio: h.hora_inicio,
