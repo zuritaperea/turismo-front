@@ -248,7 +248,7 @@ const ProductoTuristicoModal = ({
           <Modal.Footer>
             <div className="flex justify-center w-full">
               <button
-                className={`text-white rounded-xl py-4 px-8 flex items-center font-semibold text-lg transition-all duration-300 shadow-lg transform ${isLoadingReserva
+                className={`mb-6 text-white rounded-xl py-4 px-8 flex items-center font-semibold text-lg transition-all duration-300 shadow-lg transform ${isLoadingReserva
                     ? "bg-gray-500 cursor-not-allowed"
                     : botonHabilitado
                       ? "bg-blue-600 hover:bg-blue-700 hover:scale-105 hover:shadow-xl cursor-pointer"
