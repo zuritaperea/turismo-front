@@ -1,11 +1,11 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from 'swiper/modules';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-function Carousel({ images, detail = false, imagePrincipalUrl = null }) {
+function Carousel({ images, detail = false, imagePrincipalUrl = null, autoPlay = false, autoPlayDelay = 3000 }) {
   const videoRefs = useRef([]);
   const [selectedImage, setSelectedImage] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -98,11 +98,12 @@ function Carousel({ images, detail = false, imagePrincipalUrl = null }) {
       style={{ height: 'auto', minHeight: '280px', maxHeight: '436px', marginBottom: '1rem' }}
     >
       <Swiper
-        modules={[Navigation, Pagination]}
+        modules={[Navigation, Pagination, ...(autoPlay ? [Autoplay] : [])]}
         spaceBetween={20}
         onSlideChange={handleSlideChange}
         navigation
         pagination={{ clickable: true }}
+        autoplay={isModalOpen ? false : autoPlay ? { delay: autoPlayDelay, disableOnInteraction: false } : false}
         breakpoints={{
           0: { slidesPerView: 1 },
           640: { slidesPerView: detail && filteredImages.length > 1 ? 2 : 1 },

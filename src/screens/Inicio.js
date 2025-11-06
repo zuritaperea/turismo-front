@@ -148,7 +148,7 @@ export default function Inicio() {
       <Header config={config} />
 
       <div className="relative">
-        <Carousel images={images} />
+        <Carousel images={images} autoPlay={true} autoPlayDelay={5000}/>
 
         <div className="flex justify-center -mt-28 z-10 relative px-4">
           <div className="w-full max-w-md animate__animated animate__fadeInUp animate__delay-1s">
