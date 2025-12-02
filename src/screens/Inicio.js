@@ -223,6 +223,7 @@ export default function Inicio() {
               title: banner.attributes.name,
               url: banner.attributes.url
             }))}
+            autoPlay={true} autoPlayDelay={5000}
           />
         </div>
       )}
