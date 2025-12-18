@@ -294,7 +294,7 @@ function ItemScreen({ tipoObjeto }) {
             <div className="animate__fadeIn animate__delay-4s">
               <SeccionConTitulo
                 titulo={t("common.guided")}
-                contenido={t("common.yes")}
+                contenido={t("common.si")}
               />
             </div>
           )}
@@ -303,7 +303,7 @@ function ItemScreen({ tipoObjeto }) {
             <div className="animate__fadeIn animate__delay-4s">
               <SeccionConTitulo
                 titulo={t("common.accessible")}
-                contenido={t("common.yes")}
+                contenido={t("common.si")}
               />
             </div>
           )}
@@ -312,7 +312,7 @@ function ItemScreen({ tipoObjeto }) {
             <div className="animate__fadeIn animate__delay-4s">
               <SeccionConTitulo
                 titulo={t("common.allows_pets")}
-                contenido={t("common.yes")}
+                contenido={t("common.si")}
               />
             </div>
           )}
