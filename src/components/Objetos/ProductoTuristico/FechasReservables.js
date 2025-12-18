@@ -15,7 +15,8 @@ export const calcularRangoReservable = ({
   const availableTo = parse(producto?.attributes?.available_to);
   const inicioDate = parse(inicio);
   const finalDate = parse(final);
-
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
   console.group("🔍 Fechas de entrada:");
   console.log("fechaDesdeDate:", fechaDesdeDate);
   console.log("fechaHastaDate:", fechaHastaDate);
@@ -28,7 +29,15 @@ export const calcularRangoReservable = ({
   console.groupEnd();
 
   // Prioridades
-  let minDate = fechaDesdeDate || validityFrom || availableFrom || inicioDate || new Date();
+  const posiblesMinimos = [
+    today,
+    fechaDesdeDate,
+    validityFrom,
+    availableFrom,
+    inicioDate
+  ].filter(Boolean);
+
+  let minDate = new Date(Math.max(...posiblesMinimos.map(d => d.getTime())));
   let maxDate = fechaHastaDate || validityTo || availableTo || finalDate;
 
   // Validaciones

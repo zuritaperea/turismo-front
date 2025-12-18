@@ -1,3 +1,4 @@
+import React from "react";
 import Modal from "../../Modal";
 import { Calendar } from "react-date-range";
 import { DateRange } from "react-date-range";
@@ -9,6 +10,8 @@ import FormularioAcompaniantes from "./FormularioAcompaniantes";
 import Carousel from "../../Carousel";
 import { useTranslation } from "react-i18next";
 import { calcularRangoReservable } from "./FechasReservables";
+import { eachDayOfInterval } from "date-fns";
+
 const ProductoTuristicoModal = ({
   producto,
   show,
@@ -54,7 +57,23 @@ const ProductoTuristicoModal = ({
     !isLoadingReserva &&
     (!tieneHorariosConfigurados || (hayHorariosParaElDia && selectedStartDate instanceof Date)) &&
     warnings.length === 0;
+  const isDiaHabilitado = (date) => {
+    if (!tieneHorariosConfigurados) return true;
 
+    const horariosConfig = producto?.attributes?.horarios_disponibles;
+    if (!horariosConfig || horariosConfig.length === 0) return false;
+
+    const jsDay = date.getDay(); // 0=domingo
+    const adjustedDay = (jsDay + 6) % 7; // 0=lunes, 6=domingo
+
+    return horariosConfig.some(h => h.dia_semana === adjustedDay);
+  };
+  const disabledDates = React.useMemo(() => {
+  if (!tieneHorariosConfigurados || !minDate || !maxDate) return [];
+
+  return eachDayOfInterval({ start: minDate, end: maxDate })
+    .filter(date => !isDiaHabilitado(date));
+}, [tieneHorariosConfigurados, minDate, maxDate, producto]);
   return (
     <div className="" style={{ zIndex: 1000 }}>
       <Modal show={show} onHide={onClose}>
@@ -127,6 +146,7 @@ const ProductoTuristicoModal = ({
                             locale={es}
                             minDate={minDate}
                             maxDate={maxDate}
+                            disabledDates={disabledDates}
                             scroll={{ enabled: false }}
                             months={1}
                             className="rounded border shadow w-full"
@@ -152,6 +172,7 @@ const ProductoTuristicoModal = ({
                             color="#111827"
                             minDate={minDate}
                             maxDate={maxDate}
+                            disabledDay={(date) => !isDiaHabilitado(date)}
                             className="rounded border shadow w-full"
                             style={{
                               position: 'relative',
@@ -249,10 +270,10 @@ const ProductoTuristicoModal = ({
             <div className="flex justify-center w-full">
               <button
                 className={`mb-6 text-white rounded-xl py-4 px-8 flex items-center font-semibold text-lg transition-all duration-300 shadow-lg transform ${isLoadingReserva
-                    ? "bg-gray-500 cursor-not-allowed"
-                    : botonHabilitado
-                      ? "bg-blue-600 hover:bg-blue-700 hover:scale-105 hover:shadow-xl cursor-pointer"
-                      : "bg-gray-500 cursor-not-allowed opacity-50"
+                  ? "bg-gray-500 cursor-not-allowed"
+                  : botonHabilitado
+                    ? "bg-blue-600 hover:bg-blue-700 hover:scale-105 hover:shadow-xl cursor-pointer"
+                    : "bg-gray-500 cursor-not-allowed opacity-50"
                   }`}
                 disabled={!botonHabilitado || isLoadingReserva}
                 onClick={botonHabilitado ? handleReservar : undefined}
